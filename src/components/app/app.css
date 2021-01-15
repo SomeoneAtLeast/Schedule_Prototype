@@ -1,0 +1,6 @@
+.app {
+    width: 600px;
+    margin: 200px auto 0 auto;
+    background-color: rgb(73, 121, 177);
+    border-radius: 5px;
+}

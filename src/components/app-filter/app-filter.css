@@ -1,0 +1,21 @@
+.filter-list__filter {
+    list-style: none;
+}
+
+.filter-list__filter-btn {
+    padding: 10px 25px;
+    border-radius: 5px;
+    border: none;
+    color: rgb(54, 54, 54);
+    background-color: rgb(211, 228, 248);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filter-list__filter-btn:hover {
+    opacity: 0.8;
+}
+
+.filter-list__filter-btn:active {
+    transform: scale(0.95);
+}
