@@ -1,0 +1,23 @@
+.days-field {
+    background-color: rgb(160, 209, 238);
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 1px;
+}
+
+.days-field__item {
+    background-color: rgb(53, 136, 184);
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 1px;
+    transition: 0.3s;
+}
+
+.days-field__item:hover {
+    background-color: rgb(47, 122, 165);
+    font-size: larger;
+}
+
+.days-field__item:active {
+    transform: scale(0.95);
+}
