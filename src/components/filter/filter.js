@@ -3,8 +3,8 @@ import React, {Component} from "react";
 import "./filter.scss"
 
 export default class Filter extends Component {
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
 
         this.state = {
             active: false,
@@ -21,7 +21,7 @@ export default class Filter extends Component {
 
     render () {
         // eslint-disable-next-line react/prop-types
-        const {btnText} = this.props;
+        const {btnText, onSort, id} = this.props;
         const {active} = this.state;
         let classNames = "filter-list__filter";
 
@@ -33,7 +33,8 @@ export default class Filter extends Component {
             <li className={classNames}>
                 <button
                 className="filter-list__filter-btn"
-                onClick = {this.onActive}>
+                key = {id}
+                onClick = {this.onActive, onSort}>
                     {btnText}
                 </button>
             </li>
