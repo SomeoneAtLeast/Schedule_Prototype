@@ -2,7 +2,7 @@ import React from "react";
 
 import "./app.scss";
 
-import FilterList from "../app-filter-list";
+import FilterList from "../filter-list";
 import DaysField from "../days-field"
 
 const App = () => {

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-import "./app-days-field-item.scss";
+import "./days-field-item.scss";
 
 export default class DaysFieldItem extends Component {
     render () {

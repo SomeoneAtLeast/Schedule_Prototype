@@ -2,7 +2,7 @@ import React from "react";
 
 import "./days-field.scss"
 
-import DaysFieldItem from "../app-days-field-item";
+import DaysFieldItem from "../days-field-item";
 
 // eslint-disable-next-line react/prop-types
 const DaysField = ({daysArr}) => {
