@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./days-field.css"
+import "./days-field.scss"
 
 import DaysFieldItem from "../app-days-field-item";
 

@@ -11,13 +11,13 @@
     cursor: pointer;
     margin: 1px;
     transition: 0.3s;
-}
 
-.days-field__item:hover {
-    background-color: rgba(2, 136, 209, 0.8);
-    font-size: larger;
-}
+    &:hover {
+        background-color: rgba(2, 136, 209, 0.8);
+        font-size: larger;
+    }
 
-.days-field__item:active {
-    transform: scale(0.95);
+    &:active {
+        transform: scale(0.95);
+    }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./app.css";
+import "./app.scss";
 
 import FilterList from "../app-filter-list";
 import DaysField from "../days-field"

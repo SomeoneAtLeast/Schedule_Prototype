@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./app-filter-list.css"
+import "./app-filter-list.scss"
 
 import Filter from "../app-filter";
 
