@@ -17,17 +17,17 @@ const FilterList = ({onSort}) => {
     <ul className = "filter-list">
         <Filter
             btnText={buttons[0].label}
-            onSort = {() => onSort(buttons[0].label)}
+            onSort = {() => onSort(buttons[0].id)}
             id = {buttons[0].id}
             />
         <Filter
             btnText={buttons[1].label}
-            onSort = {() => onSort(buttons[1].label)}
+            onSort = {() => onSort(buttons[1].id)}
             id = {buttons[1].id}
             />
         <Filter
             btnText={buttons[2].label}
-            onSort = {() => onSort(buttons[2].label)}
+            onSort = {() => onSort(buttons[2].id)}
             id = {buttons[2].id}
             />
     </ul>
