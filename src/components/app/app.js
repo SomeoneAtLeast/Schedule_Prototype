@@ -13,7 +13,7 @@ for (let i = 1; i <= totalDays; i++) {
         {
             dayNumber: i,
             id: i,
-            working: false
+            worked: false
         }
     )
 }
@@ -25,65 +25,94 @@ export default class App extends Component {
         super(props);
 
         this.state = {
-            days : days
+            allDays: days,
+            workingDays: [],
+            weekends: [],
+            days: days
         };
 
-        this.changeState = this.changeState.bind(this);
+        this.onMakeDayWorking = this.onMakeDayWorking.bind(this);
         this.showWorkingdays = this.showWorkingdays.bind(this);
+        this.showWeekends = this.showWeekends.bind(this);
+        this.showAllDays = this.showAllDays.bind(this);
         this.sort = this.sort.bind(this);
     }
 
-    changeState(id) {
-        console.log(id);
-        this.setState(({days}) => {
-            const indexObj = days.findIndex(elem => elem.id === id); 
-            const Obj = days.find(elem => elem.id === id); 
-            Obj.working = true;
-            const newDays = days.slice();
-
-            newDays.splice(indexObj, 1, Obj);
-
-
+    onMakeDayWorking(id) {
+        this.setState(({days, workingDays}) => {
+            const index = days.findIndex(elem => elem.id === id); 
+            const oldDay = days[index];
+            const newDay = {...oldDay, worked: !oldDay.worked}
+            const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
+            workingDays = newDays;
             return {
-                days: newDays
+                days: workingDays
             }
         });
     }
 
     showWorkingdays() {
-        this.setState(({days}) => {
-           const workingDays = days.filter((day) => {
-               return day.working == true;
+        this.setState(({days, workingDays}) => {
+           const workedDays = days.filter((day) => {
+               return day.worked == true;
            });
+
+           workingDays = workedDays;
 
            return {
             days: workingDays
         }
         });
-
-        console.log("Показываю рабочие")
     }
 
+    showWeekends() {
+        this.setState(({days, weekends}) => {
+           const weekendsDays = days.filter((day) => {
+               return day.worked == false;
+           });
+
+           weekends = weekendsDays;
+           return {
+            days: weekends
+        }
+        });
+    }
+
+    showAllDays() {
+        this.setState(({allDays, workingDays, weekends}) => {
+            allDays = [...workingDays, ...weekends];
+           return {
+            days: allDays
+        }
+        });
+    }
 
     sort(id) {
-        console.log(id);
-
         if (id == -1) {
-            return
+            this.showAllDays()
         } else if (id == -2) {
             this.showWorkingdays();
-        } else {
-            return
+        } else if (id == -3) {
+            this.showWeekends()
         }
     }
 
     render() {
+        const {days} = this.state;
+        const workedQuantity = days.filter(item => item.worked).length;
+        const weekendsQuantity = days.filter(item => !item.worked).length;
+        const allDaysQuantity = days.length;
+
         return (
             <div className = "app">
-                <FilterList onSort={this.sort}/>
+                <FilterList
+                workedQuantity={workedQuantity}
+                allDaysQuantity={allDaysQuantity}
+                weekendsQuantity={weekendsQuantity}
+                onSort={this.sort}/>
                 <DaysField
                 daysArr = {this.state.days}
-                changeState={this.changeState}/>
+                onMakeDayWorking={this.onMakeDayWorking}/>
             </div>
         )
     }
