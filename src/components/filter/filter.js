@@ -1,16 +1,18 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from "react";
 
 import "./filter.scss"
 
 export default class Filter extends Component {
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
 
         this.state = {
             active: false,
         };
 
         this.onActive = this.onActive.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     onActive () {
@@ -18,10 +20,18 @@ export default class Filter extends Component {
             active: !active
         }))
     }
+    
+    onFilterSelect() {
+        this.props.onFilterSelect();
+    }
+
+    onClick () {
+        this.onActive();
+        this.onFilterSelect();
+    }
 
     render () {
-        // eslint-disable-next-line react/prop-types
-        const {btnText} = this.props;
+        const {btnText, btnQuantity, id} = this.props;
         const {active} = this.state;
         let classNames = "filter-list__filter";
 
@@ -33,8 +43,14 @@ export default class Filter extends Component {
             <li className={classNames}>
                 <button
                 className="filter-list__filter-btn"
-                onClick = {this.onActive}>
+                key = {id}
+                onClick = {this.onClick}>
+                    <span className="filter-list__left-text">
                     {btnText}
+                    </span>
+                    <span className="filter-list__right-text">
+                    {btnQuantity}
+                    </span>
                 </button>
             </li>
         )

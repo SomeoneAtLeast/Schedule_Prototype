@@ -1,14 +1,20 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from "react";
 
 import "./days-field-item.scss";
 
 export default class DaysFieldItem extends Component {
-    render () {
-        // eslint-disable-next-line react/prop-types
-        const {dayNumber} = this.props;
 
+    render () {
+        const {dayNumber, onMakeDayWorking, worked} = this.props;
+        let classNames = "days-field__item-body";
+        if(worked) {
+            classNames += " worked";
+        }
         return (
-            <div className = "days-field__item-body">
+            <div 
+            className = {classNames}
+            onClick = {onMakeDayWorking}>
                 <span className="days-field__item-number">
                     {dayNumber}
                 </span>

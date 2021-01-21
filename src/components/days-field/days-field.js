@@ -5,7 +5,7 @@ import "./days-field.scss"
 import DaysFieldItem from "../days-field-item";
 
 // eslint-disable-next-line react/prop-types
-const DaysField = ({daysArr}) => {
+const DaysField = ({daysArr, onMakeDayWorking}) => {
 
     // eslint-disable-next-line react/prop-types
     const daysFieldElements = daysArr.map((item) => {
@@ -15,7 +15,9 @@ const DaysField = ({daysArr}) => {
             <article
             className="days-field__item"
             key = {id}>
-                <DaysFieldItem {...itemProps}/>
+                <DaysFieldItem
+                {...itemProps}
+                onMakeDayWorking={() => onMakeDayWorking(id)}/>
             </article>
         )
     })
