@@ -5,32 +5,32 @@ import "./filter-list.scss"
 import Filter from "../filter";
 
 // eslint-disable-next-line react/prop-types
-const FilterList = ({onSort, workedQuantity, allDaysQuantity, weekendsQuantity}) => {
+const FilterList = ({workedQuantity, allDaysQuantity, weekendsQuantity, onFilterSelect}) => {
 
     const buttons = [
-        {label: "Все дни", id: -1, quantity: `(${allDaysQuantity})`},
-        {label: "Рабочие", id: -2, quantity: `(${workedQuantity})`},
-        {label: "Выходные", id: -3, quantity: `(${weekendsQuantity})`},
+        {name: "all",  label: "Все дни", id: -1, quantity: `(${allDaysQuantity})`},
+        {name: "worked",  label: "Рабочие", id: -2, quantity: `(${workedQuantity})`},
+        {name: "weekends",  label: "Выходные", id: -3, quantity: `(${weekendsQuantity})`},
     ]
     return (
     <ul className = "filter-list">
         <Filter
             btnText={buttons[0].label}
             btnQuantity={buttons[0].quantity}
-            onSort = {() => onSort(buttons[0].id)}
             id = {buttons[0].id}
+            onFilterSelect={() => onFilterSelect(buttons[0].name)}
             />
         <Filter
             btnText={buttons[1].label}
             btnQuantity={buttons[1].quantity}
-            onSort = {() => onSort(buttons[1].id)}
             id = {buttons[1].id}
+            onFilterSelect={() => onFilterSelect(buttons[1].name)}
             />
         <Filter
             btnText={buttons[2].label}
             btnQuantity={buttons[2].quantity}
-            onSort = {() => onSort(buttons[2].id)}
             id = {buttons[2].id}
+            onFilterSelect={() => onFilterSelect(buttons[2].name)}
             />
     </ul>
     )

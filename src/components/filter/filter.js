@@ -12,7 +12,6 @@ export default class Filter extends Component {
         };
 
         this.onActive = this.onActive.bind(this);
-
         this.onClick = this.onClick.bind(this);
     }
 
@@ -21,10 +20,14 @@ export default class Filter extends Component {
             active: !active
         }))
     }
+    
+    onFilterSelect() {
+        this.props.onFilterSelect();
+    }
 
     onClick () {
         this.onActive();
-        this.props.onSort()
+        this.onFilterSelect();
     }
 
     render () {
