@@ -6,14 +6,21 @@ import FilterList from "../filter-list";
 import DaysField from "../days-field"
 
 const totalDays = 30;
-const emptyDays = [];
+let emptyDays = [];
+const dayNames7 = ["пн", "вт", "ср", "чет", "пт", "сб", "вс"];
+const dayNames30 = [
+    ...dayNames7, ...dayNames7, ...dayNames7, ...dayNames7, dayNames7[0], dayNames7[1]
+    ];
 
 for (let i = 1; i <= totalDays; i++) {
     emptyDays.push(
         {
             dayNumber: i,
+            dayName: dayNames30[i - 1],
             id: i,
-            worked: false
+            unassigned: true,
+            worked: false,
+            weekend: false
         }
     )
 }

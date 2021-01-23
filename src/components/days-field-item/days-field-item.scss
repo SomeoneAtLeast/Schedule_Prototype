@@ -1,4 +1,15 @@
+.days-field .days-field__item {
+    position: relative;
+    background-color: #8c8c8c;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 1px;
+    transition: 0.3s;
+}
+
 .days-field__item-body {
+    display: flex;
+    flex-direction: column;
     min-width: 98px;
     min-height: 90px;
     display: flex;
@@ -7,6 +18,49 @@
     color: rgb(255, 255, 255);
 }
 
+.days-field__item-day-name {
+    font-size: 12px;
+    transition: 0.3s; 
+}
+
+.days-field__item-number {
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+.days-field .days-field__item {
+     &:hover {
+        opacity: 0.8;
+        .days-field__item-day-name {
+            font-size: 14px; 
+        }
+        
+        .days-field__item-number {
+            font-size: 24px;
+        }
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
 .worked {
-    background-color: green;
+    background-color: #0f7db3;
+}
+
+
+.days-field__btn-group {
+    display: none;
+    width: 98px;
+    height: 90px;
+    top: -92px;
+    position: absolute;
+    background-color: #005b88;
+}
+
+
+.days-field__btn {
+    background-color: transparent;
+    border: none;
 }
