@@ -7,7 +7,7 @@ import DaysField from "../days-field"
 
 const totalDays = 30;
 let emptyDays = [];
-const dayNames7 = ["пн", "вт", "ср", "чет", "пт", "сб", "вс"];
+const dayNames7 = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
 const dayNames30 = [
     ...dayNames7, ...dayNames7, ...dayNames7, ...dayNames7, dayNames7[0], dayNames7[1]
     ];
