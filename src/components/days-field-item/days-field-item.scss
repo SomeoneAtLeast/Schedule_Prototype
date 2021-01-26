@@ -8,7 +8,6 @@
 }
 
 .days-field__item-body {
-    display: flex;
     flex-direction: column;
     min-width: 98px;
     min-height: 90px;
@@ -28,7 +27,7 @@
     transition: 0.3s;
 }
 
-.days-field .days-field__item {
+.days-field__item {
      &:hover {
         opacity: 0.8;
         .days-field__item-day-name {
@@ -45,22 +44,34 @@
     }
 }
 
-.worked {
-    background-color: #0f7db3;
-}
-
-
 .days-field__btn-group {
     display: none;
+    flex-wrap: wrap;
+    justify-content: space-around;
     width: 98px;
     height: 90px;
-    top: -92px;
+    top: 0;
     position: absolute;
-    background-color: #005b88;
+    border-radius: 7px;
+    background-color: #4396c8;
 }
 
 
 .days-field__btn {
     background-color: transparent;
     border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    width: 49px;
+    height: 45px;
+
+    img {
+        width: 45px;
+        transition: 0.3s;
+    }
+
+    &:hover img {
+        transform: scale(1.1);
+    }
 }

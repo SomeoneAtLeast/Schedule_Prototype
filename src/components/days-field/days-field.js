@@ -10,10 +10,16 @@ const DaysField = ({daysArr, onMakeDayWorking}) => {
     // eslint-disable-next-line react/prop-types
     const daysFieldElements = daysArr.map((item) => {
         const {id, ...itemProps} = item;
-
+        const {worked} = item;
+        let classNames = "days-field__item";
+        
+        if(worked) {
+            classNames += " worked";
+        }
+        
         return (
             <article
-            className="days-field__item"
+            className={classNames}
             key = {id}>
                 <DaysFieldItem
                 {...itemProps}

@@ -6,3 +6,21 @@
     padding: 10px 15px;
     min-height: 480px;
 }
+
+.filter-list + .days-field .worked {
+    background-color: #0f7db3;
+    opacity: 1;
+    cursor: auto;
+    
+    .days-field__item-number {
+        display: none;
+    }
+
+    .days-field__item-day-name {
+        display: none;
+    }
+
+    .days-field__btn-group {
+        display: flex;
+    }
+}

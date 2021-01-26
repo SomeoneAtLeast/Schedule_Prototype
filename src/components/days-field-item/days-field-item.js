@@ -3,20 +3,18 @@ import React, {Component} from "react";
 
 import "./days-field-item.scss";
 import workImg from "./work.svg"
+import weekendImg from "./weekend.svg"
+import vacationdImg from "./vacation.svg"
+import crossImg from "./cross.svg"
 
 export default class DaysFieldItem extends Component {
 
     render () {
-        const {dayName, dayNumber, onMakeDayWorking, worked} = this.props;
-        let classNames = "days-field__item-body";
+        const {dayName, dayNumber, onMakeDayWorking} = this.props;
 
-        if(worked) {
-            classNames += " worked";
-        }
-        
         return (
             <div 
-            className = {classNames}
+            className = "days-field__item-body"
             onClick = {onMakeDayWorking}>
                 <span className="days-field__item-day-name">
                     {dayName}
@@ -27,6 +25,15 @@ export default class DaysFieldItem extends Component {
                 <div className="days-field__btn-group">
                     <button className="days-field__btn days-field__work-btn">
                         <img src={workImg}></img>
+                    </button>
+                    <button className="days-field__btn days-field__work-btn">
+                        <img src={weekendImg}></img>
+                    </button>
+                    <button className="days-field__btn days-field__work-btn">
+                        <img src={vacationdImg}></img>
+                    </button>
+                    <button className="days-field__btn days-field__work-btn">
+                        <img src={crossImg}></img>
                     </button>
                 </div>
             </div>
