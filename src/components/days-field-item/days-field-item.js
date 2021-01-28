@@ -2,10 +2,10 @@
 import React, {Component} from "react";
 
 import "./days-field-item.scss";
-import workImg from "./work.svg"
-import weekendImg from "./weekend.svg"
-import vacationdImg from "./vacation.svg"
-import crossImg from "./cross.svg"
+import workImg from "./../../global-imgs/work.svg"
+import weekendImg from "./../../global-imgs/weekend.svg"
+import vacationdImg from "./../../global-imgs/vacation.svg"
+import crossImg from "./../../global-imgs/cross.svg"
 
 export default class DaysFieldItem extends Component {
 

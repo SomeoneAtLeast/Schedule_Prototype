@@ -14,7 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgb(255, 255, 255);
+    color: rgb(243, 243, 243);
 }
 
 .days-field__item-day-name {
@@ -30,6 +30,11 @@
 .days-field__item {
      &:hover {
         opacity: 0.8;
+        
+        .days-field__item-body {
+            color: rgb(255, 255, 255);           
+        }
+
         .days-field__item-day-name {
             font-size: 14px; 
         }
@@ -40,6 +45,7 @@
     }
 
     &:active {
+        color: rgb(255, 255, 255);
         transform: scale(0.95);
     }
 }
@@ -53,7 +59,7 @@
     top: 0;
     position: absolute;
     border-radius: 7px;
-    background-color: #4396c8;
+    background-color: #6d6d6d;
 }
 
 
