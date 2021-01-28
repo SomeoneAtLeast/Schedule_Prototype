@@ -14,16 +14,18 @@ export default class DaysFieldItem extends Component {
 
         return (
             <div 
-            className = "days-field__item-body"
-            onClick = {onMakeDayWorking}>
+            className = "days-field__item-body">
                 <span className="days-field__item-day-name">
                     {dayName}
                 </span>
                 <span className="days-field__item-number">
                     {dayNumber}
                 </span>
-                <div className="days-field__btn-group">
-                    <button className="days-field__btn days-field__work-btn">
+                <div
+                    className="days-field__btn-group">
+                    <button 
+                        className="days-field__btn days-field__work-btn"
+                        onClick = {onMakeDayWorking}>
                         <img src={workImg}></img>
                     </button>
                     <button className="days-field__btn days-field__work-btn">
