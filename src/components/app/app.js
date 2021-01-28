@@ -18,9 +18,10 @@ for (let i = 1; i <= totalDays; i++) {
             dayNumber: i,
             dayName: dayNames30[i - 1],
             id: i,
-            unassigned: true,
+            selected: false,
             worked: false,
-            weekend: false
+            weekend: false,
+            vacation: false
         }
     )
 }
@@ -36,8 +37,27 @@ export default class App extends Component {
             filter: "all"
         };
 
+        this.onMakeDaySelected = this.onMakeDaySelected.bind(this);
         this.onMakeDayWorking = this.onMakeDayWorking.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
+    }
+
+    onMakeDaySelected(id) {
+        this.setState(({days}) => {
+            const index = days.findIndex(elem => elem.id === id); 
+            const oldDay = days[index];
+            const newDay = {...oldDay, selected: !oldDay.selected}
+            const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
+            newDays.forEach(item => {
+                if (item.id !== (index + 1)) {
+                    item.selected = false
+                    }  
+              });
+
+            return {
+                days: newDays
+            }
+        });
     }
 
     onMakeDayWorking(id) {
@@ -83,6 +103,7 @@ export default class App extends Component {
                 onFilterSelect={this.onFilterSelect}/>
                 <DaysField
                 daysArr = {visibleDays}
+                onMakeDaySelected={this.onMakeDaySelected}
                 onMakeDayWorking={this.onMakeDayWorking}/>
             </div>
         )

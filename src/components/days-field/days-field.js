@@ -5,14 +5,18 @@ import "./days-field.scss"
 import DaysFieldItem from "../days-field-item";
 
 // eslint-disable-next-line react/prop-types
-const DaysField = ({daysArr, onMakeDayWorking}) => {
+const DaysField = ({daysArr, onMakeDaySelected}) => {
 
     // eslint-disable-next-line react/prop-types
     const daysFieldElements = daysArr.map((item) => {
         const {id, ...itemProps} = item;
-        const {worked} = item;
+        const {worked, selected} = item;
         let classNames = "days-field__item";
-        
+
+        if(selected) {
+            classNames += " selected";
+        }
+
         if(worked) {
             classNames += " worked";
         }
@@ -23,7 +27,7 @@ const DaysField = ({daysArr, onMakeDayWorking}) => {
             key = {id}>
                 <DaysFieldItem
                 {...itemProps}
-                onMakeDayWorking={() => onMakeDayWorking(id)}/>
+                onMakeDayWorking={() => onMakeDaySelected(id)}/>
             </article>
         )
     })

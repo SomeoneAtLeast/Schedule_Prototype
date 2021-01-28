@@ -7,7 +7,7 @@
     min-height: 480px;
 }
 
-.filter-list + .days-field .worked {
+.filter-list + .days-field .selected {
     background-color: #0f7db3;
     opacity: 1;
     cursor: auto;
@@ -23,4 +23,8 @@
     .days-field__btn-group {
         display: flex;
     }
+}
+
+.filter-list + .days-field .worked {
+    background-color:  red;;
 }
