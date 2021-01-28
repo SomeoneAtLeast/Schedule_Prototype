@@ -13,7 +13,8 @@ export default class FilterList extends Component {
         this.state = {
             allActive: true,
             workedActive: false,
-            weekendsActive: false
+            weekendsActive: false,
+            vacationActive: false
         }
     }
 
@@ -22,30 +23,41 @@ export default class FilterList extends Component {
             this.setState({
                 allActive: !this.state.allActive,
                 workedActive: false,
-                weekendsActive: false
+                weekendsActive: false,
+                vacationActive: false
             })
         } else if (id === -2) {
             this.setState({
                 workedActive: !this.state.workedActive,
                 allActive: false,
-                weekendsActive: false
+                weekendsActive: false,
+                vacationActive: false
             })
         } else if (id === -3) {
             this.setState({
                 weekendsActive: !this.state.weekendsActive,
                 workedActive: false,
-                allActive: false
+                allActive: false,
+                vacationActive: false
+            })
+        } else if (id === -4) {
+            this.setState({
+                vacationActive: !this.state.vacationActive,
+                workedActive: false,
+                allActive: false,
+                weekendsActive: false
             })
         }
     }
 
     render() {
-        const {workedQuantity, allDaysQuantity, weekendsQuantity, onFilterSelect} = this.props;
-        const {allActive, workedActive, weekendsActive} = this.state;
+        const {workedQuantity, allDaysQuantity, weekendsQuantity, vacationQuantity, onFilterSelect} = this.props;
+        const {allActive, workedActive, weekendsActive, vacationActive} = this.state;
         const buttons = [
             {name: "all",  label: "Все дни", id: -1, quantity: `(${allDaysQuantity})`, active: allActive},
             {name: "worked",  label: "Рабочие", id: -2, quantity: `(${workedQuantity})`, active: workedActive},
             {name: "weekends",  label: "Выходные", id: -3, quantity: `(${weekendsQuantity})`, active: weekendsActive},
+            {name: "vacation",  label: "Отпуск", id: -4, quantity: `(${vacationQuantity})`, active: vacationActive}
         ]
 
         return (
@@ -73,6 +85,14 @@ export default class FilterList extends Component {
                     active={buttons[2].active}
                     onFilterSelect={() => onFilterSelect(buttons[2].name)}
                     onActive={() => this.onActive(buttons[2].id)}
+                    />
+                <Filter
+                    btnText={buttons[3].label}
+                    btnQuantity={buttons[3].quantity}
+                    id = {buttons[3].id}
+                    active={buttons[3].active}
+                    onFilterSelect={() => onFilterSelect(buttons[3].name)}
+                    onActive={() => this.onActive(buttons[3].id)}
                     />
             </ul>
             )

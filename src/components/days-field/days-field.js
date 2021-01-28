@@ -5,12 +5,12 @@ import "./days-field.scss"
 import DaysFieldItem from "../days-field-item";
 
 // eslint-disable-next-line react/prop-types
-const DaysField = ({daysArr, onMakeDaySelected, onMakeDayWorking, onMakeDayWeekend}) => {
+const DaysField = ({daysArr, onMakeDaySelected, onMakeDayWorking, onMakeDayWeekend, onMakeDayVacation}) => {
 
     // eslint-disable-next-line react/prop-types
     const daysFieldElements = daysArr.map((item) => {
         const {id, ...itemProps} = item;
-        const {weekend, worked, selected} = item;
+        const {weekend, worked, vacation, selected} = item;
         let classNames = "days-field__item";
 
         if(selected) {
@@ -25,6 +25,10 @@ const DaysField = ({daysArr, onMakeDaySelected, onMakeDayWorking, onMakeDayWeeke
             classNames += " weekend";
         }
 
+        if(vacation) {
+            classNames += " vacation";
+        }
+
         return (
             <article
             className={classNames}
@@ -33,7 +37,8 @@ const DaysField = ({daysArr, onMakeDaySelected, onMakeDayWorking, onMakeDayWeeke
                 <DaysFieldItem
                 {...itemProps}
                 onMakeDayWorking={() => onMakeDayWorking(id)}
-                onMakeDayWeekend={() => onMakeDayWeekend(id)}/>
+                onMakeDayWeekend={() => onMakeDayWeekend(id)}
+                onMakeDayVacation={() => onMakeDayVacation(id)}/>
             </article>
         )
     })
