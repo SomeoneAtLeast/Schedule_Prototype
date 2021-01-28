@@ -39,6 +39,7 @@ export default class App extends Component {
 
         this.onMakeDaySelected = this.onMakeDaySelected.bind(this);
         this.onMakeDayWorking = this.onMakeDayWorking.bind(this);
+        this.onMakeDayWeekend = this.onMakeDayWeekend.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
     }
 
@@ -66,6 +67,20 @@ export default class App extends Component {
             const oldDay = days[index];
             const newDay = {...oldDay, worked: !oldDay.worked}
             const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
+            newDays[index].weekend = false;
+            return {
+                days: newDays
+            }
+        });
+    }
+
+    onMakeDayWeekend(id) {
+        this.setState(({days}) => {
+            const index = days.findIndex(elem => elem.id === id); 
+            const oldDay = days[index];
+            const newDay = {...oldDay, weekend: !oldDay.weekend}
+            const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
+            newDays[index].worked = false;
             return {
                 days: newDays
             }
@@ -76,7 +91,7 @@ export default class App extends Component {
         if(filter === "worked") {
             return days.filter(item => item.worked)
         } else if (filter === "weekends") {
-            return days.filter(item => !item.worked) 
+            return days.filter(item => item.weekend) 
         } else {
             return days
         }
@@ -89,7 +104,7 @@ export default class App extends Component {
     render() {
         const {days, filter} = this.state;
         const workedQuantity = days.filter(item => item.worked).length;
-        const weekendsQuantity = days.filter(item => !item.worked).length;
+        const weekendsQuantity = days.filter(item => item.weekend).length;
         const allDaysQuantity = days.length;
 
         const visibleDays = this.filterDays(days, filter)
@@ -104,7 +119,8 @@ export default class App extends Component {
                 <DaysField
                 daysArr = {visibleDays}
                 onMakeDaySelected={this.onMakeDaySelected}
-                onMakeDayWorking={this.onMakeDayWorking}/>
+                onMakeDayWorking={this.onMakeDayWorking}
+                onMakeDayWeekend={this.onMakeDayWeekend}/>
             </div>
         )
     }

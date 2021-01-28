@@ -10,7 +10,7 @@ import crossImg from "./cross.svg"
 export default class DaysFieldItem extends Component {
 
     render () {
-        const {dayName, dayNumber, onMakeDayWorking} = this.props;
+        const {dayName, dayNumber, onMakeDayWorking, onMakeDayWeekend} = this.props;
 
         return (
             <div 
@@ -28,7 +28,9 @@ export default class DaysFieldItem extends Component {
                         onClick = {onMakeDayWorking}>
                         <img src={workImg}></img>
                     </button>
-                    <button className="days-field__btn days-field__work-btn">
+                    <button 
+                        className="days-field__btn days-field__work-btn"
+                        onClick = {onMakeDayWeekend}>
                         <img src={weekendImg}></img>
                     </button>
                     <button className="days-field__btn days-field__work-btn">
