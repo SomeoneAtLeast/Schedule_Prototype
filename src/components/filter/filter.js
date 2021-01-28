@@ -7,32 +7,20 @@ export default class Filter extends Component {
     constructor (props) {
         super(props);
 
-        this.state = {
-            active: false,
-        };
-
-        this.onActive = this.onActive.bind(this);
         this.onClick = this.onClick.bind(this);
     }
 
-    onActive () {
-        this.setState(({active}) => ({
-            active: !active
-        }))
-    }
-    
     onFilterSelect() {
         this.props.onFilterSelect();
+        this.props.onActive();
     }
 
     onClick () {
-        this.onActive();
         this.onFilterSelect();
     }
 
     render () {
-        const {btnText, btnQuantity, id} = this.props;
-        const {active} = this.state;
+        const {btnText, btnQuantity, id, active, img} = this.props;
         let classNames = "filter-list__filter";
 
         if (active) {
@@ -44,12 +32,10 @@ export default class Filter extends Component {
                 <button
                 className="filter-list__filter-btn"
                 key = {id}
-                onClick = {this.onClick}>
-                    <span className="filter-list__left-text">
-                    {btnText}
-                    </span>
-                    <span className="filter-list__right-text">
-                    {btnQuantity}
+                onClick = {this.onClick}>   
+                    <img className="filter-list__filter-img" src={img}></img>
+                    <span className="filter-list__text">
+                    {btnText} - {btnQuantity}
                     </span>
                 </button>
             </li>

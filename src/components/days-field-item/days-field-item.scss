@@ -1,12 +1,83 @@
+.days-field .days-field__item {
+    position: relative;
+    background-color: #8c8c8c;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 1px;
+    transition: 0.3s;
+}
+
 .days-field__item-body {
+    flex-direction: column;
     min-width: 98px;
     min-height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgb(255, 255, 255);
+    color: rgb(243, 243, 243);
 }
 
-.worked {
-    background-color: green;
+.days-field__item-day-name {
+    font-size: 12px;
+    transition: 0.3s; 
+}
+
+.days-field__item-number {
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+.days-field__item {
+     &:hover {
+        opacity: 0.8;
+        
+        .days-field__item-body {
+            color: rgb(255, 255, 255);           
+        }
+
+        .days-field__item-day-name {
+            font-size: 14px; 
+        }
+        
+        .days-field__item-number {
+            font-size: 24px;
+        }
+    }
+
+    &:active {
+        color: rgb(255, 255, 255);
+        transform: scale(0.95);
+    }
+}
+
+.days-field__btn-group {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 98px;
+    height: 90px;
+    top: 0;
+    position: absolute;
+    border-radius: 7px;
+    background-color: #6d6d6d;
+}
+
+
+.days-field__btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    width: 49px;
+    height: 45px;
+
+    img {
+        width: 45px;
+        transition: 0.3s;
+    }
+
+    &:hover img {
+        transform: scale(1.1);
+    }
 }

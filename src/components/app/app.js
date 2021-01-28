@@ -6,14 +6,22 @@ import FilterList from "../filter-list";
 import DaysField from "../days-field"
 
 const totalDays = 30;
-const emptyDays = [];
+let emptyDays = [];
+const dayNames7 = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
+const dayNames30 = [
+    ...dayNames7, ...dayNames7, ...dayNames7, ...dayNames7, dayNames7[0], dayNames7[1]
+    ];
 
 for (let i = 1; i <= totalDays; i++) {
     emptyDays.push(
         {
             dayNumber: i,
+            dayName: dayNames30[i - 1],
             id: i,
-            worked: false
+            selected: false,
+            worked: false,
+            weekend: false,
+            vacation: false
         }
     )
 }
@@ -28,9 +36,30 @@ export default class App extends Component {
             days: days,
             filter: "all"
         };
-
+        
+        this.onMakeDaySelected = this.onMakeDaySelected.bind(this);
         this.onMakeDayWorking = this.onMakeDayWorking.bind(this);
+        this.onMakeDayWeekend = this.onMakeDayWeekend.bind(this);
+        this.onMakeDayVacation = this.onMakeDayVacation.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
+    }
+
+    onMakeDaySelected(id) {
+        this.setState(({days}) => {
+            const index = days.findIndex(elem => elem.id === id); 
+            const oldDay = days[index];
+            const newDay = {...oldDay, selected: !oldDay.selected}
+            const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
+            newDays.forEach(item => {
+                if (item.id !== (index + 1)) {
+                    item.selected = false
+                    }  
+              });
+
+            return {
+                days: newDays
+            }
+        });
     }
 
     onMakeDayWorking(id) {
@@ -39,17 +68,52 @@ export default class App extends Component {
             const oldDay = days[index];
             const newDay = {...oldDay, worked: !oldDay.worked}
             const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
+            newDays[index].weekend = false;
+            newDays[index].vacation = false;
+
             return {
                 days: newDays
             }
         });
     }
 
+    onMakeDayWeekend(id) {
+        this.setState(({days}) => {
+            const index = days.findIndex(elem => elem.id === id); 
+            const oldDay = days[index];
+            const newDay = {...oldDay, weekend: !oldDay.weekend}
+            const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
+            newDays[index].worked = false;
+            newDays[index].vacation = false;
+
+            return {
+                days: newDays
+            }
+        });
+    }
+
+    onMakeDayVacation(id) {
+        this.setState(({days}) => {
+            const index = days.findIndex(elem => elem.id === id); 
+            const oldDay = days[index];
+            const newDay = {...oldDay, vacation: !oldDay.vacation}
+            const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
+            newDays[index].worked = false;
+            newDays[index].weekend = false;
+
+            return {
+                days: newDays
+            }
+        });
+    }
+    
     filterDays(days, filter) {
         if(filter === "worked") {
             return days.filter(item => item.worked)
         } else if (filter === "weekends") {
-            return days.filter(item => !item.worked) 
+            return days.filter(item => item.weekend) 
+        } else if (filter === "vacation") {
+            return days.filter(item => item.vacation) 
         } else {
             return days
         }
@@ -62,7 +126,8 @@ export default class App extends Component {
     render() {
         const {days, filter} = this.state;
         const workedQuantity = days.filter(item => item.worked).length;
-        const weekendsQuantity = days.filter(item => !item.worked).length;
+        const weekendsQuantity = days.filter(item => item.weekend).length;
+        const vacationQuantity = days.filter(item => item.vacation).length;
         const allDaysQuantity = days.length;
 
         const visibleDays = this.filterDays(days, filter)
@@ -73,10 +138,14 @@ export default class App extends Component {
                 workedQuantity={workedQuantity}
                 allDaysQuantity={allDaysQuantity}
                 weekendsQuantity={weekendsQuantity}
+                vacationQuantity={vacationQuantity}
                 onFilterSelect={this.onFilterSelect}/>
                 <DaysField
                 daysArr = {visibleDays}
-                onMakeDayWorking={this.onMakeDayWorking}/>
+                onMakeDaySelected={this.onMakeDaySelected}
+                onMakeDayWorking={this.onMakeDayWorking}
+                onMakeDayWeekend={this.onMakeDayWeekend}
+                onMakeDayVacation={this.onMakeDayVacation}/>
             </div>
         )
     }

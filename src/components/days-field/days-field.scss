@@ -1,23 +1,38 @@
 .days-field {
-    background-color: #fafafa;
+    background-color: #bfbfbf;
     display: flex;
+    align-items: flex-start;
     flex-wrap: wrap;
-    padding-top: 1px;
+    padding: 10px 15px;
+    min-height: 480px;
 }
 
-.days-field__item {
-    background-color: rgb(2, 136, 209);
-    border-radius: 7px;
-    cursor: pointer;
-    margin: 1px;
-    transition: 0.3s;
-
-    &:hover {
-        background-color: rgba(2, 136, 209, 0.8);
-        font-size: larger;
+.filter-list + .days-field .selected {
+    background-color: #0f7db3;
+    opacity: 1;
+    cursor: auto;
+    
+    .days-field__item-number {
+        display: none;
     }
 
-    &:active {
-        transform: scale(0.95);
+    .days-field__item-day-name {
+        display: none;
     }
+
+    .days-field__btn-group {
+        display: flex;
+    }
+}
+
+.filter-list + .days-field .worked {
+    background-color:  #79b4d7;
+}
+
+.filter-list + .days-field .weekend {
+    background-color:  #79d799;
+}
+
+.filter-list + .days-field .vacation {
+    background-color:  #8079d7;
 }
