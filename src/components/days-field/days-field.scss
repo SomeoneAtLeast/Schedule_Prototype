@@ -7,8 +7,8 @@
     min-height: 480px;
 }
 
-.filter-list + .days-field .selected {
-    background-color: #0f7db3;
+.days-field .selected {
+    background-color: #6d6d6d;
     opacity: 1;
     cursor: auto;
     
@@ -25,14 +25,14 @@
     }
 }
 
-.filter-list + .days-field .worked {
+.days-field article.worked {
     background-color:  #79b4d7;
 }
 
-.filter-list + .days-field .weekend {
+.days-field article.weekend {
     background-color:  #79d799;
 }
 
-.filter-list + .days-field .vacation {
+.days-field article.vacation {
     background-color:  #8079d7;
 }

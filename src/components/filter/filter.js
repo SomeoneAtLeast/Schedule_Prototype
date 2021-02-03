@@ -24,7 +24,7 @@ export default class Filter extends Component {
         let classNames = "filter-list__filter";
 
         if (active) {
-            classNames += " active";
+            classNames += " active-filter";
         }
 
         return (
@@ -33,7 +33,7 @@ export default class Filter extends Component {
                 className="filter-list__filter-btn"
                 key = {id}
                 onClick = {this.onClick}>   
-                    <img className="filter-list__filter-img" src={img}></img>
+                    <img className="filter-list__filter-img" src={img} alt={btnText}></img>
                     <span className="filter-list__text">
                     {btnText} - {btnQuantity}
                     </span>

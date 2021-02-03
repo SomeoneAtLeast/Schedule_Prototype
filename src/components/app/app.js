@@ -1,9 +1,13 @@
 import React, {Component} from "react";
-
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import "./app.scss";
 
 import FilterList from "../filter-list";
 import DaysField from "../days-field"
+import MainNav from "../main-nav"
+import Arrangements from "../arrangements"
+// Добавить обработку ошибок внутри компонентов. 
+
 
 const totalDays = 30;
 let emptyDays = [];
@@ -133,20 +137,40 @@ export default class App extends Component {
         const visibleDays = this.filterDays(days, filter)
 
         return (
-            <div className = "app">
-                <FilterList
-                workedQuantity={workedQuantity}
-                allDaysQuantity={allDaysQuantity}
-                weekendsQuantity={weekendsQuantity}
-                vacationQuantity={vacationQuantity}
-                onFilterSelect={this.onFilterSelect}/>
-                <DaysField
-                daysArr = {visibleDays}
-                onMakeDaySelected={this.onMakeDaySelected}
-                onMakeDayWorking={this.onMakeDayWorking}
-                onMakeDayWeekend={this.onMakeDayWeekend}
-                onMakeDayVacation={this.onMakeDayVacation}/>
-            </div>
+            <Router>
+                <div className = "app">
+                    <div className="header">
+                        <div className="header__main-nav">
+                            <MainNav/>
+                        </div>
+                        <div className="header__second-nav">
+                            <Route path="/" exact render={() => {
+                                return (
+                                    <FilterList
+                                        workedQuantity={workedQuantity}
+                                        allDaysQuantity={allDaysQuantity}
+                                        weekendsQuantity={weekendsQuantity}
+                                        vacationQuantity={vacationQuantity}
+                                        onFilterSelect={this.onFilterSelect}/>
+                                )
+                            }}/>
+                        </div>
+                    </div>
+                    <div className="main">
+                        <Route path="/arrangements" component={Arrangements}/>
+                        <Route path="/" exact render={() => {
+                            return (
+                                <DaysField
+                                    daysArr = {visibleDays}
+                                    onMakeDaySelected={this.onMakeDaySelected}
+                                    onMakeDayWorking={this.onMakeDayWorking}
+                                    onMakeDayWeekend={this.onMakeDayWeekend}
+                                    onMakeDayVacation={this.onMakeDayVacation}/>
+                            )
+                        }}/>
+                    </div>
+                </div>
+            </Router>
         )
     }
 }

@@ -26,20 +26,20 @@ export default class DaysFieldItem extends Component {
                     <button 
                         className="days-field__btn days-field__work-btn"
                         onClick = {onMakeDayWorking}>
-                        <img src={workImg}></img>
+                        <img src={workImg} alt="Сделать рабочим"></img>
                     </button>
                     <button 
                         className="days-field__btn days-field__work-btn"
                         onClick = {onMakeDayWeekend}>
-                        <img src={weekendImg}></img>
+                        <img src={weekendImg} alt="Сделать выходным"></img>
                     </button>
                     <button 
                         className="days-field__btn days-field__work-btn"
                         onClick = {onMakeDayVacation}>
-                        <img src={vacationdImg}></img>
+                        <img src={vacationdImg} alt="Сделать днем отпуска"></img>
                     </button>
                     <button className="days-field__btn days-field__work-btn">
-                        <img src={crossImg}></img>
+                        <img src={crossImg} alt="Выйти"></img>
                     </button>
                 </div>
             </div>
