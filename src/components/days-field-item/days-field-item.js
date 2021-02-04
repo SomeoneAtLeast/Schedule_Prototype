@@ -14,7 +14,7 @@ export default class DaysFieldItem extends Component {
 
         return (
             <div 
-            className = "days-field__item-body">
+                className = "days-field__item-body">
                 <span className="days-field__item-day-name">
                     {dayName}
                 </span>

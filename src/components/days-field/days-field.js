@@ -1,13 +1,13 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 
 import "./days-field.scss"
 
 import DaysFieldItem from "../days-field-item";
 
-// eslint-disable-next-line react/prop-types
+
 const DaysField = ({daysArr, onMakeDaySelected, onMakeDayWorking, onMakeDayWeekend, onMakeDayVacation}) => {
 
-    // eslint-disable-next-line react/prop-types
     const daysFieldElements = daysArr.map((item) => {
         const {id, ...itemProps} = item;
         const {weekend, worked, vacation, selected} = item;

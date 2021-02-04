@@ -1,47 +1,55 @@
-import React, {Component} from "react";
+import React from "react";
 
 import "./arrangements-field.scss"
-import chairImg from "./imgs/chair.svg"
 
-export default class ArrangementsField extends Component {
-    render() {
+import ArrangementsItem from "../arrangements-item";
+
+const totalSeats = 3;
+let emptySeatsArr = [];
+
+for (let i = 1; i <= totalSeats; i++) {
+    emptySeatsArr.push(
+        {
+            oldIp: "10.160.140.111",
+            newIp: "10.160.149.221",
+            seatNumber: "3019.65 (127)",
+            id: i + 10
+        }
+    )
+}
+
+const seats = emptySeatsArr;
+
+const ArrangementsField = () => {
+
+
+        const ArrangementsFieldElements = seats.map((item) => {
+            const {oldIp, newIp, seatNumber, id} = item;
+    
+            return (
+                <td 
+                    className="arrangements-table__сell"
+                    key={id}>
+                    <ArrangementsItem
+                        oldIp={oldIp}
+                        newIp={newIp}
+                        seatNumber={seatNumber}/>
+                </td>
+            )
+        })
+    
+
         return (
             <table className="arrangements-table">
                 <tr className="arrangements-table__row">
-                    <td className="arrangements-table__сell">
-                        <img 
-                            className="arrangements-table__img"
-                            alt="Место" 
-                            src={chairImg}/>
-                        <div className="arrangements-table__text-wrapper">
-                            <div className="arrangements-table__text">
-                                <span className="arrangements-table__label">
-                                    OLD IP
-                                </span> 
-                                <span className="arrangements-table__value">
-                                    10.160.140.111
-                                </span>                               
-                            </div>
-                            <div className="arrangements-table__text">
-                                <span className="arrangements-table__label">
-                                    NEW IP
-                                </span>  
-                                <span className="arrangements-table__value">
-                                    10.160.149.221
-                                </span>                              
-                            </div>
-                            <div className="arrangements-table__text">
-                                <span className="arrangements-table__label">
-                                    МЕСТО
-                                </span>   
-                                <span className="arrangements-table__value">
-                                    3019.65 (127)
-                                </span>                             
-                            </div>
-                        </div>
-                    </td>
+                    {ArrangementsFieldElements}
+                </tr>
+                <tr className="arrangements-table__row">
+                    {ArrangementsFieldElements}
                 </tr>
             </table>
         )
-    }
+
 }
+
+export default ArrangementsField;
