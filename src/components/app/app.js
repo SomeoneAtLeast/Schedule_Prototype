@@ -38,7 +38,11 @@ export default class App extends Component {
 
         this.state = {
             days: days,
-            filter: "all"
+            filter: "all",
+            allActive: true,
+            workedActive: false,
+            weekendsActive: false,
+            vacationActive: false
         };
         
         this.onMakeDaySelected = this.onMakeDaySelected.bind(this);
@@ -46,6 +50,7 @@ export default class App extends Component {
         this.onMakeDayWeekend = this.onMakeDayWeekend.bind(this);
         this.onMakeDayVacation = this.onMakeDayVacation.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
+        this.onActive = this.onActive.bind(this);
     }
 
     onMakeDaySelected(id) {
@@ -127,8 +132,40 @@ export default class App extends Component {
         this.setState({filter})
     }
 
+    onActive (id) {
+        if (id === -1) {
+            this.setState({
+                allActive: true,
+                workedActive: false,
+                weekendsActive: false,
+                vacationActive: false
+            })
+        } else if (id === -2) {
+            this.setState({
+                workedActive: true,
+                allActive: false,
+                weekendsActive: false,
+                vacationActive: false
+            })
+        } else if (id === -3) {
+            this.setState({
+                weekendsActive: true,
+                workedActive: false,
+                allActive: false,
+                vacationActive: false
+            })
+        } else if (id === -4) {
+            this.setState({
+                vacationActive: true,
+                workedActive: false,
+                allActive: false,
+                weekendsActive: false
+            })
+        }
+    }
+
     render() {
-        const {days, filter} = this.state;
+        const {days, filter, allActive, workedActive, weekendsActive, vacationActive} = this.state;
         const workedQuantity = days.filter(item => item.worked).length;
         const weekendsQuantity = days.filter(item => item.weekend).length;
         const vacationQuantity = days.filter(item => item.vacation).length;
@@ -151,7 +188,12 @@ export default class App extends Component {
                                         allDaysQuantity={allDaysQuantity}
                                         weekendsQuantity={weekendsQuantity}
                                         vacationQuantity={vacationQuantity}
-                                        onFilterSelect={this.onFilterSelect}/>
+                                        allActive={allActive}
+                                        workedActive={workedActive}
+                                        weekendsActive={weekendsActive}
+                                        vacationActive={vacationActive}
+                                        onFilterSelect={this.onFilterSelect}
+                                        onActive={this.onActive}/>
                                 )
                             }}/>
                         </div>

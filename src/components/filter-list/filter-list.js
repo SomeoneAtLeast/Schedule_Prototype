@@ -11,52 +11,54 @@ import vacationdImg from "./../../global-imgs/vacation.svg"
 
 // const FilterList = ({workedQuantity, allDaysQuantity, weekendsQuantity, onFilterSelect}) => {
 export default class FilterList extends Component {
-    constructor() {
-        super();
+    // constructor() {
+    //     super();
 
-        this.state = {
-            allActive: true,
-            workedActive: false,
-            weekendsActive: false,
-            vacationActive: false
-        }
-    }
+    //     this.state = {
+    //         allActive: true,
+    //         workedActive: false,
+    //         weekendsActive: false,
+    //         vacationActive: false
+    //     }
+    // }
 
-    onActive (id) {
-        if (id === -1) {
-            this.setState({
-                allActive: true,
-                workedActive: false,
-                weekendsActive: false,
-                vacationActive: false
-            })
-        } else if (id === -2) {
-            this.setState({
-                workedActive: true,
-                allActive: false,
-                weekendsActive: false,
-                vacationActive: false
-            })
-        } else if (id === -3) {
-            this.setState({
-                weekendsActive: true,
-                workedActive: false,
-                allActive: false,
-                vacationActive: false
-            })
-        } else if (id === -4) {
-            this.setState({
-                vacationActive: true,
-                workedActive: false,
-                allActive: false,
-                weekendsActive: false
-            })
-        }
-    }
+    // onActive (id) {
+    //     if (id === -1) {
+    //         this.setState({
+    //             allActive: true,
+    //             workedActive: false,
+    //             weekendsActive: false,
+    //             vacationActive: false
+    //         })
+    //     } else if (id === -2) {
+    //         this.setState({
+    //             workedActive: true,
+    //             allActive: false,
+    //             weekendsActive: false,
+    //             vacationActive: false
+    //         })
+    //     } else if (id === -3) {
+    //         this.setState({
+    //             weekendsActive: true,
+    //             workedActive: false,
+    //             allActive: false,
+    //             vacationActive: false
+    //         })
+    //     } else if (id === -4) {
+    //         this.setState({
+    //             vacationActive: true,
+    //             workedActive: false,
+    //             allActive: false,
+    //             weekendsActive: false
+    //         })
+    //     }
+    // }
 
     render() {
-        const {workedQuantity, allDaysQuantity, weekendsQuantity, vacationQuantity, onFilterSelect} = this.props;
-        const {allActive, workedActive, weekendsActive, vacationActive} = this.state;
+        const {workedQuantity, allDaysQuantity, weekendsQuantity,
+              vacationQuantity, onFilterSelect, onActive, allActive,
+              workedActive, weekendsActive, vacationActive} = this.props;
+        // const {allActive, workedActive, weekendsActive, vacationActive} = this.state;
         const buttons = [
             {name: "all",  label: "Все дни", img: allImg, id: -1, quantity: allDaysQuantity, active: allActive},
             {name: "worked",  label: "Рабочие", img: workImg, id: -2, quantity: workedQuantity, active: workedActive},
@@ -73,7 +75,7 @@ export default class FilterList extends Component {
                     img={buttons[0].img}
                     active={buttons[0].active}
                     onFilterSelect={() => onFilterSelect(buttons[0].name)}
-                    onActive={() => this.onActive(buttons[0].id)}
+                    onActive={() => onActive(buttons[0].id)}
                     />
                 <Filter
                     btnText={buttons[1].label}
@@ -82,7 +84,7 @@ export default class FilterList extends Component {
                     img={buttons[1].img}
                     active={buttons[1].active}
                     onFilterSelect={() => onFilterSelect(buttons[1].name)}
-                    onActive={() => this.onActive(buttons[1].id)}
+                    onActive={() => onActive(buttons[1].id)}
                     />
                 <Filter
                     btnText={buttons[2].label}
@@ -91,7 +93,7 @@ export default class FilterList extends Component {
                     img={buttons[2].img}
                     active={buttons[2].active}
                     onFilterSelect={() => onFilterSelect(buttons[2].name)}
-                    onActive={() => this.onActive(buttons[2].id)}
+                    onActive={() => onActive(buttons[2].id)}
                     />
                 <Filter
                     btnText={buttons[3].label}
@@ -100,7 +102,7 @@ export default class FilterList extends Component {
                     img={buttons[3].img}
                     active={buttons[3].active}
                     onFilterSelect={() => onFilterSelect(buttons[3].name)}
-                    onActive={() => this.onActive(buttons[3].id)}
+                    onActive={() => onActive(buttons[3].id)}
                     />
             </ul>
             )
