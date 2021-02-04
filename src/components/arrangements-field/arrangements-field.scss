@@ -1,0 +1,61 @@
+.arrangements-table {
+    border-collapse: collapse;
+}
+
+
+.arrangements-table__row:nth-child(odd) {
+    .arrangements-table__сell {
+        border-bottom: 20px solid #888888;
+    }
+
+    .arrangements-table__img {
+        margin-bottom: 4px;
+    }
+
+}
+
+.arrangements-table__row:nth-child(even) {
+    .arrangements-table__img {
+        transform: rotate(180deg);
+    }
+
+    .arrangements-table__img {
+        margin-top: 4px;
+    }
+
+    .arrangements-table__text-wrapper {
+        margin-top: 4px;
+    }
+
+}
+
+.arrangements-table__сell {
+    display: inline-flex;
+    width: 240px;
+    padding: 0 5px;
+    border-right: 3px solid #888888;
+    background-color: #BFBFBF;
+}
+
+.arrangements-table__сell:first-child {
+    border-left: 3px solid #888888;
+}
+
+.arrangements-table__img {
+    width: 50px;
+}
+
+.arrangements-table__text-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+.arrangements-table__text {
+    display: flex;
+    margin-bottom: 4px;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #313131;
+}

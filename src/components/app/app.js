@@ -5,7 +5,7 @@ import "./app.scss";
 import FilterList from "../filter-list";
 import DaysField from "../days-field"
 import MainNav from "../main-nav"
-import Arrangements from "../arrangements"
+import ArrangementsField from "../arrangements-field"
 // Добавить обработку ошибок внутри компонентов. 
 
 
@@ -199,7 +199,7 @@ export default class App extends Component {
                         </div>
                     </div>
                     <div className="main">
-                        <Route path="/arrangements" component={Arrangements}/>
+                        <Route path="/arrangements" component={ArrangementsField}/>
                         <Route path="/" exact render={() => {
                             return (
                                 <DaysField

@@ -9,56 +9,12 @@ import workImg from "./../../global-imgs/work.svg"
 import weekendImg from "./../../global-imgs/weekend.svg"
 import vacationdImg from "./../../global-imgs/vacation.svg"
 
-// const FilterList = ({workedQuantity, allDaysQuantity, weekendsQuantity, onFilterSelect}) => {
 export default class FilterList extends Component {
-    // constructor() {
-    //     super();
-
-    //     this.state = {
-    //         allActive: true,
-    //         workedActive: false,
-    //         weekendsActive: false,
-    //         vacationActive: false
-    //     }
-    // }
-
-    // onActive (id) {
-    //     if (id === -1) {
-    //         this.setState({
-    //             allActive: true,
-    //             workedActive: false,
-    //             weekendsActive: false,
-    //             vacationActive: false
-    //         })
-    //     } else if (id === -2) {
-    //         this.setState({
-    //             workedActive: true,
-    //             allActive: false,
-    //             weekendsActive: false,
-    //             vacationActive: false
-    //         })
-    //     } else if (id === -3) {
-    //         this.setState({
-    //             weekendsActive: true,
-    //             workedActive: false,
-    //             allActive: false,
-    //             vacationActive: false
-    //         })
-    //     } else if (id === -4) {
-    //         this.setState({
-    //             vacationActive: true,
-    //             workedActive: false,
-    //             allActive: false,
-    //             weekendsActive: false
-    //         })
-    //     }
-    // }
 
     render() {
         const {workedQuantity, allDaysQuantity, weekendsQuantity,
               vacationQuantity, onFilterSelect, onActive, allActive,
               workedActive, weekendsActive, vacationActive} = this.props;
-        // const {allActive, workedActive, weekendsActive, vacationActive} = this.state;
         const buttons = [
             {name: "all",  label: "Все дни", img: allImg, id: -1, quantity: allDaysQuantity, active: allActive},
             {name: "worked",  label: "Рабочие", img: workImg, id: -2, quantity: workedQuantity, active: workedActive},
@@ -105,6 +61,6 @@ export default class FilterList extends Component {
                     onActive={() => onActive(buttons[3].id)}
                     />
             </ul>
-            )
+        )
     }
 }

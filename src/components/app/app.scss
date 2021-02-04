@@ -1,5 +1,5 @@
 .app {
-    width: 730px;
+    width: 792px;
     margin: 50px auto 0 auto;
 }
 
@@ -21,4 +21,11 @@
     background-color: #4b4b4b8c;
 }
 
-// #5acaff
+.main {
+    display: flex;
+    background-color: #bfbfbf;
+    padding: 10px 15px;
+    min-height: 500px;
+    box-sizing: border-box;
+    width: 100%;
+}
