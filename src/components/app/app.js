@@ -6,6 +6,7 @@ import FilterList from "../filter-list";
 import DaysField from "../days-field"
 import MainNav from "../main-nav"
 import ArrangementsField from "../arrangements-field"
+import Controls from "../controls"
 // Добавить обработку ошибок внутри компонентов. 
 
 
@@ -199,6 +200,7 @@ export default class App extends Component {
                         </div>
                     </div>
                     <div className="main">
+                        <Controls/>
                         <Route path="/arrangements" component={ArrangementsField}/>
                         <Route path="/" exact render={() => {
                             return (

@@ -1,14 +1,13 @@
-.app {
-    width: 792px;
-    margin: 50px auto 0 auto;
-}
+// .app {
+//     // width: 792px;
+//     margin: 50px auto 0 auto;
+// }
 
 .header__main-nav {
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 100px;
-    border-radius: 40px 40px 0 0;
     background-color: #5acaff;
     border-bottom: 3px solid #a4a4a4;
 }
@@ -19,13 +18,12 @@
     justify-content: center;
     min-height: 80px;
     background-color: #4b4b4b8c;
+    border-bottom: 3px solid #6d6d6d;
 }
 
 .main {
     display: flex;
     background-color: #bfbfbf;
-    padding: 10px 15px;
     min-height: 500px;
-    box-sizing: border-box;
     width: 100%;
 }

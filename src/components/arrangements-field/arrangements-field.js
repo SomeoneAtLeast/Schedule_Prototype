@@ -40,14 +40,16 @@ const ArrangementsField = () => {
     
 
         return (
-            <table className="arrangements-table">
-                <tr className="arrangements-table__row">
-                    {ArrangementsFieldElements}
-                </tr>
-                <tr className="arrangements-table__row">
-                    {ArrangementsFieldElements}
-                </tr>
-            </table>
+            <div className="arrangements-field">
+                <table className="arrangements-table">
+                    <tr className="arrangements-table__row">
+                        {ArrangementsFieldElements}
+                    </tr>
+                    <tr className="arrangements-table__row">
+                        {ArrangementsFieldElements}
+                    </tr>
+                </table>
+            </div>
         )
 
 }
