@@ -1,8 +1,3 @@
-// .app {
-//     // width: 792px;
-//     margin: 50px auto 0 auto;
-// }
-
 .header__main-nav {
     display: flex;
     flex-direction: column;
@@ -14,8 +9,8 @@
 
 .header__second-nav {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-end;
     min-height: 80px;
     background-color: #4b4b4b8c;
     border-bottom: 3px solid #6d6d6d;

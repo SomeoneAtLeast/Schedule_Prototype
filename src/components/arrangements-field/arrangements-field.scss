@@ -1,5 +1,10 @@
 .arrangements-field {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     flex-grow: 1;
+    box-sizing: border-box;
+    padding: 30px;
     width: 85%;
 }
 
@@ -59,8 +64,8 @@
 
 .arrangements-table__text {
     display: flex;
-    margin-bottom: 4px;
     justify-content: space-between;
+    margin-bottom: 4px;
     font-size: 14px;
     color: #313131;
 }

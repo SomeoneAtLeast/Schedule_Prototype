@@ -13,6 +13,16 @@ export default class MainNav extends Component {
         }
     }
 
+    // довести до ума
+    componentDidMount() {
+        if(window.location.href === "http://localhost:3000/arrangements/") {
+            this.setState({
+                scheduleActive: false,
+                arrangementsActive: true
+            })
+        }
+    }
+
     onActive (btnName) {
         if (btnName === "scheduleBtn") {
             this.setState({

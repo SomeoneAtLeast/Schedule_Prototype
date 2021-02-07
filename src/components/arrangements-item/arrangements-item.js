@@ -1,10 +1,18 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from "react";
 
 import "./arrangements-item.scss"
 import chairImg from "./imgs/chair.svg"
 
 export default class ArrangementsItem extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
+
+        const {oldIp, newIp, seatNumber} = this.props;
+
         return (    
                 <>
                     <img 
@@ -17,7 +25,9 @@ export default class ArrangementsItem extends Component {
                                 OLD IP
                             </span> 
                             <span className="arrangements-table__value">
-                                10.160.140.111
+                                <input 
+                                className="arrangements-table__value-input"
+                                type="text" placeholder={oldIp}/>
                             </span>                               
                         </div>
                         <div className="arrangements-table__text">
@@ -25,7 +35,9 @@ export default class ArrangementsItem extends Component {
                                 NEW IP
                             </span>  
                             <span className="arrangements-table__value">
-                                10.160.149.221
+                                <input 
+                                className="arrangements-table__value-input"
+                                type="text" placeholder={newIp}/>
                             </span>                              
                         </div>
                         <div className="arrangements-table__text">
@@ -33,7 +45,9 @@ export default class ArrangementsItem extends Component {
                                 МЕСТО
                             </span>   
                             <span className="arrangements-table__value">
-                                3019.65 (127)
+                                <input 
+                                className="arrangements-table__value-input"
+                                type="text" placeholder={seatNumber}/>
                             </span>                             
                         </div>
                     </div>
