@@ -1,3 +1,32 @@
+.arrangements-table__text-wrapper {
+    cursor: pointer;
+}
+
+.arrangements-table__text {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+
+
+.arrangements-table__text-wrapper--change {
+    display: none;
+    position: absolute;
+    width: 170px;
+    background-color: #BFBFBF;
+    right: 5px;
+
+    .arrangements-table__text {
+        margin-bottom: 5px;
+    }
+}
+
+.selected-seat {
+    .arrangements-table__text-wrapper--change {
+        display: block;
+    } 
+}
+
 .arrangements-table__value-input {
     box-sizing: border-box;
     border-radius: 5px;

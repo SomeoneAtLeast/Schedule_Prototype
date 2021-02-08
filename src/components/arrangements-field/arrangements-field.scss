@@ -19,7 +19,16 @@
     }
 
     .arrangements-table__img {
-        margin-bottom: 4px;
+        margin-bottom: 8px;
+    }
+
+    .arrangements-table__сell {
+
+        &:hover {
+            .arrangements-table__img {
+                transform: scale(1.1);
+            }
+        }
     }
 
 }
@@ -29,29 +38,46 @@
         transform: rotate(180deg);
     }
 
-    .arrangements-table__img {
-        margin-top: 4px;
+    .arrangements-table__text-wrapper {
+        margin-top: 10px;
     }
 
-    .arrangements-table__text-wrapper {
-        margin-top: 4px;
+    .arrangements-table__text-wrapper--change {
+        top: 10px;
+    }
+
+    .arrangements-table__сell {
+
+        &:hover {
+            .arrangements-table__img {
+                transform: rotate(180deg) scale(1.1);
+            }
+        }
     }
 
 }
 
 .arrangements-table__сell {
     display: inline-flex;
+    position: relative;
     width: 240px;
     padding: 0 5px;
     border-right: 3px solid #888888;
     background-color: #BFBFBF;
+    transition: 0.3s;
+
+    &:active{
+        transform: scale(0.95);
+    }
 }
+
 
 .arrangements-table__сell:first-child {
     border-left: 3px solid #888888;
 }
 
 .arrangements-table__img {
+    transition: 0.3s;
     width: 50px;
 }
 

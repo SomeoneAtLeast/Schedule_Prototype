@@ -25,6 +25,32 @@ export default class ArrangementsItem extends Component {
                                 OLD IP
                             </span> 
                             <span className="arrangements-table__value">
+                                {oldIp}
+                            </span>                               
+                        </div>
+                        <div className="arrangements-table__text">
+                            <span className="arrangements-table__label">
+                                NEW IP
+                            </span>  
+                            <span className="arrangements-table__value">
+                                {newIp}
+                            </span>                              
+                        </div>
+                        <div className="arrangements-table__text">
+                            <span className="arrangements-table__label">
+                                МЕСТО
+                            </span>   
+                            <span className="arrangements-table__value">
+                                {seatNumber}
+                            </span>                             
+                        </div>
+                    </div>
+                    <div className="arrangements-table__text-wrapper--change">
+                        <div className="arrangements-table__text">
+                            <span className="arrangements-table__label">
+                                OLD IP
+                            </span> 
+                            <span className="arrangements-table__value">
                                 <input 
                                 className="arrangements-table__value-input"
                                 type="text" placeholder={oldIp}/>
