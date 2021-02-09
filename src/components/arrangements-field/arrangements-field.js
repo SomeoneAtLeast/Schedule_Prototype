@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from "react";
 
 import "./arrangements-field.scss"
@@ -37,38 +38,65 @@ const seatsData = [
 const seats = seatsData;
 
 export default class ArrangementsField extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             seats: seats
         }
+
+        this.onChangeSeatText = this.onChangeSeatText.bind(this);
+        this.onTextWrapperChangeHide = this.onTextWrapperChangeHide.bind(this);
+        this.onTextWrapperChangeShow = this.onTextWrapperChangeShow.bind(this);
     }
     
     onTextWrapperChangeShow(id) {
         this.setState(({seats}) => {
             const index = seats.findIndex(elem => elem.id === id); 
             const oldSeat = seats[index];
-            const newSeat = {...oldSeat, selected: !oldSeat.selected}
+            const newSeat = {...oldSeat, selected: true}
             const newSeats = [...seats.slice(0, index), newSeat, ...seats.slice(index + 1)];
             newSeats.forEach(item => {
                 if (item.id !== (index + 10)) {
                     item.selected = false
                     }  
               });
-              console.log(newSeats)
             return {
                 seats: newSeats
             }
         })
     }
-    
+
+    onTextWrapperChangeHide(id) {
+        this.setState(({seats}) => {
+            const index = seats.findIndex(elem => elem.id === id); 
+            const oldSeat = seats[index];
+            const newSeat = {...oldSeat, selected: false}
+            const newSeats = [...seats.slice(0, index), newSeat, ...seats.slice(index + 1)];
+            return {
+                seats: newSeats
+            }
+        })
+    }
+
+    onChangeSeatText(id, NewOldIp, NewNewIp, NewSeatNumber) {
+        this.setState(({seats}) => {
+            const index = seats.findIndex(elem => elem.id === id); 
+            const oldSeat = seats[index];
+            const newSeat = {...oldSeat, oldIp: NewOldIp, newIp: NewNewIp, seatNumber: NewSeatNumber}
+            const newSeats = [...seats.slice(0, index), newSeat, ...seats.slice(index + 1)];
+
+            return {
+                seats: newSeats
+            }
+        })
+    }
+
     render() {
         const arrangementsFieldElements = this.state.seats.map((item) => {
             const {oldIp, newIp, seatNumber, id, selected} = item;
 
             let classNames = "arrangements-table__сell";
-            console.log(selected);
             if(selected) {
                 classNames += " selected-seat";
             }
@@ -76,12 +104,15 @@ export default class ArrangementsField extends Component {
             return (
                 <td 
                     className={classNames}
-                    key={id}
-                    onClick={() => this.onTextWrapperChangeShow(id)}>
+                    key={id}>
                     <ArrangementsItem
+                        id={id}
                         oldIp={oldIp}
                         newIp={newIp}
-                        seatNumber={seatNumber}/>
+                        seatNumber={seatNumber}
+                        onChangeSeatText={this.onChangeSeatText}
+                        onTextWrapperChangeShow={this.onTextWrapperChangeShow}
+                        onTextWrapperChangeHide={this.onTextWrapperChangeHide}/>
                 </td>
             )
         })
