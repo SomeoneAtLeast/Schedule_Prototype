@@ -7,8 +7,9 @@ import DaysField from "../days-field"
 import MainNav from "../main-nav"
 import ArrangementsField from "../arrangements-field"
 import Controls from "../controls"
-// Добавить обработку ошибок внутри компонентов. 
+import WorkingShifts from "../working-shifts"
 
+// Добавить обработку ошибок внутри компонентов. 
 
 const totalDays = 30;
 let emptyDays = [];
@@ -202,6 +203,7 @@ export default class App extends Component {
                     <div className="main">
                         <Controls/>
                         <Route path="/arrangements" component={ArrangementsField}/>
+                        <Route path="/workingshifts" component={WorkingShifts}/>
                         <Route path="/" exact render={() => {
                             return (
                                 <DaysField
