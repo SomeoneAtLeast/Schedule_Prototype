@@ -8,13 +8,24 @@
 }
 
 .working-shifts__table-wrapper {
-    width: 30%;
-}
-.working-shifts__table {
     width: 100%;
+}
+
+.working-shifts__table {
+    width: 40%;
     text-align: center;
     border-collapse: collapse;
     margin-bottom: 15px;
+}
+
+.working-shifts__table-month {
+    padding: 13px 0;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    font-size: 19px;
+    color: rgb(243, 243, 243);
+    background-color: #2f63a7;
+    text-align: center;
 }
 
 .working-shifts__table-caption {
@@ -50,6 +61,7 @@
     color: #3b3b3b;
     font-size: 15px;
     padding: 8px 15px;
+    width: 25%;
 }
 
 .working-shifts__table-header-gl {
@@ -96,4 +108,14 @@
 
 .working-shifts__table-header-21-09 {
     background-color: #344fa0;
+}
+
+.working-shifts__table-row-team, 
+.working-shifts__table-row-shifts {
+    .working-shifts__table-cell {
+        &:last-child {
+            padding: 5px;
+            width: 5%;
+        }
+    }
 }
