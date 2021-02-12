@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, {Component} from "react";
 
-import  "./working-shifts-item.scss"
-export default class WorkingShiftsItem extends Component {
+import  "./working-shifts-social-item.scss"
+export default class WorkingShiftsSocialItem extends Component {
     constructor(props) {
         super(props);
     }

@@ -2,23 +2,27 @@
     display: flex;
     justify-content: space-between;
     flex-grow: 1;
+    flex-wrap: wrap;
+    align-items: flex-start;
     box-sizing: border-box;
     padding: 30px;
     width: 85%;
 }
 
 .working-shifts__table-wrapper {
-    width: 100%;
+    width: 40%;
 }
 
 .working-shifts__table {
-    width: 40%;
+    width: 100%;
     text-align: center;
     border-collapse: collapse;
     margin-bottom: 15px;
 }
 
 .working-shifts__table-month {
+    width: 100%;
+    flex-grow: 1;
     padding: 13px 0;
     margin-bottom: 15px;
     border-radius: 10px;
@@ -29,6 +33,7 @@
 }
 
 .working-shifts__table-caption {
+    width: 100%;
     padding: 13px 0;
     margin-bottom: 15px;
     border-radius: 10px;

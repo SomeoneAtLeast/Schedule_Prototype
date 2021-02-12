@@ -3,8 +3,8 @@ import React, {Component} from "react";
 
 import  "./working-shifts.scss"
 
-import WorkingShiftsItem from "../working-shifts-item"
-
+import WorkingShiftsSocialItem from "../working-shifts-social-item"
+import WorkingShiftsKmItem from "../working-shifts-km-item"
 
 const totalShifts = 4;
 let emptyShifts = [];
@@ -64,10 +64,21 @@ export default class WorkingShifts extends Component {
 
     render() {
         const {shifts} = this.state;
-        const tableRows = (number) => {
+
+        const tableSocialRows = (number) => {
             let rows = [];
             for (let i = 0; i < number; i++) {
-                rows.push(<WorkingShiftsItem shifts={shifts[i]}/>);
+                rows.push(<WorkingShiftsSocialItem shifts={shifts[i]}/>);
+            }
+            return (
+                rows
+            )
+        }
+
+        const tableKmRows = (number) => {
+            let rows = [];
+            for (let i = 0; i < number; i++) {
+                rows.push(<WorkingShiftsKmItem shifts={shifts[i]}/>);
             }
             return (
                 rows
@@ -82,7 +93,7 @@ export default class WorkingShifts extends Component {
                             className={`working-shifts__table-header working-shifts__table-header-${startTime}-${finishTime}`}
                             colSpan="4">С {startTime} до {finishTime}</th>
                     </tr>
-                    {tableRows(numberOfRows)}
+                    {tableSocialRows(numberOfRows)}
                 </table>
             )
         }
@@ -98,10 +109,10 @@ export default class WorkingShifts extends Component {
 
         return (
             <div className="working-shifts">
-                <div className="working-shifts__table-wrapper">
                 <div className="working-shifts__table-month">
-                            Февраль
-                        </div>
+                        Февраль
+                </div>
+                <div className="working-shifts__table-wrapper">
                     <table className="working-shifts__table">
                         <caption className="working-shifts__table-caption">
                             Социальные Сети
@@ -126,6 +137,22 @@ export default class WorkingShifts extends Component {
                         </tr>
                     </table>
                     {tables(5)}
+                </div>
+                <div className="working-shifts__table-wrapper">
+                    <table className="working-shifts__table">
+                        <caption className="working-shifts__table-caption">
+                            КМ
+                        </caption>
+                        <tr className="working-shifts__table-row-header working-shifts__table-row-gl">
+                            <th 
+                                className="working-shifts__table-header working-shifts__table-header-gl"
+                                colSpan="3">
+                                    Групп-лидер
+                                </th>
+                            <td className="working-shifts__table-header working-shifts__table-header-gl">№ Смены</td>
+                        </tr>
+                        {tableKmRows(7)}
+                    </table>
                 </div>
             </div>
         )
