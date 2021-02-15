@@ -9,7 +9,14 @@ import ArrangementsField from "../arrangements-field"
 import Controls from "../controls"
 import WorkingShifts from "../working-shifts"
 
-// Добавить обработку ошибок внутри компонентов. 
+// Заменить функции за методы
+// Добавить редактирование мест
+// Добавить обработку ошибок внутри компонентов.
+// Добавить валидацию пропсов.
+// Добавить пропсы по умолчанию, если это требуется. 
+// Использовать функции высшего порядка.
+// Создать единый стейт
+// MVC
 
 const totalDays = 30;
 let emptyDays = [];
@@ -27,7 +34,8 @@ for (let i = 1; i <= totalDays; i++) {
             selected: false,
             worked: false,
             weekend: false,
-            vacation: false
+            vacation: false,
+            error: false
         }
     )
 }
@@ -54,7 +62,7 @@ export default class App extends Component {
         this.onFilterSelect = this.onFilterSelect.bind(this);
         this.onActive = this.onActive.bind(this);
     }
-
+    
     onMakeDaySelected(id) {
         this.setState(({days}) => {
             const index = days.findIndex(elem => elem.id === id); 

@@ -49,7 +49,7 @@ export default class ArrangementsField extends Component {
         this.onTextWrapperChangeHide = this.onTextWrapperChangeHide.bind(this);
         this.onTextWrapperChangeShow = this.onTextWrapperChangeShow.bind(this);
     }
-    
+
     onTextWrapperChangeShow(id) {
         this.setState(({seats}) => {
             const index = seats.findIndex(elem => elem.id === id); 

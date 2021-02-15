@@ -10,7 +10,8 @@ export default class WorkingShiftsKmItem extends Component {
     render() {
         const {shifts} = this.props;
         return (
-            <tr className="working-shifts__table-row working-shifts__table-row-workers">
+            <tr 
+                className="working-shifts__table-row working-shifts__table-row-workers">
                 <td 
                     className="working-shifts__table-cell working-shifts__table-cell-worker"
                     colSpan="3">

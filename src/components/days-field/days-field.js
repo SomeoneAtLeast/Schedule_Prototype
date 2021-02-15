@@ -43,7 +43,6 @@ const DaysField = ({daysArr, onMakeDaySelected, onMakeDayWorking, onMakeDayWeeke
         )
     })
 
-
     return (
     <div className = "days-field">
         {daysFieldElements}

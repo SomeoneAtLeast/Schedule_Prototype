@@ -79,6 +79,7 @@ export default class ArrangementsItem extends Component {
                     <div 
                         className="arrangements-table__text-wrapper--change"
                         onBlur={() => onChangeSeatText(id, this.state.oldIp, this.state.newIp, this.state.seatNumber)}>
+                        {/* Добавить красивую зеленую плашку о успешном сохранении */}
                         <button 
                             className="arrangements-table__save-btn"
                             onClick={() => onTextWrapperChangeHide(id)}>
