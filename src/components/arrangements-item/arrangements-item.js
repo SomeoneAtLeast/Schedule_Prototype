@@ -9,9 +9,9 @@ export default class ArrangementsItem extends Component {
         super(props);
 
         this.state = {
-            oldIp: "",
-            newIp: "",
-            seatNumber: ""
+            oldIp: this.props.oldIp,
+            newIp: this.props.newIp,
+            seatNumber: this.props.seatNumber
 
         }
 
@@ -40,7 +40,7 @@ export default class ArrangementsItem extends Component {
 
     render() {
 
-        const {id, oldIp, newIp, seatNumber, onChangeSeatText, onTextWrapperChangeShow, onTextWrapperChangeHide} = this.props;
+        const {id, onChangeSeatText} = this.props;
 
         return (    
                 <>
@@ -50,52 +50,18 @@ export default class ArrangementsItem extends Component {
                         src={chairImg}/>
                     <div 
                         className="arrangements-table__text-wrapper"
-                        onClick={() => onTextWrapperChangeShow(id)}>
-                        <div className="arrangements-table__text">
-                            <span className="arrangements-table__label">
-                                OLD IP
-                            </span> 
-                            <span className="arrangements-table__value">
-                                {oldIp}
-                            </span>                               
-                        </div>
-                        <div className="arrangements-table__text">
-                            <span className="arrangements-table__label">
-                                NEW IP
-                            </span>  
-                            <span className="arrangements-table__value">
-                                {newIp}
-                            </span>                              
-                        </div>
-                        <div className="arrangements-table__text">
-                            <span className="arrangements-table__label">
-                                МЕСТО
-                            </span>   
-                            <span className="arrangements-table__value">
-                                {seatNumber}
-                            </span>                             
-                        </div>
-                    </div>
-                    <div 
-                        className="arrangements-table__text-wrapper--change"
                         onBlur={() => onChangeSeatText(id, this.state.oldIp, this.state.newIp, this.state.seatNumber)}>
-                        {/* Добавить красивую зеленую плашку о успешном сохранении */}
-                        <button 
-                            className="arrangements-table__save-btn"
-                            onClick={() => onTextWrapperChangeHide(id)}>
-                            СОХРАНИТЬ
-                        </button>
                         <div className="arrangements-table__text">
                             <span className="arrangements-table__label">
                                 OLD IP
                             </span> 
                             <span className="arrangements-table__value">
                                 <input 
-                                    className="arrangements-table__value-input"
-                                    type="text"
-                                    onChange={this.onOldIpChange}
-                                    placeholder="Новый IP"
-                                    value={this.state.oldIp}/>
+                                        className="arrangements-table__value-input"
+                                        type="text"
+                                        onChange={this.onOldIpChange}
+                                        placeholder="Старый IP"
+                                        value={this.state.oldIp}/>
                             </span>                               
                         </div>
                         <div className="arrangements-table__text">
@@ -103,11 +69,11 @@ export default class ArrangementsItem extends Component {
                                 NEW IP
                             </span>  
                             <span className="arrangements-table__value">
-                                <input 
+                            <input 
                                     className="arrangements-table__value-input"
                                     type="text"
                                     onChange={this.onNewIpChange}
-                                    placeholder="Старый IP"
+                                    placeholder="Новый IP"
                                     value={this.state.newIp}/>
                             </span>                              
                         </div>
@@ -116,7 +82,7 @@ export default class ArrangementsItem extends Component {
                                 МЕСТО
                             </span>   
                             <span className="arrangements-table__value">
-                                <input 
+                            <input 
                                     className="arrangements-table__value-input"
                                     type="text"
                                     onChange={this.onSeatNumberChange}

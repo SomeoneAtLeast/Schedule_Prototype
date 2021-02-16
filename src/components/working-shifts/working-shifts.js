@@ -64,47 +64,62 @@ export default class WorkingShifts extends Component {
         }
     }
 
+    onChangeShiftsText(id, startTime, finishTime) {
+        console.log(id, startTime, finishTime);
+        // this.setState(({shifts}) => {
+        //     const index = shifts.findIndex(elem => elem.id === id); 
+        //     const oldShift = shifts[index];
+        //     const newShift = {...oldShift, startTime: startTime, finishTime: finishTime}
+        //     const newShifts = [...shifts.slice(0, index), newShift, ...shifts.slice(index + 1)];
+
+        //     return {
+        //         shifts: newShifts
+        //     }
+        // })
+    }
+
+    tableKmRows (number) {
+        let rows = [];
+        for (let i = 0; i < number; i++) {
+            rows.push(<WorkingShiftsKmItem shifts={this.state.shifts[i]} key={this.state.shifts[i].id}/>);
+        }
+        return (
+            rows
+        )
+    }
+
+    table (startTime, finishTime, numberOfRows, shiftNumber, key) {
+        let rows = [];
+        
+        for (let i = 0; i <= numberOfRows; i++) {
+            rows.push(<WorkingShiftsSocialItem shifts={this.state.shifts[shiftNumber]} key={this.state.shifts[i].id}/>);
+        }
+
+        return (
+            <table className="working-shifts__table" key={key}>
+                <tbody>
+                    <tr className={`working-shifts__table-row-header working-shifts__table-row-${startTime}-${finishTime}`}>
+                        <th 
+                            className={`working-shifts__table-header working-shifts__table-header-${startTime}-${finishTime}`}
+                            colSpan="4"
+                            onClick={() => this.onChangeShiftsText(key, 1, 2)}>С {startTime} до {finishTime}</th>
+                    </tr>
+                    {rows}
+                </tbody>
+            </table>
+        )
+    }
+
+    tables (tablesNumber) {
+        let tablesArr = [];
+        for (let i = 0; i <= (tablesNumber - 1); i++) {
+            tablesArr.push(this.table(this.state.shifts[i].startTime, this.state.shifts[i].finishTime, getRandomNumber(0, 2), i, i))
+        }
+
+        return tablesArr
+    }
+
     render() {
-        const {shifts} = this.state;
-        const tableKmRows = (number) => {
-            let rows = [];
-            for (let i = 0; i < number; i++) {
-                rows.push(<WorkingShiftsKmItem shifts={shifts[i]} key={shifts[i].id}/>);
-            }
-            return (
-                rows
-            )
-        }
-
-        const table = (startTime, finishTime, numberOfRows, shiftNumber, key) => {
-            let rows = [];
-            
-            for (let i = 0; i <= numberOfRows; i++) {
-                rows.push(<WorkingShiftsSocialItem shifts={shifts[shiftNumber]} key={shifts[i].id}/>);
-            }
-
-            return (
-                <table className="working-shifts__table" key={key}>
-                    <tbody>
-                        <tr className={`working-shifts__table-row-header working-shifts__table-row-${startTime}-${finishTime}`}>
-                            <th 
-                                className={`working-shifts__table-header working-shifts__table-header-${startTime}-${finishTime}`}
-                                colSpan="4">С {startTime} до {finishTime}</th>
-                        </tr>
-                        {rows}
-                    </tbody>
-                </table>
-            )
-        }
-
-        const tables = (tablesNumber) => {
-            let tablesArr = [];
-            for (let i = 0; i <= (tablesNumber - 1); i++) {
-                tablesArr.push(table(shifts[i].startTime, shifts[i].finishTime, getRandomNumber(0, 2), i, i))
-            }
-
-            return tablesArr
-        }
 
         return (
             <div className="working-shifts">
@@ -137,7 +152,7 @@ export default class WorkingShifts extends Component {
                             </tr>
                         </tbody>
                     </table>
-                    {tables(7)}
+                    {this.tables(7)}
                 </div>
                 <div className="working-shifts__table-wrapper">
                     <table className="working-shifts__table">
@@ -153,7 +168,7 @@ export default class WorkingShifts extends Component {
                                     </th>
                                 <td className="working-shifts__table-header working-shifts__table-header-gl">№ Смены</td>
                             </tr>
-                            {tableKmRows(7)}
+                            {this.tableKmRows(7)}
                         </tbody>
                     </table>
                 </div>
