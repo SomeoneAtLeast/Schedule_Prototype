@@ -8,16 +8,26 @@ export default class WorkingShiftsKmItem extends Component {
     }
 
     render() {
-        const {shifts} = this.props;
+        const {kmShifts, id} = this.props;
         return (
             <tr 
                 className="working-shifts__table-row working-shifts__table-row-workers">
                 <td 
                     className="working-shifts__table-cell working-shifts__table-cell-worker"
                     colSpan="3">
-                        {shifts.worker1}
+                        <input
+                            className="working-shifts__table-header-value"
+                            type="text"
+                            value={kmShifts[id - 100].worker}
+                            onChange={this.props.onTextChange(id, kmShifts, "worker")}/>
                     </td>
-                <td className="working-shifts__table-cell working-shifts__table-cell-worker">{shifts.shiftNumber}</td>
+                <td className="working-shifts__table-cell working-shifts__table-cell-worker">
+                <input
+                            className="working-shifts__table-header-value"
+                            type="text"
+                            value={kmShifts[id - 100].shiftNumber}
+                            onChange={this.props.onTextChange(id, kmShifts, "shiftNumber")}/>
+                </td>
             </tr>
         )
     }

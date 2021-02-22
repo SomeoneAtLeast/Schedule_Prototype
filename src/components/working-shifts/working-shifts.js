@@ -20,7 +20,10 @@ for (let i = 0; i <= totalShifts; i++) {
             {
                 startTime: 8 + i,
                 finishTime: 20 + i,
-                shiftNumber: 1,
+                firstShiftNumber: 1,
+                secondShiftNumber: 2,
+                thirdShiftNumber: 1,
+                fourthShiftNumber: 2,
                 id: i + 100
             }
         )
@@ -29,8 +32,11 @@ for (let i = 0; i <= totalShifts; i++) {
             {
                 startTime: 14,
                 finishTime: "02",
-                shiftNumber: 1,
-                id: 106
+                firstShiftNumber: 1,
+                secondShiftNumber: 2,
+                thirdShiftNumber: 1,
+                fourthShiftNumber: 2,
+                id: 105
             }
         )
     } else if (i === 6) {
@@ -38,22 +44,41 @@ for (let i = 0; i <= totalShifts; i++) {
             {
                 startTime: 21,
                 finishTime: "09",
-                shiftNumber: 1,
-                id: 107
+                firstShiftNumber: 1,
+                secondShiftNumber: 2,
+                thirdShiftNumber: 1,
+                fourthShiftNumber: 2,
+                id: 106
             }
         )
     }
 }
 
-const totalWorkers = 6;
+const totalWorkers = 12;
 
 emptyShifts.forEach(item => {
-    for (let i = 1; i <= totalWorkers; i++) {
+    for (let i = 0; i <= totalWorkers; i++) {
         item[`worker${i}`] = getRandomNumber(0, 1) ? "Сотрудник" : "-";
     }
 });
 
 const shifts = emptyShifts;
+
+
+const totalKmShifts = 6;
+let emptyKmShifts = [];
+
+for (let i = 0; i <= totalKmShifts; i++) {
+        emptyKmShifts.push(
+            {   
+                worker: getRandomNumber(0, 1) ? "Сотрудник" : "-",
+                shiftNumber: 1,
+                id: i + 100
+            }
+        )
+}
+
+const kmShifts = emptyKmShifts;
 
 let glArr = [
     {
@@ -79,140 +104,74 @@ let glArr = [
         firstShiftNumber: "1",
         secondShiftNumber: "2",
         id: 1004
+    }, {
+        glName: "Групп-лидер",
+        shiftName: "№ Смены",
+        id: 1005
     },
 ];
 
 const glTable = glArr;
 
+const workTeamsNames = [
+    {
+        workTeamsName: "Социальные Сети",
+        id: 1
+    },
+    {
+        workTeamsName: "КМ",
+        id: 2
+    },
+]
+
+const months = [
+    {
+        month: "Февраль",
+        id: 2
+    },
+]
 export default class WorkingShifts extends Component {
     constructor() {
         super();
 
         this.state = {
             shifts: shifts,
-            glTable: glTable
+            glTable: glTable,
+            kmShifts: kmShifts,
+            workTeamsNames: workTeamsNames,
+            months: months,
         }
-    }
-
-    tableKmRows (number) {
-        let rows = [];
-        for (let i = 0; i < number; i++) {
-            rows.push(<WorkingShiftsKmItem shifts={this.state.shifts[i]} key={this.state.shifts[i].id}/>);
-        }
-        return (
-            rows
-        )
     }
 
     render() {
-            const {shifts, glTable} = this.state;
+        const {shifts, glTable} = this.state;
 
-        const onStartTimeChange = (id) => (e) => {
-            console.log(id, e.target.value);
-
-            this.setState(({shifts}) => {
-                const index = shifts.findIndex(elem => elem.id === (id + 100)); 
-                const oldShift = shifts[index];
-                const newShift = {...oldShift, startTime: e.target.value}
-                const newShifts = [...shifts.slice(0, index), newShift, ...shifts.slice(index + 1)];
-    
-                return {
-                    shifts: newShifts
-                }
-            })
-        }
-
-        const onFinishTimeChange = (id) => (e) => {
-            console.log(id, e.target.value);
-
-            this.setState(({shifts}) => {
-                const index = shifts.findIndex(elem => elem.id === (id + 100)); 
-                console.log(id)
-                console.log(index)
-                const oldShift = shifts[index];
-                const newShift = {...oldShift, finishTime: e.target.value}
-                const newShifts = [...shifts.slice(0, index), newShift, ...shifts.slice(index + 1)];
-    
-                return {
-                    shifts: newShifts
-                }
-            })
-        }
-
-        const onGlNameChange = (id) => (e) => {
-            this.setState(({glTable}) => {
-                const index = glTable.findIndex(elem => elem.id === id); 
-                const oldGlTableItem = glTable[index];
-                const newGlTableItem = {...oldGlTableItem, glName: e.target.value}
-                const newGlTable = [...glTable.slice(0, index), newGlTableItem, ...glTable.slice(index + 1)];
-    
-                return {
-                    glTable: newGlTable
-                }
-            })
-        }
-
-        const onTeamNameChange = (id) => (e) => {
-            this.setState(({glTable}) => {
-                const index = glTable.findIndex(elem => elem.id === id); 
-                const oldGlTableItem = glTable[index];
-                const newGlTableItem = {...oldGlTableItem, teamName: e.target.value}
-                const newGlTable = [...glTable.slice(0, index), newGlTableItem, ...glTable.slice(index + 1)];
-    
-                return {
-                    glTable: newGlTable
-                }
-            })
-        }
-
-        const onShiftNumberChange = (id) => (e) => {
-            this.setState(({glTable}) => {
-                const index = glTable.findIndex(elem => elem.id === id); 
-                const oldGlTableItem = glTable[index];
-                const newGlTableItem = {...oldGlTableItem, shiftNumber: e.target.value}
-                const newGlTable = [...glTable.slice(0, index), newGlTableItem, ...glTable.slice(index + 1)];
-    
-                return {
-                    glTable: newGlTable
-                }
-            })
-        }
-
-        const onShiftNameChange = (id) => (e) => {
-            this.setState(({glTable}) => {
-                const index = glTable.findIndex(elem => elem.id === id); 
-                const oldGlTableItem = glTable[index];
-                const newGlTableItem = {...oldGlTableItem, shiftName: e.target.value}
-                const newGlTable = [...glTable.slice(0, index), newGlTableItem, ...glTable.slice(index + 1)];
-    
-                return {
-                    glTable: newGlTable
-                }
-            })
-        }
-
-        const onFirstShiftNumberChange = (id) => (e) => {
-            this.setState(({glTable}) => {
-                const index = glTable.findIndex(elem => elem.id === id); 
-                const oldGlTableItem = glTable[index];
-                const newGlTableItem = {...oldGlTableItem, firstShiftNumber: e.target.value}
-                const newGlTable = [...glTable.slice(0, index), newGlTableItem, ...glTable.slice(index + 1)];
-    
-                return {
-                    glTable: newGlTable
-                }
-            })
-        }
-
-        const onSecondShiftNumberChange = (id) => (e) => {
-            this.setState(({glTable}) => {
-                const index = glTable.findIndex(elem => elem.id === id); 
-                const oldGlTableItem = glTable[index];
-                const newGlTableItem = {...oldGlTableItem, secondShiftNumber: e.target.value}
-                const newGlTable = [...glTable.slice(0, index), newGlTableItem, ...glTable.slice(index + 1)];
-    
-                return {
-                    glTable: newGlTable
+        const onTextChange = (id, dataArr, objKey) => (e) => {
+            this.setState(() => {
+                const index = dataArr.findIndex(elem => elem.id === id); 
+                const obj = dataArr[index];
+                obj[objKey] = e.target.value;
+                const newShifts = [...dataArr.slice(0, index), obj, ...dataArr.slice(index + 1)];
+                if (dataArr === this.state.shifts) {
+                    return {
+                        shifts: newShifts
+                    } 
+                } else if (dataArr === this.state.glTable) {
+                    return {
+                        glTable: newShifts
+                    } 
+                } else if (dataArr === this.state.kmShifts) {
+                    return {
+                        kmShifts: newShifts
+                    } 
+                } else if (dataArr === this.state.workTeamsNames) {
+                    return {
+                        workTeamsNames: newShifts
+                    } 
+                } else if (dataArr === this.state.months) {
+                    return {
+                        months: newShifts
+                    } 
                 }
             })
         }
@@ -221,7 +180,7 @@ export default class WorkingShifts extends Component {
             let rows = [];
             
             for (let i = 0; i <= numberOfRows; i++) {
-                rows.push(<WorkingShiftsSocialItem shifts={shifts[shiftNumber]} key={shifts[i].id}/>);
+                rows.push(<WorkingShiftsSocialItem shift={shifts[shiftNumber]} shifts={shifts} onTextChange={onTextChange} key={key} id={key}/>);
             }
     
             return (
@@ -237,13 +196,13 @@ export default class WorkingShifts extends Component {
                                         className="working-shifts__table-header-value"
                                         type="text"
                                         value={startTime}
-                                        onChange={onStartTimeChange(key)}/>
+                                        onChange={onTextChange(key, this.state.shifts, "startTime")}/>
                                     до
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
                                         value={finishTime}
-                                        onChange={onFinishTimeChange(key)}/>
+                                        onChange={onTextChange(key, this.state.shifts, "finishTime")}/>
                             </th>
                         </tr>
                         {rows}
@@ -255,21 +214,41 @@ export default class WorkingShifts extends Component {
         const tables = (tablesNumber) => {
             let tablesArr = [];
             for (let i = 0; i <= (tablesNumber - 1); i++) {
-                tablesArr.push(table(shifts[i].startTime, shifts[i].finishTime, 1, i, i))
+                tablesArr.push(table(shifts[i].startTime, shifts[i].finishTime, 0, i, i + 100))
             }
     
             return tablesArr
         }
 
+        const tableKmRows = (number) => {
+            let rows = [];
+            for (let i = 0; i < number; i++) {
+                rows.push(<WorkingShiftsKmItem kmShifts={this.state.kmShifts} key={this.state.kmShifts[i].id} id={this.state.kmShifts[i].id} onTextChange={onTextChange}/>);
+            }
+            return (
+                rows
+            )
+        }
+
         return (
-            <div className="working-shifts">
+            <div className="working-shifts" key={123}>
                 <div className="working-shifts__table-month">
-                        Февраль
+                    <input
+                            className="working-shifts__table-header-value"
+                            type="text"
+                            onChange={onTextChange(2, this.state.months, "month")}
+                            value={this.state.months[0].month}
+                            />
                 </div>
                 <div className="working-shifts__table-wrapper">
                     <table className="working-shifts__table">
                         <caption className="working-shifts__table-caption">
-                            Социальные Сети
+                            <input
+                                className="working-shifts__table-header-value"
+                                type="text"
+                                onChange={onTextChange(1, this.state.workTeamsNames, "workTeamsName")}
+                                value={this.state.workTeamsNames[0].workTeamsName}
+                                />
                         </caption>
                         <tbody>
                             <tr className="working-shifts__table-row-header working-shifts__table-row-gl">
@@ -277,7 +256,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
-                                        onChange={onGlNameChange(1001)}
+                                        onChange={onTextChange(1001, this.state.glTable, "glName")}
                                         value={glTable[0].glName}
                                         />
                                     </th>
@@ -285,7 +264,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
-                                        onChange={onGlNameChange(1002)}
+                                        onChange={onTextChange(1002, this.state.glTable, "glName")}
                                         value={glTable[1].glName}
                                         />
                                 </th>
@@ -293,7 +272,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
-                                        onChange={onGlNameChange(1003)}
+                                        onChange={onTextChange(1003, this.state.glTable, "glName")}
                                         value={glTable[2].glName}
                                         />
                                 </th>
@@ -301,7 +280,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
-                                        onChange={onShiftNameChange(1004)}
+                                        onChange={onTextChange(1004, this.state.glTable, "shiftName")}
                                         value={glTable[3].shiftName}
                                         />
                                     </th>
@@ -311,7 +290,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
-                                        onChange={onTeamNameChange(1001)}
+                                        onChange={onTextChange(1001, this.state.glTable, "teamName")}
                                         value={glTable[0].teamName}
                                         />
                                     </td>
@@ -319,7 +298,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
-                                        onChange={onTeamNameChange(1002)}
+                                        onChange={onTextChange(1002, this.state.glTable, "teamName")}
                                         value={glTable[1].teamName}
                                         />
                                     </td>
@@ -327,7 +306,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
-                                        onChange={onTeamNameChange(1003)}
+                                        onChange={onTextChange(1003, this.state.glTable, "teamName")}
                                         value={glTable[2].teamName}
                                         />
                                     </td>
@@ -335,7 +314,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
-                                        onChange={onFirstShiftNumberChange(1004)}
+                                        onChange={onTextChange(1004, this.state.glTable, "firstShiftNumber")}
                                         value={glTable[3].firstShiftNumber}
                                         />
                                     </td>
@@ -345,7 +324,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
-                                        onChange={onShiftNumberChange(1001)}
+                                        onChange={onTextChange(1001, this.state.glTable, "shiftNumber")}
                                         value={glTable[0].shiftNumber}
                                         />
                                 </td>
@@ -353,7 +332,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
-                                        onChange={onShiftNumberChange(1002)}
+                                        onChange={onTextChange(1002, this.state.glTable, "shiftNumber")}
                                         value={glTable[1].shiftNumber}
                                         />
                                 </td>
@@ -361,7 +340,7 @@ export default class WorkingShifts extends Component {
                                     <input
                                             className="working-shifts__table-header-value"
                                             type="text"
-                                            onChange={onShiftNumberChange(1003)}
+                                            onChange={onTextChange(1003, this.state.glTable, "shiftNumber")}
                                             value={glTable[2].shiftNumber}
                                             />
                                 </td>
@@ -369,7 +348,7 @@ export default class WorkingShifts extends Component {
                                 <input
                                             className="working-shifts__table-header-value"
                                             type="text"
-                                            onChange={onSecondShiftNumberChange(1004)}
+                                            onChange={onTextChange(1004, this.state.glTable, "secondShiftNumber")}
                                             value={glTable[3].secondShiftNumber}
                                             />
                                 </td>
@@ -381,18 +360,35 @@ export default class WorkingShifts extends Component {
                 <div className="working-shifts__table-wrapper">
                     <table className="working-shifts__table">
                         <caption className="working-shifts__table-caption">
-                            КМ
+                            <input
+                                    className="working-shifts__table-header-value"
+                                    type="text"
+                                    onChange={onTextChange(2, this.state.workTeamsNames, "workTeamsName")}
+                                    value={this.state.workTeamsNames[1].workTeamsName}
+                                    />
                         </caption>
                         <tbody>
                             <tr className="working-shifts__table-row-header working-shifts__table-row-gl">
                                 <th 
                                     className="working-shifts__table-header working-shifts__table-header-gl"
                                     colSpan="3">
-                                        Групп-лидер
+                                    <input
+                                        className="working-shifts__table-header-value"
+                                        type="text"
+                                        onChange={onTextChange(1005, this.state.glTable, "glName")}
+                                        value={this.state.glTable[4].glName}
+                                        />
                                     </th>
-                                <td className="working-shifts__table-header working-shifts__table-header-gl">№ Смены</td>
+                                <td className="working-shifts__table-header working-shifts__table-header-gl">
+                                    <input
+                                            className="working-shifts__table-header-value"
+                                            type="text"
+                                            onChange={onTextChange(1005, this.state.glTable, "shiftName")}
+                                            value={this.state.glTable[4].shiftName}
+                                            />
+                                    </td>
                             </tr>
-                            {this.tableKmRows(7)}
+                            {tableKmRows(7)}
                         </tbody>
                     </table>
                 </div>
