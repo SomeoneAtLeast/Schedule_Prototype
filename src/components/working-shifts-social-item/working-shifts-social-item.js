@@ -58,7 +58,7 @@ export default class WorkingShiftsSocialItem extends Component {
 }
 
 WorkingShiftsSocialItem.propTypes = {
-    shift: PropTypes.array,
+    shift: PropTypes.object,
     shifts: PropTypes.array,
     id: PropTypes.number,
     onTextChange: PropTypes.func

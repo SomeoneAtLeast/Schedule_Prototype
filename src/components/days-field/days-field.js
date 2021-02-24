@@ -6,7 +6,7 @@ import "./days-field.scss"
 import DaysFieldItem from "../days-field-item";
 
 
-const DaysField = ({daysArr, onMakeDaySelected, onMakeDayWorking, onMakeDayWeekend, onMakeDayVacation}) => {
+const DaysField = ({daysArr, onChangeDayType}) => {
 
     const daysFieldElements = daysArr.map((item) => {
         const {id, ...itemProps} = item;
@@ -33,12 +33,12 @@ const DaysField = ({daysArr, onMakeDaySelected, onMakeDayWorking, onMakeDayWeeke
             <article
             className={classNames}
             key = {id}
-            onClick={() => onMakeDaySelected(id)}>
+            onClick={() => onChangeDayType(id, "selected")}>
                 <DaysFieldItem
                 {...itemProps}
-                onMakeDayWorking={() => onMakeDayWorking(id)}
-                onMakeDayWeekend={() => onMakeDayWeekend(id)}
-                onMakeDayVacation={() => onMakeDayVacation(id)}/>
+                onMakeDayWorking={() => onChangeDayType(id, "worked")}
+                onMakeDayWeekend={() => onChangeDayType(id, "weekend")}
+                onMakeDayVacation={() => onChangeDayType(id, "vacation")}/>
             </article>
         )
     })
@@ -52,10 +52,7 @@ const DaysField = ({daysArr, onMakeDaySelected, onMakeDayWorking, onMakeDayWeeke
 
 DaysField.propTypes = {
     daysArr: PropTypes.array,
-    onMakeDaySelected: PropTypes.func,
-    onMakeDayWorking: PropTypes.func,
-    onMakeDayWeekend: PropTypes.func,
-    onMakeDayVacation: PropTypes.func,
+    onChangeDayType: PropTypes.func,
 }
 
 export default DaysField;

@@ -12,10 +12,9 @@ export default class MainNav extends Component {
             workingshiftsActive: false
         }
     }
-
-    // довести до ума
+    
     componentDidMount() {
-        if(window.location.href === "http://localhost:3000/arrangements/") {
+        if(window.location.href === "http://localhost:3000/seats/") {
             this.setState({
                 scheduleActive: false,
                 workingshiftsActive: false,
@@ -89,7 +88,7 @@ export default class MainNav extends Component {
                 <li 
                     className="main-nav__item"
                     onClick={() => this.onActive("arrangementsBtn")}>
-                    <Link to="/arrangements/" className={arrangementsClass}>
+                    <Link to="/seats/" className={arrangementsClass}>
                         Места
                     </Link>
                 </li>

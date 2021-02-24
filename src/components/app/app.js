@@ -14,9 +14,6 @@ import WorkingShifts from "../working-shifts"
 
 // Ограничить количество символов в инпутах
 // Добавить обработку ошибок внутри компонентов.
-// Добавить валидацию пропсов.
-// Добавить пропсы по умолчанию, если это требуется. 
-// Использовать функции высшего порядка.
 // Создать единый стейт
 // MVC (начато)
 
@@ -33,70 +30,34 @@ export default class App extends Component {
             vacationActive: false
         };
         
-        this.onMakeDaySelected = this.onMakeDaySelected.bind(this);
-        this.onMakeDayWorking = this.onMakeDayWorking.bind(this);
-        this.onMakeDayWeekend = this.onMakeDayWeekend.bind(this);
-        this.onMakeDayVacation = this.onMakeDayVacation.bind(this);
+        this.onChangeDayType = this.onChangeDayType.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
         this.onActive = this.onActive.bind(this);
     }
 
-    onMakeDaySelected(id) {
+    onChangeDayType(id, objKey) {
         this.setState(({days}) => {
             const index = days.findIndex(elem => elem.id === id); 
             const oldDay = days[index];
-            const newDay = {...oldDay, selected: !oldDay.selected}
+            const newDay = {...oldDay}
+            newDay[objKey] = !oldDay[objKey];
             const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
-            newDays.forEach(item => {
-                if (item.id !== (index + 1)) {
-                    item.selected = false
-                    }  
-              });
-
-            return {
-                days: newDays
+            if (objKey === "selected") {
+                newDays.forEach(item => {
+                    if (item.id !== (index + 1)) {
+                        item[objKey] = false
+                        }  
+                  });
+            } else if (objKey === "worked") {
+                newDays[index].weekend = false;
+                newDays[index].vacation = false;
+            } else if (objKey === "weekend") {
+                newDays[index].worked = false;
+                newDays[index].vacation = false;
+            } else if (objKey === "vacation") {
+                newDays[index].worked = false;
+                newDays[index].weekend = false;
             }
-        });
-    }
-
-    onMakeDayWorking(id) {
-        this.setState(({days}) => {
-            const index = days.findIndex(elem => elem.id === id); 
-            const oldDay = days[index];
-            const newDay = {...oldDay, worked: !oldDay.worked}
-            const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
-            newDays[index].weekend = false;
-            newDays[index].vacation = false;
-
-            return {
-                days: newDays
-            }
-        });
-    }
-
-    onMakeDayWeekend(id) {
-        this.setState(({days}) => {
-            const index = days.findIndex(elem => elem.id === id); 
-            const oldDay = days[index];
-            const newDay = {...oldDay, weekend: !oldDay.weekend}
-            const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
-            newDays[index].worked = false;
-            newDays[index].vacation = false;
-
-            return {
-                days: newDays
-            }
-        });
-    }
-
-    onMakeDayVacation(id) {
-        this.setState(({days}) => {
-            const index = days.findIndex(elem => elem.id === id); 
-            const oldDay = days[index];
-            const newDay = {...oldDay, vacation: !oldDay.vacation}
-            const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
-            newDays[index].worked = false;
-            newDays[index].weekend = false;
 
             return {
                 days: newDays
@@ -188,16 +149,13 @@ export default class App extends Component {
                     </div>
                     <div className="main">
                         <Controls/>
-                        <Route path="/arrangements" component={SeatsField}/>
+                        <Route path="/seats" component={SeatsField}/>
                         <Route path="/workingshifts" component={WorkingShifts}/>
                         <Route path="/" exact render={() => {
                             return (
                                 <DaysField
                                     daysArr = {visibleDays}
-                                    onMakeDaySelected={this.onMakeDaySelected}
-                                    onMakeDayWorking={this.onMakeDayWorking}
-                                    onMakeDayWeekend={this.onMakeDayWeekend}
-                                    onMakeDayVacation={this.onMakeDayVacation}/>
+                                    onChangeDayType={this.onChangeDayType}/>
                             )
                         }}/>
                     </div>

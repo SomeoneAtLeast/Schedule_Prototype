@@ -29,30 +29,30 @@ export default class WorkingShifts extends Component {
                 const index = dataArr.findIndex(elem => elem.id === id); 
                 const obj = dataArr[index];
                 obj[objKey] = e.target.value;
-                const newShifts = [...dataArr.slice(0, index), obj, ...dataArr.slice(index + 1)];
+                const newArr = [...dataArr.slice(0, index), obj, ...dataArr.slice(index + 1)];
                 if (dataArr === shifts) {
                     return {
-                        shifts: newShifts
+                        shifts: newArr
                     } 
                 } else if (dataArr === glTable) {
                     return {
-                        glTable: newShifts
+                        glTable: newArr
                     } 
                 } else if (dataArr === kmShifts) {
                     return {
-                        kmShifts: newShifts
+                        kmShifts: newArr
                     } 
                 } else if (dataArr === kmTable) {
                     return {
-                        kmTable: newShifts
+                        kmTable: newArr
                     } 
                 } else if (dataArr === workTeamsNames) {
                     return {
-                        workTeamsNames: newShifts
+                        workTeamsNames: newArr
                     } 
                 } else if (dataArr === months) {
                     return {
-                        months: newShifts
+                        months: newArr
                     } 
                 }
             })
