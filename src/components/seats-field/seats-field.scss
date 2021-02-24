@@ -1,0 +1,94 @@
+.seats-field {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-grow: 1;
+    box-sizing: border-box;
+    padding: 30px;
+    width: 85%;
+}
+
+.seats-table {
+    border-collapse: collapse;
+}
+
+
+.seats-table__row:nth-child(odd) {
+    .seats-table__сell {
+        border-bottom: 20px solid #888888;
+    }
+
+    .seats-table__img {
+        margin-bottom: 8px;
+    }
+
+    .seats-table__сell {
+
+        &:hover {
+            .seats-table__img {
+                transform: translateY(-5px);
+            }
+        }
+    }
+
+}
+
+.seats-table__row:nth-child(even) {
+    .seats-table__img {
+        transform: rotate(180deg);
+    }
+
+    .seats-table__text-wrapper {
+        margin-top: 10px;
+    }
+
+    .seats-table__text-wrapper--change {
+        top: 10px;
+    }
+
+    .seats-table__сell {
+
+        &:hover {
+            .seats-table__img {
+                transform: rotate(180deg) translateY(-5px);
+            }
+        }
+    }
+
+}
+
+.seats-table__сell {
+    display: inline-flex;
+    position: relative;
+    width: 240px;
+    padding: 0 5px;
+    border-right: 3px solid #888888;
+    background-color: #BFBFBF;
+    transition: 0.3s;
+}
+
+
+.seats-table__сell:first-child {
+    border-left: 3px solid #888888;
+}
+
+.seats-table__img {
+    transition: 0.3s;
+    width: 50px;
+    margin-left: 5px;
+}
+
+.seats-table__text-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 15px;
+}
+
+.seats-table__text {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #313131;
+}

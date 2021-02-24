@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, {Component} from "react";
+import PropTypes from 'prop-types';
 
 import "./filter.scss"
 
@@ -24,7 +24,7 @@ export default class Filter extends Component {
         let classNames = "filter-list__filter";
 
         if (active) {
-            classNames += " active";
+            classNames += " active-filter";
         }
 
         return (
@@ -33,7 +33,7 @@ export default class Filter extends Component {
                 className="filter-list__filter-btn"
                 key = {id}
                 onClick = {this.onClick}>   
-                    <img className="filter-list__filter-img" src={img}></img>
+                    <img className="filter-list__filter-img" src={img} alt={btnText}></img>
                     <span className="filter-list__text">
                     {btnText} - {btnQuantity}
                     </span>
@@ -41,4 +41,14 @@ export default class Filter extends Component {
             </li>
         )
     }
+}
+
+Filter.propTypes = {
+    onFilterSelect: PropTypes.func,
+    onActive: PropTypes.func,
+    btnText: PropTypes.string,
+    btnQuantity: PropTypes.number,
+    id: PropTypes.number,
+    active: PropTypes.bool,
+    img: PropTypes.string,
 }

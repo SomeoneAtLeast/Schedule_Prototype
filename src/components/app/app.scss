@@ -1,4 +1,24 @@
-.app {
-    width: 730px;
-    margin: 50px auto 0 auto;
+.header__main-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100px;
+    background-color: #5acaff;
+    border-bottom: 3px solid #a4a4a4;
+}
+
+.header__second-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 80px;
+    background-color: #4b4b4b8c;
+    border-bottom: 3px solid #6d6d6d;
+}
+
+.main {
+    display: flex;
+    background-color: #bfbfbf;
+    min-height: 500px;
+    width: 100%;
 }
