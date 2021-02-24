@@ -1,15 +1,17 @@
 import React, {Component} from "react";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
+
 import "./app.scss";
+
+import {days} from "../../models/app-model"
 
 import FilterList from "../filter-list";
 import DaysField from "../days-field"
 import MainNav from "../main-nav"
-import ArrangementsField from "../arrangements-field"
+import SeatsField from "../seats-field"
 import Controls from "../controls"
 import WorkingShifts from "../working-shifts"
 
-// Изменить нейминг
 // Ограничить количество символов в инпутах
 // Добавить обработку ошибок внутри компонентов.
 // Добавить валидацию пропсов.
@@ -17,30 +19,6 @@ import WorkingShifts from "../working-shifts"
 // Использовать функции высшего порядка.
 // Создать единый стейт
 // MVC (начато)
-
-const totalDays = 30;
-let emptyDays = [];
-const dayNames7 = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
-const dayNames30 = [
-    ...dayNames7, ...dayNames7, ...dayNames7, ...dayNames7, dayNames7[0], dayNames7[1]
-    ];
-
-for (let i = 1; i <= totalDays; i++) {
-    emptyDays.push(
-        {
-            dayNumber: i,
-            dayName: dayNames30[i - 1],
-            id: i,
-            selected: false,
-            worked: false,
-            weekend: false,
-            vacation: false,
-            error: false
-        }
-    )
-}
-
-const days = emptyDays;
 
 export default class App extends Component {
     constructor (props) {
@@ -62,7 +40,7 @@ export default class App extends Component {
         this.onFilterSelect = this.onFilterSelect.bind(this);
         this.onActive = this.onActive.bind(this);
     }
-    
+
     onMakeDaySelected(id) {
         this.setState(({days}) => {
             const index = days.findIndex(elem => elem.id === id); 
@@ -210,7 +188,7 @@ export default class App extends Component {
                     </div>
                     <div className="main">
                         <Controls/>
-                        <Route path="/arrangements" component={ArrangementsField}/>
+                        <Route path="/arrangements" component={SeatsField}/>
                         <Route path="/workingshifts" component={WorkingShifts}/>
                         <Route path="/" exact render={() => {
                             return (

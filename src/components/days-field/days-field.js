@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from "react";
+import PropTypes from 'prop-types';
 
 import "./days-field.scss"
 
@@ -48,6 +48,14 @@ const DaysField = ({daysArr, onMakeDaySelected, onMakeDayWorking, onMakeDayWeeke
         {daysFieldElements}
     </div>
     )
+}
+
+DaysField.propTypes = {
+    daysArr: PropTypes.array,
+    onMakeDaySelected: PropTypes.func,
+    onMakeDayWorking: PropTypes.func,
+    onMakeDayWeekend: PropTypes.func,
+    onMakeDayVacation: PropTypes.func,
 }
 
 export default DaysField;

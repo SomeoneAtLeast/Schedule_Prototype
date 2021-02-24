@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, {Component} from "react";
+import PropTypes from 'prop-types';
 
 import  "./working-shifts-social-item.scss"
 export default class WorkingShiftsSocialItem extends Component {
@@ -8,6 +8,8 @@ export default class WorkingShiftsSocialItem extends Component {
     }
 
     makeCells(startNumber, finishNumber, shiftNumberName) {
+        const {shift, shifts, id, onTextChange} = this.props;
+
         let cells = [];
         for (let i = startNumber; i <= finishNumber; i++) {
             cells.push(
@@ -17,18 +19,18 @@ export default class WorkingShiftsSocialItem extends Component {
                         <input
                             className="working-shifts__table-header-value"
                             type="text"
-                            value={this.props.shift[`worker${i}`]}
-                            onChange={this.props.onTextChange((this.props.id), this.props.shifts, `worker${i}`)}/>
+                            value={shift[`worker${i}`]}
+                            onChange={onTextChange((id), shifts, `worker${i}`)}/>
                 </td>
             );
         }
         
-        cells.push(<td className="working-shifts__table-cell working-shifts__table-cell-worker" key={this.props.id}>
+        cells.push(<td className="working-shifts__table-cell working-shifts__table-cell-worker" key={id}>
                         <input
                             className="working-shifts__table-header-value"
                             type="text"
-                            value={this.props.shifts[this.props.id - 100][shiftNumberName]}
-                            onChange={this.props.onTextChange(this.props.id, this.props.shifts, shiftNumberName)}/>
+                            value={shifts[id - 100][shiftNumberName]}
+                            onChange={onTextChange(id, shifts, shiftNumberName)}/>
             </td>);
 
 
@@ -53,4 +55,11 @@ export default class WorkingShiftsSocialItem extends Component {
             </>
         )
     }
+}
+
+WorkingShiftsSocialItem.propTypes = {
+    shift: PropTypes.array,
+    shifts: PropTypes.array,
+    id: PropTypes.number,
+    onTextChange: PropTypes.func
 }

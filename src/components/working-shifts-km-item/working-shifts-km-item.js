@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, {Component} from "react";
+import PropTypes from 'prop-types';
 
 import  "./working-shifts-km-item.scss"
 export default class WorkingShiftsKmItem extends Component {
@@ -8,7 +8,7 @@ export default class WorkingShiftsKmItem extends Component {
     }
 
     render() {
-        const {kmShifts, id} = this.props;
+        const {kmShifts, id, onTextChange} = this.props;
         return (
             <tr 
                 className="working-shifts__table-row working-shifts__table-row-workers">
@@ -19,16 +19,22 @@ export default class WorkingShiftsKmItem extends Component {
                             className="working-shifts__table-header-value"
                             type="text"
                             value={kmShifts[id - 100].worker}
-                            onChange={this.props.onTextChange(id, kmShifts, "worker")}/>
+                            onChange={onTextChange(id, kmShifts, "worker")}/>
                     </td>
                 <td className="working-shifts__table-cell working-shifts__table-cell-worker">
                 <input
                             className="working-shifts__table-header-value"
                             type="text"
                             value={kmShifts[id - 100].shiftNumber}
-                            onChange={this.props.onTextChange(id, kmShifts, "shiftNumber")}/>
+                            onChange={onTextChange(id, kmShifts, "shiftNumber")}/>
                 </td>
             </tr>
         )
     }
+}
+
+WorkingShiftsKmItem.propTypes = {
+    kmShifts: PropTypes.array,
+    id: PropTypes.number,
+    onTextChange: PropTypes.func
 }

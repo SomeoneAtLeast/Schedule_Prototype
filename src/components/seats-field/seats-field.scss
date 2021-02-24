@@ -1,4 +1,4 @@
-.arrangements-field {
+.seats-field {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -8,24 +8,24 @@
     width: 85%;
 }
 
-.arrangements-table {
+.seats-table {
     border-collapse: collapse;
 }
 
 
-.arrangements-table__row:nth-child(odd) {
-    .arrangements-table__сell {
+.seats-table__row:nth-child(odd) {
+    .seats-table__сell {
         border-bottom: 20px solid #888888;
     }
 
-    .arrangements-table__img {
+    .seats-table__img {
         margin-bottom: 8px;
     }
 
-    .arrangements-table__сell {
+    .seats-table__сell {
 
         &:hover {
-            .arrangements-table__img {
+            .seats-table__img {
                 transform: translateY(-5px);
             }
         }
@@ -33,23 +33,23 @@
 
 }
 
-.arrangements-table__row:nth-child(even) {
-    .arrangements-table__img {
+.seats-table__row:nth-child(even) {
+    .seats-table__img {
         transform: rotate(180deg);
     }
 
-    .arrangements-table__text-wrapper {
+    .seats-table__text-wrapper {
         margin-top: 10px;
     }
 
-    .arrangements-table__text-wrapper--change {
+    .seats-table__text-wrapper--change {
         top: 10px;
     }
 
-    .arrangements-table__сell {
+    .seats-table__сell {
 
         &:hover {
-            .arrangements-table__img {
+            .seats-table__img {
                 transform: rotate(180deg) translateY(-5px);
             }
         }
@@ -57,7 +57,7 @@
 
 }
 
-.arrangements-table__сell {
+.seats-table__сell {
     display: inline-flex;
     position: relative;
     width: 240px;
@@ -68,24 +68,24 @@
 }
 
 
-.arrangements-table__сell:first-child {
+.seats-table__сell:first-child {
     border-left: 3px solid #888888;
 }
 
-.arrangements-table__img {
+.seats-table__img {
     transition: 0.3s;
     width: 50px;
     margin-left: 5px;
 }
 
-.arrangements-table__text-wrapper {
+.seats-table__text-wrapper {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     margin-left: 15px;
 }
 
-.arrangements-table__text {
+.seats-table__text {
     display: flex;
     justify-content: space-between;
     margin-bottom: 4px;

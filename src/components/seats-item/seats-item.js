@@ -1,10 +1,10 @@
-/* eslint-disable react/prop-types */
 import React, {Component} from "react";
+import PropTypes from 'prop-types';
 
-import "./arrangements-item.scss"
+import "./seats-item.scss"
 import chairImg from "./imgs/chair.svg"
 
-export default class ArrangementsItem extends Component {
+export default class SeatsItem extends Component {
     constructor(props) {
         super(props);
 
@@ -45,45 +45,45 @@ export default class ArrangementsItem extends Component {
         return (    
                 <>
                     <img 
-                        className="arrangements-table__img"
+                        className="seats-table__img"
                         alt="Место" 
                         src={chairImg}/>
                     <div 
-                        className="arrangements-table__text-wrapper"
+                        className="seats-table__text-wrapper"
                         onBlur={() => onChangeSeatText(id, this.state.oldIp, this.state.newIp, this.state.seatNumber)}>
-                        <div className="arrangements-table__text">
-                            <span className="arrangements-table__label">
+                        <div className="seats-table__text">
+                            <span className="seats-table__label">
                                 OLD IP
                             </span> 
-                            <span className="arrangements-table__value">
+                            <span className="seats-table__value">
                                 <input 
-                                        className="arrangements-table__value-input"
+                                        className="seats-table__value-input"
                                         type="text"
                                         onChange={this.onOldIpChange}
                                         placeholder="Старый IP"
                                         value={this.state.oldIp}/>
                             </span>                               
                         </div>
-                        <div className="arrangements-table__text">
-                            <span className="arrangements-table__label">
+                        <div className="seats-table__text">
+                            <span className="seats-table__label">
                                 NEW IP
                             </span>  
-                            <span className="arrangements-table__value">
+                            <span className="seats-table__value">
                             <input 
-                                    className="arrangements-table__value-input"
+                                    className="seats-table__value-input"
                                     type="text"
                                     onChange={this.onNewIpChange}
                                     placeholder="Новый IP"
                                     value={this.state.newIp}/>
                             </span>                              
                         </div>
-                        <div className="arrangements-table__text">
-                            <span className="arrangements-table__label">
+                        <div className="seats-table__text">
+                            <span className="seats-table__label">
                                 МЕСТО
                             </span>   
-                            <span className="arrangements-table__value">
+                            <span className="seats-table__value">
                             <input 
-                                    className="arrangements-table__value-input"
+                                    className="seats-table__value-input"
                                     type="text"
                                     onChange={this.onSeatNumberChange}
                                     placeholder="№ места"
@@ -94,4 +94,12 @@ export default class ArrangementsItem extends Component {
                 </>
         )
     }
+}
+
+SeatsItem.propTypes = {
+    oldIp: PropTypes.string,
+    newIp: PropTypes.string,
+    seatNumber: PropTypes.string,
+    id: PropTypes.number,
+    onChangeSeatText: PropTypes.func,
 }

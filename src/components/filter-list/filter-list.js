@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, {Component} from "react";
+import PropTypes from 'prop-types';
 
 import "./filter-list.scss"
 
@@ -63,4 +63,17 @@ export default class FilterList extends Component {
             </ul>
         )
     }
+}
+
+FilterList.propTypes = {
+    workedQuantity: PropTypes.number,
+    allDaysQuantity: PropTypes.number,
+    weekendsQuantity: PropTypes.number,
+    vacationQuantity: PropTypes.number,
+    onFilterSelect: PropTypes.func,
+    onActive: PropTypes.func,
+    allActive: PropTypes.bool,
+    workedActive: PropTypes.bool,
+    weekendsActive: PropTypes.bool,
+    vacationActive: PropTypes.bool,
 }

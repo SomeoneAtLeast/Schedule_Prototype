@@ -1,9 +1,8 @@
-/* eslint-disable react/prop-types */
 import React, {Component} from "react";
 
 import  "./working-shifts.scss"
 
-import {shifts, kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model"
+import {shifts, kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 
 import WorkingShiftsSocialItem from "../working-shifts-social-item"
 import WorkingShiftsKmItem from "../working-shifts-km-item"

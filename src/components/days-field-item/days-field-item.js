@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, {Component} from "react";
+import PropTypes from 'prop-types';
 
 import "./days-field-item.scss";
 import workImg from "./../../global-imgs/work.svg"
@@ -45,4 +45,12 @@ export default class DaysFieldItem extends Component {
             </div>
         )
     }
+}
+
+DaysFieldItem.propTypes = {
+    dayName: PropTypes.string,
+    dayNumber: PropTypes.number,
+    onMakeDayWorking: PropTypes.func,
+    onMakeDayWeekend: PropTypes.func,
+    onMakeDayVacation: PropTypes.func,
 }
