@@ -28,8 +28,9 @@ export default class WorkingShifts extends Component {
             this.setState(() => {
                 const index = dataArr.findIndex(elem => elem.id === id); 
                 const obj = dataArr[index];
-                obj[objKey] = e.target.value;
-                const newArr = [...dataArr.slice(0, index), obj, ...dataArr.slice(index + 1)];
+                const newObj = {...obj};
+                newObj[objKey] = e.target.value;
+                const newArr = [...dataArr.slice(0, index), newObj, ...dataArr.slice(index + 1)];
                 if (dataArr === shifts) {
                     return {
                         shifts: newArr

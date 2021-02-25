@@ -1,2 +1,2 @@
-import {days} from "./app-model";
-export {days};
+import {days, workers} from "./app-model";
+export {days, workers};

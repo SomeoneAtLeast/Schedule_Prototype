@@ -21,3 +21,23 @@ for (let i = 1; i <= totalDays; i++) {
 }
 
 export const days = emptyDays;
+
+const totalWorkers = 15;
+let emptyWorkers = [];
+
+for (let i = 1; i <= totalWorkers; i++) {
+    emptyWorkers.push(
+        {
+            name: `Сотрудник ${i}`,
+        }
+    )
+}
+
+
+emptyWorkers.forEach((item) => {
+    for (let i = 1; i <= days.length; i++) {
+        item[`day${i}`] = 11
+    }
+})
+
+export const workers = emptyWorkers;

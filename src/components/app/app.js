@@ -3,10 +3,11 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import "./app.scss";
 
-import {days} from "../../models/app-model"
+import {days, workers} from "../../models/app-model"
 
 import FilterList from "../filter-list";
 import DaysField from "../days-field"
+import DaysFieldCommon from "../days-field-common"
 import MainNav from "../main-nav"
 import SeatsField from "../seats-field"
 import Controls from "../controls"
@@ -23,6 +24,7 @@ export default class App extends Component {
 
         this.state = {
             days: days,
+            workers: workers,
             filter: "all",
             allActive: true,
             workedActive: false,
@@ -130,7 +132,7 @@ export default class App extends Component {
                             <MainNav/>
                         </div>
                         <div className="header__second-nav">
-                            <Route path="/" exact render={() => {
+                            <Route path="/personalschedule" exact render={() => {
                                 return (
                                     <FilterList
                                         workedQuantity={workedQuantity}
@@ -152,6 +154,13 @@ export default class App extends Component {
                         <Route path="/seats" component={SeatsField}/>
                         <Route path="/workingshifts" component={WorkingShifts}/>
                         <Route path="/" exact render={() => {
+                            return (
+                                <DaysFieldCommon
+                                    days = {days}
+                                    workers = {workers}/>
+                            )
+                        }}/>
+                        <Route path="/personalschedule" render={() => {
                             return (
                                 <DaysField
                                     daysArr = {visibleDays}
