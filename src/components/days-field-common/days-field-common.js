@@ -15,58 +15,59 @@ const DaysFieldCommon = ({days, workers}) => {
         )
     })
 
-    let i = 0;
-    const workersElements = workers.map((item) => {
-        i++
-        return (
+    const getWorkerElement = (workerNumber) => {
+        let daysInMonth = [];
+
+        daysInMonth.push(
             <td className = "days-field-common-item" 
-                key={i}>
-                {item[`day${i}`]}
+                key={workerNumber}>
+                {workers[workerNumber].name}
             </td>
         )
-    })
+
+        for (let i = 1; i <= days.length; i++) {
+            daysInMonth.push(
+                <td className = "days-field-common-item" 
+                    key={i}>
+                    {workers[workerNumber].days[workerNumber].workingHours}
+                </td>
+            )
+        }
+
+        return (
+            daysInMonth
+        )
+    }
+
+    const getWorkersElements = () => {
+        let i = 0;
+
+        const WorkersElements = workers.map((worker) => {
+            i++
+            return (
+                <tr 
+                    className = "days-field-common-items-row"
+                    key={worker.name}>
+                    {getWorkerElement(i - 1)}
+                </tr>
+            )
+        });
+
+        return (
+            WorkersElements
+        )
+    }
+
+
 
     return (
     <table className = "days-field-common">
         <tr className = "days-field-common-items-row">
+            <th className = "days-field-common-item">
+            </th>
             {daysNumbers}
         </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
-        <tr className = "days-field-common-items-row">
-            {workersElements}
-        </tr>
+        {getWorkersElements()}
     </table>
     )
 }

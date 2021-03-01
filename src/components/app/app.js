@@ -13,6 +13,7 @@ import SeatsField from "../seats-field"
 import Controls from "../controls"
 import WorkingShifts from "../working-shifts"
 
+// В процессе рефакторинг personalschedule, в особенности перенос на this.state.workers
 // Ограничить количество символов в инпутах
 // Добавить обработку ошибок внутри компонентов.
 // Создать единый стейт
@@ -38,31 +39,33 @@ export default class App extends Component {
     }
 
     onChangeDayType(id, objKey) {
-        this.setState(({days}) => {
-            const index = days.findIndex(elem => elem.id === id); 
-            const oldDay = days[index];
-            const newDay = {...oldDay}
-            newDay[objKey] = !oldDay[objKey];
-            const newDays = [...days.slice(0, index), newDay, ...days.slice(index + 1)];
+        this.setState(({workers}) => {
+            console.log(workers)
+            const index = workers.findIndex(elem => elem.id === id); 
+            const oldWorkerStatus = workers[id];
+            const newWorkerStatus = {...oldWorkerStatus}
+            console.log(newWorkerStatus)
+            newWorkerStatus[objKey] = !oldWorkerStatus[objKey];
+            const newWorkers = [...workers.slice(0, index), newWorkerStatus, ...workers.slice(index + 1)];
             if (objKey === "selected") {
-                newDays.forEach(item => {
+                newWorkers.forEach(item => {
                     if (item.id !== (index + 1)) {
                         item[objKey] = false
                         }  
                   });
             } else if (objKey === "worked") {
-                newDays[index].weekend = false;
-                newDays[index].vacation = false;
+                newWorkers[index].weekend = false;
+                newWorkers[index].vacation = false;
             } else if (objKey === "weekend") {
-                newDays[index].worked = false;
-                newDays[index].vacation = false;
+                newWorkers[index].worked = false;
+                newWorkers[index].vacation = false;
             } else if (objKey === "vacation") {
-                newDays[index].worked = false;
-                newDays[index].weekend = false;
+                newWorkers[index].worked = false;
+                newWorkers[index].weekend = false;
             }
-
+            console.log(workers)
             return {
-                days: newDays
+                workers: newWorkers
             }
         });
     }
@@ -116,7 +119,7 @@ export default class App extends Component {
     }
 
     render() {
-        const {days, filter, allActive, workedActive, weekendsActive, vacationActive} = this.state;
+        const {days, workers, filter, allActive, workedActive, weekendsActive, vacationActive} = this.state;
         const workedQuantity = days.filter(item => item.worked).length;
         const weekendsQuantity = days.filter(item => item.weekend).length;
         const vacationQuantity = days.filter(item => item.vacation).length;
@@ -163,7 +166,8 @@ export default class App extends Component {
                         <Route path="/personalschedule" render={() => {
                             return (
                                 <DaysField
-                                    daysArr = {visibleDays}
+                                    days = {visibleDays}
+                                    workers = {workers}
                                     onChangeDayType={this.onChangeDayType}/>
                             )
                         }}/>

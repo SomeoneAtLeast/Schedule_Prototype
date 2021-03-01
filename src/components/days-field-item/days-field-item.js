@@ -10,16 +10,13 @@ import crossImg from "./../../global-imgs/cross.svg"
 export default class DaysFieldItem extends Component {
 
     render () {
-        const {dayName, dayNumber, onMakeDayWorking, onMakeDayWeekend, onMakeDayVacation} = this.props;
+        const {workingHours, onMakeDayWorking, onMakeDayWeekend, onMakeDayVacation} = this.props;
 
         return (
             <div 
                 className = "days-field__item-body">
                 <span className="days-field__item-day-name">
-                    {dayName}
-                </span>
-                <span className="days-field__item-number">
-                    {dayNumber}
+                    {workingHours}
                 </span>
                 <div
                     className="days-field__btn-group">
@@ -49,7 +46,7 @@ export default class DaysFieldItem extends Component {
 
 DaysFieldItem.propTypes = {
     dayName: PropTypes.string,
-    dayNumber: PropTypes.number,
+    workingHours: PropTypes.number,
     onMakeDayWorking: PropTypes.func,
     onMakeDayWeekend: PropTypes.func,
     onMakeDayVacation: PropTypes.func,
