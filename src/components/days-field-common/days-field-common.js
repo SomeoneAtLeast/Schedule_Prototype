@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-
+import {Link} from 'react-router-dom';
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({days, workers}) => {
+const DaysFieldCommon = ({workers, onSelectWorker}) => {
 
-    const daysNumbers = days.map((item) => {
+    const daysNumbers = workers[0].days.map((item) => {
 
         return (
             <th className = "days-field-common-item" 
@@ -20,15 +20,18 @@ const DaysFieldCommon = ({days, workers}) => {
 
         daysInMonth.push(
             <td className = "days-field-common-item" 
-                key={workerNumber}>
-                {workers[workerNumber].name}
+                key={workerNumber}
+                onClick={() => onSelectWorker(workerNumber)}>
+                    <Link to={`/personalschedule/${workerNumber + 1}`} className = "days-field-common-item-link">
+                        {workers[workerNumber].name}
+                    </Link>
             </td>
         )
 
-        for (let i = 1; i <= days.length; i++) {
+        for (let i = 1; i <= workers[0].days.length; i++) {
             daysInMonth.push(
                 <td className = "days-field-common-item" 
-                    key={i}>
+                    key={i + 1000}>
                     {workers[workerNumber].days[workerNumber].workingHours}
                 </td>
             )
@@ -62,12 +65,14 @@ const DaysFieldCommon = ({days, workers}) => {
 
     return (
     <table className = "days-field-common">
-        <tr className = "days-field-common-items-row">
-            <th className = "days-field-common-item">
-            </th>
-            {daysNumbers}
-        </tr>
-        {getWorkersElements()}
+        <tbody>
+            <tr className = "days-field-common-items-row">
+                <th className = "days-field-common-item">
+                </th>
+                {daysNumbers}
+            </tr>
+            {getWorkersElements()}
+        </tbody>
     </table>
     )
 }

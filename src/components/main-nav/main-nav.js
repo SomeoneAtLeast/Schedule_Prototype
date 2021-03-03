@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from "react";
 import {Link} from 'react-router-dom';
 
@@ -14,13 +15,13 @@ export default class MainNav extends Component {
     }
     
     componentDidMount() {
-        if(window.location.href === "http://localhost:3000/seats/") {
+        if(this.props.location.pathname === "/seats/") {
             this.setState({
                 scheduleActive: false,
                 workingshiftsActive: false,
                 arrangementsActive: true
             })
-        } else if (window.location.href === "http://localhost:3000/workingshifts/") {
+        } else if (this.props.location.pathname === "/workingshifts/") {
             this.setState({
                 scheduleActive: false,
                 workingshiftsActive: true,
@@ -76,7 +77,7 @@ export default class MainNav extends Component {
                     onClick={() => this.onActive("scheduleBtn")}>
                     <Link to="/" className={scheduleClass}>
                         График
-                    </Link>
+                    </Link> 
                 </li>
                 <li 
                     className="main-nav__item"

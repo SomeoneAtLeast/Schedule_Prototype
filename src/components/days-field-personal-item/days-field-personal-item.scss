@@ -1,4 +1,4 @@
-.days-field .days-field__item {
+.days-field-personal .days-field-personal__item {
     position: relative;
     background-color: #8c8c8c;
     border-radius: 7px;
@@ -7,7 +7,7 @@
     transition: 0.3s;
 }
 
-.days-field__item-body {
+.days-field-personal__item-body {
     flex-direction: column;
     min-width: 98px;
     min-height: 90px;
@@ -17,29 +17,29 @@
     color: rgb(243, 243, 243);
 }
 
-.days-field__item-day-name {
+.days-field-personal__item-day-name {
     font-size: 12px;
     transition: 0.3s; 
 }
 
-.days-field__item-number {
+.days-field-personal__item-number {
     font-size: 22px;
     transition: 0.3s;
 }
 
-.days-field__item {
+.days-field-personal__item {
      &:hover {
         opacity: 0.8;
         
-        .days-field__item-body {
+        .days-field-personal__item-body {
             color: rgb(255, 255, 255);           
         }
 
-        .days-field__item-day-name {
+        .days-field-personal__item-day-name {
             font-size: 14px; 
         }
         
-        .days-field__item-number {
+        .days-field-personal__item-number {
             font-size: 24px;
         }
     }
@@ -50,7 +50,7 @@
     }
 }
 
-.days-field__btn-group {
+.days-field-personal__btn-group {
     display: none;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -63,7 +63,7 @@
 }
 
 
-.days-field__btn {
+.days-field-personal__btn {
     background-color: transparent;
     border: none;
     outline: none;
