@@ -22,3 +22,10 @@
     min-height: 500px;
     width: 100%;
 }
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    background-color: #888888;
+}

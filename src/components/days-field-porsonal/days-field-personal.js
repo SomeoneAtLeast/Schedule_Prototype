@@ -13,8 +13,13 @@ export default class DaysFieldPresonal extends Component {
     }
 
     componentDidMount() {
-        this.props.onSelectWorker()
-      }
+        this.props.onSelectWorker();
+        this.props.onClearAllDays();
+    }
+
+    componentWillUnmount() {
+        this.props.onClearAllDays();
+    }
 
     getWorkerPresonalDays (workerNumber) {
         const {workers, onChangeDayType} = this.props;
@@ -51,12 +56,12 @@ export default class DaysFieldPresonal extends Component {
             return (
                 <td className = {classNames} 
                             key = {item.id}
-                            onClick={() => onChangeDayType(workers[workerNumber].id, item.id, "selected")}>
+                            onClick={() => onChangeDayType(workers[workerNumber].id, item.id, "selected", "personal")}>
                                 <DaysFieldItemPersonal
                                     workingHours={item.workingHours}
-                                    onMakeDayWorking={() => onChangeDayType(workers[workerNumber].id, item.id, "worked")}
-                                    onMakeDayWeekend={() => onChangeDayType(workers[workerNumber].id, item.id, "weekend")}
-                                    onMakeDayVacation={() => onChangeDayType(workers[workerNumber].id, item.id, "vacation")}/>
+                                    onMakeDayWorking={() => onChangeDayType(workers[workerNumber].id, item.id, "worked", "personal")}
+                                    onMakeDayWeekend={() => onChangeDayType(workers[workerNumber].id, item.id, "weekend", "personal")}
+                                    onMakeDayVacation={() => onChangeDayType(workers[workerNumber].id, item.id, "vacation", "personal")}/>
                 </td>
             )
         })

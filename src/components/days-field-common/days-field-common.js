@@ -3,7 +3,7 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, onSelectWorker}) => {
+const DaysFieldCommon = ({workers, onSelectWorker, onSelectDay}) => {
 
     const daysNumbers = workers[0].days.map((item) => {
 
@@ -31,7 +31,10 @@ const DaysFieldCommon = ({workers, onSelectWorker}) => {
         for (let i = 1; i <= workers[0].days.length; i++) {
             let classNames = "days-field-common-item";
 
-            
+            if (workers[workerNumber].days[i - 1].selected) {
+                classNames += " selected";
+            }
+
             if (workers[workerNumber].days[i - 1].worked) {
                 classNames += " worked";
             }
@@ -46,8 +49,9 @@ const DaysFieldCommon = ({workers, onSelectWorker}) => {
 
             daysInMonth.push(
                 <td className = {classNames}
-                    key={i + 1000}>
-                    {workers[workerNumber].days[i - 1].id}
+                    key={i + 1000}
+                    onClick={() => onSelectDay(workers[workerNumber].id, workers[workerNumber].days[i - 1].id)}>
+                    {workers[workerNumber].days[i - 1].workingHours}
                 </td>
             )
         }

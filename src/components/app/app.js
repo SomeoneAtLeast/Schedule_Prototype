@@ -10,7 +10,7 @@ import DaysFieldPresonal from "../days-field-porsonal"
 import DaysFieldCommon from "../days-field-common"
 import MainNav from "../main-nav"
 import SeatsField from "../seats-field"
-import Controls from "../controls"
+import DaysFieldCommonControls from "../days-field-common-controls"
 import WorkingShifts from "../working-shifts"
 
 // В процессе рефакторинг personalschedule, в особенности перенос на this.state.workers
@@ -18,6 +18,7 @@ import WorkingShifts from "../working-shifts"
 // Добавить обработку ошибок внутри компонентов.
 // Создать единый стейт
 // MVC (начато)
+// пофиксить ошибку при попытки назначить день не выбрав его
 
 export default class App extends Component {
     constructor (props) {
@@ -26,6 +27,7 @@ export default class App extends Component {
         this.state = {
             workers: workers,
             selectedWorker: 0,
+            selectedDay: 0,
             filter: "all",
             allActive: true,
             workedActive: false,
@@ -37,11 +39,13 @@ export default class App extends Component {
         this.onFilterSelect = this.onFilterSelect.bind(this);
         this.onActive = this.onActive.bind(this);
         this.onSelectWorker = this.onSelectWorker.bind(this);
+        this.onSelectDay = this.onSelectDay.bind(this);
+        this.onClearAllDays = this.onClearAllDays.bind(this);
     }
 
-    onChangeDayType(workerId, dayId, objKey) {
+    onChangeDayType(workerId, dayId, objKey, scheduleType = "common") {
+        console.log(workerId, dayId, objKey, scheduleType)
         this.setState(({workers}) => {
-
             const workerIndex = workers.findIndex(elem => elem.id === workerId);
             const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === dayId); 
             const oldDayStatus = workers[workerIndex].days[dayIndex];
@@ -51,23 +55,31 @@ export default class App extends Component {
             const newWorker = {...workers[workerIndex], days: newDays}
             const newWorkers = [...workers.slice(0, workerIndex), newWorker, ...workers.slice(workerIndex + 1)];
 
-            if (objKey === "selected") {
-                newWorkers[workerIndex].days.forEach(item => {
-                    if (item.id !== (dayIndex + 1)) {
-                        item[objKey] = false
-                        }  
-                  });
-            } else if (objKey === "worked") {
-                newWorkers[workerIndex].days[dayIndex].weekend = false;
-                newWorkers[workerIndex].days[dayIndex].vacation = false;
-            } else if (objKey === "weekend") {
-                newWorkers[workerIndex].days[dayIndex].worked = false;
-                newWorkers[workerIndex].days[dayIndex].vacation = false;
-            } else if (objKey === "vacation") {
+            if (objKey === "clear") {
                 newWorkers[workerIndex].days[dayIndex].worked = false;
                 newWorkers[workerIndex].days[dayIndex].weekend = false;
+                newWorkers[workerIndex].days[dayIndex].vacation = false;
             }
 
+            if (scheduleType === "personal") {
+                if (objKey === "selected") {
+                    newWorkers[workerIndex].days.forEach(item => {
+                        if (item.id !== (dayIndex + 1)) {
+                            item[objKey] = false
+                            }  
+                      });
+                } else if (objKey === "worked") {
+                    newWorkers[workerIndex].days[dayIndex].weekend = false;
+                    newWorkers[workerIndex].days[dayIndex].vacation = false;
+                } else if (objKey === "weekend") {
+                    newWorkers[workerIndex].days[dayIndex].worked = false;
+                    newWorkers[workerIndex].days[dayIndex].vacation = false;
+                } else if (objKey === "vacation") {
+                    newWorkers[workerIndex].days[dayIndex].worked = false;
+                    newWorkers[workerIndex].days[dayIndex].weekend = false;
+                }
+            }
+ 
             return {
                 workers: newWorkers
             }
@@ -155,8 +167,33 @@ export default class App extends Component {
         })
     }
 
+    onSelectDay(selectedWorker, selectedDay) {
+        console.log(selectedWorker, selectedDay)
+        this.setState({
+            selectedWorker: selectedWorker,
+            selectedDay: selectedDay,
+        })
+
+        this.onChangeDayType(selectedWorker, selectedDay, "selected")
+    }
+
+    onClearAllDays() {
+        this.setState(({workers}) => {
+            const newWorkers = [...workers]
+            newWorkers.forEach((item) => {
+                item.days.forEach((item) => {
+                    item.selected = false
+                })
+            })
+
+            return {
+                workers: newWorkers
+            }
+        });
+    }
+
     render() {
-        const {workers, filter, selectedWorker, allActive, workedActive, weekendsActive, vacationActive} = this.state;
+        const {workers, filter, selectedWorker, selectedDay, allActive, workedActive, weekendsActive, vacationActive} = this.state;
         const workedQuantity = workers[selectedWorker].days.filter(item => item.worked).length;
         const weekendsQuantity = workers[selectedWorker].days.filter(item => item.weekend).length;
         const vacationQuantity = workers[selectedWorker].days.filter(item => item.vacation).length;
@@ -190,14 +227,25 @@ export default class App extends Component {
                         </div>
                     </div>
                     <div className="main">
-                        <Controls/>
+                        <div className="controls">
+                            <Route path="/" exact render={() => {
+                                    return (
+                                        <DaysFieldCommonControls
+                                            onChangeDayType = {this.onChangeDayType}
+                                            onClearAllDays = {this.onClearAllDays}
+                                            selectedWorker = {selectedWorker}
+                                            selectedDay = {selectedDay}/>
+                                    )
+                                }}/>
+                        </div>
                         <Route path="/seats" component={SeatsField}/>
                         <Route path="/workingshifts" component={WorkingShifts}/>
                         <Route path="/" exact render={() => {
                             return (
                                 <DaysFieldCommon
                                     workers = {workers}
-                                    onSelectWorker = {this.onSelectWorker} />
+                                    onSelectWorker = {this.onSelectWorker}
+                                    onSelectDay={this.onSelectDay}/>
                             )
                         }}/>
                         <Route path="/personalschedule/:id" render={({match}) => {
@@ -208,7 +256,8 @@ export default class App extends Component {
                                     workers = {visibleWorkers}
                                     selectedWorker = {id - 1}
                                     onChangeDayType = {this.onChangeDayType}
-                                    onSelectWorker = {() => this.onSelectWorker(id - 1)}/>
+                                    onSelectWorker = {() => this.onSelectWorker(id - 1)}
+                                    onClearAllDays = {this.onClearAllDays}/>
                             )
                         }}/>
                     </div>

@@ -3,10 +3,6 @@
     border-collapse: collapse;
 }
 
-// .days-field-common-items-row {
-//     margin: 2px 0;
-// }
-
 .days-field-common-item {
     padding: 5px 0;
     width: 30px;
@@ -16,14 +12,18 @@
     cursor: pointer;
 }
 
+.selected {
+    background-color: #cc628e;
+}
+
 .worked {
-    background-color: brown;
+    background-color: #79b4d7;
 }
 
 .weekend {
-    background-color: rgb(59, 48, 48);
+    background-color: #79d799;
 }
 
 .vacation {
-    background-color: rgb(93, 78, 158);
+    background-color: #8079d7;
 }
