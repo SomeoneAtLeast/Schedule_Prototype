@@ -55,10 +55,63 @@ export default class App extends Component {
             const newWorker = {...workers[workerIndex], days: newDays}
             const newWorkers = [...workers.slice(0, workerIndex), newWorker, ...workers.slice(workerIndex + 1)];
 
-            if (objKey === "clear") {
-                newWorkers[workerIndex].days[dayIndex].worked = false;
+            if (objKey === "worked") {
                 newWorkers[workerIndex].days[dayIndex].weekend = false;
                 newWorkers[workerIndex].days[dayIndex].vacation = false;
+            } else if (objKey === "weekend") {
+                newWorkers[workerIndex].days[dayIndex].worked = false;
+                newWorkers[workerIndex].days[dayIndex].vacation = false;
+            } else if (objKey === "vacation") {
+                newWorkers[workerIndex].days[dayIndex].worked = false;
+                newWorkers[workerIndex].days[dayIndex].weekend = false;
+            }
+
+            if (scheduleType === "common") {
+                if (objKey === "worked") {
+                    newWorkers.forEach((item) => {
+                        item.days.forEach((item) => {
+                            if (item.selected) {
+                                item.worked = true;
+                                item.weekend = false;
+                                item.vacation = false;
+                                item.selected = false;
+                            }
+                        })
+                    })
+                } else if (objKey === "weekend") {
+                    newWorkers.forEach((item) => {
+                        item.days.forEach((item) => {
+                            if (item.selected) {
+                                item.weekend = true
+                                item.worked = false;
+                                item.vacation = false;
+                                item.selected = false;
+                            }
+                        })
+                    })
+                } else if (objKey === "vacation") {
+                    newWorkers.forEach((item) => {
+                        item.days.forEach((item) => {
+                            if (item.selected) {
+                                item.vacation = true
+                                item.worked = false;
+                                item.weekend = false;
+                                item.selected = false;
+                            }
+                        })
+                    })
+                } else if (objKey === "clear") {
+                    newWorkers.forEach((item) => {
+                        item.days.forEach((item) => {
+                            if (item.selected) {
+                                item.vacation = false
+                                item.worked = false;
+                                item.weekend = false;
+                                item.selected = false;
+                            }
+                        })
+                    })
+                }
             }
 
             if (scheduleType === "personal") {
@@ -66,17 +119,8 @@ export default class App extends Component {
                     newWorkers[workerIndex].days.forEach(item => {
                         if (item.id !== (dayIndex + 1)) {
                             item[objKey] = false
-                            }  
+                        }  
                       });
-                } else if (objKey === "worked") {
-                    newWorkers[workerIndex].days[dayIndex].weekend = false;
-                    newWorkers[workerIndex].days[dayIndex].vacation = false;
-                } else if (objKey === "weekend") {
-                    newWorkers[workerIndex].days[dayIndex].worked = false;
-                    newWorkers[workerIndex].days[dayIndex].vacation = false;
-                } else if (objKey === "vacation") {
-                    newWorkers[workerIndex].days[dayIndex].worked = false;
-                    newWorkers[workerIndex].days[dayIndex].weekend = false;
                 }
             }
  
