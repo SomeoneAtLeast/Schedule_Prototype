@@ -1,23 +1,37 @@
 const totalDays = 30;
-let emptyDays = [];
 const dayNames7 = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
 const dayNames30 = [
     ...dayNames7, ...dayNames7, ...dayNames7, ...dayNames7, dayNames7[0], dayNames7[1]
     ];
 
-for (let i = 1; i <= totalDays; i++) {
-    emptyDays.push(
+
+const totalWorkers = 30;
+let emptyWorkers = [];
+
+for (let i = 1; i <= totalWorkers; i++) {
+    emptyWorkers.push(
         {
-            dayNumber: i,
-            dayName: dayNames30[i - 1],
+            name: `Сотрудник ${i}`,
             id: i,
-            selected: false,
-            worked: false,
-            weekend: false,
-            vacation: false,
-            error: false
+            days: []
         }
     )
 }
 
-export const days = emptyDays;
+emptyWorkers.forEach((item) => {
+    for (let i = 1; i <= totalDays; i++) {
+        item.days.push(
+            {   
+                dayName: dayNames30[i - 1],
+                selected: false,
+                worked: false,
+                weekend: false,
+                vacation: false,
+                workingHours: 0,
+                id: i
+            }
+        )
+    }
+})
+
+export const workers = emptyWorkers;

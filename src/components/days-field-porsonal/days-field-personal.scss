@@ -1,0 +1,34 @@
+.days-field-personal {
+    background-color: cadetblue;
+    border-collapse: collapse;
+}
+
+.days-field-personal .selected {
+    background-color: #6d6d6d;
+    opacity: 1;
+    cursor: auto;
+    
+    .days-field-personal__item-number {
+        display: none;
+    }
+
+    .days-field-personal__item-day-name {
+        display: none;
+    }
+
+    .days-field-personal__btn-group {
+        display: flex;
+    }
+}
+
+.days-field-personal td.worked {
+    background-color:  #79b4d7;
+}
+
+.days-field-personal td.weekend {
+    background-color:  #79d799;
+}
+
+.days-field-personal td.vacation {
+    background-color:  #8079d7;
+}

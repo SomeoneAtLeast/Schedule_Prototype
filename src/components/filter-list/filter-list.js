@@ -10,11 +10,15 @@ import weekendImg from "./../../global-imgs/weekend.svg"
 import vacationdImg from "./../../global-imgs/vacation.svg"
 
 export default class FilterList extends Component {
+    componentWillUnmount() {
+        this.props.onFilterSelect("all")
+    }
 
     render() {
         const {workedQuantity, allDaysQuantity, weekendsQuantity,
               vacationQuantity, onFilterSelect, onActive, allActive,
               workedActive, weekendsActive, vacationActive} = this.props;
+
         const buttons = [
             {name: "all",  label: "Все дни", img: allImg, id: -1, quantity: allDaysQuantity, active: allActive},
             {name: "worked",  label: "Рабочие", img: workImg, id: -2, quantity: workedQuantity, active: workedActive},

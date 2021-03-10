@@ -1,44 +1,41 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
 
-import "./days-field-item.scss";
+import "./days-field-personal-item.scss";
 import workImg from "./../../global-imgs/work.svg"
 import weekendImg from "./../../global-imgs/weekend.svg"
 import vacationdImg from "./../../global-imgs/vacation.svg"
 import crossImg from "./../../global-imgs/cross.svg"
 
-export default class DaysFieldItem extends Component {
+export default class DaysFieldItemPersonal extends Component {
 
     render () {
-        const {dayName, dayNumber, onMakeDayWorking, onMakeDayWeekend, onMakeDayVacation} = this.props;
+        const {workingHours, onMakeDayWorking, onMakeDayWeekend, onMakeDayVacation} = this.props;
 
         return (
             <div 
-                className = "days-field__item-body">
-                <span className="days-field__item-day-name">
-                    {dayName}
-                </span>
-                <span className="days-field__item-number">
-                    {dayNumber}
+                className = "days-field-personal__item-body">
+                <span className="days-field-personal__item-day-name">
+                    {workingHours}
                 </span>
                 <div
-                    className="days-field__btn-group">
+                    className="days-field-personal__btn-group">
                     <button 
-                        className="days-field__btn days-field__work-btn"
+                        className="days-field-personal__btn days-field-personal__work-btn"
                         onClick = {onMakeDayWorking}>
                         <img src={workImg} alt="Сделать рабочим"></img>
                     </button>
                     <button 
-                        className="days-field__btn days-field__work-btn"
+                        className="days-field-personal__btn days-field-personal__work-btn"
                         onClick = {onMakeDayWeekend}>
                         <img src={weekendImg} alt="Сделать выходным"></img>
                     </button>
                     <button 
-                        className="days-field__btn days-field__work-btn"
+                        className="days-field-personal__btn days-field-personal__work-btn"
                         onClick = {onMakeDayVacation}>
                         <img src={vacationdImg} alt="Сделать днем отпуска"></img>
                     </button>
-                    <button className="days-field__btn days-field__work-btn">
+                    <button className="days-field-personal__btn days-field-personal__work-btn">
                         <img src={crossImg} alt="Выйти"></img>
                     </button>
                 </div>
@@ -47,9 +44,9 @@ export default class DaysFieldItem extends Component {
     }
 }
 
-DaysFieldItem.propTypes = {
+DaysFieldItemPersonal.propTypes = {
     dayName: PropTypes.string,
-    dayNumber: PropTypes.number,
+    workingHours: PropTypes.number,
     onMakeDayWorking: PropTypes.func,
     onMakeDayWeekend: PropTypes.func,
     onMakeDayVacation: PropTypes.func,

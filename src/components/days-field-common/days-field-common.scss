@@ -1,0 +1,29 @@
+.days-field-common {
+    background-color: cadetblue;
+    border-collapse: collapse;
+}
+
+.days-field-common-item {
+    padding: 5px 0;
+    width: 30px;
+    text-align: center;
+    background-color: darkgreen;
+    border: 4px solid rgb(105, 109, 121);
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #cc628e;
+}
+
+.worked {
+    background-color: #79b4d7;
+}
+
+.weekend {
+    background-color: #79d799;
+}
+
+.vacation {
+    background-color: #8079d7;
+}
