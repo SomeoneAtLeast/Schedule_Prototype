@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from "react";
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-
+import {Route} from 'react-router-dom';
+import {connect} from "react-redux"
+import {SelectWorker, filterDays, filterWorker} from "../..//store/actions"
 import "./app.scss";
-
-import {workers} from "../../models/app-model"
 
 import FilterList from "../filter-list";
 import DaysFieldPresonal from "../days-field-porsonal"
@@ -20,25 +20,13 @@ import WorkingShifts from "../working-shifts"
 // MVC (начато)
 // пофиксить ошибку при попытки назначить день не выбрав его
 
-export default class App extends Component {
+class App extends Component {
     constructor (props) {
         super(props);
-
-        this.state = {
-            workers: workers,
-            selectedWorker: 0,
-            selectedDay: 0,
-            filter: "all",
-            allActive: true,
-            workedActive: false,
-            weekendsActive: false,
-            vacationActive: false
-        };
         
         this.onChangeDayType = this.onChangeDayType.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
         this.onActive = this.onActive.bind(this);
-        this.onSelectWorker = this.onSelectWorker.bind(this);
         this.onSelectDay = this.onSelectDay.bind(this);
         this.onClearAllDays = this.onClearAllDays.bind(this);
     }
@@ -129,39 +117,6 @@ export default class App extends Component {
             }
         });
     }
-    
-    filterDays(workers, filter) {
-        if(filter === "worked") {
-            return  workers.filter(item => item.worked)
-        } else if (filter === "weekends") {
-            return  workers.filter(item => item.weekend) 
-        } else if (filter === "vacation") {
-            return  workers.filter(item => item.vacation) 
-        } else {
-            return  workers
-        }
-    }
-
-    filterWorker(workers, selectedWorker, filter) {
-        if(filter === "worked") {
-            const workedDays = workers.filter(item => item.worked);
-            const newWorker = {...this.state.workers[selectedWorker], days: workedDays}
-            const newWorkers = [...this.state.workers.slice(0, selectedWorker), newWorker, ...this.state.workers.slice(selectedWorker + 1)];
-            return  newWorkers
-        } else if (filter === "weekends") {
-            const weekendDays = workers.filter(item => item.weekend);
-            const newWorker = {...this.state.workers[selectedWorker], days: weekendDays}
-            const newWorkers = [...this.state.workers.slice(0, selectedWorker), newWorker, ...this.state.workers.slice(selectedWorker + 1)];
-            return  newWorkers
-        } else if (filter === "vacation") {
-            const vacationDays = workers.filter(item => item.vacation);
-            const newWorker = {...this.state.workers[selectedWorker], days: vacationDays}
-            const newWorkers = [...this.state.workers.slice(0, selectedWorker), newWorker, ...this.state.workers.slice(selectedWorker + 1)];
-            return  newWorkers
-        } else {
-            return  this.state.workers
-        }
-    }
 
     onFilterSelect(filter) {
         this.setState({
@@ -205,12 +160,6 @@ export default class App extends Component {
         }
     }
 
-    onSelectWorker(id) {
-        this.setState({
-            selectedWorker: id
-        })
-    }
-
     onSelectDay(selectedWorker, selectedDay) {
         console.log(selectedWorker, selectedDay)
         this.setState({
@@ -237,76 +186,102 @@ export default class App extends Component {
     }
 
     render() {
-        const {workers, filter, selectedWorker, selectedDay, allActive, workedActive, weekendsActive, vacationActive} = this.state;
+
+       const {workers, selectedWorker, selectedDay, filter, allActive, workedActive, weekendsActive, vacationActive, SelectWorker, filterDays, filterWorker} = this.props;
+        console.log(filter)
         const workedQuantity = workers[selectedWorker].days.filter(item => item.worked).length;
         const weekendsQuantity = workers[selectedWorker].days.filter(item => item.weekend).length;
         const vacationQuantity = workers[selectedWorker].days.filter(item => item.vacation).length;
         const allDaysQuantity = workers[selectedWorker].days.length;
-        const visibleDays = this.filterDays(workers[selectedWorker].days, filter)
-        const visibleWorkers = this.filterWorker(workers[selectedWorker].days, selectedWorker, filter)
-
+        const visibleDays = filterDays(workers[selectedWorker].days, filter);
+        const visibleWorkers = filterWorker(workers[selectedWorker].days, selectedWorker, filter);
+        console.log(visibleWorkers);
         return (
-            <Router>
-                <div className = "app">
-                    <div className="header">
-                        <div className="header__main-nav">
-                            <Route path="/" component={MainNav}/>
-                        </div>
-                        <div className="header__second-nav">
-                            <Route path="/personalschedule/:id" exact render={() => {
-                                return (
-                                    <FilterList
-                                        workedQuantity = {workedQuantity}
-                                        allDaysQuantity = {allDaysQuantity}
-                                        weekendsQuantity = {weekendsQuantity}
-                                        vacationQuantity = {vacationQuantity}
-                                        allActive = {allActive}
-                                        workedActive = {workedActive}
-                                        weekendsActive = {weekendsActive}
-                                        vacationActive = {vacationActive}
-                                        onFilterSelect = {this.onFilterSelect}
-                                        onActive={this.onActive}/>
-                                )
-                            }}/>
-                        </div>
+            <div className = "app">
+                <div className="header">
+                    <div className="header__main-nav">
+                        <Route path="/" component={MainNav}/>
                     </div>
-                    <div className="main">
-                        <div className="controls">
-                            <Route path="/" exact render={() => {
-                                    return (
-                                        <DaysFieldCommonControls
-                                            onChangeDayType = {this.onChangeDayType}
-                                            onClearAllDays = {this.onClearAllDays}
-                                            selectedWorker = {selectedWorker}
-                                            selectedDay = {selectedDay}/>
-                                    )
-                                }}/>
-                        </div>
-                        <Route path="/seats" component={SeatsField}/>
-                        <Route path="/workingshifts" component={WorkingShifts}/>
-                        <Route path="/" exact render={() => {
+                    <div className="header__second-nav">
+                        <Route path="/personalschedule/:id" exact render={() => {
                             return (
-                                <DaysFieldCommon
-                                    workers = {workers}
-                                    onSelectWorker = {this.onSelectWorker}
-                                    onSelectDay={this.onSelectDay}/>
-                            )
-                        }}/>
-                        <Route path="/personalschedule/:id" render={({match}) => {
-                            const {id} = match.params;
-                            return (
-                                <DaysFieldPresonal
-                                    days = {visibleDays}
-                                    workers = {visibleWorkers}
-                                    selectedWorker = {id - 1}
-                                    onChangeDayType = {this.onChangeDayType}
-                                    onSelectWorker = {() => this.onSelectWorker(id - 1)}
-                                    onClearAllDays = {this.onClearAllDays}/>
+                                <FilterList
+                                    workedQuantity = {workedQuantity}
+                                    allDaysQuantity = {allDaysQuantity}
+                                    weekendsQuantity = {weekendsQuantity}
+                                    vacationQuantity = {vacationQuantity}
+                                    allActive = {allActive}
+                                    workedActive = {workedActive}
+                                    weekendsActive = {weekendsActive}
+                                    vacationActive = {vacationActive}
+                                    // onFilterSelect = {this.onFilterSelect}
+                                    // onActive={this.onActive}
+                                    />
                             )
                         }}/>
                     </div>
                 </div>
-            </Router>
+                <div className="main">
+                    <div className="controls">
+                        <Route path="/" exact render={() => {
+                                return (
+                                    <DaysFieldCommonControls
+                                        // onChangeDayType = {this.onChangeDayType}
+                                        // onClearAllDays = {this.onClearAllDays}
+                                        selectedWorker = {selectedWorker}
+                                        selectedDay = {selectedDay}
+                                        />
+                                )
+                            }}/>
+                    </div>
+                    <Route path="/seats" component={SeatsField}/>
+                    <Route path="/workingshifts" component={WorkingShifts}/>
+                    <Route path="/" exact render={() => {
+                        return (
+                            <DaysFieldCommon
+                                workers = {workers}
+                                SelectWorker = {SelectWorker}
+                                // onSelectDay={this.onSelectDay}
+                                />
+                        )
+                    }}/>
+                    <Route path="/personalschedule/:id" render={({match}) => {
+                        const {id} = match.params;
+                        return (
+                            <DaysFieldPresonal
+                                days = {visibleDays}
+                                workers = {visibleWorkers}
+                                selectedWorker = {id - 1}
+                                // onChangeDayType = {this.onChangeDayType}
+                                // onSelectWorker = {() => this.onSelectWorker(id - 1)}
+                                // onClearAllDays = {this.onClearAllDays}
+                                />
+                        )
+                    }}/>
+                </div>
+            </div>
         )
     }
 }
+
+const mapDispatchToProps = {
+    SelectWorker,
+    filterDays,
+    filterWorker
+}
+
+const mapStateToProps = ({workers, selectedWorker, selectedDay, filter, allActive,
+    workedActive, weekendsActive, vacationActive}) => {
+    return {
+        workers,
+        selectedWorker,
+        selectedDay,
+        filter,
+        allActive,
+        workedActive,
+        weekendsActive,
+        vacationActive
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

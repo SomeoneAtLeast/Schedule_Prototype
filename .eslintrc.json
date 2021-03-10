@@ -19,5 +19,7 @@
     ],
     "rules": {
         "react/display-name": "off"
-    }
+    },
+    "parser": "babel-eslint"
+
 }

@@ -78,7 +78,7 @@ export default class DaysFieldPresonal extends Component {
     render() {
         const {days, selectedWorker} = this.props;
 
-        const daysNumbers = days.map((item) => {
+        const daysNumbers = days.workers.map((item) => {
 
             return (
                 <th className = "days-field-personal-item" 

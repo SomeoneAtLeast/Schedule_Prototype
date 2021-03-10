@@ -3,7 +3,7 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, onSelectWorker, onSelectDay}) => {
+const DaysFieldCommon = ({workers, SelectWorker, onSelectDay}) => {
 
     const daysNumbers = workers[0].days.map((item) => {
 
@@ -21,7 +21,7 @@ const DaysFieldCommon = ({workers, onSelectWorker, onSelectDay}) => {
         daysInMonth.push(
             <td className = "days-field-common-item" 
                 key={workerNumber}
-                onClick={() => onSelectWorker(workerNumber)}>
+                onClick={() => SelectWorker(workerNumber)}>
                     <Link to={`/personalschedule/${workerNumber + 1}`} className = "days-field-common-item-link">
                         {workers[workerNumber].name}
                     </Link>
