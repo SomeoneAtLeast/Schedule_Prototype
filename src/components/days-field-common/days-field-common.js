@@ -1,10 +1,11 @@
-/* eslint-disable react/prop-types */
 import React from "react";
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {connect} from "react-redux"
+import {SelectWorker, ChangeDayType, SelectDay} from "../../store/actions"
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, SelectWorker, onSelectDay}) => {
-
+const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
     const daysNumbers = workers[0].days.map((item) => {
 
         return (
@@ -47,10 +48,15 @@ const DaysFieldCommon = ({workers, SelectWorker, onSelectDay}) => {
                 classNames += " vacation";
             }
 
+            const kek = () => {
+                console.log(workers[workerNumber].id, workers[workerNumber].days[i - 1].id)
+                SelectDay(workers[workerNumber].id, workers[workerNumber].days[i - 1].id);
+                ChangeDayType(workers[workerNumber].id, workers[workerNumber].days[i - 1].id, "selected")
+            }
             daysInMonth.push(
                 <td className = {classNames}
                     key={i + 1000}
-                    onClick={() => onSelectDay(workers[workerNumber].id, workers[workerNumber].days[i - 1].id)}>
+                    onClick={() => kek()}>
                     {workers[workerNumber].days[i - 1].workingHours}
                 </td>
             )
@@ -96,5 +102,23 @@ const DaysFieldCommon = ({workers, SelectWorker, onSelectDay}) => {
     )
 }
 
+DaysFieldCommon.propTypes = {
+    workers: PropTypes.array,
+    SelectWorker: PropTypes.func,
+    SelectDay: PropTypes.func,
+    ChangeDayType: PropTypes.func,
+}
 
-export default DaysFieldCommon;
+const mapDispatchToProps = {
+    SelectWorker, 
+    ChangeDayType,
+    SelectDay
+}
+
+const mapStateToProps = ({workers}) => {
+    return {
+        workers
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DaysFieldCommon);

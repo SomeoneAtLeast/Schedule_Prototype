@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import {connect} from "react-redux"
+import {ClearAllDays, ChangeDayType} from "../../store/actions"
 
 import "./days-field-common-controls.scss"
 
@@ -15,7 +17,7 @@ const buttonsArr = [
     {name: "clear",  label: "Убрать назначения", img: clearImg, id: -5}
 ]
 
-const DaysFieldCommonControls = ({selectedWorker, selectedDay, onChangeDayType, onClearAllDays}) => {
+const DaysFieldCommonControls = ({selectedWorker, selectedDay, ChangeDayType, ClearAllDays}) => {
 
     const buttons = buttonsArr.map((item) => {
         const {name, label, img, id} = item;
@@ -24,7 +26,7 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, onChangeDayType, 
             <button
                 className="days-field-common-controls-btn"
                 key = {id}
-                onClick={() => onChangeDayType(selectedWorker, selectedDay, name)}>   
+                onClick={() => ChangeDayType(selectedWorker, selectedDay, name)}>   
                     <img className="days-field-common-controls-btn__img" src={img} alt={label}></img>
                     <span className="days-field-common-controls-btn__text">
                         {label}
@@ -38,7 +40,7 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, onChangeDayType, 
 
                 <button
                 className="days-field-common-controls-btn"
-                onClick={() => onClearAllDays()}>   
+                onClick={() => ClearAllDays()}>   
                     <img className="days-field-common-controls-btn__img"></img>
                     <span className="days-field-common-controls-btn__text">
                         ABOBA
@@ -49,4 +51,17 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, onChangeDayType, 
 
 }
 
-export default DaysFieldCommonControls;
+const mapDispatchToProps = {
+    ClearAllDays, 
+    ChangeDayType,
+
+}
+
+const mapStateToProps = ({ selectedWorker, selectedDay}) => {
+    return {
+        selectedWorker,
+        selectedDay,
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DaysFieldCommonControls);

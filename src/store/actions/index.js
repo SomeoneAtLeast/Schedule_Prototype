@@ -1,30 +1,54 @@
 const SelectWorker = (id) => {
     return {
         type: "Select-Worker",
-        selectedWorker: id
+        id
     }
 }
 
-const filterDays = (workers, filter) => {
+const ClearAllDays = () => {
     return {
-        type: "Filter-Days",
-        workers,
+        type: "Clear-All-Days"
+    }
+}
+
+const ChangeDayType = (workerId, dayId, objKey, scheduleType = "common") => {
+    return {
+        type: "Change-Day-Type",
+        workerId,
+        dayId,
+        objKey,
+        scheduleType
+    }
+}
+
+const FilterSelect = (filter) => {
+    return {
+        type: "Filter-Select",
         filter
     }
 }
 
-const filterWorker = (workers, selectedWorker, filter) => {
+const MakeActive = (id) => {
     return {
-        type: "Filter-Worker",
-        workers,
-        filter,
-        selectedWorker
+        type: "Make-Active",
+        id
     }
 }
 
+const SelectDay = (selectedWorker, selectedDay, ChangeDayType) => {
+    return {
+        type: "Select-Day",
+        selectedWorker, 
+        selectedDay,
+        ChangeDayType
+    }
+}
 
 export {
     SelectWorker,
-    filterDays,
-    filterWorker
+    ClearAllDays,
+    ChangeDayType,
+    FilterSelect,
+    MakeActive,
+    SelectDay
 }
