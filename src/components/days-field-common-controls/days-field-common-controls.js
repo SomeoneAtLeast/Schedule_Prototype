@@ -10,7 +10,7 @@ import weekendImg from "./../../global-imgs/weekend.svg"
 import vacationdImg from "./../../global-imgs/vacation.svg"
 import clearImg from "./../../global-imgs/clear.svg"
 
-const buttonsArr = [
+const buttons = [
     {name: "worked",  label: "Назначить Рабочими", img: workImg, id: -2},
     {name: "weekend",  label: "Назначить Выходными", img: weekendImg, id: -3},
     {name: "vacation",  label: "Назначить Отпуском", img: vacationdImg, id: -4},
@@ -18,25 +18,25 @@ const buttonsArr = [
 ]
 
 const DaysFieldCommonControls = ({selectedWorker, selectedDay, ChangeDayType, ClearAllDays}) => {
-
-    const buttons = buttonsArr.map((item) => {
-        const {name, label, img, id} = item;
-    
-        return (
-            <button
-                className="days-field-common-controls-btn"
-                key = {id}
-                onClick={() => ChangeDayType(selectedWorker, selectedDay, name)}>   
-                    <img className="days-field-common-controls-btn__img" src={img} alt={label}></img>
-                    <span className="days-field-common-controls-btn__text">
-                        {label}
-                    </span>
-            </button>
-        )
-    })
         return (
             <div className="controls">
-                {buttons}
+                {
+                    buttons.map((item) => {
+                        const {name, label, img, id} = item;
+                    
+                        return (
+                            <button
+                                className="days-field-common-controls-btn"
+                                key = {id}
+                                onClick={() => ChangeDayType(selectedWorker, selectedDay, name)}>   
+                                    <img className="days-field-common-controls-btn__img" src={img} alt={label}></img>
+                                    <span className="days-field-common-controls-btn__text">
+                                        {label}
+                                    </span>
+                            </button>
+                        )
+                    })
+                }
 
                 <button
                 className="days-field-common-controls-btn"
@@ -53,14 +53,13 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, ChangeDayType, Cl
 
 const mapDispatchToProps = {
     ClearAllDays, 
-    ChangeDayType,
-
+    ChangeDayType
 }
 
 const mapStateToProps = ({ selectedWorker, selectedDay}) => {
     return {
         selectedWorker,
-        selectedDay,
+        selectedDay
     }
 }
 

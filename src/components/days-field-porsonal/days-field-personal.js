@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux"
-import {SelectWorker, ClearAllDays, ChangeDayType} from "../../store/actions"
+import {ClearAllDays, ChangeDayType, SelectWorker} from "../../store/actions"
 
 import "./days-field-personal.scss"
 
@@ -15,7 +15,7 @@ class DaysFieldPresonal extends Component {
     }
 
     componentDidMount() {
-        this.props.SelectWorker();
+        this.props.SelectWorker(this.props.selectedWorker);
         this.props.ClearAllDays();
     }
 
@@ -23,9 +23,43 @@ class DaysFieldPresonal extends Component {
         this.props.ClearAllDays();
     }
 
-    getWorkerPresonalDays (workerNumber) {
-        const {workers, ChangeDayType} = this.props;
+    filterDays(workers, filter) {
+        if(filter === "worked") {
+            return  workers.filter(item => item.worked)
+        } else if (filter === "weekends") {
+            return  workers.filter(item => item.weekend) 
+        } else if (filter === "vacation") {
+            return  workers.filter(item => item.vacation) 
+        } else {
+            return  workers
+        }
+    }
 
+    filterWorkers(workersArr, selectedWorker, filter) {
+        const {workers} = this.props;
+        if(filter === "worked") {
+            const workedDays = workersArr.filter(item => item.worked);
+            const newWorker = {...workers[selectedWorker], days: workedDays}
+            const newWorkers = [...workers.slice(0, selectedWorker), newWorker, ...workers.slice(selectedWorker + 1)];
+            return  newWorkers
+        } else if (filter === "weekends") {
+            const weekendDays = workersArr.filter(item => item.weekend);
+            const newWorker = {...workers[selectedWorker], days: weekendDays}
+            const newWorkers = [...workers.slice(0, selectedWorker), newWorker, ...workers.slice(selectedWorker + 1)];
+            return  newWorkers
+        } else if (filter === "vacation") {
+            const vacationDays = workersArr.filter(item => item.vacation);
+            const newWorker = {...workers[selectedWorker], days: vacationDays}
+            const newWorkers = [...workers.slice(0, selectedWorker), newWorker, ...workers.slice(selectedWorker + 1)];
+            return  newWorkers
+        } else {
+            return  workers
+        }
+    }
+
+    getWorkerPresonalDays (workerNumber) {
+        const {workers, ChangeDayType, selectedWorker, filter} = this.props;
+        const visibleWorkers = this.filterWorkers(workers[selectedWorker].days, selectedWorker, filter)
         let daysInMonth = [];
 
         daysInMonth.push(
@@ -34,7 +68,7 @@ class DaysFieldPresonal extends Component {
                 {workers[workerNumber].name}
             </td>
         )
-        const daysFieldElements = workers[workerNumber].days.map((item) => {
+        const daysFieldElements = visibleWorkers[workerNumber].days.map((item) => {
             
             let classNames = "days-field-personal__item";
             const {weekend, worked, vacation, selected} = item;
@@ -78,12 +112,10 @@ class DaysFieldPresonal extends Component {
     }
 
     render() {
-        const {days, selectedWorker} = this.props;
-        // закончить тут
+        const {workers, selectedWorker, filter} = this.props;
         const visibleDays = this.filterDays(workers[selectedWorker].days, filter)
-        const visibleWorkers = this.filterWorkers(workers[selectedWorker].days, selectedWorker, filter)
 
-        const daysNumbers = days.map((item) => {
+        const daysNumbers = visibleDays.map((item) => {
 
             return (
                 <th className = "days-field-personal-item" 
@@ -118,20 +150,13 @@ DaysFieldPresonal.propTypes = {
 
 }
 
-days = {visibleDays}
-workers = {visibleWorkers}
-selectedWorker = {id - 1}
-ChangeDayType = {ChangeDayType}
-SelectWorker = {() => SelectWorker(id - 1)}
-ClearAllDays = {ClearAllDays}
-
-const mapDispatchToProps = {
-    SelectWorker, 
+const mapDispatchToProps = { 
     ClearAllDays, 
-    ChangeDayType
+    ChangeDayType,
+    SelectWorker
 }
 
-const mapStateToProps = ({workers, selectedWorker, selectedDay, filter}) => {
+const mapStateToProps = ({workers, selectedDay, filter, selectedWorker}) => {
     return {
         workers,
         selectedWorker,

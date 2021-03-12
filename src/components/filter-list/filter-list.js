@@ -20,10 +20,10 @@ class FilterList extends Component {
         const {workers, selectedWorker, FilterSelect, MakeActive, allActive,
               workedActive, weekendsActive, vacationActive} = this.props;
 
-              const workedQuantity = workers[selectedWorker].days.filter(item => item.worked).length;
-              const weekendsQuantity = workers[selectedWorker].days.filter(item => item.weekend).length;
-              const vacationQuantity = workers[selectedWorker].days.filter(item => item.vacation).length;
-              const allDaysQuantity = workers[selectedWorker].days.length;
+        const workedQuantity = workers[selectedWorker].days.filter(item => item.worked).length;
+        const weekendsQuantity = workers[selectedWorker].days.filter(item => item.weekend).length;
+        const vacationQuantity = workers[selectedWorker].days.filter(item => item.vacation).length;
+        const allDaysQuantity = workers[selectedWorker].days.length;
 
         const buttons = [
             {name: "all",  label: "Все дни", img: allImg, id: -1, quantity: allDaysQuantity, active: allActive},

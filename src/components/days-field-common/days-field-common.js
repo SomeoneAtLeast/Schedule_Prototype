@@ -48,15 +48,14 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
                 classNames += " vacation";
             }
 
-            const kek = () => {
-                console.log(workers[workerNumber].id, workers[workerNumber].days[i - 1].id)
+            const SelectDayAndChangeDayType = () => {
                 SelectDay(workers[workerNumber].id, workers[workerNumber].days[i - 1].id);
                 ChangeDayType(workers[workerNumber].id, workers[workerNumber].days[i - 1].id, "selected")
             }
             daysInMonth.push(
                 <td className = {classNames}
                     key={i + 1000}
-                    onClick={() => kek()}>
+                    onClick={() => SelectDayAndChangeDayType()}>
                     {workers[workerNumber].days[i - 1].workingHours}
                 </td>
             )

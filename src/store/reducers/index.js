@@ -32,6 +32,13 @@ const reducer = (state = initialState, action) => {
             }
         }
         case "Change-Day-Type": {
+            
+            if (action.workerId === 0 || action.dayId === 0) {
+                return {
+                    ...state 
+                }
+            }
+
             const {workers} = state;
             const workerIndex = workers.findIndex(elem => elem.id === action.workerId);
             const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === action.dayId); 
