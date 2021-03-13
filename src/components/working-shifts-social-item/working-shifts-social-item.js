@@ -1,14 +1,17 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
+import {connect} from "react-redux"
+import {TextChange} from "../../store/actions"
 
 import  "./working-shifts-social-item.scss"
-export default class WorkingShiftsSocialItem extends Component {
+class WorkingShiftsSocialItem extends Component {
     constructor(props) {
         super(props);
     }
 
     makeCells(startNumber, finishNumber, shiftNumberName) {
-        const {shift, shifts, id, onTextChange} = this.props;
+        const {shift, shifts, id, TextChange} = this.props;
 
         let cells = [];
         for (let i = startNumber; i <= finishNumber; i++) {
@@ -20,7 +23,7 @@ export default class WorkingShiftsSocialItem extends Component {
                             className="working-shifts__table-header-value"
                             type="text"
                             value={shift[`worker${i}`]}
-                            onChange={onTextChange((id), shifts, `worker${i}`)}/>
+                            onChange={(e) => TextChange((id), shifts, `worker${i}`, e)}/>
                 </td>
             );
         }
@@ -30,7 +33,7 @@ export default class WorkingShiftsSocialItem extends Component {
                             className="working-shifts__table-header-value"
                             type="text"
                             value={shifts[id - 100][shiftNumberName]}
-                            onChange={onTextChange(id, shifts, shiftNumberName)}/>
+                            onChange={(e) => TextChange(id, shifts, shiftNumberName, e)}/>
             </td>);
 
 
@@ -63,3 +66,16 @@ WorkingShiftsSocialItem.propTypes = {
     id: PropTypes.number,
     onTextChange: PropTypes.func
 }
+
+const mapDispatchToProps = {
+    TextChange
+}
+
+const mapStateToProps = ({shifts}) => {
+
+    return {
+        shifts,
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkingShiftsSocialItem);

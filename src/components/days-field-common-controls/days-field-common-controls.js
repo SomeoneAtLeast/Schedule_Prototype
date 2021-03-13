@@ -56,7 +56,7 @@ const mapDispatchToProps = {
     ChangeDayType
 }
 
-const mapStateToProps = ({ selectedWorker, selectedDay}) => {
+const mapStateToProps = ({selectedWorker, selectedDay}) => {
     return {
         selectedWorker,
         selectedDay

@@ -1,69 +1,20 @@
-import React, {Component} from "react";
+/* eslint-disable react/prop-types */
+import React from "react";
+import {connect} from "react-redux"
+import {TextChange} from "../../store/actions"
 
 import  "./working-shifts.scss"
-
-import {shifts, kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 
 import WorkingShiftsSocialItem from "../working-shifts-social-item"
 import WorkingShiftsKmItem from "../working-shifts-km-item"
 
-export default class WorkingShifts extends Component {
-    constructor() {
-        super();
-
-        this.state = {
-            shifts: shifts,
-            glTable: glTable,
-            kmTable: kmArr,
-            kmShifts: kmShifts,
-            workTeamsNames: workTeamsNames,
-            months: months,
-        }
-    }
-
-    render() {
-        const {shifts, glTable, kmTable, kmShifts, workTeamsNames, months} = this.state;
-
-        const onTextChange = (id, dataArr, objKey) => (e) => {
-            this.setState(() => {
-                const index = dataArr.findIndex(elem => elem.id === id); 
-                const obj = dataArr[index];
-                const newObj = {...obj};
-                newObj[objKey] = e.target.value;
-                const newArr = [...dataArr.slice(0, index), newObj, ...dataArr.slice(index + 1)];
-                if (dataArr === shifts) {
-                    return {
-                        shifts: newArr
-                    } 
-                } else if (dataArr === glTable) {
-                    return {
-                        glTable: newArr
-                    } 
-                } else if (dataArr === kmShifts) {
-                    return {
-                        kmShifts: newArr
-                    } 
-                } else if (dataArr === kmTable) {
-                    return {
-                        kmTable: newArr
-                    } 
-                } else if (dataArr === workTeamsNames) {
-                    return {
-                        workTeamsNames: newArr
-                    } 
-                } else if (dataArr === months) {
-                    return {
-                        months: newArr
-                    } 
-                }
-            })
-        }
+const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTable, TextChange}) => {
 
         const table = (startTime, finishTime, numberOfRows, shiftNumber, key) => {
             let rows = [];
             
             for (let i = 0; i <= numberOfRows; i++) {
-                rows.push(<WorkingShiftsSocialItem shift={shifts[shiftNumber]} shifts={shifts} onTextChange={onTextChange} key={key} id={key}/>);
+                rows.push(<WorkingShiftsSocialItem shift={shifts[shiftNumber]} key={key} id={key}/>);
             }
     
             return (
@@ -79,13 +30,13 @@ export default class WorkingShifts extends Component {
                                         className="working-shifts__table-header-value"
                                         type="text"
                                         value={startTime}
-                                        onChange={onTextChange(key, this.state.shifts, "startTime")}/>
+                                        onChange={(e) => TextChange(key, shifts, "startTime", e)}/>
                                     до
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
                                         value={finishTime}
-                                        onChange={onTextChange(key, this.state.shifts, "finishTime")}/>
+                                        onChange={(e) => TextChange(key, shifts, "finishTime", e)}/>
                             </th>
                         </tr>
                         {rows}
@@ -106,7 +57,7 @@ export default class WorkingShifts extends Component {
         const tableKmRows = (number) => {
             let rows = [];
             for (let i = 0; i < number; i++) {
-                rows.push(<WorkingShiftsKmItem kmShifts={this.state.kmShifts} key={this.state.kmShifts[i].id} id={this.state.kmShifts[i].id} onTextChange={onTextChange}/>);
+                rows.push(<WorkingShiftsKmItem kmShifts={kmShifts} key={kmShifts[i].id} id={kmShifts[i].id} onTextChange={TextChange}/>);
             }
             return (
                 rows
@@ -114,7 +65,7 @@ export default class WorkingShifts extends Component {
         }
         
         const getGlCells = (state, value, className, colSpan = 1) => {
-            const glCells = this.state[state].map((item) => {
+            const glCells = state.map((item) => {
                 const {id} = item;
 
                 let insideValue = "";
@@ -137,7 +88,7 @@ export default class WorkingShifts extends Component {
                         <input
                             className="working-shifts__table-header-value"
                             type="text"
-                            onChange={onTextChange(id, this.state[state], insideValue)}
+                            onChange={(e) => TextChange(id, state, insideValue, e)}
                             value={item[insideValue]}
                             />
                     </td>
@@ -155,8 +106,8 @@ export default class WorkingShifts extends Component {
                     <input
                             className="working-shifts__table-header-value"
                             type="text"
-                            onChange={onTextChange(2, this.state.months, "month")}
-                            value={this.state.months[0].month}
+                            onChange={(e) => TextChange(2, months, "month", e)}
+                            value={months[0].month}
                             />
                 </div>
                 <div className="working-shifts__table-wrapper">
@@ -165,19 +116,19 @@ export default class WorkingShifts extends Component {
                             <input
                                 className="working-shifts__table-header-value"
                                 type="text"
-                                onChange={onTextChange(1, this.state.workTeamsNames, "workTeamsName")}
-                                value={this.state.workTeamsNames[0].workTeamsName}
+                                onChange={(e) => TextChange(1, workTeamsNames, "workTeamsName", e)}
+                                value={workTeamsNames[0].workTeamsName}
                                 />
                         </caption>
                         <tbody>
                             <tr className="working-shifts__table-row-header working-shifts__table-row-gl">
-                                {getGlCells("glTable", "name", "working-shifts__table-header working-shifts__table-header-gl")}
+                                {getGlCells(glTable, "name", "working-shifts__table-header working-shifts__table-header-gl")}
                             </tr>
                             <tr className="working-shifts__table-row working-shifts__table-row-team">
-                                {getGlCells("glTable", "teamName", "working-shifts__table-cell working-shifts__table-cell-team")}
+                                {getGlCells(glTable, "teamName", "working-shifts__table-cell working-shifts__table-cell-team")}
                             </tr> 
                             <tr className="working-shifts__table-row working-shifts__table-row-shifts">
-                                {getGlCells("glTable", "shiftNumber", "working-shifts__table-cell working-shifts__table-cell-shift")}
+                                {getGlCells(glTable, "shiftNumber", "working-shifts__table-cell working-shifts__table-cell-shift")}
                             </tr>
                         </tbody>
                     </table>
@@ -189,14 +140,14 @@ export default class WorkingShifts extends Component {
                             <input
                                     className="working-shifts__table-header-value"
                                     type="text"
-                                    onChange={onTextChange(2, this.state.workTeamsNames, "workTeamsName")}
-                                    value={this.state.workTeamsNames[1].workTeamsName}
+                                    onChange={(e) => TextChange(2, workTeamsNames, "workTeamsName", e)}
+                                    value={workTeamsNames[1].workTeamsName}
                                     />
                         </caption>
                         <tbody>
                             <tr className="working-shifts__table-row-header working-shifts__table-row-gl">
-                                {getGlCells("kmTable", "name", "working-shifts__table-header working-shifts__table-header-gl", 3)}
-                                {getGlCells("kmTable", "shiftName", "working-shifts__table-header working-shifts__table-header-gl")}
+                                {getGlCells(kmTable, "name", "working-shifts__table-header working-shifts__table-header-gl", 3)}
+                                {getGlCells(kmTable, "shiftName", "working-shifts__table-header working-shifts__table-header-gl")}
 
                             </tr>
                             {tableKmRows(7)}
@@ -205,5 +156,22 @@ export default class WorkingShifts extends Component {
                 </div>
             </div>
         )
+}
+
+const mapDispatchToProps = {
+    TextChange
+}
+
+const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmTable}) => {
+
+    return {
+        shifts,
+        kmShifts,
+        months,
+        workTeamsNames,
+        glTable,
+        kmTable,
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkingShifts);
