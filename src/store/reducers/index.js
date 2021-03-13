@@ -183,13 +183,12 @@ const reducer = (state = initialState, action) => {
             }
         }
         case "Text-Change": {
-            console.log("LOL")
             const index = action.dataArr.findIndex(elem => elem.id === action.id); 
             const obj = action.dataArr[index];
             const newObj = {...obj};
             newObj[action.objKey] = action.e.target.value;
             const newArr = [...action.dataArr.slice(0, index), newObj, ...action.dataArr.slice(index + 1)];
-            if (action.dataArr === shifts) {
+            if (action.dataArr === state.shifts) {
                 return {
                     ...state,
                     shifts: newArr

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {Component} from "react";
+import React from "react";
 import {connect} from "react-redux"
 import {TextChange} from "../../store/actions"
 
@@ -8,16 +8,13 @@ import  "./working-shifts.scss"
 import WorkingShiftsSocialItem from "../working-shifts-social-item"
 import WorkingShiftsKmItem from "../working-shifts-km-item"
 
-class WorkingShifts extends Component {
-
-    render() {
-        const {shifts, kmShifts, months, workTeamsNames} = this.props;
+const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTable, TextChange}) => {
 
         const table = (startTime, finishTime, numberOfRows, shiftNumber, key) => {
             let rows = [];
             
             for (let i = 0; i <= numberOfRows; i++) {
-                rows.push(<WorkingShiftsSocialItem shift={shifts[shiftNumber]} shifts={shifts} onTextChange={TextChange} key={key} id={key}/>);
+                rows.push(<WorkingShiftsSocialItem shift={shifts[shiftNumber]} key={key} id={key}/>);
             }
     
             return (
@@ -33,13 +30,13 @@ class WorkingShifts extends Component {
                                         className="working-shifts__table-header-value"
                                         type="text"
                                         value={startTime}
-                                        onChange={TextChange(key, shifts, "startTime")}/>
+                                        onChange={(e) => TextChange(key, shifts, "startTime", e)}/>
                                     до
                                     <input
                                         className="working-shifts__table-header-value"
                                         type="text"
                                         value={finishTime}
-                                        onChange={TextChange(key, shifts, "finishTime")}/>
+                                        onChange={(e) => TextChange(key, shifts, "finishTime", e)}/>
                             </th>
                         </tr>
                         {rows}
@@ -68,7 +65,7 @@ class WorkingShifts extends Component {
         }
         
         const getGlCells = (state, value, className, colSpan = 1) => {
-            const glCells = this.props[state].map((item) => {
+            const glCells = state.map((item) => {
                 const {id} = item;
 
                 let insideValue = "";
@@ -91,7 +88,7 @@ class WorkingShifts extends Component {
                         <input
                             className="working-shifts__table-header-value"
                             type="text"
-                            onChange={TextChange(id, this.props[state], insideValue)}
+                            onChange={(e) => TextChange(id, state, insideValue, e)}
                             value={item[insideValue]}
                             />
                     </td>
@@ -102,13 +99,14 @@ class WorkingShifts extends Component {
                 glCells
             )
         }
+
         return (
             <div className="working-shifts" key={123}>
                 <div className="working-shifts__table-month">
                     <input
                             className="working-shifts__table-header-value"
                             type="text"
-                            onChange={TextChange(2, months, "month")}
+                            onChange={(e) => TextChange(2, months, "month", e)}
                             value={months[0].month}
                             />
                 </div>
@@ -118,19 +116,19 @@ class WorkingShifts extends Component {
                             <input
                                 className="working-shifts__table-header-value"
                                 type="text"
-                                onChange={TextChange(1, workTeamsNames, "workTeamsName")}
+                                onChange={(e) => TextChange(1, workTeamsNames, "workTeamsName", e)}
                                 value={workTeamsNames[0].workTeamsName}
                                 />
                         </caption>
                         <tbody>
                             <tr className="working-shifts__table-row-header working-shifts__table-row-gl">
-                                {getGlCells("glTable", "name", "working-shifts__table-header working-shifts__table-header-gl")}
+                                {getGlCells(glTable, "name", "working-shifts__table-header working-shifts__table-header-gl")}
                             </tr>
                             <tr className="working-shifts__table-row working-shifts__table-row-team">
-                                {getGlCells("glTable", "teamName", "working-shifts__table-cell working-shifts__table-cell-team")}
+                                {getGlCells(glTable, "teamName", "working-shifts__table-cell working-shifts__table-cell-team")}
                             </tr> 
                             <tr className="working-shifts__table-row working-shifts__table-row-shifts">
-                                {getGlCells("glTable", "shiftNumber", "working-shifts__table-cell working-shifts__table-cell-shift")}
+                                {getGlCells(glTable, "shiftNumber", "working-shifts__table-cell working-shifts__table-cell-shift")}
                             </tr>
                         </tbody>
                     </table>
@@ -142,14 +140,14 @@ class WorkingShifts extends Component {
                             <input
                                     className="working-shifts__table-header-value"
                                     type="text"
-                                    onChange={TextChange(2, workTeamsNames, "workTeamsName")}
+                                    onChange={(e) => TextChange(2, workTeamsNames, "workTeamsName", e)}
                                     value={workTeamsNames[1].workTeamsName}
                                     />
                         </caption>
                         <tbody>
                             <tr className="working-shifts__table-row-header working-shifts__table-row-gl">
-                                {getGlCells("kmTable", "name", "working-shifts__table-header working-shifts__table-header-gl", 3)}
-                                {getGlCells("kmTable", "shiftName", "working-shifts__table-header working-shifts__table-header-gl")}
+                                {getGlCells(kmTable, "name", "working-shifts__table-header working-shifts__table-header-gl", 3)}
+                                {getGlCells(kmTable, "shiftName", "working-shifts__table-header working-shifts__table-header-gl")}
 
                             </tr>
                             {tableKmRows(7)}
@@ -158,7 +156,6 @@ class WorkingShifts extends Component {
                 </div>
             </div>
         )
-    }
 }
 
 const mapDispatchToProps = {
@@ -166,6 +163,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmTable}) => {
+
     return {
         shifts,
         kmShifts,
@@ -175,4 +173,5 @@ const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmT
         kmTable,
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(WorkingShifts);

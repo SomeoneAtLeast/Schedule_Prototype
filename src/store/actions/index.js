@@ -44,7 +44,8 @@ const SelectDay = (selectedWorker, selectedDay, ChangeDayType) => {
     }
 }
 
-const TextChange = (id, dataArr, objKey) => (e) => {
+const TextChange = (id, dataArr, objKey, e) => {
+    console.log(id, dataArr, objKey, e)
     return {
         type: "Text-Change",
         id, 

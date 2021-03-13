@@ -19,14 +19,14 @@ export default class WorkingShiftsKmItem extends Component {
                             className="working-shifts__table-header-value"
                             type="text"
                             value={kmShifts[id - 100].worker}
-                            onChange={onTextChange(id, kmShifts, "worker")}/>
+                            onChange={(e) => onTextChange(id, kmShifts, "worker", e)}/>
                     </td>
                 <td className="working-shifts__table-cell working-shifts__table-cell-worker">
                 <input
                             className="working-shifts__table-header-value"
                             type="text"
                             value={kmShifts[id - 100].shiftNumber}
-                            onChange={onTextChange(id, kmShifts, "shiftNumber")}/>
+                            onChange={(e) => onTextChange(id, kmShifts, "shiftNumber", e)}/>
                 </td>
             </tr>
         )
