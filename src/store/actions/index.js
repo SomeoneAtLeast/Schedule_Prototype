@@ -44,11 +44,22 @@ const SelectDay = (selectedWorker, selectedDay, ChangeDayType) => {
     }
 }
 
+const TextChange = (id, dataArr, objKey) => (e) => {
+    return {
+        type: "Text-Change",
+        id, 
+        dataArr,
+        objKey,
+        e
+    }
+}
+
 export {
     SelectWorker,
     ClearAllDays,
     ChangeDayType,
     FilterSelect,
     MakeActive,
-    SelectDay
+    SelectDay,
+    TextChange
 }

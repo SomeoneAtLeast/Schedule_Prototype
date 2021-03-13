@@ -1,16 +1,22 @@
 import {workers} from "../../models/app-model"
+import {shifts, kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 
 const initialState = {
-    workers: workers,
+    workers,
     selectedWorker: 0,
     selectedDay: 0,
     filter: "all",
     allActive: true,
     workedActive: false,
     weekendsActive: false,
-    vacationActive: false
+    vacationActive: false,
+    shifts,
+    glTable,
+    kmTable: kmArr,
+    kmShifts,
+    workTeamsNames,
+    months,
 }
-
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -176,6 +182,46 @@ const reducer = (state = initialState, action) => {
                 selectedDay: action.selectedDay,
             }
         }
+        case "Text-Change": {
+            console.log("LOL")
+            const index = action.dataArr.findIndex(elem => elem.id === action.id); 
+            const obj = action.dataArr[index];
+            const newObj = {...obj};
+            newObj[action.objKey] = action.e.target.value;
+            const newArr = [...action.dataArr.slice(0, index), newObj, ...action.dataArr.slice(index + 1)];
+            if (action.dataArr === shifts) {
+                return {
+                    ...state,
+                    shifts: newArr
+                } 
+            } else if (action.dataArr === state.glTable) {
+                return {
+                    ...state,
+                    glTable: newArr
+                } 
+            } else if (action.dataArr === state.kmShifts) {
+                return {
+                    ...state,
+                    kmShifts: newArr
+                } 
+            } else if (action.dataArr === state.kmTable) {
+                return {
+                    ...state,
+                    kmTable: newArr
+                } 
+            } else if (action.dataArr === state.workTeamsNames) {
+                return {
+                    ...state,
+                    workTeamsNames: newArr
+                } 
+            } else if (action.dataArr === state.months) {
+                return {
+                    ...state,
+                    months: newArr
+                } 
+            }
+        }
+        break;
         default:
             return state;    
     }
