@@ -1,5 +1,6 @@
 import {workers} from "../../models/app-model"
 import {shifts, kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
+import {seats} from "../../models/seats-model"
 
 const initialState = {
     workers,
@@ -16,6 +17,7 @@ const initialState = {
     kmShifts,
     workTeamsNames,
     months,
+    seats
 }
 
 const reducer = (state = initialState, action) => {
@@ -221,6 +223,17 @@ const reducer = (state = initialState, action) => {
             }
         }
         break;
+        case "Change-Seat-Text": {
+            const index = state.seats.findIndex(elem => elem.id === action.id); 
+            const oldSeat = state.seats[index];
+            const newSeat = {...oldSeat, oldIp: action.NewOldIp, newIp: action.NewNewIp, seatNumber: action.NewSeatNumber}
+            const newSeats = [...state.seats.slice(0, index), newSeat, ...state.seats.slice(index + 1)];
+    
+            return {
+                ...state,
+                seats: newSeats
+            }
+        }
         default:
             return state;    
     }

@@ -1,16 +1,15 @@
-import React, {Component} from "react";
+import React from "react";
 import PropTypes from 'prop-types';
+import {connect} from "react-redux"
 
 import "./days-field-personal-item.scss";
+
 import workImg from "./../../global-imgs/work.svg"
 import weekendImg from "./../../global-imgs/weekend.svg"
 import vacationdImg from "./../../global-imgs/vacation.svg"
 import crossImg from "./../../global-imgs/cross.svg"
 
-export default class DaysFieldItemPersonal extends Component {
-
-    render () {
-        const {workingHours, onMakeDayWorking, onMakeDayWeekend, onMakeDayVacation} = this.props;
+const DaysFieldItemPersonal = ({workingHours, onMakeDayWorking, onMakeDayWeekend, onMakeDayVacation}) => {
 
         return (
             <div 
@@ -41,7 +40,6 @@ export default class DaysFieldItemPersonal extends Component {
                 </div>
             </div>
         )
-    }
 }
 
 DaysFieldItemPersonal.propTypes = {
@@ -51,3 +49,5 @@ DaysFieldItemPersonal.propTypes = {
     onMakeDayWeekend: PropTypes.func,
     onMakeDayVacation: PropTypes.func,
 }
+
+export default connect()(DaysFieldItemPersonal);

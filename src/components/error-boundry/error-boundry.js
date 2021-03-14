@@ -1,5 +1,6 @@
-/* eslint-disable react/prop-types */
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 import ErrorMessage from '../error-message';
 
 export default class ErrorBoundry extends Component {
@@ -19,4 +20,8 @@ export default class ErrorBoundry extends Component {
 
         return this.props.children;
     }
+}
+
+ErrorBoundry.propTypes = {
+    children: PropTypes.object,
 }

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux"
@@ -64,7 +63,7 @@ WorkingShiftsSocialItem.propTypes = {
     shift: PropTypes.object,
     shifts: PropTypes.array,
     id: PropTypes.number,
-    onTextChange: PropTypes.func
+    TextChange: PropTypes.func
 }
 
 const mapDispatchToProps = {

@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import {connect} from "react-redux"
+import PropTypes from 'prop-types';
 import {TextChange} from "../../store/actions"
 
 import  "./working-shifts.scss"
@@ -157,6 +157,17 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
             </div>
         )
 }
+
+WorkingShifts.propTypes = {
+    shifts: PropTypes.array,
+    kmShifts: PropTypes.array,
+    months: PropTypes.array,
+    workTeamsNames: PropTypes.array,
+    glTable: PropTypes.array,
+    kmTable: PropTypes.array,
+    TextChange: PropTypes.func,
+}
+
 
 const mapDispatchToProps = {
     TextChange

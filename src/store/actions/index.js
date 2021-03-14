@@ -45,13 +45,22 @@ const SelectDay = (selectedWorker, selectedDay, ChangeDayType) => {
 }
 
 const TextChange = (id, dataArr, objKey, e) => {
-    console.log(id, dataArr, objKey, e)
     return {
         type: "Text-Change",
         id, 
         dataArr,
         objKey,
         e
+    }
+}
+
+const ChangeSeatText = (id, NewOldIp, NewNewIp, NewSeatNumber) => {
+    return {
+        type: "Change-Seat-Text",
+        NewOldIp, 
+        NewNewIp,
+        NewSeatNumber,
+        id
     }
 }
 
@@ -62,5 +71,6 @@ export {
     FilterSelect,
     MakeActive,
     SelectDay,
-    TextChange
+    TextChange,
+    ChangeSeatText
 }

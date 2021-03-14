@@ -5,7 +5,7 @@ import {FilterSelect, MakeActive} from "../../store/actions"
 
 import "./filter-list.scss"
 
-import Filter from "../filter";
+import FilterItem from "../filter-item";
 import allImg from "./../../global-imgs/all.svg"
 import workImg from "./../../global-imgs/work.svg"
 import weekendImg from "./../../global-imgs/weekend.svg"
@@ -39,14 +39,14 @@ class FilterList extends Component {
                     buttons.map((item) => {
                         const {label, quantity, id, img, active, name} = item;
                         return (
-                            <Filter
+                            <FilterItem
                                 btnText={label}
                                 btnQuantity={quantity}
                                 id = {id}
                                 key = {id}
                                 img={img}
                                 active={active}
-                                onFilterSelect={() => FilterSelect(name)}
+                                FilterSelect={() => FilterSelect(name)}
                                 onActive={() => MakeActive(id)}
                             />
                         )

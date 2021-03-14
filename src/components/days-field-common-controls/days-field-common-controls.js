@@ -1,6 +1,7 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import {connect} from "react-redux"
+import PropTypes from 'prop-types';
+
 import {ClearAllDays, ChangeDayType} from "../../store/actions"
 
 import "./days-field-common-controls.scss"
@@ -49,6 +50,13 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, ChangeDayType, Cl
             </div>
         )
 
+}
+
+DaysFieldCommonControls.propTypes = {
+    selectedWorker: PropTypes.number,
+    selectedDay: PropTypes.number,
+    ClearAllDays: PropTypes.func,
+    ChangeDayType: PropTypes.func,
 }
 
 const mapDispatchToProps = {
