@@ -20,7 +20,7 @@ const buttons = [
 
 const DaysFieldCommonControls = ({selectedWorker, selectedDay, ChangeDayType, ClearAllDays}) => {
         return (
-            <div className="controls">
+            <div className="days-field-common-controls">
                 {
                     buttons.map((item) => {
                         const {name, label, img, id} = item;

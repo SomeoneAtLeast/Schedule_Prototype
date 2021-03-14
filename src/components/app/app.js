@@ -18,15 +18,19 @@ import WorkingShifts from "../working-shifts"
 const App = () => {
     return (
         <div className = "app">
-            <div className="header">
+            <header className="header">
                 <div className="header__main-nav">
                     <Route path="/" component={MainNav}/>
                 </div>
-                <div className="header__second-nav">
-                    <Route path="/personalschedule/:id" exact component={FilterList}/>
-                </div>
-            </div>
-            <div className="main">
+                <Route path="/personalschedule/:id" exact render={() => {
+                                return (
+                                    <div className="header__second-nav">
+                                        <Route path="/personalschedule/:id" exact component={FilterList}/>
+                                    </div>
+                                )
+                            }}/>
+            </header>
+            <main className="main">
                 <div className="controls">
                     <Route path="/" exact component={DaysFieldCommonControls}/>
                 </div>
@@ -34,7 +38,7 @@ const App = () => {
                 <Route path="/workingshifts" component={WorkingShifts}/>
                 <Route path="/" exact component={DaysFieldCommon}/>
                 <Route path="/personalschedule/:id" component={DaysFieldPresonal}/>
-            </div>
+            </main>
         </div>
     )
 }

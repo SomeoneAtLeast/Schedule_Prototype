@@ -1,26 +1,23 @@
 @font-face {
-	font-family: "Roboto-Regular"; 
-	src: local("Roboto-Regular"),
-	url(./fonts/Roboto-Regular.ttf); 
-}
-
-@font-face {
-	font-family: "Roboto-Medium"; 
-	src: local("Roboto-Medium"),
-	url(./fonts/Roboto-Medium.ttf); 
-}
-
-@font-face {
 	font-family: "Roboto-Bold"; 
 	src: local("Roboto-Bold"),
 	url(./fonts/Roboto-Bold.ttf); 
 }
 
+@font-face {
+	font-family: "Roboto-Regular"; 
+	src: local("Roboto-Regular"),
+	url(./fonts/Roboto-Regular.ttf); 
+}
+
 body {
   margin: 0;
   overflow: scroll;
-  font-family: "Roboto-Medium", sans-serif;
+  font-family: "Roboto-Regular", sans-serif;
   background-color: #D3D3D3;
+  background-repeat: no-repeat;
+  background-image: url("../src/global-imgs/kek.jpg") ;
+  background-size: 100% 100%;
 }
 
 a {

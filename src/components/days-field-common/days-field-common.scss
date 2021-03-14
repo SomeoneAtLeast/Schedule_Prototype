@@ -1,15 +1,31 @@
 .days-field-common {
-    background-color: cadetblue;
+    width: 85%;
     border-collapse: collapse;
+    background-color: #EEEEEE
+}
+
+.days-field-common-items-row:first-child {
+    background: linear-gradient(60deg, #d9edf7, #94dcffc4);
 }
 
 .days-field-common-item {
     padding: 5px 0;
     width: 30px;
     text-align: center;
-    background-color: darkgreen;
-    border: 4px solid rgb(105, 109, 121);
+    color: rgba(0, 0, 0, 0.85);
+    background-color: #FFFFFF;
+    border: 1px solid #DDD;
     cursor: pointer;
+}
+
+.days-field-common-item:first-child {
+    border: none;
+    border-bottom: 1px solid #DDD;
+}
+
+.days-field-common-days-item {
+    font-weight: normal;
+    padding: 10px;
 }
 
 .selected {

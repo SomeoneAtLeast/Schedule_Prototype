@@ -3,13 +3,18 @@ import React, {Component} from "react";
 import {Link} from 'react-router-dom';
 
 import  "./main-nav.scss"
+
+import schedule from "./../../global-imgs/schedule.svg"
+import shifts from "./../../global-imgs/shifts.svg"
+import seat from "./../../global-imgs/seat.svg"
+
 export default class MainNav extends Component {
     constructor() {
         super();
 
         this.state = {
             scheduleActive: true,
-            arrangementsActive: false,
+            seatsActive: false,
             workingshiftsActive: false
         }
     }
@@ -19,13 +24,13 @@ export default class MainNav extends Component {
             this.setState({
                 scheduleActive: false,
                 workingshiftsActive: false,
-                arrangementsActive: true
+                seatsActive: true
             })
         } else if (this.props.location.pathname === "/workingshifts/") {
             this.setState({
                 scheduleActive: false,
                 workingshiftsActive: true,
-                arrangementsActive: false
+                seatsActive: false
             })
         }
     }
@@ -34,62 +39,74 @@ export default class MainNav extends Component {
         if (btnName === "scheduleBtn") {
             this.setState({
                 scheduleActive: true,
-                arrangementsActive: false,
+                seatsActive: false,
                 workingshiftsActive: false
             })
-        } else if (btnName === "arrangementsBtn") {
+        } else if (btnName === "seatsBtn") {
             this.setState({
                 scheduleActive: false,
                 workingshiftsActive: false,
-                arrangementsActive: true
+                seatsActive: true
             })
         } else if (btnName === "workingshiftsBtn") {
             this.setState({
                 scheduleActive: false,
-                arrangementsActive: false,
+                seatsActive: false,
                 workingshiftsActive: true
             })
         }
     }
     
     render() {
-        let scheduleClass = "main-nav__item-link";
-        let arrangementsClass = "main-nav__item-link";
-        let workingshiftsClass = "main-nav__item-link";
-        const {scheduleActive, arrangementsActive, workingshiftsActive} = this.state;
+        let scheduleClass = "main-nav__item";
+        let seatsClass = "main-nav__item";
+        let workingshiftsClass = "main-nav__item";
+        const {scheduleActive, seatsActive, workingshiftsActive} = this.state;
 
         if (scheduleActive) {
-            scheduleClass += " active-main-nav-btn";
+            scheduleClass += " active-main-nav__item";
         } 
         
-        if (arrangementsActive) {
-            arrangementsClass += " active-main-nav-btn";
+        if (seatsActive) {
+            seatsClass += " active-main-nav__item";
         }
 
         if (workingshiftsActive) {
-            workingshiftsClass += " active-main-nav-btn";
+            workingshiftsClass += " active-main-nav__item";
         }
 
         return (
             <ul className="main-nav">
                 <li 
-                    className="main-nav__item"
+                    className={scheduleClass}
                     onClick={() => this.onActive("scheduleBtn")}>
-                    <Link to="/" className={scheduleClass}>
+                    <Link to="/" className="main-nav__item-link">
+                        <img
+                            className="main-nav__item-link-img"
+                            src={schedule} 
+                            alt="График"/>
                         График
                     </Link> 
                 </li>
                 <li 
-                    className="main-nav__item"
+                    className={workingshiftsClass}
                     onClick={() => this.onActive("workingshiftsBtn")}>
-                    <Link to="/workingshifts/" className={workingshiftsClass}>
+                    <Link to="/workingshifts/" className="main-nav__item-link">
+                        <img
+                            className="main-nav__item-link-img"
+                            src={shifts} 
+                            alt="График"/>
                         Смены
                     </Link>
                 </li>
                 <li 
-                    className="main-nav__item"
-                    onClick={() => this.onActive("arrangementsBtn")}>
-                    <Link to="/seats/" className={arrangementsClass}>
+                    className={seatsClass}
+                    onClick={() => this.onActive("seatsBtn")}>  
+                    <Link to="/seats/" className="main-nav__item-link">
+                        <img
+                            className="main-nav__item-link-img"
+                            src={seat} 
+                            alt="График"/>  
                         Места
                     </Link>
                 </li>

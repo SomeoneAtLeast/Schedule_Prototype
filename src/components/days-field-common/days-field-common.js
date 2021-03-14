@@ -9,7 +9,7 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
     const daysNumbers = workers[0].days.map((item) => {
 
         return (
-            <th className = "days-field-common-item" 
+            <th className = "days-field-common-days-item" 
                 key={item.id}>
                 {item.id} {item.dayName}
             </th>
@@ -91,7 +91,7 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
     <table className = "days-field-common">
         <tbody>
             <tr className = "days-field-common-items-row">
-                <th className = "days-field-common-item">
+                <th className = "days-field-common-days-item">
                 </th>
                 {daysNumbers}
             </tr>

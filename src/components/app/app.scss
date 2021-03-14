@@ -2,9 +2,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: rgba(0, 0, 0, 0.8);
     min-height: 100px;
-    background-color: #5acaff;
-    border-bottom: 3px solid #a4a4a4;
 }
 
 .header__second-nav {
@@ -12,13 +11,12 @@
     align-items: center;
     justify-content: flex-end;
     min-height: 80px;
-    background-color: #4b4b4b8c;
-    border-bottom: 3px solid #6d6d6d;
+    background-color: rgba(0, 0, 0, 0.8);;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .main {
     display: flex;
-    background-color: #bfbfbf;
     min-height: 500px;
     width: 100%;
 }
@@ -27,5 +25,5 @@
     display: flex;
     flex-direction: column;
     width: 15%;
-    background-color: #888888;
+    background-color: rgba(0, 0, 0, 0.8);
 }
