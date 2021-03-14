@@ -2,10 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './components/app';
+import {Provider} from "react-redux";
+import {BrowserRouter as Router} from 'react-router-dom';
+import ErrorBoundry from "../src/components/error-boundry"
+import store from "./store/store"
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Provider store = {store}>
+    <ErrorBoundry>
+      <Router>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </Router>
+    </ErrorBoundry>
+  </Provider>
+  , document.getElementById('root')
 );

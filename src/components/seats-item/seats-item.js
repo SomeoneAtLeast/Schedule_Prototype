@@ -1,10 +1,13 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
+import {connect} from "react-redux"
+import {ChangeSeatText} from "../../store/actions"
 
 import "./seats-item.scss"
+
 import chairImg from "./imgs/chair.svg"
 
-export default class SeatsItem extends Component {
+class SeatsItem extends Component {
     constructor(props) {
         super(props);
 
@@ -12,7 +15,6 @@ export default class SeatsItem extends Component {
             oldIp: this.props.oldIp,
             newIp: this.props.newIp,
             seatNumber: this.props.seatNumber
-
         }
 
         this.onOldIpChange = this.onOldIpChange.bind(this);
@@ -40,7 +42,7 @@ export default class SeatsItem extends Component {
 
     render() {
 
-        const {id, onChangeSeatText} = this.props;
+        const {id, ChangeSeatText} = this.props;
 
         return (    
                 <>
@@ -50,7 +52,7 @@ export default class SeatsItem extends Component {
                         src={chairImg}/>
                     <div 
                         className="seats-table__text-wrapper"
-                        onBlur={() => onChangeSeatText(id, this.state.oldIp, this.state.newIp, this.state.seatNumber)}>
+                        onBlur={() => ChangeSeatText(id, this.state.oldIp, this.state.newIp, this.state.seatNumber)}>
                         <div className="seats-table__text">
                             <span className="seats-table__label">
                                 OLD IP
@@ -101,5 +103,18 @@ SeatsItem.propTypes = {
     newIp: PropTypes.string,
     seatNumber: PropTypes.string,
     id: PropTypes.number,
-    onChangeSeatText: PropTypes.func,
+    ChangeSeatText: PropTypes.func,
 }
+
+const mapDispatchToProps = {
+    ChangeSeatText
+}
+
+
+const mapStateToProps = ({seats}) => {
+    return {
+        seats
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SeatsItem);
