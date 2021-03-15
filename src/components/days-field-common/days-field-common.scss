@@ -1,16 +1,14 @@
 .days-field-common {
-    width: 85%;
     border-collapse: collapse;
-    background-color: #EEEEEE
+    background-color: #EEEEEE;
 }
 
 .days-field-common-items-row:first-child {
-    background: linear-gradient(60deg, #d9edf7, #94dcffc4);
+    background: #ea6153;
 }
 
 .days-field-common-item {
     padding: 5px 0;
-    width: 30px;
     text-align: center;
     color: rgba(0, 0, 0, 0.85);
     background-color: #FFFFFF;
@@ -20,12 +18,20 @@
 
 .days-field-common-item:first-child {
     border: none;
+    text-align: left;
+    padding: 15px;
     border-bottom: 1px solid #DDD;
 }
 
 .days-field-common-days-item {
     font-weight: normal;
     padding: 10px;
+    color: white;
+}
+
+.days-field-common-item-link {
+    color: rgba(0, 0, 0, 0.85);
+    white-space: nowrap;
 }
 
 .selected {

@@ -1,4 +1,4 @@
-import {workers} from "../../models/app-model"
+import {workers} from "../../models/schedule-model"
 import {shifts, kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 import {seats} from "../../models/seats-model"
 

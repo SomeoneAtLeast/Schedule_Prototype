@@ -1,8 +1,33 @@
 .main-nav {
     display: flex;
     justify-content: space-around;
+    width: 83%;
     margin: 0;
     padding: 0;
+}
+
+.header__main-nav-logo-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 17%;
+}
+
+.header__main-nav-link {
+    display: flex;
+    justify-content: center;
+    transition: 0.3s;
+
+    &:hover {
+        transform: scale(0.95);
+    }
+
+    &:active {
+        transform: scale(0.85);
+    }
+}
+
+.header__main-nav-logo {
+    width: 45%;
 }
 
 .main-nav__item {
@@ -27,6 +52,7 @@
 .main-nav__item-link-img {
     margin-right: 10px;
 }
+
 .main-nav__item-link {
     display: flex;
     align-items: center;

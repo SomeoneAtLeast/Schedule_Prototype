@@ -2,8 +2,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .days-field-common-controls-btn {
@@ -12,7 +10,7 @@
     justify-content: center;
     width: 230px;
     padding: 10px 0;
-    margin-bottom: 15px;
+    margin: 0 auto 15px auto;
     border-radius: 5px;
     border: 2px solid transparent;
     outline: none;

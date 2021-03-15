@@ -1,9 +1,8 @@
 .header__main-nav {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
-    min-height: 100px;
+    min-height: 110px;
 }
 
 .header__second-nav {
@@ -17,13 +16,17 @@
 
 .main {
     display: flex;
-    min-height: 500px;
     width: 100%;
 }
 
 .controls {
-    display: flex;
-    flex-direction: column;
-    width: 15%;
+    box-sizing: border-box;
+    width: 17%;
     background-color: rgba(0, 0, 0, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 15px;
+}
+
+.main-content {
+    width: 83%;
 }
