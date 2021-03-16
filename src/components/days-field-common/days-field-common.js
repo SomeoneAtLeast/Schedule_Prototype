@@ -11,7 +11,12 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
         return (
             <th className = "days-field-common-days-item" 
                 key={item.id}>
-                {item.id} {item.dayName}
+                <div>
+                    {item.id}
+                </div>
+                <div>
+                    {item.dayName}
+                </div>
             </th>
         )
     })

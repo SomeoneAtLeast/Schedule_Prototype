@@ -1,7 +1,7 @@
 .header__main-nav {
     display: flex;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.4);
     min-height: 110px;
 }
 
@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: flex-end;
     min-height: 80px;
-    background-color: rgba(0, 0, 0, 0.8);;
+    background-color: rgba(0, 0, 0, 0.4);;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -22,9 +22,8 @@
 .controls {
     box-sizing: border-box;
     width: 17%;
-    background-color: rgba(0, 0, 0, 0.8);
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    padding-top: 15px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 58px;
 }
 
 .main-content {

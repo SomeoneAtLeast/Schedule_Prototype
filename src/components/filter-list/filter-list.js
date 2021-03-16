@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux"
-import {FilterSelect, MakeActive} from "../../store/actions"
+import {FilterSelect, MakeFilterActive} from "../../store/actions"
 
 import "./filter-list.scss"
 
@@ -17,7 +17,7 @@ class FilterList extends Component {
     }
 
     render() {
-        const {workers, selectedWorker, FilterSelect, MakeActive, allActive,
+        const {workers, selectedWorker, FilterSelect, MakeFilterActive, allActive,
               workedActive, weekendsActive, vacationActive} = this.props;
 
         const workedQuantity = workers[selectedWorker].days.filter(item => item.worked).length;
@@ -47,7 +47,7 @@ class FilterList extends Component {
                                 img={img}
                                 active={active}
                                 FilterSelect={() => FilterSelect(name)}
-                                onActive={() => MakeActive(id)}
+                                MakeFilterActive={() => MakeFilterActive(id)}
                             />
                         )
                     })
@@ -65,7 +65,7 @@ FilterList.propTypes = {
     weekendsQuantity: PropTypes.number,
     vacationQuantity: PropTypes.number,
     FilterSelect: PropTypes.func,
-    MakeActive: PropTypes.func,
+    MakeFilterActive: PropTypes.func,
     allActive: PropTypes.bool,
     workedActive: PropTypes.bool,
     weekendsActive: PropTypes.bool,
@@ -74,7 +74,7 @@ FilterList.propTypes = {
 
 const mapDispatchToProps = {
     FilterSelect,
-    MakeActive,
+    MakeFilterActive,
 }
 
 const mapStateToProps = ({workers, selectedWorker, allActive, workedActive, weekendsActive, vacationActive}) => {

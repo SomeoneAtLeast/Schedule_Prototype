@@ -1,16 +1,17 @@
 .days-field-common-controls {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    width: 250px;
+    margin: 0 auto;
 }
 
 .days-field-common-controls-btn {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 230px;
-    padding: 10px 0;
-    margin: 0 auto 15px auto;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
     border-radius: 5px;
     border: 2px solid transparent;
     outline: none;

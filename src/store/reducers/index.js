@@ -17,7 +17,10 @@ const initialState = {
     kmShifts,
     workTeamsNames,
     months,
-    seats
+    seats,
+    scheduleActive: true,
+    seatsActive: false,
+    workingshiftsActive: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -27,18 +30,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 selectedWorker: action.id
             }
-        case "Clear-All-Days": {
-            const newWorkers = [...state.workers]
-            newWorkers.forEach((item) => {
-                item.days.forEach((item) => {
-                    item.selected = false
-                })
-            })
-            return {
-                ...state,
-                workers: newWorkers
-            }
-        }
         case "Change-Day-Type": {
             
             if (action.workerId === 0 || action.dayId === 0) {
@@ -141,7 +132,7 @@ const reducer = (state = initialState, action) => {
                 vacationActive: false
             }
         }
-        case "Make-Active": {
+        case "Make-Filter-Active": {
             if (action.id === -1) {
                 return {
                     ...state,
@@ -232,6 +223,59 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 seats: newSeats
+            }
+        }
+        case "Make-Active-Nav-Btn": {
+            if (action.btnName === "scheduleBtn") {
+                return {
+                    ...state,
+                    scheduleActive: true,
+                    seatsActive: false,
+                    workingshiftsActive: false
+                }
+            } else if (action.btnName === "seatsBtn") {
+                return {
+                    ...state,
+                    scheduleActive: false,
+                    workingshiftsActive: false,
+                    seatsActive: true
+                }
+            } else if (action.btnName === "workingshiftsBtn") {
+                return {
+                    ...state,
+                    scheduleActive: false,
+                    seatsActive: false,
+                    workingshiftsActive: true
+                }
+            }
+        }
+        break;
+        case "Change-Selected-Page": {
+            if(action.location.pathname === "/seats/") {
+                return {
+                    ...state,
+                    scheduleActive: false,
+                    workingshiftsActive: false,
+                    seatsActive: true
+                }
+            } else if (action.location.pathname === "/workingshifts/") {
+                return {
+                    ...state,
+                    scheduleActive: false,
+                    workingshiftsActive: true,
+                    seatsActive: false
+                }
+            } else if (action.location.pathname === "/") {
+                return {
+                    ...state,
+                    scheduleActive: true,
+                    workingshiftsActive: false,
+                    seatsActive: false
+                }
+            } else {
+                return {
+                    ...state
+                }
             }
         }
         default:

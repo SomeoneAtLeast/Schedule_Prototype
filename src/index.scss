@@ -16,19 +16,11 @@ body {
   font-family: "Roboto-Regular", sans-serif;
   background-color: #000;
   background-repeat: no-repeat;
-  background-image: url("../src/global-imgs/kek.jpg") ;
-  background-size: cover;
+  background-image: url("../src/global-imgs/kek.jpg");
+  background-size: 100%;
 }
 
 a {
 	text-decoration: none;
 	outline: none;
-}
-
-.visually-hidden {
-	position: absolute;
-	clip: rect(0 0 0 0);
-	width: 1px;
-	height: 1px;
-	margin: -1px;
 }

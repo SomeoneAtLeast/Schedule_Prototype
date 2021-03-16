@@ -1,6 +1,8 @@
 .days-field-common {
+    width: 100%;
     border-collapse: collapse;
     background-color: #EEEEEE;
+    border-radius: 5px;
 }
 
 .days-field-common-items-row:first-child {
@@ -13,6 +15,7 @@
     color: rgba(0, 0, 0, 0.85);
     background-color: #FFFFFF;
     border: 1px solid #DDD;
+    border-top: none;
     cursor: pointer;
 }
 
@@ -24,6 +27,7 @@
 }
 
 .days-field-common-days-item {
+    width: 2%;
     font-weight: normal;
     padding: 10px;
     color: white;
