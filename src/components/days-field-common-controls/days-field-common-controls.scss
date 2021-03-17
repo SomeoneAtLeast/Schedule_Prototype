@@ -17,7 +17,7 @@
     outline: none;
     color: rgb(243, 243, 243);
     background-color: transparent;
-    font-family: "Roboto-Medium", sans-serif;
+    font-family: "Roboto-Regular", sans-serif;
     cursor: pointer;
     transition: 0.3s;
     font-size: 15px;
@@ -29,7 +29,7 @@
     &:hover {
         border: 2px solid rgb(243, 243, 243);
 
-        .filter-list__filter-img {
+        .days-field-common-controls-btn__img {
             transform: translateY(-2px);
         }
     }
@@ -38,4 +38,5 @@
 .days-field-common-controls-btn__img {
     margin-right: 10px;
     width: 28px;
+    transition: 0.3s;
 }

@@ -14,7 +14,7 @@ const DaysFieldItemPersonal = ({workingHours, onMakeDayWorking, onMakeDayWeekend
         return (
             <div 
                 className = "days-field-personal__item-body">
-                <span className="days-field-personal__item-day-name">
+                <span className="days-field-personal__item-hours">
                     {workingHours}
                 </span>
                 <div

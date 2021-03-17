@@ -45,17 +45,11 @@ class App extends Component{
                         </div>
                         <Route path="/" component={MainNav}/>
                     </div>
-                    <Route path="/personalschedule/:id" exact render={() => {
-                                    return (
-                                        <div className="header__second-nav">
-                                            <Route path="/personalschedule/:id" exact component={FilterList}/>
-                                        </div>
-                                    )
-                                }}/>
                 </header>
                 <main className="main">
                     <div className="controls">
                         <Route path="/" exact component={DaysFieldCommonControls}/>
+                        <Route path="/personalschedule/:id" exact component={FilterList}/>
                     </div>
                     <div className="main-content">
                         <Route path="/" exact component={DaysFieldCommon}/>

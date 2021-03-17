@@ -1,18 +1,24 @@
 .days-field-personal {
-    background-color: cadetblue;
+    width: 100%;
+    background-color: #FFF;
     border-collapse: collapse;
 }
 
-.days-field-personal .selected {
-    background-color: #6d6d6d;
-    opacity: 1;
-    cursor: auto;
+.days-field-personal-items-row:first-child {
+    background-color: #934BE6;
     
-    .days-field-personal__item-number {
-        display: none;
+    .days-field-personal__item {
+        width: 2%;
+        padding: 10px;
+        color: white;
     }
+}
 
-    .days-field-personal__item-day-name {
+.days-field-personal .selected {
+    cursor: auto;
+    background-color: transparent;
+    
+    .days-field-personal__item-hours {
         display: none;
     }
 

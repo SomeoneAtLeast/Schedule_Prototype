@@ -28,9 +28,14 @@ const FilterItem = ({btnText, btnQuantity, id, active, img, MakeFilterActive, Fi
             key = {id}
             onClick = {onClick}>   
                 <img className="filter-list__filter-img" src={img} alt={btnText}></img>
-                <span className="filter-list__text">
-                {btnText} - {btnQuantity}
-                </span>
+                <div className="filter-list__text">
+                    <span>
+                        {btnText}
+                    </span>
+                    <span>
+                        {btnQuantity}
+                    </span>
+                </div>
             </button>
         </li>
     )

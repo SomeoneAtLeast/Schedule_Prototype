@@ -30,8 +30,19 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 selectedWorker: action.id
             }
+        case "Clear-All-Days": {
+            const newWorkers = [...state.workers]
+            newWorkers.forEach((item) => {
+                item.days.forEach((item) => {
+                    item.selected = false
+                })
+            })
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
         case "Change-Day-Type": {
-            
             if (action.workerId === 0 || action.dayId === 0) {
                 return {
                     ...state 

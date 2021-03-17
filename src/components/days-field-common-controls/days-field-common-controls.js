@@ -46,7 +46,6 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, ChangeDayType}) =
 DaysFieldCommonControls.propTypes = {
     selectedWorker: PropTypes.number,
     selectedDay: PropTypes.number,
-    ClearAllDays: PropTypes.func,
     ChangeDayType: PropTypes.func,
 }
 

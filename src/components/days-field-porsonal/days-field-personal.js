@@ -62,7 +62,7 @@ class DaysFieldPresonal extends Component {
         let daysInMonth = [];
 
         daysInMonth.push(
-            <td className = "days-field-personal-item" 
+            <td className = "days-field-personal__item" 
                 key={workerNumber}>
                 {workers[workerNumber].name}
             </td>
@@ -117,9 +117,14 @@ class DaysFieldPresonal extends Component {
         const daysNumbers = visibleDays.map((item) => {
 
             return (
-                <th className = "days-field-personal-item" 
+                <th className = "days-field-personal__item" 
                     key={item.id}>
-                    {item.id} {item.dayName}
+                        <div>
+                            {item.id}
+                        </div>
+                        <div>
+                            {item.dayName}
+                        </div>
                 </th>
             )
         })
@@ -128,7 +133,7 @@ class DaysFieldPresonal extends Component {
             <table className = "days-field-personal">
                 <tbody>
                     <tr className = "days-field-personal-items-row">
-                        <th className = "days-field-personal-item">
+                        <th className = "days-field-personal__item">
                         </th>
                         {daysNumbers}
                     </tr>
