@@ -1,22 +1,7 @@
 .days-field-personal__item {
-    cursor: pointer;
+    padding: 0;
     font-weight: normal;
     transition: 0.3s;
-
-    &:hover {
-        .days-field-personal__item-day-name {
-            font-size: 14px; 
-        }
-        
-        .days-field-personal__item-number {
-            font-size: 24px;
-        }
-    }
-
-    &:active {
-        color: rgb(255, 255, 255);
-        transform: scale(0.95);
-    }
 }
 
 .days-field-personal__item:first-child {
@@ -29,9 +14,9 @@
     text-align: center;
 }
 
-.days-field-personal__item-number {
-    font-size: 22px;
+.days-field-personal__item-hours {
     transition: 0.3s;
+    font-size: 18px;
 }
 
 .days-field-personal__btn-group {
@@ -39,8 +24,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     width: 100%;
-    height: 136px;
-    border-radius: 7px;
+    height: 140px;
     background-color: #4b4b4b;
     transition: 0.3s;
 }
@@ -52,16 +36,15 @@
     outline: none;
     cursor: pointer;
     padding: 0;
-    width: 34px;
-    height: 34px;
+    width: 28px;
 
     img {
-        width: 31px;
+        width: 100%;
         transition: 0.3s;
     }
 
     &:hover img {
-        transform: scale(1.1);
+        transform: scale(1.2);
     }
 }
 
@@ -70,6 +53,21 @@
         border: 1px solid #DDD;
         border-top: none;
         height: 110px;
+
+        &:not(:first-child) {
+            cursor: pointer;
+
+            &:hover {
+                .days-field-personal__item-hours {
+                    transform: scale(1.1);
+                }
+                
+            }
+        
+            &:active {
+                transform: scale(0.95);
+            }
+        }
     }
 
     .days-field-personal__item:first-child {

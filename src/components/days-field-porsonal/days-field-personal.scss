@@ -9,6 +9,7 @@
     
     .days-field-personal__item {
         width: 2%;
+        height: 38.5px;
         padding: 10px;
         color: white;
     }
@@ -37,4 +38,8 @@
 
 .days-field-personal td.vacation {
     background-color:  #8079d7;
+}
+
+.days-field-personal__no-items {
+    text-align: center;
 }

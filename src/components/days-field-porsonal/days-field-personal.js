@@ -61,12 +61,22 @@ class DaysFieldPresonal extends Component {
         const visibleWorkers = this.filterWorkers(workers[selectedWorker].days, selectedWorker, filter)
         let daysInMonth = [];
 
-        daysInMonth.push(
-            <td className = "days-field-personal__item" 
-                key={workerNumber}>
-                {workers[workerNumber].name}
-            </td>
-        )
+        if (visibleWorkers[workerNumber].days.length === 0) {
+            daysInMonth.push(
+                <td className = "days-field-personal__item days-field-personal__no-items" 
+                    key={workerNumber}>
+                        Здесь пусто
+                </td>
+            )
+        } else {
+            daysInMonth.push(
+                <td className = "days-field-personal__item" 
+                    key={workerNumber}>
+                    {workers[workerNumber].name}
+                </td>
+            )
+        }
+
         const daysFieldElements = visibleWorkers[workerNumber].days.map((item) => {
             
             let classNames = "days-field-personal__item";
