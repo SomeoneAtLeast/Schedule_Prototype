@@ -1,11 +1,11 @@
 .days-field-personal {
-    width: 100%;
+    margin-bottom: auto;
     background-color: #FFF;
     border-collapse: collapse;
 }
 
 .days-field-personal-items-row:first-child {
-    background-color: #934BE6;
+    background: linear-gradient(70deg, #934BE6, #7b20e2);
     
     .days-field-personal__item {
         width: 2%;

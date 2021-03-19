@@ -15,6 +15,7 @@ const WorkingShiftsKmItem = ({kmShifts, id, onTextChange}) => {
                     <input
                         className="working-shifts__table-header-value"
                         type="text"
+                        maxLength={31}
                         value={kmShifts[id - 100].worker}
                         onChange={(e) => onTextChange(id, kmShifts, "worker", e)}/>
                 </td>
@@ -22,6 +23,7 @@ const WorkingShiftsKmItem = ({kmShifts, id, onTextChange}) => {
             <input
                         className="working-shifts__table-header-value"
                         type="text"
+                        maxLength={6}
                         value={kmShifts[id - 100].shiftNumber}
                         onChange={(e) => onTextChange(id, kmShifts, "shiftNumber", e)}/>
             </td>

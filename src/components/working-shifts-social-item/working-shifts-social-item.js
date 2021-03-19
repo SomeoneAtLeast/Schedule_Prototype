@@ -22,6 +22,7 @@ class WorkingShiftsSocialItem extends Component {
                             className="working-shifts__table-header-value"
                             type="text"
                             value={shift[`worker${i}`]}
+                            maxLength={31}
                             onChange={(e) => TextChange((id), shifts, `worker${i}`, e)}/>
                 </td>
             );
@@ -31,6 +32,7 @@ class WorkingShiftsSocialItem extends Component {
                         <input
                             className="working-shifts__table-header-value"
                             type="text"
+                            maxLength={6}
                             value={shifts[id - 100][shiftNumberName]}
                             onChange={(e) => TextChange(id, shifts, shiftNumberName, e)}/>
             </td>);

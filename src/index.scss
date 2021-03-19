@@ -10,27 +10,17 @@
 	url(./fonts/Roboto-Regular.ttf); 
 }
 
-
-html {
-	height: 100%;
-}
-
 body {
-	height: 100%;
   	margin: 0;
   	overflow: scroll;
   	font-family: "Roboto-Regular", sans-serif;
   	background-color: #000;
   	background-repeat: no-repeat;
-  	background-image: url("../src/global-imgs/kek.jpg");
+  	background-image: url("../src/global-imgs/background.jpg");
  	 background-size: 100%;
 }
 
 a {
 	text-decoration: none;
 	outline: none;
-}
-
-#root {
-	height: 100%;
 }

@@ -17,7 +17,7 @@ import DaysFieldCommonControls from "../days-field-common-controls"
 import WorkingShifts from "../working-shifts"
 
 
-// Ограничить количество символов в инпутах
+// Кнобка снятия выделений
 
 class App extends Component{
 
