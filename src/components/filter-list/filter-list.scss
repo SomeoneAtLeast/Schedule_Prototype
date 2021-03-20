@@ -5,3 +5,18 @@
     margin: 0 auto;
     padding: 0;
 }
+
+@media (max-width: 1485px) { 
+
+    .filter-list {
+        width: 155px;
+    }
+
+}
+
+@media (max-width: 1000px) { 
+
+    .filter-list {
+        width: 115px;
+    }
+}

@@ -34,3 +34,11 @@
     width: 83%;
     background-color: #EEE;
 }
+
+@media (max-width: 1000px) { 
+    .controls {
+        box-sizing: content-box;
+        width: 150px;
+        padding: 58px 10px 0 10px;
+    }
+}

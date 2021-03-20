@@ -43,3 +43,14 @@
 .days-field-personal__no-items {
     text-align: center;
 }
+
+@media (max-width: 1485px) { 
+
+    .days-field-personal-items-row:first-child {
+        .days-field-personal__item {
+            width: 2%;
+            height: auto;
+        }
+    }
+
+}

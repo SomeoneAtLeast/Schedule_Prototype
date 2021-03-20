@@ -57,3 +57,35 @@
     flex-grow: 1;
     justify-content: space-between;
 }
+
+@media (max-width: 1485px) { 
+    
+    .filter-list__filter-btn  {
+        padding: 10px 10px;
+        font-size: 14px;
+        width: 147px;
+    }
+
+    .filter-list__filter-img {
+        width: 25px;
+    }
+}
+
+@media (max-width: 1000px) { 
+    
+    .filter-list__filter-btn  {
+        padding: 10px 5px;
+        font-size: 12px;
+        width: 115px;
+    }
+
+    .filter-list__text {
+        flex-direction: column;
+        height: 32px;
+    }
+
+    .filter-list__filter-img {
+        margin-right: 5px;
+        width: 25px;
+    }
+}

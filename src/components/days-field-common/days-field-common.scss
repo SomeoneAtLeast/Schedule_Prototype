@@ -91,3 +91,31 @@
         background-color: rgba(255, 203, 1, 0.7);
     }
 }
+
+@media (max-width: 1485px) { 
+
+    .days-field-common-item {
+        font-size: 14px;
+    }
+
+    .days-field-common-days-item {
+        font-size: 14px;
+    }
+
+    .days-field-common-item-link {
+        white-space: normal;
+    }
+
+}
+
+@media (max-width: 1000px) { 
+
+    .days-field-common-item {
+        font-size: 12px;
+    }
+
+    .days-field-common-days-item {
+        font-size: 12px;
+    }
+
+}

@@ -74,3 +74,32 @@
         border-left: none;
     }
 }
+
+
+@media (max-width: 1485px) { 
+
+    .days-field-personal__item {
+        font-size: 14px;
+    }
+
+    .days-field-personal__item:first-child {
+        white-space: normal;
+    }
+
+    .days-field-personal__item-hours {
+        font-size: 16px;
+    }
+
+}
+
+@media (max-width: 1000px) { 
+
+    .days-field-personal__item {
+        font-size: 12px;
+    }
+
+    .days-field-personal__item-hours {
+        font-size: 14px;
+    }
+
+}
