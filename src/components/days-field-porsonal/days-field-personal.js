@@ -144,6 +144,7 @@ class DaysFieldPresonal extends Component {
                 <tbody>
                     <tr className = "days-field-personal-items-row">
                         <th className = "days-field-personal__item">
+                            Апрель
                         </th>
                         {daysNumbers}
                     </tr>

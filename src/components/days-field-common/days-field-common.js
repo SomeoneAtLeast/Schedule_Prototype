@@ -97,6 +97,7 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
         <tbody>
             <tr className = "days-field-common-items-row">
                 <th className = "days-field-common-days-item">
+                    Апрель
                 </th>
                 {daysNumbers}
             </tr>

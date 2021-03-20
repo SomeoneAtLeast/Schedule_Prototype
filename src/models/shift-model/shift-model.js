@@ -153,8 +153,8 @@ const workTeamsNames = [
 
 const months = [
     {
-        month: "Февраль",
-        id: 2
+        month: "Апрель",
+        id: 4
     },
 ]
 

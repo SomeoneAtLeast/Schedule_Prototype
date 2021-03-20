@@ -61,6 +61,7 @@ class SeatsItem extends Component {
                                 <input 
                                         className="seats-table__value-input"
                                         type="text"
+                                        maxLength={15}
                                         onChange={this.onOldIpChange}
                                         placeholder="Старый IP"
                                         value={this.state.oldIp}/>
@@ -74,6 +75,7 @@ class SeatsItem extends Component {
                             <input 
                                     className="seats-table__value-input"
                                     type="text"
+                                    maxLength={15}
                                     onChange={this.onNewIpChange}
                                     placeholder="Новый IP"
                                     value={this.state.newIp}/>
@@ -87,6 +89,7 @@ class SeatsItem extends Component {
                             <input 
                                     className="seats-table__value-input"
                                     type="text"
+                                    maxLength={15}
                                     onChange={this.onSeatNumberChange}
                                     placeholder="№ места"
                                     value={this.state.seatNumber}/>
