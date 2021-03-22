@@ -140,20 +140,22 @@ class DaysFieldPresonal extends Component {
         })
 
         return (
-            <table className = "days-field-personal">
-                <tbody>
-                    <tr className = "days-field-personal-items-row">
-                        <th className = "days-field-personal__item">
-                            Апрель
-                        </th>
-                        {daysNumbers}
-                    </tr>
-                    <tr className = "days-field-personal-items-row">
-                        {this.getWorkerPresonalDays(id)}
-                    </tr>
-                </tbody>
-            </table>
-        )
+            <div className="days-field-personal-wrapper">
+                <table className = "days-field-personal">
+                    <tbody>
+                        <tr className = "days-field-personal-items-row">
+                            <th className = "days-field-personal__item">
+                                Апрель
+                            </th>
+                            {daysNumbers}
+                        </tr>
+                        <tr className = "days-field-personal-items-row">
+                            {this.getWorkerPresonalDays(id)}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        )  
     }
 }
 

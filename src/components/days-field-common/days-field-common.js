@@ -93,17 +93,19 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
 
 
     return (
-    <table className = "days-field-common">
-        <tbody>
-            <tr className = "days-field-common-items-row">
-                <th className = "days-field-common-days-item">
-                    Апрель
-                </th>
-                {daysNumbers}
-            </tr>
-            {getWorkersElements()}
-        </tbody>
-    </table>
+        <div className="days-field-common-wrapper">
+            <table className = "days-field-common">
+                <tbody>
+                    <tr className = "days-field-common-items-row">
+                        <th className = "days-field-common-days-item">
+                            Апрель
+                        </th>
+                        {daysNumbers}
+                    </tr>
+                    {getWorkersElements()}
+                </tbody>
+            </table>
+        </div>
     )
 }
 

@@ -1,8 +1,8 @@
 .main-nav {
     display: flex;
     justify-content: space-around;
-    width: 83%;
-    min-width: 235px;
+    flex-grow: 1;
+    min-width: 225px;
     margin: 0;
     padding: 0;
 }
@@ -10,8 +10,7 @@
 .header__main-nav-logo-wrapper {
     display: flex;
     justify-content: center;
-    width: 17%;
-    min-width: 125px;
+    width: 300px;
 }
 
 .header__main-nav-link {
@@ -80,6 +79,10 @@
 
 @media (max-width: 1485px) { 
 
+    .header__main-nav-logo-wrapper {
+        width: 185px;
+    }
+
     .header__main-nav-logo {
         width: 40%;
     }
@@ -95,6 +98,10 @@
 }
 
 @media (max-width: 1000px) { 
+
+    .header__main-nav-logo-wrapper {
+        width: 135px;
+    }
 
     .header__main-nav-logo {
         width: 35%;

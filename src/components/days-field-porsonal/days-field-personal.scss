@@ -1,3 +1,8 @@
+
+.days-field-personal-wrapper {
+    overflow: scroll;
+}
+
 .days-field-personal {
     margin-bottom: auto;
     background-color: #FFF;
@@ -48,9 +53,19 @@
 
     .days-field-personal-items-row:first-child {
         .days-field-personal__item {
+            box-sizing: border-box;
             width: 2%;
-            height: auto;
+            height: 54px;
         }
     }
+}
 
+
+@media (max-width: 1000px) { 
+
+    .days-field-personal-items-row:first-child {
+        .days-field-personal__item {
+            height: 48px;
+        }
+    }
 }

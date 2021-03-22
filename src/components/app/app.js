@@ -18,6 +18,8 @@ import WorkingShifts from "../working-shifts"
 
 
 // Кнобка снятия выделений
+// Поправить фоны при адаптиве (ширину боди в фона)
+
 
 class App extends Component{
 
@@ -47,13 +49,22 @@ class App extends Component{
                     </div>
                 </header>
                 <main className="main">
-                    <div className="controls">
-                        <Route path="/" exact component={DaysFieldCommonControls}/>
-                        <Route path="/personalschedule/:id" exact component={FilterList}/>
-                    </div>
+                    <Route path="/personalschedule/:id" exact render={() => {
+                        return (
+                        <div className="controls">
+                            <Route path="/personalschedule/:id" exact component={FilterList}/>
+                        </div>
+                        )
+                    }}/>
+                    <Route path="/" exact render={() => {
+                        return (
+                        <div className="controls">
+                            <Route path="/" exact component={DaysFieldCommonControls}/>
+                        </div>
+                        )
+                    }}/>
                     <div className="main-content">
                         <Route path="/" exact component={DaysFieldCommon}/>
-
                         <Route path="/personalschedule/:id" render={({match}) => {
                             const {id} = match.params;
                             return (

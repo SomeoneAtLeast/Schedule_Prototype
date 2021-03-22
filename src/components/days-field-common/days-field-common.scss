@@ -1,5 +1,9 @@
+.days-field-common-wrapper {
+    overflow: scroll;
+}
+
+
 .days-field-common {
-    width: 100%;
     border-collapse: collapse;
     background-color: #FFF;
 }
@@ -109,7 +113,7 @@
 }
 
 @media (max-width: 1000px) { 
-
+    
     .days-field-common-item {
         font-size: 12px;
     }
@@ -117,5 +121,4 @@
     .days-field-common-days-item {
         font-size: 12px;
     }
-
 }

@@ -25,20 +25,35 @@
 }
 
 .controls {
-    box-sizing: border-box;
-    width: 17%;
+    min-width: 300px;
     padding-top: 58px;
 }
 
 .main-content {
-    width: 83%;
+    flex-grow: 1;
+    min-width: 225px;
     background-color: #EEE;
 }
 
-@media (max-width: 1000px) { 
+@media (max-width: 1485px) { 
+
+    .main-content {
+        background-color: #EEE;
+    }
+
     .controls {
-        box-sizing: content-box;
-        width: 150px;
-        padding: 58px 10px 0 10px;
+        min-width: 185px;
+    }
+}
+
+
+@media (max-width: 1000px) { 
+
+    .main-content {
+        background-color: #EEE;
+    }
+
+    .controls {
+        min-width: 135px;
     }
 }
