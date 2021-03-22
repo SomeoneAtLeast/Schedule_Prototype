@@ -76,6 +76,10 @@
     }
 }
 
+.main-nav__empty-block-for-visual {
+    width: 300px;
+}
+
 
 @media (max-width: 1485px) { 
 
@@ -97,9 +101,18 @@
     }
 }
 
+@media (max-width: 1485px) { 
+
+    .main-nav__empty-block-for-visual {
+        width: 185px;
+    }
+    
+}
+
 @media (max-width: 1000px) { 
 
-    .header__main-nav-logo-wrapper {
+    .header__main-nav-logo-wrapper,
+    .main-nav__empty-block-for-visual {
         width: 135px;
     }
 
@@ -113,8 +126,10 @@
     }
 
     .main-nav__item-link-img {
+        
         width: 18px;
     }
+    
 }
 
 

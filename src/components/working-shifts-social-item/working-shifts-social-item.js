@@ -19,7 +19,7 @@ class WorkingShiftsSocialItem extends Component {
                     className="working-shifts__table-cell working-shifts__table-cell-worker" 
                     key={i + 500}>
                         <input
-                            className="working-shifts__table-header-value"
+                            className="working-shifts__table-input-value"
                             type="text"
                             value={shift[`worker${i}`]}
                             maxLength={31}
@@ -30,7 +30,7 @@ class WorkingShiftsSocialItem extends Component {
         
         cells.push(<td className="working-shifts__table-cell working-shifts__table-cell-worker" key={id}>
                         <input
-                            className="working-shifts__table-header-value"
+                            className="working-shifts__table-input-value"
                             type="text"
                             maxLength={6}
                             value={shifts[id - 100][shiftNumberName]}

@@ -29,14 +29,14 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                                 >
                                     С
                                     <input
-                                        className="working-shifts__table-header-value"
+                                        className="working-shifts__table-input-value"
                                         type="text"
                                         maxLength={2}
                                         value={startTime}
                                         onChange={(e) => TextChange(key, shifts, "startTime", e)}/>
                                     до
                                     <input
-                                        className="working-shifts__table-header-value"
+                                        className="working-shifts__table-input-value"
                                         type="text"
                                         maxLength={2}
                                         value={finishTime}
@@ -95,7 +95,7 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                         colSpan={colSpan}>
                         <input
                             maxLength={MaxLength}
-                            className="working-shifts__table-header-value"
+                            className="working-shifts__table-input-value"
                             type="text"
                             onChange={(e) => TextChange(id, state, insideValue, e)}
                             value={item[insideValue]}
@@ -113,7 +113,7 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
             <div className="working-shifts" key={123}>
                 <div className="working-shifts__table-month">
                     <input
-                            className="working-shifts__table-header-value"
+                            className="working-shifts__table-input-value"
                             type="text"
                             maxLength={15}
                             onChange={(e) => TextChange(2, months, "month", e)}
@@ -124,7 +124,7 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                     <table className="working-shifts__table">
                         <caption className="working-shifts__table-caption working-shifts__table-caption-social">
                             <input
-                                className="working-shifts__table-header-value"
+                                className="working-shifts__table-input-value"
                                 type="text"
                                 maxLength={70}
                                 onChange={(e) => TextChange(1, workTeamsNames, "workTeamsName", e)}
@@ -149,7 +149,7 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                     <table className="working-shifts__table">
                         <caption className="working-shifts__table-caption working-shifts__table-caption-km">
                             <input
-                                    className="working-shifts__table-header-value"
+                                    className="working-shifts__table-input-value"
                                     type="text"
                                     maxLength={35}
                                     onChange={(e) => TextChange(2, workTeamsNames, "workTeamsName", e)}
