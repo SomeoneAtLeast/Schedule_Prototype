@@ -10,7 +10,7 @@
 }
 
 .working-shifts__table-wrapper-social {
-    width: 55%;
+    width: 63%;
 }
 
 .working-shifts__table-wrapper-km {
@@ -76,10 +76,6 @@
         width: 95%;
     }
 
-    &:not(:last-child) {
-        width: 350px;
-    }
-
     &:last-child {
         border-left: 1px solid #DDD;
     }
@@ -106,6 +102,7 @@
 }
 
 .working-shifts__table-cell {
+    box-sizing: border-box;
     color: #3b3b3b;
     font-size: 15px;
     padding: 12px;
@@ -113,6 +110,10 @@
 
     .working-shifts__table-input-value {
         width: 95%;
+    }
+
+    &:not(:last-child) {
+        min-width: 290px;
     }
 
     &:last-child {
@@ -213,7 +214,7 @@
     .working-shifts__table-wrapper {
         box-sizing: border-box;
         width: 100%;
-        padding: 0 100px;
+        padding: 0 80px;
 
         &:not(:last-child) {
             margin-bottom: 100px;
@@ -235,32 +236,77 @@
         }
     }
 
+    .working-shifts__table-cell {
+        &:not(:last-child) {
+            min-width: 250px;
+        }
+    }
+
     .working-shifts__table-input-value {
         font-size: 12px;
     }
 
+    .working-shifts__table-header-hours {
+        font-size: 14px;
+        &:first-child {
+            .working-shifts__table-input-value {
+                font-size: 14px;
+            }
+        }
+    }
+    
 }
 
 
 @media (max-width: 1000px) { 
 
-    .header__main-nav-logo-wrapper,
-    .main-nav__empty-block-for-visual {
-        width: 135px;
+    .working-shifts__table-wrapper {
+        padding: 0;
     }
 
-    .header__main-nav-logo {
-        width: 35%;
+    .working-shifts__table-month {
+        height: 48px;
+
+        .working-shifts__table-input-value{
+            font-size: 12px;
+        }
     }
 
-    .main-nav__item-link {
-        font-size: 13px;
-        padding: 10px 30px;
+    .working-shifts__table-caption {
+
+        .working-shifts__table-input-value {
+            font-size: 12px;
+        }
     }
 
-    .main-nav__item-link-img {
-        
-        width: 18px;
+    .working-shifts__table-cell {
+
+        &:last-child {
+            max-width: 60px;
+            min-width: 60px;
+            width: 60px;
+    
+            .working-shifts__table-input-value {
+                width: 50px;
+            }
+        }
+
+        &:not(:last-child) {
+            min-width: 210px;
+        }
+    }
+    
+    .working-shifts__table-input-value {
+        font-size: 10px;
+    }
+
+    .working-shifts__table-header-hours {
+        font-size: 12px;
+        &:first-child {
+            .working-shifts__table-input-value {
+                font-size: 12px;
+            }
+        }
     }
     
 }

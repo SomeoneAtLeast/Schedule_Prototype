@@ -17,8 +17,8 @@ import DaysFieldCommonControls from "../days-field-common-controls"
 import WorkingShifts from "../working-shifts"
 
 
-// Кнобка снятия выделений
-// Поправить фоны при адаптиве (ширину боди в фона)
+// Кнопка снятия выделений
+// textarea
 
 
 class App extends Component{
