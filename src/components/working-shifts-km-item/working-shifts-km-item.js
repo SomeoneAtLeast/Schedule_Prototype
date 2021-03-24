@@ -12,7 +12,7 @@ const WorkingShiftsKmItem = ({kmShifts, id, onTextChange}) => {
             <td 
                 className="working-shifts__table-cell working-shifts__table-cell-worker"
                 colSpan="3">
-                    <input
+                    <textarea
                         className="working-shifts__table-input-value"
                         type="text"
                         maxLength={31}
@@ -20,12 +20,12 @@ const WorkingShiftsKmItem = ({kmShifts, id, onTextChange}) => {
                         onChange={(e) => onTextChange(id, kmShifts, "worker", e)}/>
                 </td>
             <td className="working-shifts__table-cell working-shifts__table-cell-worker">
-            <input
-                        className="working-shifts__table-input-value"
-                        type="text"
-                        maxLength={6}
-                        value={kmShifts[id - 100].shiftNumber}
-                        onChange={(e) => onTextChange(id, kmShifts, "shiftNumber", e)}/>
+                <textarea
+                            className="working-shifts__table-input-value"
+                            type="text"
+                            maxLength={6}
+                            value={kmShifts[id - 100].shiftNumber}
+                            onChange={(e) => onTextChange(id, kmShifts, "shiftNumber", e)}/>
             </td>
         </tr>
     )

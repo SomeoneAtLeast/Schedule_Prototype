@@ -74,6 +74,9 @@
 
     .working-shifts__table-input-value {
         width: 95%;
+        height: 20px;
+        line-height: 20px;
+        resize: none;
     }
 
     &:last-child {
@@ -110,6 +113,9 @@
 
     .working-shifts__table-input-value {
         width: 95%;
+        height: 20px;
+        line-height: 20px;
+        resize: none;
     }
 
     &:not(:last-child) {
@@ -279,20 +285,34 @@
         }
     }
 
-    .working-shifts__table-cell {
+
+    .working-shifts__table-header {
 
         &:last-child {
-            max-width: 60px;
-            min-width: 60px;
-            width: 60px;
+
+            .working-shifts__table-input-value {
+                width: 95%;
+            }
+        }
+
+    }
+
+
+    .working-shifts__table-cell {
+        padding: 10px 0;
+
+        &:last-child {
+            max-width: 50px;
+            min-width: 50px;
+            width: 50px;
     
             .working-shifts__table-input-value {
-                width: 50px;
+                width: 40px;
             }
         }
 
         &:not(:last-child) {
-            min-width: 210px;
+            min-width: 103px;
         }
     }
     
@@ -313,18 +333,37 @@
 
 
 @media (max-width: 600px) { 
-
-    .main-nav__item-link {
-        flex-direction: column;
-        justify-content: space-around;
-        height: 65px;
-        font-size: 12px;
-        padding: 7px 4px;
+    .working-shifts__table {
+    
+        &:first-child {
+            .working-shifts__table-header {
+                .working-shifts__table-input-value {
+                    width: 95%;
+                    height: 40px;
+                    line-height: auto;
+                }
+        
+                &:last-child {
+                    .working-shifts__table-input-value {
+                        width: 70%;
+                    }
+                }
+            }
+        }
     }
 
-    .main-nav__item-link-img {
-        width: 22px;
-        margin: 0;
+    .working-shifts__table {
+    
+        &:not(:first-child) {
+            .working-shifts__table-cell {
+                &:not(:last-child) {
+                    .working-shifts__table-input-value {
+                        width: 95%;
+                        height: 40px;
+                        line-height: auto;
+                    }
+                }
+            }
+        }
     }
-
 }

@@ -93,10 +93,11 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                         className={className}
                         key={id}
                         colSpan={colSpan}>
-                        <input
+                        <textarea
                             maxLength={MaxLength}
                             className="working-shifts__table-input-value"
                             type="text"
+                            rows="2"
                             onChange={(e) => TextChange(id, state, insideValue, e)}
                             value={item[insideValue]}
                             />

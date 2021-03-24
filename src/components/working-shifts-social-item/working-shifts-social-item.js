@@ -18,7 +18,7 @@ class WorkingShiftsSocialItem extends Component {
                 <td 
                     className="working-shifts__table-cell working-shifts__table-cell-worker" 
                     key={i + 500}>
-                        <input
+                        <textarea
                             className="working-shifts__table-input-value"
                             type="text"
                             value={shift[`worker${i}`]}
@@ -29,7 +29,7 @@ class WorkingShiftsSocialItem extends Component {
         }
         
         cells.push(<td className="working-shifts__table-cell working-shifts__table-cell-worker" key={id}>
-                        <input
+                        <textarea
                             className="working-shifts__table-input-value"
                             type="text"
                             maxLength={6}
