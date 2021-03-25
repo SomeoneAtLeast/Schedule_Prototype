@@ -98,21 +98,21 @@ const kmShifts = emptyKmShifts;
 
 const glArr = [
     {
-        name: "ГруппЛидерович Иван Иванов 1",
+        name: "Групплидерович Иван Иванов 1",
         teamName: "Команда 1",
         shiftNumber: "Смена 1",
         nameMaxLength: 31,
         id: 1001
     },
     {
-        name: "ГруппЛидерович Иван Иванов 2",
+        name: "Групплидерович Иван Иванов 2",
         teamName: "Команда 2",
         shiftNumber: "Смена 2",
         nameMaxLength: 31,
         id: 1002
     },
     {
-        name: "ГруппЛидерович Иван Иванов 3",
+        name: "Групплидерович Иван Иванов 3",
         teamName: "Команда 3",
         shiftNumber: "Смена 1 и 2",
         nameMaxLength: 31,

@@ -83,6 +83,10 @@
 
 @media (max-width: 1485px) { 
 
+    .main-nav {
+        min-width: 415px;
+    }
+
     .header__main-nav-logo-wrapper {
         width: 185px;
     }
@@ -134,6 +138,11 @@
 
 
 @media (max-width: 600px) { 
+    
+    .main-nav {
+        min-width: 225px;
+    }
+
 
     .main-nav__item-link {
         flex-direction: column;

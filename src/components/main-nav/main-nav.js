@@ -72,6 +72,12 @@ const MainNav = ({scheduleActive, seatsActive, workingshiftsActive, MakeActiveNa
                     </div>
                     )
                 }}/>
+            <Route path="/seats/" exact render={() => {
+                    return (
+                    <div className="main-nav__empty-block-for-visual">
+                    </div>
+                    )
+                }}/>
         </>
     )
 }
