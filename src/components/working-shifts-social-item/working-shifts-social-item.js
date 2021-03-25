@@ -18,19 +18,21 @@ class WorkingShiftsSocialItem extends Component {
                 <td 
                     className="working-shifts__table-cell working-shifts__table-cell-worker" 
                     key={i + 500}>
-                        <input
-                            className="working-shifts__table-header-value"
+                        <textarea
+                            className="working-shifts__table-input-value"
                             type="text"
                             value={shift[`worker${i}`]}
+                            maxLength={31}
                             onChange={(e) => TextChange((id), shifts, `worker${i}`, e)}/>
                 </td>
             );
         }
         
         cells.push(<td className="working-shifts__table-cell working-shifts__table-cell-worker" key={id}>
-                        <input
-                            className="working-shifts__table-header-value"
+                        <textarea
+                            className="working-shifts__table-input-value"
                             type="text"
+                            maxLength={6}
                             value={shifts[id - 100][shiftNumberName]}
                             onChange={(e) => TextChange(id, shifts, shiftNumberName, e)}/>
             </td>);

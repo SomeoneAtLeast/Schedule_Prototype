@@ -28,9 +28,9 @@ const FilterSelect = (filter) => {
     }
 }
 
-const MakeActive = (id) => {
+const MakeFilterActive = (id) => {
     return {
-        type: "Make-Active",
+        type: "Make-Filter-Active",
         id
     }
 }
@@ -64,13 +64,30 @@ const ChangeSeatText = (id, NewOldIp, NewNewIp, NewSeatNumber) => {
     }
 }
 
+
+const MakeActiveNavBtn = (btnName) => {
+    return {
+        type: "Make-Active-Nav-Btn",
+        btnName
+    }
+}
+
+const ChangeSelectedPage = (location) => {
+    return {
+        type: "Change-Selected-Page",
+        location
+    }
+}
+
 export {
     SelectWorker,
     ClearAllDays,
     ChangeDayType,
     FilterSelect,
-    MakeActive,
+    MakeFilterActive,
     SelectDay,
     TextChange,
-    ChangeSeatText
+    ChangeSeatText,
+    MakeActiveNavBtn,
+    ChangeSelectedPage
 }

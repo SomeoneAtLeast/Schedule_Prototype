@@ -50,10 +50,15 @@ const SeatsField = ({seats}) => {
     
     return (
         <div className="seats-field">
-            {table(arrangementsFieldElements, 10, 12, 16)}
-            {table(arrangementsFieldElements, 16, 18, 22)}
-            {table(arrangementsFieldElements, 22, 24, 28)}
-            {table(arrangementsFieldElements, 28, 30, 34)}
+            <div className="seats-field-title">
+                Рабочие места
+            </div>
+            <div className="seats-field-tables">
+                {table(arrangementsFieldElements, 10, 12, 16)}
+                {table(arrangementsFieldElements, 16, 18, 22)}
+                {table(arrangementsFieldElements, 22, 24, 28)}
+                {table(arrangementsFieldElements, 28, 30, 34)}
+            </div>
         </div>
     )
 }

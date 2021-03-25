@@ -11,7 +11,7 @@ let emptyWorkers = [];
 for (let i = 1; i <= totalWorkers; i++) {
     emptyWorkers.push(
         {
-            name: `Сотрудник ${i}`,
+            name: `Иванов Иван Иванович № ${i}`,
             id: i,
             days: []
         }

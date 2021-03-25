@@ -14,7 +14,7 @@ class DaysFieldPresonal extends Component {
     }
 
     componentDidMount() {
-        this.props.SelectWorker(this.props.selectedWorker);
+        this.props.SelectWorker(this.props.id);
         this.props.ClearAllDays();
     }
 
@@ -61,12 +61,22 @@ class DaysFieldPresonal extends Component {
         const visibleWorkers = this.filterWorkers(workers[selectedWorker].days, selectedWorker, filter)
         let daysInMonth = [];
 
-        daysInMonth.push(
-            <td className = "days-field-personal-item" 
-                key={workerNumber}>
-                {workers[workerNumber].name}
-            </td>
-        )
+        if (visibleWorkers[workerNumber].days.length === 0) {
+            daysInMonth.push(
+                <td className = "days-field-personal__item days-field-personal__no-items" 
+                    key={workerNumber}>
+                        Здесь пусто
+                </td>
+            )
+        } else {
+            daysInMonth.push(
+                <td className = "days-field-personal__item" 
+                    key={workerNumber}>
+                    {workers[workerNumber].name}
+                </td>
+            )
+        }
+
         const daysFieldElements = visibleWorkers[workerNumber].days.map((item) => {
             
             let classNames = "days-field-personal__item";
@@ -111,33 +121,41 @@ class DaysFieldPresonal extends Component {
     }
 
     render() {
-        const {workers, selectedWorker, filter} = this.props;
+        const {workers, selectedWorker, filter, id} = this.props;
         const visibleDays = this.filterDays(workers[selectedWorker].days, filter)
 
         const daysNumbers = visibleDays.map((item) => {
 
             return (
-                <th className = "days-field-personal-item" 
+                <th className = "days-field-personal__item" 
                     key={item.id}>
-                    {item.id} {item.dayName}
+                        <div>
+                            {item.id}
+                        </div>
+                        <div>
+                            {item.dayName}
+                        </div>
                 </th>
             )
         })
 
         return (
-            <table className = "days-field-personal">
-                <tbody>
-                    <tr className = "days-field-personal-items-row">
-                        <th className = "days-field-personal-item">
-                        </th>
-                        {daysNumbers}
-                    </tr>
-                    <tr className = "days-field-personal-items-row">
-                        {this.getWorkerPresonalDays(selectedWorker)}
-                    </tr>
-                </tbody>
-            </table>
-        )
+            <div className="days-field-personal-wrapper">
+                <table className = "days-field-personal">
+                    <tbody>
+                        <tr className = "days-field-personal-items-row">
+                            <th className = "days-field-personal__item">
+                                Апрель
+                            </th>
+                            {daysNumbers}
+                        </tr>
+                        <tr className = "days-field-personal-items-row">
+                            {this.getWorkerPresonalDays(id)}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        )  
     }
 }
 
@@ -148,8 +166,8 @@ DaysFieldPresonal.propTypes = {
     ChangeDayType: PropTypes.func,
     days: PropTypes.array,
     workers: PropTypes.array,
-    selectedWorker: PropTypes.number
-
+    selectedWorker: PropTypes.number,
+    id: PropTypes.number
 }
 
 const mapDispatchToProps = { 

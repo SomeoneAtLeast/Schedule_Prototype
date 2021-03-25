@@ -9,9 +9,14 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
     const daysNumbers = workers[0].days.map((item) => {
 
         return (
-            <th className = "days-field-common-item" 
+            <th className = "days-field-common-days-item" 
                 key={item.id}>
-                {item.id} {item.dayName}
+                <div>
+                    {item.id}
+                </div>
+                <div>
+                    {item.dayName}
+                </div>
             </th>
         )
     })
@@ -88,16 +93,19 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
 
 
     return (
-    <table className = "days-field-common">
-        <tbody>
-            <tr className = "days-field-common-items-row">
-                <th className = "days-field-common-item">
-                </th>
-                {daysNumbers}
-            </tr>
-            {getWorkersElements()}
-        </tbody>
-    </table>
+        <div className="days-field-common-wrapper">
+            <table className = "days-field-common">
+                <tbody>
+                    <tr className = "days-field-common-items-row">
+                        <th className = "days-field-common-days-item">
+                            Апрель
+                        </th>
+                        {daysNumbers}
+                    </tr>
+                    {getWorkersElements()}
+                </tbody>
+            </table>
+        </div>
     )
 }
 

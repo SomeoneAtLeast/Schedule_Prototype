@@ -1,18 +1,30 @@
+
+.days-field-personal-wrapper {
+    overflow: scroll;
+}
+
 .days-field-personal {
-    background-color: cadetblue;
+    margin-bottom: auto;
+    background-color: #FFF;
     border-collapse: collapse;
 }
 
-.days-field-personal .selected {
-    background-color: #6d6d6d;
-    opacity: 1;
-    cursor: auto;
+.days-field-personal-items-row:first-child {
+    background: linear-gradient(70deg, #934BE6, #7b20e2);
     
-    .days-field-personal__item-number {
-        display: none;
+    .days-field-personal__item {
+        width: 2%;
+        height: 38.5px;
+        padding: 10px;
+        color: white;
     }
+}
 
-    .days-field-personal__item-day-name {
+.days-field-personal .selected {
+    cursor: auto;
+    background-color: transparent;
+    
+    .days-field-personal__item-hours {
         display: none;
     }
 
@@ -31,4 +43,29 @@
 
 .days-field-personal td.vacation {
     background-color:  #8079d7;
+}
+
+.days-field-personal__no-items {
+    text-align: center;
+}
+
+@media (max-width: 1485px) { 
+
+    .days-field-personal-items-row:first-child {
+        .days-field-personal__item {
+            box-sizing: border-box;
+            width: 2%;
+            height: 54px;
+        }
+    }
+}
+
+
+@media (max-width: 1000px) { 
+
+    .days-field-personal-items-row:first-child {
+        .days-field-personal__item {
+            height: 48px;
+        }
+    }
 }

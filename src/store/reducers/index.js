@@ -1,4 +1,4 @@
-import {workers} from "../../models/app-model"
+import {workers} from "../../models/schedule-model"
 import {shifts, kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 import {seats} from "../../models/seats-model"
 
@@ -17,7 +17,10 @@ const initialState = {
     kmShifts,
     workTeamsNames,
     months,
-    seats
+    seats,
+    scheduleActive: true,
+    seatsActive: false,
+    workingshiftsActive: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -40,7 +43,6 @@ const reducer = (state = initialState, action) => {
             }
         }
         case "Change-Day-Type": {
-            
             if (action.workerId === 0 || action.dayId === 0) {
                 return {
                     ...state 
@@ -141,7 +143,7 @@ const reducer = (state = initialState, action) => {
                 vacationActive: false
             }
         }
-        case "Make-Active": {
+        case "Make-Filter-Active": {
             if (action.id === -1) {
                 return {
                     ...state,
@@ -232,6 +234,59 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 seats: newSeats
+            }
+        }
+        case "Make-Active-Nav-Btn": {
+            if (action.btnName === "scheduleBtn") {
+                return {
+                    ...state,
+                    scheduleActive: true,
+                    seatsActive: false,
+                    workingshiftsActive: false
+                }
+            } else if (action.btnName === "seatsBtn") {
+                return {
+                    ...state,
+                    scheduleActive: false,
+                    workingshiftsActive: false,
+                    seatsActive: true
+                }
+            } else if (action.btnName === "workingshiftsBtn") {
+                return {
+                    ...state,
+                    scheduleActive: false,
+                    seatsActive: false,
+                    workingshiftsActive: true
+                }
+            }
+        }
+        break;
+        case "Change-Selected-Page": {
+            if(action.location.pathname === "/seats/") {
+                return {
+                    ...state,
+                    scheduleActive: false,
+                    workingshiftsActive: false,
+                    seatsActive: true
+                }
+            } else if (action.location.pathname === "/workingshifts/") {
+                return {
+                    ...state,
+                    scheduleActive: false,
+                    workingshiftsActive: true,
+                    seatsActive: false
+                }
+            } else if (action.location.pathname === "/") {
+                return {
+                    ...state,
+                    scheduleActive: true,
+                    workingshiftsActive: false,
+                    seatsActive: false
+                }
+            } else {
+                return {
+                    ...state
+                }
             }
         }
         default:

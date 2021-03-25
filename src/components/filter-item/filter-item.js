@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 import "./filter-item.scss"
 
-const FilterItem = ({btnText, btnQuantity, id, active, img, onActive, FilterSelect}) => {
+const FilterItem = ({btnText, btnQuantity, id, active, img, MakeFilterActive, FilterSelect}) => {
 
     const onFilterSelect = () => {
         FilterSelect();
-        onActive();
+        MakeFilterActive();
     }
 
     const onClick = () =>  {
@@ -28,9 +28,14 @@ const FilterItem = ({btnText, btnQuantity, id, active, img, onActive, FilterSele
             key = {id}
             onClick = {onClick}>   
                 <img className="filter-list__filter-img" src={img} alt={btnText}></img>
-                <span className="filter-list__text">
-                {btnText} - {btnQuantity}
-                </span>
+                <div className="filter-list__text">
+                    <span>
+                        {btnText}
+                    </span>
+                    <span>
+                        {btnQuantity}
+                    </span>
+                </div>
             </button>
         </li>
     )
@@ -38,7 +43,7 @@ const FilterItem = ({btnText, btnQuantity, id, active, img, onActive, FilterSele
 
 FilterItem.propTypes = {
     FilterSelect: PropTypes.func,
-    onActive: PropTypes.func,
+    MakeFilterActive: PropTypes.func,
     btnText: PropTypes.string,
     btnQuantity: PropTypes.number,
     id: PropTypes.number,

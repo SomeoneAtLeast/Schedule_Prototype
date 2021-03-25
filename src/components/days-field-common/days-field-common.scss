@@ -1,29 +1,124 @@
+.days-field-common-wrapper {
+    overflow: scroll;
+}
+
+
 .days-field-common {
-    background-color: cadetblue;
     border-collapse: collapse;
+    background-color: #FFF;
+}
+
+.days-field-common-items-row:first-child {
+    background: linear-gradient(70deg, #ea6153, #e34938);
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .days-field-common-item {
     padding: 5px 0;
-    width: 30px;
     text-align: center;
-    background-color: darkgreen;
-    border: 4px solid rgb(105, 109, 121);
+    color: rgba(0, 0, 0, 0.85);
+    border: 1px solid #DDD;
+    border-top: none;
     cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+        background-color: rgba(224, 222, 222, 0.8);
+    }
+
+    &:active {
+        border: 2px solid rgb(90, 90, 90);
+    }
 }
 
-.selected {
-    background-color: #cc628e;
+.days-field-common-item:first-child {
+    border: none;
+    text-align: left;
+    border-bottom: 1px solid #DDD;
+    transition: 0.2s;
+
+    &:hover {
+        background-color: transparent;
+        transform: scale(1.03);
+    }
+
+    &:active {
+        border-bottom: 1px solid #DDD;
+        transform: scale(0.95);
+    }
+}
+
+.days-field-common-days-item {
+    width: 2%;
+    font-weight: normal;
+    padding: 10px;
+    color: white;
+}
+
+.days-field-common-item-link {
+    display: block;
+    color: rgba(0, 0, 0, 0.85);
+    padding: 15px;
+    white-space: nowrap;
 }
 
 .worked {
-    background-color: #79b4d7;
+    background-color: rgba(121, 180, 215, 1);
 }
 
 .weekend {
-    background-color: #79d799;
+    background-color: rgba(136, 136, 136, 1);
 }
 
 .vacation {
-    background-color: #8079d7;
+    background-color: rgba(255, 203, 1, 1);
+}
+
+.selected {
+    border: 2px solid rgb(90, 90, 90);
+}
+
+.days-field-common-item.worked {
+    &:hover {
+        background-color: rgba(121, 180, 215, 0.7);
+    }
+}
+
+.days-field-common-item.weekend {
+    &:hover {
+        background-color: rgba(136, 136, 136, 0.7);
+    }
+}
+
+.days-field-common-item.vacation {
+    &:hover {
+        background-color: rgba(255, 203, 1, 0.7);
+    }
+}
+
+@media (max-width: 1485px) { 
+
+    .days-field-common-item {
+        font-size: 14px;
+    }
+
+    .days-field-common-days-item {
+        font-size: 14px;
+    }
+
+    .days-field-common-item-link {
+        white-space: normal;
+    }
+
+}
+
+@media (max-width: 1000px) { 
+    
+    .days-field-common-item {
+        font-size: 12px;
+    }
+
+    .days-field-common-days-item {
+        font-size: 12px;
+    }
 }
