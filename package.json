@@ -2,7 +2,7 @@
   "name": "schedule_prototype",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://someoneatleast.github.io/Schedule_Prototype/public/",
+  "homepage": "https://someoneatleast.github.io/Schedule_Prototype/build/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
