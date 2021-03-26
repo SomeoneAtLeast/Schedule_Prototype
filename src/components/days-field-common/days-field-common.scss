@@ -1,16 +1,12 @@
 .days-field-common-wrapper {
     overflow: scroll;
+    max-height: 85vh;
 }
 
 
 .days-field-common {
     border-collapse: collapse;
     background-color: #FFF;
-}
-
-.days-field-common-items-row:first-child {
-    background: linear-gradient(70deg, #ea6153, #e34938);
-    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .days-field-common-item {
@@ -22,8 +18,10 @@
     cursor: pointer;
     transition: background 0.3s;
 
+
     &:hover {
         background-color: rgba(224, 222, 222, 0.8);
+        box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
     }
 
     &:active {
@@ -37,14 +35,10 @@
     border-bottom: 1px solid #DDD;
     transition: 0.2s;
 
-    &:hover {
-        background-color: transparent;
-        transform: scale(1.03);
-    }
-
     &:active {
-        border-bottom: 1px solid #DDD;
-        transform: scale(0.95);
+        .days-field-common-item-link {
+            transform: scale(0.95);
+        }
     }
 }
 
@@ -53,9 +47,15 @@
     font-weight: normal;
     padding: 10px;
     color: white;
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(175deg, #ea6153, #e34938);
+    position: sticky;
+    top: 0;
+    z-index: 2; 
 }
 
 .days-field-common-item-link {
+    transition: 0.3s;
     display: block;
     color: rgba(0, 0, 0, 0.85);
     padding: 15px;

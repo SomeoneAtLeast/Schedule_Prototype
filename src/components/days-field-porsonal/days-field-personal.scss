@@ -1,22 +1,28 @@
-
 .days-field-personal-wrapper {
+    background-color: #EEE;
+    height: 100%;
+}
+
+
+.days-field-personal-content-field {
     overflow: scroll;
 }
 
 .days-field-personal {
-    margin-bottom: auto;
     background-color: #FFF;
+    margin-bottom: auto;
     border-collapse: collapse;
 }
 
 .days-field-personal-items-row:first-child {
-    background: linear-gradient(70deg, #934BE6, #7b20e2);
     
     .days-field-personal__item {
         width: 2%;
         height: 38.5px;
         padding: 10px;
         color: white;
+        box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(175deg, #934BE6, #7b20e2);
     }
 }
 
