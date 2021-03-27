@@ -79,6 +79,12 @@ const ChangeSelectedPage = (location) => {
     }
 }
 
+const ShowOrCloseWorkingHours = () => {
+    return {
+        type: "Show-Or-Close-Working-Hours",
+    }
+}
+
 export {
     SelectWorker,
     ClearAllDays,
@@ -89,5 +95,6 @@ export {
     TextChange,
     ChangeSeatText,
     MakeActiveNavBtn,
-    ChangeSelectedPage
+    ChangeSelectedPage,
+    ShowOrCloseWorkingHours
 }

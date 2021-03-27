@@ -20,7 +20,8 @@ const initialState = {
     seats,
     scheduleActive: true,
     seatsActive: false,
-    workingshiftsActive: false
+    workingshiftsActive: false,
+    makeWorkingBtnActive: true
 }
 
 const reducer = (state = initialState, action) => {
@@ -289,9 +290,14 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
+        case "Show-Or-Close-Working-Hours": {
+            return {
+                ...state,
+                makeWorkingBtnActive: !state.makeWorkingBtnActive
+            }
+        }
         default:
             return state;    
     }
 }
-
 export default reducer;
