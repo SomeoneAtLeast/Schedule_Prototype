@@ -101,12 +101,11 @@ class DaysFieldPresonal extends Component {
             return (
                 <td className = {classNames} 
                             key = {item.id}
-                            onClick={() => ChangeDayType(workers[workerNumber].id, item.id, "selected", "personal")}>
+                            onClick={() => ChangeDayType(workers[workerNumber].id, item.id, "selected", null, null, "personal")}>
                                 <DaysFieldItemPersonal
                                     workingHours={item.workingHours}
-                                    onMakeDayWorking={() => ChangeDayType(workers[workerNumber].id, item.id, "worked", "personal")}
-                                    onMakeDayWeekend={() => ChangeDayType(workers[workerNumber].id, item.id, "weekend", "personal")}
-                                    onMakeDayVacation={() => ChangeDayType(workers[workerNumber].id, item.id, "vacation", "personal")}/>
+                                    onMakeDayWeekend={() => ChangeDayType(workers[workerNumber].id, item.id, "weekend", null, null, "personal")}
+                                    onMakeDayVacation={() => ChangeDayType(workers[workerNumber].id, item.id, "vacation", null, null, "personal")}/>
                 </td>
             )
         })

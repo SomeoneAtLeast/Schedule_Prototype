@@ -10,6 +10,7 @@ import workImg from "./../../global-imgs/work.svg"
 import weekendImg from "./../../global-imgs/weekend.svg"
 import vacationdImg from "./../../global-imgs/vacation.svg"
 import clearImg from "./../../global-imgs/clear.svg"
+import takeOfImg from "./../../global-imgs/take-off.svg"
 
 const buttons = [
     {
@@ -19,32 +20,42 @@ const buttons = [
         id: -2,
         subMenu: [
             {
-                workedTime: "08-20",
+                workingTime: "09-18",
+                hoursCount: 8,
+                id: -49
+            },
+            {
+                workingTime: "11-20",
+                hoursCount: 8,
+                id: -50
+            },
+            {
+                workingTime: "08-20",
                 hoursCount: 11,
                 id: -51
             },
             {
-                workedTime: "09-21",
+                workingTime: "09-21",
                 hoursCount: 11,
                 id: -52
             },
             {
-                workedTime: "10-22",
+                workingTime: "10-22",
                 hoursCount: 11,
                 id: -53
             },
             {
-                workedTime: "11-23",
+                workingTime: "11-23",
                 hoursCount: 11,
                 id: -54
             },
             {
-                workedTime: "12-24",
+                workingTime: "12-24",
                 hoursCount: 11,
                 id: -55
             },
             {
-                workedTime: "14-02",
+                workingTime: "14-02",
                 hoursCount: 11,
                 id: -56
             },
@@ -52,7 +63,8 @@ const buttons = [
     },
     {name: "weekend",  label: "Назначить выходным", img: weekendImg, id: -3},
     {name: "vacation",  label: "Назначить отпуском", img: vacationdImg, id: -4},
-    {name: "clear",  label: "Убрать назначения", img: clearImg, id: -5}
+    {name: "takeOf",  label: "Снять назначения", img: takeOfImg, id: -5},
+    {name: "clear",  label: "Убрать выделения", img: clearImg, id: -6}
 ]
 
 const DaysFieldCommonControls = ({selectedWorker, selectedDay, makeWorkingBtnActive, ChangeDayType, ShowOrCloseWorkingHours}) => {
@@ -63,35 +75,36 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, makeWorkingBtnAct
                         const {name, label, img, id} = item;
 
                         if (item.subMenu) {
-                            let classNames = "days-field-common-controls__sub-menu";
+                            let subMenuClassNames = "days-field-common-controls__sub-menu";
+                            let controlsBtnClassName = "days-field-common-controls__item-btn days-field-common-controls__item-btn-with-sub-menu";
 
                             if (makeWorkingBtnActive) {
-                                classNames += " days-field-common-controls__sub-menu-active"
+                                subMenuClassNames += " days-field-common-controls__sub-menu-active"
+                                controlsBtnClassName += " days-field-common-controls__item-btn-with-sub-menu-active"
                             }
 
                             return (
                                 <li className="days-field-common-controls__item" key = {id}>
                                     <button
-                                        className="days-field-common-controls__item-btn"
+                                        className={controlsBtnClassName}
                                         onClick={() => ShowOrCloseWorkingHours()}>   
                                             <img className="days-field-common-controls__item-btn-img" src={img} alt={label}></img>
                                             <span className="days-field-common-controls__item-btn-text">
                                                 {label}
                                             </span>
                                     </button>
-                                    <ul className={classNames}>
+                                    <ul className={subMenuClassNames}>
                                         {
                                             item.subMenu.map((subItem) => {
-                                                const {workedTime, id} = subItem;
+                                                const {workingTime, hoursCount, id} = subItem;
 
                                                 return (
                                                     <li className="days-field-common-controls__sub-menu-item" key = {id}>
                                                         <button
-                                                            className={`days-field-common-controls__sub-menu-item-btn days-field-common-controls__sub-menu-item-btn-${workedTime}`}
-                                                            // onClick={() => ChangeDayType(selectedWorker, selectedDay, name)}
-                                                            >   
+                                                            className={`days-field-common-controls__sub-menu-item-btn days-field-common-controls__sub-menu-item-btn-${workingTime}`}
+                                                            onClick={() => ChangeDayType(selectedWorker, selectedDay, name, workingTime, hoursCount)}>   
                                                                 <span className="days-field-common-controls__sub-menu-item-btn-text">
-                                                                    {workedTime}
+                                                                    {workingTime}
                                                                 </span>
                                                         </button>
                                                     </li>                                               

@@ -19,18 +19,26 @@
     font-size: 18px;
 }
 
-.days-field-personal__btn-group {
+.days-field-personal__btn-group-list {
+    position: relative;
+    padding: 0;
+    margin: 0;
     display: none;
     flex-wrap: wrap;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
     height: 140px;
     background-color: #4b4b4b;
+    list-style: none;
     transition: 0.3s;
 }
 
+.days-field-personal__btn-group-list-item {
+    height: 31px;
+}
 
-.days-field-personal__btn {
+.days-field-personal__btn-group-list-btn {
     background-color: transparent;
     border: none;
     outline: none;
@@ -73,6 +81,90 @@
     .days-field-personal__item:first-child {
         border-left: none;
     }
+}
+
+.days-field-personal__sub-menu {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    top: 0;
+    right: 100%;
+    list-style: none;
+    width: 135px;
+    height: 140px;
+    background-color: #4b4b4b;
+    display: none;
+}
+
+
+.days-field-personal__sub-menu-item-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    padding: 5px 14px;
+    outline: none;
+    border: none;
+    color: rgb(243, 243, 243);
+    background-color: transparent;
+    font-family: "Roboto-Regular", sans-serif;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 11px;
+}
+
+.days-field-personal__sub-menu-item {
+    border-radius: 5px;
+    border: 2px solid transparent;
+    overflow: hidden;
+    transition: 0.2s;
+
+    &:hover {
+        border: 2px solid rgb(243, 243, 243);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.days-field-personal__sub-menu-item-btn-09-18 {
+    background: linear-gradient(70deg, #ffa8d5, #e64f95);
+}
+
+.days-field-personal__sub-menu-item-btn-11-20 {
+    background: linear-gradient(70deg, #ce6b9e, #c60973);
+}
+
+.days-field-personal__sub-menu-item-btn-08-20 {
+    background: linear-gradient(70deg, #23c6db, #01aec5);
+}
+
+.days-field-personal__sub-menu-item-btn-09-21 {
+    background: linear-gradient(70deg, #cccb79, #b8bd0d);
+}
+
+.days-field-personal__sub-menu-item-btn-10-22 {
+    background: linear-gradient(70deg, #6fc48c, #1db150);
+}
+
+.days-field-personal__sub-menu-item-btn-11-23 {
+    background: linear-gradient(70deg, #d55959, #9f0f0f);
+}
+
+.days-field-personal__sub-menu-item-btn-12-24 {
+    background: linear-gradient(70deg, #aca88b, #a29845);
+}
+
+.days-field-personal__sub-menu-item-btn-14-02 {
+    background: linear-gradient(70deg, #ae9478, #ae7a43);
+}
+
+.days-field-personal__sub-menu-item-btn-21-09 {
+    background: linear-gradient(70deg, #5e69a6, #012388);
 }
 
 

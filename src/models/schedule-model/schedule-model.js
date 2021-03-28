@@ -13,7 +13,8 @@ for (let i = 1; i <= totalWorkers; i++) {
         {
             name: `Иванов Иван Иванович № ${i}`,
             id: i,
-            days: []
+            days: [],
+            workingShiftTotal: null,
         }
     )
 }
@@ -28,6 +29,7 @@ emptyWorkers.forEach((item) => {
                 weekend: false,
                 vacation: false,
                 workingHours: 0,
+                workingShiftDay: null,
                 id: i
             }
         )

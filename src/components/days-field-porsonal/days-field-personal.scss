@@ -34,21 +34,17 @@
         display: none;
     }
 
-    .days-field-personal__btn-group {
+    .days-field-personal__btn-group-list {
         display: flex;
     }
 }
 
-.days-field-personal td.worked {
-    background-color:  #79b4d7;
-}
-
 .days-field-personal td.weekend {
-    background-color:  #79d799;
+    background-color: rgba(136, 136, 136, 1);
 }
 
 .days-field-personal td.vacation {
-    background-color:  #8079d7;
+    background-color: rgba(255, 203, 1, 1);
 }
 
 .days-field-personal__no-items {

@@ -46,6 +46,34 @@
     }
 }
 
+
+.days-field-common-controls__item-btn-with-sub-menu {
+    position: relative;
+    padding: 10px 35px 10px 20px;
+
+    &::after {
+        content: "▼";
+        position: absolute;
+        right: 12px;
+        top: 17px;
+        font-size: 13px;
+        transform: scaleY(0.7);
+        transition: 0.2s;
+    }
+}
+
+.days-field-common-controls__item-btn-with-sub-menu-active {
+    border: 2px solid rgb(243, 243, 243);
+
+    .days-field-common-controls__item-btn-img {
+        transform: translateY(-2px);
+    }
+
+    &::after {
+        transform: scaleY(0.7) rotate(180deg);
+    }
+}
+
 .days-field-common-controls__item-btn-img {
     margin-right: 10px;
     width: 28px;
@@ -53,12 +81,11 @@
 }
 
 .days-field-common-controls__sub-menu {
-    padding: 0;
+    padding: 5px 0 2px 80px;
     list-style: none;
     flex-wrap: wrap;
     display: flex;
     justify-content: space-between;
-    padding-left: 90px;
     display: none;
 }
 
@@ -81,6 +108,14 @@
     &:active {
         transform: scale(0.95);
     }
+}
+
+.days-field-common-controls__sub-menu-item-btn-09-18 {
+    background: linear-gradient(70deg, #ffa8d5, #e64f95);
+}
+
+.days-field-common-controls__sub-menu-item-btn-11-20 {
+    background: linear-gradient(70deg, #ce6b9e, #c60973);
 }
 
 .days-field-common-controls__sub-menu-item-btn-08-20 {
@@ -123,6 +158,23 @@
         padding: 10px 10px;
         font-size: 14px;
     }
+
+    .days-field-common-controls__sub-menu {
+        padding: 5px 0 2px 40px;
+    }
+
+    .days-field-common-controls__item-btn-with-sub-menu {
+        
+        &::after {
+            right: 4px;
+            top: 21px;
+            font-size: 12px;
+        }
+    }
+
+    .days-field-common-controls__sub-menu-item-btn {
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 1000px) { 
@@ -140,5 +192,22 @@
     .days-field-common-controls__item-btn-img {
         margin-right: 5px;
         width: 25px;
+    }
+
+    .days-field-common-controls__sub-menu {
+        padding: 5px 0 2px 22px;
+    }
+
+    .days-field-common-controls__item-btn-with-sub-menu {
+        
+        &::after {
+            right: 2px;
+            top: 25px;
+            font-size: 10px;
+        }
+    }
+
+    .days-field-common-controls__sub-menu-item-btn {
+        font-size: 12px;
     }
 }

@@ -42,7 +42,7 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
             }
 
             if (workers[workerNumber].days[i - 1].worked) {
-                classNames += " worked";
+                classNames += ` worked-${workers[workerNumber].days[i - 1].workingShiftDay}`;
             }
 
             if (workers[workerNumber].days[i - 1].weekend) {

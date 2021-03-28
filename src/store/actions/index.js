@@ -11,12 +11,14 @@ const ClearAllDays = () => {
     }
 }
 
-const ChangeDayType = (workerId, dayId, objKey, scheduleType = "common") => {
+const ChangeDayType = (workerId, dayId, objKey, workingTime, hoursCount, scheduleType = "common") => {
     return {
         type: "Change-Day-Type",
         workerId,
         dayId,
         objKey,
+        workingTime,
+        hoursCount,
         scheduleType
     }
 }
