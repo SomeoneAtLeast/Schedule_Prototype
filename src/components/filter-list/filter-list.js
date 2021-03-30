@@ -20,7 +20,6 @@ class FilterList extends Component {
 
     componentDidUpdate() {
         this.props.SelectWorker(this.props.match.params.id - 1)
-        console.log(this.props.match.params.id - 1 + "update");  
     }
 
     componentWillUnmount() {
@@ -35,8 +34,6 @@ class FilterList extends Component {
         const weekendsQuantity = workers[selectedWorker].days.filter(item => item.weekend).length;
         const vacationQuantity = workers[selectedWorker].days.filter(item => item.vacation).length;
         const allDaysQuantity = workers[selectedWorker].days.length;
-
-        console.log(selectedWorker)
 
         const buttons = [
             {name: "all",  label: "Все дни", img: allImg, id: -1, quantity: allDaysQuantity, active: allActive},
