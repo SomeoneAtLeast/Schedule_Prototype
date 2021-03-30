@@ -26,7 +26,7 @@
     }
 }
 
-.days-field-personal .selected {
+.days-field-personal .days-field-personal--selected {
     cursor: auto;
     background-color: transparent;
     
@@ -39,12 +39,54 @@
     }
 }
 
-.days-field-personal td.weekend {
+.days-field-personal .days-field-personal--show-working-hours  {
+    .days-field-personal__sub-menu {
+        display: flex;
+    }
+}
+
+.days-field-personal td.days-field-personal--weekend {
     background-color: rgba(136, 136, 136, 1);
 }
 
-.days-field-personal td.vacation {
+.days-field-personal td.days-field-personal--vacation {
     background-color: rgba(255, 203, 1, 1);
+}
+
+.days-field-personal td.days-field-personal--worked-09-18 {
+    background:#ffa8d5;
+}
+
+.days-field-personal td.days-field-personal--worked-11-20 {
+    background:#ce6b9e;
+}
+
+.days-field-personal td.days-field-personal--worked-08-20 {
+    background:#23c6db;
+}
+
+.days-field-personal td.days-field-personal--worked-09-21 {
+    background:#cccb79;
+}
+
+.days-field-personal td.days-field-personal--worked-10-22 {
+    background:#6fc48c;
+}
+
+.days-field-personal td.days-field-personal--worked-11-23 {
+    background:#d55959;
+}
+
+.days-field-personal td.days-field-personal--worked-12-24 {
+    background:#aca88b;
+}
+
+.days-field-personal td.days-field-personal--worked-14-02 {
+    background:#ae9478;
+}
+
+.days-field-personal td.days-field-personal--worked-21-09 {
+    background:#5e69a6;
 }
 
 .days-field-personal__no-items {

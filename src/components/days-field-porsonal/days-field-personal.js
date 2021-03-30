@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux"
-import {ClearAllDays, ChangeDayType, SelectWorker} from "../../store/actions"
+import {ClearAllDays, ChangeDayType, SelectWorker, ShowOrCloseWorkingHours} from "../../store/actions"
 
 import "./days-field-personal.scss"
 
@@ -80,32 +80,40 @@ class DaysFieldPresonal extends Component {
         const daysFieldElements = visibleWorkers[workerNumber].days.map((item) => {
             
             let classNames = "days-field-personal__item";
-            const {weekend, worked, vacation, selected} = item;
+            const {weekend, vacation, worked, selected, workingShiftDay, changeShiftMenuOpen} = item;
 
             if(selected) {
-                classNames += " selected";
+                classNames += " days-field-personal--selected ";
             }
 
-            if (worked) {
-                classNames += " worked";
+            if (changeShiftMenuOpen) {
+                classNames += " days-field-personal--show-working-hours";
             }
             
+            if (worked) {
+                classNames += ` days-field-personal--worked-${workingShiftDay}`;
+            }
+
             if(weekend) {
-                classNames += " weekend";
+                classNames += " days-field-personal--weekend";
             }
 
             if(vacation) {
-                classNames += " vacation";
+                classNames += " days-field-personal--vacation";
             }
-            
+
             return (
                 <td className = {classNames} 
-                            key = {item.id}
-                            onClick={() => ChangeDayType(workers[workerNumber].id, item.id, "selected", null, null, "personal")}>
-                                <DaysFieldItemPersonal
-                                    workingHours={item.workingHours}
-                                    onMakeDayWeekend={() => ChangeDayType(workers[workerNumber].id, item.id, "weekend", null, null, "personal")}
-                                    onMakeDayVacation={() => ChangeDayType(workers[workerNumber].id, item.id, "vacation", null, null, "personal")}/>
+                    key = {item.id}>
+                        <DaysFieldItemPersonal
+                            workingHours = {item.workingHours}
+                            workerNumber = {workers[workerNumber].id}
+                            dayNumber = {item.id}
+                            openDayMenu = {() => ChangeDayType(workers[workerNumber].id, item.id, "selected", null, null, "personal")}
+                            openChangeShiftMenu = {() => ChangeDayType(workers[workerNumber].id, item.id, "changeShiftMenuOpen", null, null, "personal")}
+                            onMakeDayWeekend = {() => ChangeDayType(workers[workerNumber].id, item.id, "weekend", null, null, "personal")}
+                            onMakeDayVacation = {() => ChangeDayType(workers[workerNumber].id, item.id, "vacation", null, null, "personal")}
+                            closeDayMenu = {() => ChangeDayType(workers[workerNumber].id, item.id, "selected", null, null, "personal")}/>
                 </td>
             )
         })
@@ -168,21 +176,24 @@ DaysFieldPresonal.propTypes = {
     days: PropTypes.array,
     workers: PropTypes.array,
     selectedWorker: PropTypes.number,
-    id: PropTypes.number
+    id: PropTypes.number,
+    ShowOrCloseWorkingHours: PropTypes.func,
 }
 
 const mapDispatchToProps = { 
     ClearAllDays, 
     ChangeDayType,
-    SelectWorker
+    SelectWorker,
+    ShowOrCloseWorkingHours
 }
 
-const mapStateToProps = ({workers, selectedDay, filter, selectedWorker}) => {
+const mapStateToProps = ({workers, selectedDay, filter, selectedWorker, makeWorkingBtnActive}) => {
     return {
         workers,
         selectedWorker,
         selectedDay,
         filter,
+        makeWorkingBtnActive
     }
 }
 

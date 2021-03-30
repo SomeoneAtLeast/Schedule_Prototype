@@ -29,6 +29,7 @@ emptyWorkers.forEach((item) => {
                 weekend: false,
                 vacation: false,
                 workingHours: 0,
+                changeShiftMenuOpen: false,
                 workingShiftDay: null,
                 id: i
             }
