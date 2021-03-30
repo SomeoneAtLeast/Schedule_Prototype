@@ -46,7 +46,6 @@ const reducer = (state = initialState, action) => {
         }
         case "Change-Day-Type": {
 
-            console.log(action.workerId, action.dayId, action.objKey, action.workingTime, action.hoursCount, action.scheduleType)
             if (action.workerId === 0 || action.dayId === 0) {
                 return {
                     ...state 
@@ -60,11 +59,6 @@ const reducer = (state = initialState, action) => {
             const {workers} = state;
             const workerIndex = workers.findIndex(elem => elem.id === action.workerId);
             const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === action.dayId); 
-            // const oldDayStatus = workers[workerIndex].days[dayIndex];
-            // // const newDayStatus = {...oldDayStatus}
-            // // newDayStatus[action.objKey] = !oldDayStatus[action.objKey];
-            // const newDays = [...workers[workerIndex].days.slice(0, dayIndex), newDayStatus, ...workers[workerIndex].days.slice(dayIndex + 1)];
-            // const newWorker = {...workers[workerIndex], days: newDays}
             const newWorkers = [...workers.slice()];
 
             if (action.objKey === "selected" && newWorkers[workerIndex].days[dayIndex].changeShiftMenuOpen === true) {
@@ -265,7 +259,7 @@ const reducer = (state = initialState, action) => {
                 selectedDay: action.selectedDay,
             }
         }
-        case "Text-Change": {
+        case "Change-Shift-Text": {
             const index = action.dataArr.findIndex(elem => elem.id === action.id); 
             const obj = action.dataArr[index];
             const newObj = {...obj};
@@ -300,6 +294,11 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     months: newArr
+                } 
+            } else if (action.dataArr === state.workers) {
+                return {
+                    ...state,
+                    workers: newArr
                 } 
             }
         }
@@ -372,6 +371,22 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 makeWorkingBtnActive: !state.makeWorkingBtnActive
+            }
+        }
+        case "Change-Schedule-Text": {
+            const {workers} = state;
+            const workerIndex = workers.findIndex(elem => elem.id === action.workerId);
+            const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === action.dayId); 
+            const oldDay = workers[workerIndex].days[dayIndex];
+            const newDay = {...oldDay}
+            newDay[action.objKey] = action.e.target.value;
+            const newDays = [...workers[workerIndex].days.slice(0, dayIndex), newDay, ...workers[workerIndex].days.slice(dayIndex + 1)];
+            const newWorker = {...workers[workerIndex], days: newDays}
+            const newWorkers = [...workers.slice(0, workerIndex), newWorker, ...workers.slice(workerIndex + 1)];
+
+            return {
+                ...state,
+                workers: newWorkers
             }
         }
         default:

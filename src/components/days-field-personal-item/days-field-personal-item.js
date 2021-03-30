@@ -124,7 +124,7 @@ const DaysFieldItemPersonal = ({workingHours, workerNumber, dayNumber, openDayMe
 
 DaysFieldItemPersonal.propTypes = {
     dayName: PropTypes.string,
-    workingHours: PropTypes.number,
+    workingHours: PropTypes.any,
     openChangeShiftMenu: PropTypes.func,
     onMakeDayWeekend: PropTypes.func,
     onMakeDayVacation: PropTypes.func,

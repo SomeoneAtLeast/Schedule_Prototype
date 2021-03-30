@@ -1,14 +1,14 @@
 import React from "react";
 import {connect} from "react-redux"
 import PropTypes from 'prop-types';
-import {TextChange} from "../../store/actions"
+import {ChangeShiftText} from "../../store/actions"
 
 import  "./working-shifts.scss"
 
 import WorkingShiftsSocialItem from "../working-shifts-social-item"
 import WorkingShiftsKmItem from "../working-shifts-km-item"
 
-const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTable, TextChange}) => {
+const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTable, ChangeShiftText}) => {
 
         const table = (startTime, finishTime, numberOfRows, shiftNumber, key) => {
             let rows = [];
@@ -33,14 +33,14 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                                         type="text"
                                         maxLength={2}
                                         value={startTime}
-                                        onChange={(e) => TextChange(key, shifts, "startTime", e)}/>
+                                        onChange={(e) => ChangeShiftText(key, shifts, "startTime", e)}/>
                                     до
                                     <input
                                         className="working-shifts__table-input-value"
                                         type="text"
                                         maxLength={2}
                                         value={finishTime}
-                                        onChange={(e) => TextChange(key, shifts, "finishTime", e)}/>
+                                        onChange={(e) => ChangeShiftText(key, shifts, "finishTime", e)}/>
                             </th>
                             <th className="working-shifts__table-header-hours-empty">
                             </th>
@@ -63,7 +63,7 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
         const tableKmRows = (number) => {
             let rows = [];
             for (let i = 0; i < number; i++) {
-                rows.push(<WorkingShiftsKmItem kmShifts={kmShifts} key={kmShifts[i].id} id={kmShifts[i].id} onTextChange={TextChange}/>);
+                rows.push(<WorkingShiftsKmItem kmShifts={kmShifts} key={kmShifts[i].id} id={kmShifts[i].id} onChangeShiftText={ChangeShiftText}/>);
             }
             return (
                 rows
@@ -98,7 +98,7 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                             className="working-shifts__table-input-value"
                             type="text"
                             rows="2"
-                            onChange={(e) => TextChange(id, state, insideValue, e)}
+                            onChange={(e) => ChangeShiftText(id, state, insideValue, e)}
                             value={item[insideValue]}
                             />
                     </td>
@@ -117,7 +117,7 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                             className="working-shifts__table-input-value"
                             type="text"
                             maxLength={15}
-                            onChange={(e) => TextChange(2, months, "month", e)}
+                            onChange={(e) => ChangeShiftText(2, months, "month", e)}
                             value={months[0].month}
                             />
                 </div>
@@ -128,7 +128,7 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                                 className="working-shifts__table-input-value"
                                 type="text"
                                 maxLength={70}
-                                onChange={(e) => TextChange(1, workTeamsNames, "workTeamsName", e)}
+                                onChange={(e) => ChangeShiftText(1, workTeamsNames, "workTeamsName", e)}
                                 value={workTeamsNames[0].workTeamsName}
                                 />
                         </caption>
@@ -153,7 +153,7 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                                     className="working-shifts__table-input-value"
                                     type="text"
                                     maxLength={35}
-                                    onChange={(e) => TextChange(2, workTeamsNames, "workTeamsName", e)}
+                                    onChange={(e) => ChangeShiftText(2, workTeamsNames, "workTeamsName", e)}
                                     value={workTeamsNames[1].workTeamsName}
                                     />
                         </caption>
@@ -177,12 +177,12 @@ WorkingShifts.propTypes = {
     workTeamsNames: PropTypes.array,
     glTable: PropTypes.array,
     kmTable: PropTypes.array,
-    TextChange: PropTypes.func,
+    ChangeShiftText: PropTypes.func,
 }
 
 
 const mapDispatchToProps = {
-    TextChange
+    ChangeShiftText
 }
 
 const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmTable}) => {

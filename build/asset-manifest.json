@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/Schedule_Prototype/static/css/main.c8951203.chunk.css",
-    "main.js": "/Schedule_Prototype/static/js/main.5427dad1.chunk.js",
-    "main.js.map": "/Schedule_Prototype/static/js/main.5427dad1.chunk.js.map",
+    "main.css": "/Schedule_Prototype/static/css/main.6e373f99.chunk.css",
+    "main.js": "/Schedule_Prototype/static/js/main.c829c46e.chunk.js",
+    "main.js.map": "/Schedule_Prototype/static/js/main.c829c46e.chunk.js.map",
     "runtime-main.js": "/Schedule_Prototype/static/js/runtime-main.33780916.js",
     "runtime-main.js.map": "/Schedule_Prototype/static/js/runtime-main.33780916.js.map",
     "static/js/2.60578049.chunk.js": "/Schedule_Prototype/static/js/2.60578049.chunk.js",
     "static/js/2.60578049.chunk.js.map": "/Schedule_Prototype/static/js/2.60578049.chunk.js.map",
     "index.html": "/Schedule_Prototype/index.html",
-    "static/css/main.c8951203.chunk.css.map": "/Schedule_Prototype/static/css/main.c8951203.chunk.css.map",
+    "static/css/main.6e373f99.chunk.css.map": "/Schedule_Prototype/static/css/main.6e373f99.chunk.css.map",
     "static/js/2.60578049.chunk.js.LICENSE.txt": "/Schedule_Prototype/static/js/2.60578049.chunk.js.LICENSE.txt",
     "static/media/index.scss": "/Schedule_Prototype/static/media/background.2c344d8c.jpg",
     "static/media/all.367a7986.svg": "/Schedule_Prototype/static/media/all.367a7986.svg",
@@ -18,6 +18,7 @@
     "static/media/schedule.6d651227.svg": "/Schedule_Prototype/static/media/schedule.6d651227.svg",
     "static/media/seat.28c5181d.svg": "/Schedule_Prototype/static/media/seat.28c5181d.svg",
     "static/media/shifts.3a437317.svg": "/Schedule_Prototype/static/media/shifts.3a437317.svg",
+    "static/media/take-off.826ccbd2.svg": "/Schedule_Prototype/static/media/take-off.826ccbd2.svg",
     "static/media/vacation.b68047b2.svg": "/Schedule_Prototype/static/media/vacation.b68047b2.svg",
     "static/media/weekend.7c7322fa.svg": "/Schedule_Prototype/static/media/weekend.7c7322fa.svg",
     "static/media/work.2a4c9830.svg": "/Schedule_Prototype/static/media/work.2a4c9830.svg"
@@ -25,7 +26,7 @@
   "entrypoints": [
     "static/js/runtime-main.33780916.js",
     "static/js/2.60578049.chunk.js",
-    "static/css/main.c8951203.chunk.css",
-    "static/js/main.5427dad1.chunk.js"
+    "static/css/main.6e373f99.chunk.css",
+    "static/js/main.c829c46e.chunk.js"
   ]
 }

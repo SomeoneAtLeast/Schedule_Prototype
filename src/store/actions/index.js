@@ -47,9 +47,19 @@ const SelectDay = (selectedWorker, selectedDay, ChangeDayType) => {
     }
 }
 
-const TextChange = (id, dataArr, objKey, e) => {
+const ChangeScheduleText = (workerId, dayId, objKey, e) => {
     return {
-        type: "Text-Change",
+        type: "Change-Schedule-Text",
+        workerId,
+        dayId,
+        objKey,
+        e 
+    }
+}
+
+const ChangeShiftText = (id, dataArr, objKey, e) => {
+    return {
+        type: "Change-Shift-Text",
         id, 
         dataArr,
         objKey,
@@ -95,9 +105,10 @@ export {
     FilterSelect,
     MakeFilterActive,
     SelectDay,
-    TextChange,
+    ChangeShiftText,
     ChangeSeatText,
     MakeActiveNavBtn,
     ChangeSelectedPage,
-    ShowOrCloseWorkingHours
+    ShowOrCloseWorkingHours,
+    ChangeScheduleText
 }

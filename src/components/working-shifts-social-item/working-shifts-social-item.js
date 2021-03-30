@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux"
-import {TextChange} from "../../store/actions"
+import {ChangeShiftText} from "../../store/actions"
 
 import  "./working-shifts-social-item.scss"
 class WorkingShiftsSocialItem extends Component {
@@ -10,7 +10,7 @@ class WorkingShiftsSocialItem extends Component {
     }
 
     makeCells(startNumber, finishNumber, shiftNumberName) {
-        const {shift, shifts, id, TextChange} = this.props;
+        const {shift, shifts, id, ChangeShiftText} = this.props;
 
         let cells = [];
         for (let i = startNumber; i <= finishNumber; i++) {
@@ -23,7 +23,7 @@ class WorkingShiftsSocialItem extends Component {
                             type="text"
                             value={shift[`worker${i}`]}
                             maxLength={31}
-                            onChange={(e) => TextChange((id), shifts, `worker${i}`, e)}/>
+                            onChange={(e) => ChangeShiftText((id), shifts, `worker${i}`, e)}/>
                 </td>
             );
         }
@@ -34,7 +34,7 @@ class WorkingShiftsSocialItem extends Component {
                             type="text"
                             maxLength={6}
                             value={shifts[id - 100][shiftNumberName]}
-                            onChange={(e) => TextChange(id, shifts, shiftNumberName, e)}/>
+                            onChange={(e) => ChangeShiftText(id, shifts, shiftNumberName, e)}/>
             </td>);
 
 
@@ -65,11 +65,11 @@ WorkingShiftsSocialItem.propTypes = {
     shift: PropTypes.object,
     shifts: PropTypes.array,
     id: PropTypes.number,
-    TextChange: PropTypes.func
+    ChangeShiftText: PropTypes.func
 }
 
 const mapDispatchToProps = {
-    TextChange
+    ChangeShiftText
 }
 
 const mapStateToProps = ({shifts}) => {
