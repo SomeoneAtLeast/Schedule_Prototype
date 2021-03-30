@@ -3,43 +3,149 @@
     flex-wrap: wrap;
     width: 240px;
     margin: 0 auto;
+    padding: 0;
+    list-style: none;
 }
 
-.days-field-common-controls-btn {
+.days-field-common-controls__item {
+    margin: 0 0 15px 0;
+}
+
+.days-field-common-controls__sub-menu-item-btn,
+.days-field-common-controls__item-btn {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     box-sizing: border-box;
     padding: 10px 20px;
-    margin: 0 0 15px 0;
-    border-radius: 5px;
-    border: 2px solid transparent;
     outline: none;
+    border: none;
     color: rgb(243, 243, 243);
     background-color: transparent;
     font-family: "Roboto-Regular", sans-serif;
     cursor: pointer;
     transition: 0.3s;
     font-size: 15px;
+}
 
-    &:active {
-        transform: scale(0.95);
-    }
+.days-field-common-controls__item-btn {
+    
+    border: 2px solid transparent;
+    border-radius: 5px;
 
     &:hover {
         border: 2px solid rgb(243, 243, 243);
 
-        .days-field-common-controls-btn__img {
+        .days-field-common-controls__item-btn-img {
             transform: translateY(-2px);
         }
     }
+
+    &:active {
+        transform: scale(0.95);
+    }
 }
 
-.days-field-common-controls-btn__img {
+
+.days-field-common-controls__item-btn-with-sub-menu {
+    position: relative;
+    padding: 10px 35px 10px 20px;
+
+    &::after {
+        content: "▼";
+        position: absolute;
+        right: 12px;
+        top: 17px;
+        font-size: 13px;
+        transform: scaleY(0.7);
+        transition: 0.2s;
+    }
+}
+
+.days-field-common-controls__item-btn-with-sub-menu-active {
+    border: 2px solid rgb(243, 243, 243);
+
+    .days-field-common-controls__item-btn-img {
+        transform: translateY(-2px);
+    }
+
+    &::after {
+        transform: scaleY(0.7) rotate(180deg);
+    }
+}
+
+.days-field-common-controls__item-btn-img {
     margin-right: 10px;
     width: 28px;
     transition: 0.3s;
 }
+
+.days-field-common-controls__sub-menu {
+    padding: 5px 0 2px 80px;
+    list-style: none;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    display: none;
+}
+
+.days-field-common-controls__sub-menu-active {
+    display: flex;
+}
+
+.days-field-common-controls__sub-menu-item {
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: 0.2s;
+
+    &:hover {
+        border: 2px solid rgb(243, 243, 243);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.days-field-common-controls__sub-menu-item-btn-09-18 {
+    background: linear-gradient(70deg, #ffa8d5, #e64f95);
+}
+
+.days-field-common-controls__sub-menu-item-btn-11-20 {
+    background: linear-gradient(70deg, #ce6b9e, #c60973);
+}
+
+.days-field-common-controls__sub-menu-item-btn-08-20 {
+    background: linear-gradient(70deg, #23c6db, #01aec5);
+}
+
+.days-field-common-controls__sub-menu-item-btn-09-21 {
+    background: linear-gradient(70deg, #cccb79, #b8bd0d);
+}
+
+.days-field-common-controls__sub-menu-item-btn-10-22 {
+    background: linear-gradient(70deg, #6fc48c, #1db150);
+}
+
+.days-field-common-controls__sub-menu-item-btn-11-23 {
+    background: linear-gradient(70deg, #d55959, #9f0f0f);
+}
+
+.days-field-common-controls__sub-menu-item-btn-12-24 {
+    background: linear-gradient(70deg, #aca88b, #a29845);
+}
+
+.days-field-common-controls__sub-menu-item-btn-14-02 {
+    background: linear-gradient(70deg, #ae9478, #ae7a43);
+}
+
+.days-field-common-controls__sub-menu-item-btn-21-09 {
+    background: linear-gradient(70deg, #5e69a6, #012388);
+}
+
 
 @media (max-width: 1485px) { 
 
@@ -48,8 +154,25 @@
     }
 
     
-    .days-field-common-controls-btn {
+    .days-field-common-controls__item-btn {
         padding: 10px 10px;
+        font-size: 14px;
+    }
+
+    .days-field-common-controls__sub-menu {
+        padding: 5px 0 2px 40px;
+    }
+
+    .days-field-common-controls__item-btn-with-sub-menu {
+        
+        &::after {
+            right: 4px;
+            top: 21px;
+            font-size: 12px;
+        }
+    }
+
+    .days-field-common-controls__sub-menu-item-btn {
         font-size: 14px;
     }
 }
@@ -61,13 +184,30 @@
     }
 
     
-    .days-field-common-controls-btn {
+    .days-field-common-controls__item-btn {
         padding: 10px 5px;
         font-size: 12px;
     }
 
-    .days-field-common-controls-btn__img {
+    .days-field-common-controls__item-btn-img {
         margin-right: 5px;
         width: 25px;
+    }
+
+    .days-field-common-controls__sub-menu {
+        padding: 5px 0 2px 22px;
+    }
+
+    .days-field-common-controls__item-btn-with-sub-menu {
+        
+        &::after {
+            right: 2px;
+            top: 25px;
+            font-size: 10px;
+        }
+    }
+
+    .days-field-common-controls__sub-menu-item-btn {
+        font-size: 12px;
     }
 }

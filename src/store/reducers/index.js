@@ -20,7 +20,8 @@ const initialState = {
     seats,
     scheduleActive: true,
     seatsActive: false,
-    workingshiftsActive: false
+    workingshiftsActive: false,
+    makeWorkingBtnActive: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -34,7 +35,8 @@ const reducer = (state = initialState, action) => {
             const newWorkers = [...state.workers]
             newWorkers.forEach((item) => {
                 item.days.forEach((item) => {
-                    item.selected = false
+                    item.selected = false;
+                    item.changeShiftMenuOpen = false
                 })
             })
             return {
@@ -43,33 +45,76 @@ const reducer = (state = initialState, action) => {
             }
         }
         case "Change-Day-Type": {
+
             if (action.workerId === 0 || action.dayId === 0) {
                 return {
                     ...state 
                 }
             }
 
+            if (action.workingTime === undefined) {
+                action.workingTime = null;
+            }
+
             const {workers} = state;
             const workerIndex = workers.findIndex(elem => elem.id === action.workerId);
             const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === action.dayId); 
-            const oldDayStatus = workers[workerIndex].days[dayIndex];
-            const newDayStatus = {...oldDayStatus}
-            newDayStatus[action.objKey] = !oldDayStatus[action.objKey];
-            const newDays = [...workers[workerIndex].days.slice(0, dayIndex), newDayStatus, ...workers[workerIndex].days.slice(dayIndex + 1)];
-            const newWorker = {...workers[workerIndex], days: newDays}
-            const newWorkers = [...workers.slice(0, workerIndex), newWorker, ...workers.slice(workerIndex + 1)];
-    
-            if (action.objKey === "worked") {
-                newWorkers[workerIndex].days[dayIndex].weekend = false;
-                newWorkers[workerIndex].days[dayIndex].vacation = false;
-            } else if (action.objKey === "weekend") {
-                newWorkers[workerIndex].days[dayIndex].worked = false;
-                newWorkers[workerIndex].days[dayIndex].vacation = false;
-            } else if (action.objKey === "vacation") {
-                newWorkers[workerIndex].days[dayIndex].worked = false;
-                newWorkers[workerIndex].days[dayIndex].weekend = false;
+            const newWorkers = [...workers.slice()];
+
+            if (action.objKey === "selected" && newWorkers[workerIndex].days[dayIndex].changeShiftMenuOpen === true) {
+                newWorkers[workerIndex].days[dayIndex].changeShiftMenuOpen = false
             }
-    
+            
+            let selectedWorker = state.selectedWorker;
+            let selectedDay = state.selectedDay;
+            const targetDay = newWorkers[workerIndex].days[dayIndex];
+
+            if (action.objKey === "worked") {
+                targetDay.worked = true;
+                targetDay.weekend = false;
+                targetDay.vacation = false;
+                targetDay.changeShiftMenuOpen = false;
+                targetDay.selected = false;
+                targetDay.workingShiftDay = action.workingTime;
+                targetDay.workingHours = action.hoursCount;
+                selectedWorker = 0;
+                selectedDay = 0;
+            } else if (action.objKey === "weekend") {
+                targetDay.weekend = true;
+                targetDay.worked = false;
+                targetDay.vacation = false;
+                targetDay.changeShiftMenuOpen = false;
+                targetDay.selected = false;
+                targetDay.workingShiftDay = null
+                targetDay.workingHours = 0;
+                selectedWorker = 0;
+                selectedDay = 0;
+            } else if (action.objKey === "vacation") {
+                targetDay.vacation = true;
+                targetDay.worked = false;
+                targetDay.weekend = false;
+                targetDay.changeShiftMenuOpen = false;
+                targetDay.selected = false;
+                targetDay.workingShiftDay = null
+                targetDay.workingHours = 0;
+                selectedWorker = 0;
+                selectedDay = 0;
+            } else if (action.objKey === "selected") {
+                targetDay.selected = !targetDay.selected;
+            } else if (action.objKey === "changeShiftMenuOpen") {
+                targetDay.changeShiftMenuOpen = !targetDay.changeShiftMenuOpen;
+            } else if (action.objKey === "takeOf") {
+                targetDay.weekend = false;
+                targetDay.worked = false;
+                targetDay.vacation = false;
+                targetDay.changeShiftMenuOpen = false;
+                targetDay.selected = false;
+                targetDay.workingShiftDay = null
+                targetDay.workingHours = 0;
+                selectedWorker = 0;
+                selectedDay = 0;
+            }
+
             if (action.scheduleType === "common") {
                 if (action.objKey === "worked") {
                     newWorkers.forEach((item) => {
@@ -79,6 +124,10 @@ const reducer = (state = initialState, action) => {
                                 item.weekend = false;
                                 item.vacation = false;
                                 item.selected = false;
+                                item.workingShiftDay = action.workingTime;
+                                item.workingHours = action.hoursCount;
+                                selectedWorker = 0;
+                                selectedDay = 0;
                             }
                         })
                     })
@@ -90,6 +139,10 @@ const reducer = (state = initialState, action) => {
                                 item.worked = false;
                                 item.vacation = false;
                                 item.selected = false;
+                                item.workingShiftDay = null;
+                                item.workingHours = 0;
+                                selectedWorker = 0;
+                                selectedDay = 0;
                             }
                         })
                     })
@@ -101,10 +154,14 @@ const reducer = (state = initialState, action) => {
                                 item.worked = false;
                                 item.weekend = false;
                                 item.selected = false;
+                                item.workingShiftDay = null;
+                                item.workingHours = 0;
+                                selectedWorker = 0;
+                                selectedDay = 0;
                             }
                         })
                     })
-                } else if (action.objKey === "clear") {
+                } else if (action.objKey === "takeOf") {
                     newWorkers.forEach((item) => {
                         item.days.forEach((item) => {
                             if (item.selected) {
@@ -112,24 +169,40 @@ const reducer = (state = initialState, action) => {
                                 item.worked = false;
                                 item.weekend = false;
                                 item.selected = false;
+                                item.workingShiftDay = null;
+                                item.workingHours = 0;
+                                selectedWorker = 0;
+                                selectedDay = 0;
+                            }
+                        })
+                    })
+                } else if (action.objKey === "clear") {
+                    newWorkers.forEach((item) => {
+                        item.days.forEach((item) => {
+                            if (item.selected) {
+                                item.selected = false;
+                                selectedWorker = 0;
+                                selectedDay = 0;
                             }
                         })
                     })
                 }
             }
-    
+
             if (action.scheduleType === "personal") {
                 if (action.objKey === "selected") {
                     newWorkers[workerIndex].days.forEach(item => {
                         if (item.id !== (dayIndex + 1)) {
-                            item[action.objKey] = false
+                            item[action.objKey] = false;
+                            item.changeShiftMenuOpen = false;
                         }  
-                        });
+                    });
                 }
             }
-    
             return {
                 ...state,
+                selectedWorker: selectedWorker,
+                selectedDay: selectedDay,
                 workers: newWorkers
             }
         }
@@ -186,7 +259,7 @@ const reducer = (state = initialState, action) => {
                 selectedDay: action.selectedDay,
             }
         }
-        case "Text-Change": {
+        case "Change-Shift-Text": {
             const index = action.dataArr.findIndex(elem => elem.id === action.id); 
             const obj = action.dataArr[index];
             const newObj = {...obj};
@@ -221,6 +294,11 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     months: newArr
+                } 
+            } else if (action.dataArr === state.workers) {
+                return {
+                    ...state,
+                    workers: newArr
                 } 
             }
         }
@@ -289,9 +367,30 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
+        case "Show-Or-Close-Working-Hours": {
+            return {
+                ...state,
+                makeWorkingBtnActive: !state.makeWorkingBtnActive
+            }
+        }
+        case "Change-Schedule-Text": {
+            const {workers} = state;
+            const workerIndex = workers.findIndex(elem => elem.id === action.workerId);
+            const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === action.dayId); 
+            const oldDay = workers[workerIndex].days[dayIndex];
+            const newDay = {...oldDay}
+            newDay[action.objKey] = action.e.target.value;
+            const newDays = [...workers[workerIndex].days.slice(0, dayIndex), newDay, ...workers[workerIndex].days.slice(dayIndex + 1)];
+            const newWorker = {...workers[workerIndex], days: newDays}
+            const newWorkers = [...workers.slice(0, workerIndex), newWorker, ...workers.slice(workerIndex + 1)];
+
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
         default:
             return state;    
     }
 }
-
 export default reducer;

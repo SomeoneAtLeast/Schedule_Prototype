@@ -5,7 +5,9 @@
     align-items: flex-start;
     box-sizing: border-box;
     width: 100%;
+    height: 100%;
     padding-bottom: 50px;
+    background-color: #EEE;
     
 }
 
@@ -21,6 +23,7 @@
     width: 100%;
     text-align: center;
     border-collapse: collapse;
+    background-color: #FFF;
     box-shadow: 0 3px 6px 0px rgba(0, 0, 0, 0.2);
 
     &:not(:last-child) {
@@ -59,12 +62,9 @@
     background: linear-gradient(70deg, #ff8f2c, #c46b1a);
 }
 
-.working-shifts__table-row {
-    background: #FFF;
-}
-
 .working-shifts__table-row-header {
     background: linear-gradient(70deg, #777, #4a5259);
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .working-shifts__table-header {
@@ -150,30 +150,37 @@
 
 .working-shifts__table-row-08-20 {
     background: linear-gradient(70deg, #23c6db, #01aec5);
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .working-shifts__table-row-09-21 {
     background: linear-gradient(70deg, #cccb79, #b8bd0d);
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .working-shifts__table-row-10-22 {
     background: linear-gradient(70deg, #6fc48c, #1db150);
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .working-shifts__table-row-11-23 {
     background: linear-gradient(70deg, #d55959, #9f0f0f);
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .working-shifts__table-row-12-24 {
-    background: linear-gradient(70deg, #aca88b, #a29845)
+    background: linear-gradient(70deg, #aca88b, #a29845);
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .working-shifts__table-row-14-02 {
     background: linear-gradient(70deg, #ae9478, #ae7a43);
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .working-shifts__table-row-21-09 {
     background: linear-gradient(70deg, #5e69a6, #012388);
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .working-shifts__table-row-team, 

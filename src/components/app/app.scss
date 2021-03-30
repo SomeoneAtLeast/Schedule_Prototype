@@ -32,14 +32,9 @@
 .main-content {
     flex-grow: 1;
     min-width: 225px;
-    background-color: #EEE;
 }
 
 @media (max-width: 1485px) { 
-
-    .main-content {
-        background-color: #EEE;
-    }
 
     .controls {
         min-width: 185px;
@@ -48,10 +43,6 @@
 
 
 @media (max-width: 1000px) { 
-
-    .main-content {
-        background-color: #EEE;
-    }
 
     .controls {
         min-width: 135px;

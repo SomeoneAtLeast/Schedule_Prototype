@@ -11,12 +11,15 @@ const ClearAllDays = () => {
     }
 }
 
-const ChangeDayType = (workerId, dayId, objKey, scheduleType = "common") => {
+const ChangeDayType = (workerId, dayId, objKey, workingTime, hoursCount, scheduleType = "common") => {
+    // console.log(workerId, dayId, objKey, workingTime, hoursCount, scheduleType)
     return {
         type: "Change-Day-Type",
         workerId,
         dayId,
         objKey,
+        workingTime,
+        hoursCount,
         scheduleType
     }
 }
@@ -44,9 +47,19 @@ const SelectDay = (selectedWorker, selectedDay, ChangeDayType) => {
     }
 }
 
-const TextChange = (id, dataArr, objKey, e) => {
+const ChangeScheduleText = (workerId, dayId, objKey, e) => {
     return {
-        type: "Text-Change",
+        type: "Change-Schedule-Text",
+        workerId,
+        dayId,
+        objKey,
+        e 
+    }
+}
+
+const ChangeShiftText = (id, dataArr, objKey, e) => {
+    return {
+        type: "Change-Shift-Text",
         id, 
         dataArr,
         objKey,
@@ -79,6 +92,12 @@ const ChangeSelectedPage = (location) => {
     }
 }
 
+const ShowOrCloseWorkingHours = () => {
+    return {
+        type: "Show-Or-Close-Working-Hours",
+    }
+}
+
 export {
     SelectWorker,
     ClearAllDays,
@@ -86,8 +105,10 @@ export {
     FilterSelect,
     MakeFilterActive,
     SelectDay,
-    TextChange,
+    ChangeShiftText,
     ChangeSeatText,
     MakeActiveNavBtn,
-    ChangeSelectedPage
+    ChangeSelectedPage,
+    ShowOrCloseWorkingHours,
+    ChangeScheduleText
 }

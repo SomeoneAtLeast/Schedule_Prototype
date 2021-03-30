@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
-import {SelectWorker, ChangeDayType, SelectDay} from "../../store/actions"
+import {SelectWorker, ChangeDayType, SelectDay, ChangeScheduleText} from "../../store/actions"
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
+const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText}) => {
     const daysNumbers = workers[0].days.map((item) => {
 
         return (
@@ -42,7 +42,7 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
             }
 
             if (workers[workerNumber].days[i - 1].worked) {
-                classNames += " worked";
+                classNames += ` worked-${workers[workerNumber].days[i - 1].workingShiftDay}`;
             }
 
             if (workers[workerNumber].days[i - 1].weekend) {
@@ -61,7 +61,13 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType}) => {
                 <td className = {classNames}
                     key={i + 1000}
                     onClick={() => SelectDayAndChangeDayType()}>
-                    {workers[workerNumber].days[i - 1].workingHours}
+                    <input 
+                        className="days-field-common-item-input"
+                        type="text"
+                        maxLength={2}
+                        value={workers[workerNumber].days[i - 1].workingHours}
+                        onChange={(e) => ChangeScheduleText(workers[workerNumber].id, workers[workerNumber].days[i - 1].id, "workingHours", e)}
+                        />
                 </td>
             )
         }
@@ -114,12 +120,14 @@ DaysFieldCommon.propTypes = {
     SelectWorker: PropTypes.func,
     SelectDay: PropTypes.func,
     ChangeDayType: PropTypes.func,
+    ChangeScheduleText: PropTypes.func
 }
 
 const mapDispatchToProps = {
     SelectWorker, 
     ChangeDayType,
-    SelectDay
+    SelectDay,
+    ChangeScheduleText
 }
 
 const mapStateToProps = ({workers}) => {

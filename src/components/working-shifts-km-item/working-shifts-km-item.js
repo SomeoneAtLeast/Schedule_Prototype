@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import  "./working-shifts-km-item.scss"
 
-const WorkingShiftsKmItem = ({kmShifts, id, onTextChange}) => {
+const WorkingShiftsKmItem = ({kmShifts, id, onChangeShiftText}) => {
 
     return (
         <tr 
@@ -17,7 +17,7 @@ const WorkingShiftsKmItem = ({kmShifts, id, onTextChange}) => {
                         type="text"
                         maxLength={31}
                         value={kmShifts[id - 100].worker}
-                        onChange={(e) => onTextChange(id, kmShifts, "worker", e)}/>
+                        onChange={(e) => onChangeShiftText(id, kmShifts, "worker", e)}/>
                 </td>
             <td className="working-shifts__table-cell working-shifts__table-cell-worker">
                 <textarea
@@ -25,7 +25,7 @@ const WorkingShiftsKmItem = ({kmShifts, id, onTextChange}) => {
                             type="text"
                             maxLength={6}
                             value={kmShifts[id - 100].shiftNumber}
-                            onChange={(e) => onTextChange(id, kmShifts, "shiftNumber", e)}/>
+                            onChange={(e) => onChangeShiftText(id, kmShifts, "shiftNumber", e)}/>
             </td>
         </tr>
     )
@@ -34,7 +34,7 @@ const WorkingShiftsKmItem = ({kmShifts, id, onTextChange}) => {
 WorkingShiftsKmItem.propTypes = {
     kmShifts: PropTypes.array,
     id: PropTypes.number,
-    onTextChange: PropTypes.func
+    onChangeShiftText: PropTypes.func
 }
 
 export default connect()(WorkingShiftsKmItem);

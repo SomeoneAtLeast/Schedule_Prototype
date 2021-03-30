@@ -17,10 +17,6 @@ import DaysFieldCommonControls from "../days-field-common-controls"
 import WorkingShifts from "../working-shifts"
 
 
-// Кнопка снятия выделений
-// textarea
-
-
 class App extends Component{
 
     componentDidMount() {
