@@ -113,7 +113,8 @@ class DaysFieldPresonal extends Component {
                             openChangeShiftMenu = {() => ChangeDayType(workers[workerNumber].id, item.id, "changeShiftMenuOpen", null, null, "personal")}
                             onMakeDayWeekend = {() => ChangeDayType(workers[workerNumber].id, item.id, "weekend", null, null, "personal")}
                             onMakeDayVacation = {() => ChangeDayType(workers[workerNumber].id, item.id, "vacation", null, null, "personal")}
-                            closeDayMenu = {() => ChangeDayType(workers[workerNumber].id, item.id, "selected", null, null, "personal")}/>
+                            closeDayMenu = {() => ChangeDayType(workers[workerNumber].id, item.id, "selected", null, null, "personal")}
+                            takeOff = {() => ChangeDayType(workers[workerNumber].id, item.id, "takeOf", null, null, "personal")}/>
                 </td>
             )
         })

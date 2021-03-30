@@ -10,8 +10,9 @@ import workImg from "./../../global-imgs/work.svg"
 import weekendImg from "./../../global-imgs/weekend.svg"
 import vacationdImg from "./../../global-imgs/vacation.svg"
 import crossImg from "./../../global-imgs/cross.svg"
+import takeOfImg from "./../../global-imgs/take-off.svg"
 
-const DaysFieldItemPersonal = ({workingHours, workerNumber, dayNumber, openDayMenu, openChangeShiftMenu, onMakeDayWeekend, onMakeDayVacation, closeDayMenu, ChangeDayType}) => {
+const DaysFieldItemPersonal = ({workingHours, workerNumber, dayNumber, openDayMenu, openChangeShiftMenu, onMakeDayWeekend, onMakeDayVacation, closeDayMenu, ChangeDayType, takeOff}) => {
     const buttons = [
         {
             name: "worked",
@@ -64,7 +65,8 @@ const DaysFieldItemPersonal = ({workingHours, workerNumber, dayNumber, openDayMe
         },
         {name: "weekend",  label: "Назначить выходным", img: weekendImg, func: onMakeDayWeekend,  id: -3},
         {name: "vacation",  label: "Назначить отпуском", img: vacationdImg, func: onMakeDayVacation,  id: -4},
-        {name: "exit",  label: "Выйти", img: crossImg, func: closeDayMenu,  id: -5},
+        {name: "take-of",  label: "Снять назначение", img: takeOfImg, func: takeOff,  id: -5},
+        {name: "exit",  label: "Выйти", img: crossImg, func: closeDayMenu,  id: -6},
     ]
 
     return (
@@ -86,7 +88,7 @@ const DaysFieldItemPersonal = ({workingHours, workerNumber, dayNumber, openDayMe
                                 key = {id}>
                                 <button
                                     className={`days-field-personal__sub-menu-item-btn days-field-personal__sub-menu-item-btn-${workingTime}`}
-                                    onClick={() => ChangeDayType(workerNumber, dayNumber, "worked", workingTime, hoursCount)}
+                                    onClick={() => ChangeDayType(workerNumber, dayNumber, "worked", workingTime, hoursCount, "personal")}
                                     >   
                                         <span>
                                             {workingTime}
@@ -117,51 +119,6 @@ const DaysFieldItemPersonal = ({workingHours, workerNumber, dayNumber, openDayMe
                 }
             </ul>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        // <div 
-        //     className = "days-field-personal__item-body">
-        //     <div className="days-field-personal__item-hours">
-        //         {workingHours}
-        //     </div>
-        //     <div className="days-field-personal__btn-group">
-        //         <button
-        //             title="Сделать рабочим"
-        //             className="days-field-personal__btn days-field-personal__work-btn"
-        //             // onClick = {onMakeDayWorking}
-        //             >
-        //             <img src={workImg} alt="Сделать рабочим"></img>
-        //         </button>
-        //         <button
-        //             title="Сделать выходным"
-        //             className="days-field-personal__btn days-field-personal__work-btn"
-        //             onClick = {onMakeDayWeekend}>
-        //             <img src={weekendImg} alt="Сделать выходным"></img>
-        //         </button>
-        //         <button 
-        //             title="Сделать днем отпуска"
-        //             className="days-field-personal__btn days-field-personal__work-btn"
-        //             onClick = {onMakeDayVacation}>
-        //             <img src={vacationdImg} alt="Сделать днем отпуска"></img>
-        //         </button>
-        //         <button
-        //             title="Выйти"
-        //         className="days-field-personal__btn days-field-personal__work-btn">
-        //             <img src={crossImg} alt="Выйти"></img>
-        //         </button>
-
-        //     </div>
-        // </div>
     )
 }
 
@@ -176,7 +133,8 @@ DaysFieldItemPersonal.propTypes = {
     closeDayMenu: PropTypes.func,
     ChangeDayType: PropTypes.func,
     dayNumber: PropTypes.number,
-    workerNumber: PropTypes.number
+    workerNumber: PropTypes.number,
+    takeOff: PropTypes.func
 }
 
 const mapDispatchToProps = {
@@ -184,3 +142,14 @@ const mapDispatchToProps = {
 }
 
 export default connect(null, mapDispatchToProps)(DaysFieldItemPersonal);
+
+
+                // newWorkers[workerIndex].days[dayIndex].workingShiftDay = action.workingTime;
+                // newWorkers[workerIndex].days[dayIndex].workingHours = action.hoursCount;
+                // if (action.objKey === "worked" &&
+                //     newWorkers[workerIndex].days[dayIndex].worked === true &&
+                //     newWorkers[workerIndex].days[dayIndex].workingShiftDay === action.workingTime) {
+                //         // newWorkers[workerIndex].days[dayIndex].workingShiftDay = null;
+                //         // newWorkers[workerIndex].days[dayIndex].workingHours = 0;
+                //         console.log(action.objKey)
+                // }

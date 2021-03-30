@@ -12,6 +12,7 @@ const ClearAllDays = () => {
 }
 
 const ChangeDayType = (workerId, dayId, objKey, workingTime, hoursCount, scheduleType = "common") => {
+    // console.log(workerId, dayId, objKey, workingTime, hoursCount, scheduleType)
     return {
         type: "Change-Day-Type",
         workerId,
