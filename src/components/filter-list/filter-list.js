@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux"
-import {FilterSelect, MakeFilterActive} from "../../store/actions"
+import {FilterSelect, MakeFilterActive, SelectWorker} from "../../store/actions"
 
 import "./filter-list.scss"
 
@@ -12,6 +13,16 @@ import weekendImg from "./../../global-imgs/weekend.svg"
 import vacationdImg from "./../../global-imgs/vacation.svg"
 
 class FilterList extends Component {
+
+    componentDidMount() {
+        this.props.SelectWorker(this.props.match.params.id - 1)
+    }
+
+    componentDidUpdate() {
+        this.props.SelectWorker(this.props.match.params.id - 1)
+        console.log(this.props.match.params.id - 1 + "update");  
+    }
+
     componentWillUnmount() {
         this.props.FilterSelect("all")
     }
@@ -24,6 +35,8 @@ class FilterList extends Component {
         const weekendsQuantity = workers[selectedWorker].days.filter(item => item.weekend).length;
         const vacationQuantity = workers[selectedWorker].days.filter(item => item.vacation).length;
         const allDaysQuantity = workers[selectedWorker].days.length;
+
+        console.log(selectedWorker)
 
         const buttons = [
             {name: "all",  label: "Все дни", img: allImg, id: -1, quantity: allDaysQuantity, active: allActive},
@@ -75,6 +88,7 @@ FilterList.propTypes = {
 const mapDispatchToProps = {
     FilterSelect,
     MakeFilterActive,
+    SelectWorker
 }
 
 const mapStateToProps = ({workers, selectedWorker, allActive, workedActive, weekendsActive, vacationActive}) => {

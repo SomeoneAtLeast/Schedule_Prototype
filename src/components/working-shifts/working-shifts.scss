@@ -274,7 +274,7 @@
 @media (max-width: 1000px) { 
 
     .working-shifts__table-wrapper {
-        padding: 0;
+        padding: 0 8px;
     }
 
     .working-shifts__table-month {
@@ -326,7 +326,7 @@
         }
 
         &:not(:last-child) {
-            min-width: 103px;
+            min-width: 98px;
         }
     }
     

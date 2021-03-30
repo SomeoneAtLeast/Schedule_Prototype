@@ -182,7 +182,7 @@
     }
 
     .seats-table {
-        padding: 5px 0;
+        padding: 7px;
     }
 
     .seats-table__сell {
@@ -193,7 +193,7 @@
 
 @media (max-width: 400px) { 
     .seats-table__сell {
-        padding: 10px 3px;
+        padding: 10px 0;
         width: 114px;
     }
 }

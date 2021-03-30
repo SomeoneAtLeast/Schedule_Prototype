@@ -67,6 +67,7 @@ const reducer = (state = initialState, action) => {
             
             let selectedWorker = state.selectedWorker;
             let selectedDay = state.selectedDay;
+
             const targetDay = newWorkers[workerIndex].days[dayIndex];
 
             if (action.objKey === "worked") {
@@ -77,8 +78,6 @@ const reducer = (state = initialState, action) => {
                 targetDay.selected = false;
                 targetDay.workingShiftDay = action.workingTime;
                 targetDay.workingHours = action.hoursCount;
-                selectedWorker = 0;
-                selectedDay = 0;
             } else if (action.objKey === "weekend") {
                 targetDay.weekend = true;
                 targetDay.worked = false;
@@ -87,8 +86,6 @@ const reducer = (state = initialState, action) => {
                 targetDay.selected = false;
                 targetDay.workingShiftDay = null
                 targetDay.workingHours = 0;
-                selectedWorker = 0;
-                selectedDay = 0;
             } else if (action.objKey === "vacation") {
                 targetDay.vacation = true;
                 targetDay.worked = false;
@@ -97,8 +94,6 @@ const reducer = (state = initialState, action) => {
                 targetDay.selected = false;
                 targetDay.workingShiftDay = null
                 targetDay.workingHours = 0;
-                selectedWorker = 0;
-                selectedDay = 0;
             } else if (action.objKey === "selected") {
                 targetDay.selected = !targetDay.selected;
             } else if (action.objKey === "changeShiftMenuOpen") {
@@ -111,11 +106,10 @@ const reducer = (state = initialState, action) => {
                 targetDay.selected = false;
                 targetDay.workingShiftDay = null
                 targetDay.workingHours = 0;
-                selectedWorker = 0;
-                selectedDay = 0;
             }
 
             if (action.scheduleType === "common") {
+
                 if (action.objKey === "worked") {
                     newWorkers.forEach((item) => {
                         item.days.forEach((item) => {
@@ -126,8 +120,6 @@ const reducer = (state = initialState, action) => {
                                 item.selected = false;
                                 item.workingShiftDay = action.workingTime;
                                 item.workingHours = action.hoursCount;
-                                selectedWorker = 0;
-                                selectedDay = 0;
                             }
                         })
                     })
@@ -141,8 +133,6 @@ const reducer = (state = initialState, action) => {
                                 item.selected = false;
                                 item.workingShiftDay = null;
                                 item.workingHours = 0;
-                                selectedWorker = 0;
-                                selectedDay = 0;
                             }
                         })
                     })
@@ -156,8 +146,6 @@ const reducer = (state = initialState, action) => {
                                 item.selected = false;
                                 item.workingShiftDay = null;
                                 item.workingHours = 0;
-                                selectedWorker = 0;
-                                selectedDay = 0;
                             }
                         })
                     })
@@ -171,8 +159,6 @@ const reducer = (state = initialState, action) => {
                                 item.selected = false;
                                 item.workingShiftDay = null;
                                 item.workingHours = 0;
-                                selectedWorker = 0;
-                                selectedDay = 0;
                             }
                         })
                     })
@@ -181,8 +167,6 @@ const reducer = (state = initialState, action) => {
                         item.days.forEach((item) => {
                             if (item.selected) {
                                 item.selected = false;
-                                selectedWorker = 0;
-                                selectedDay = 0;
                             }
                         })
                     })
