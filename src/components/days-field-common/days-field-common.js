@@ -61,13 +61,15 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType, Chang
                 <td className = {classNames}
                     key={i + 1000}
                     onClick={() => SelectDayAndChangeDayType()}>
-                    <input 
-                        className="days-field-common-item-input"
-                        type="text"
-                        maxLength={2}
-                        value={workers[workerNumber].days[i - 1].workingHours}
-                        onChange={(e) => ChangeScheduleText(workers[workerNumber].id, workers[workerNumber].days[i - 1].id, "workingHours", e)}
-                        />
+                        <div className="days-field-common-item-input-wrapper">
+                            <input 
+                                className="days-field-common-item-input"
+                                type="text"
+                                maxLength={2}
+                                value={workers[workerNumber].days[i - 1].workingHours}
+                                onChange={(e) => ChangeScheduleText(workers[workerNumber].id, workers[workerNumber].days[i - 1].id, "workingHours", e)}
+                            />
+                        </div>
                 </td>
             )
         }
