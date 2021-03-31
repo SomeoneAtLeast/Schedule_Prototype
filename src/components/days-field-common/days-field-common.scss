@@ -52,8 +52,8 @@
     border: none;
     outline: none;
     font-family: "Roboto-Regular", sans-serif;
-    font-size: 16px;
     text-align: center;
+    font-size: 16px;
     width: 90%;
     transition: 0.2s;
 
@@ -159,5 +159,9 @@
 
     .days-field-common-days-item {
         font-size: 12px;
+    }
+
+    .days-field-common-item-input {
+        font-size: 14px;
     }
 }
