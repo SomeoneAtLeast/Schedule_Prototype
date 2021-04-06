@@ -36,19 +36,21 @@ class DaysFieldPresonal extends Component {
 
     filterWorkers(workersArr, selectedWorker, filter) {
         const {workers} = this.props;
+        const targetWorker = workers[selectedWorker];
+
         if(filter === "worked") {
             const workedDays = workersArr.filter(item => item.worked);
-            const newWorker = {...workers[selectedWorker], days: workedDays}
+            const newWorker = {...targetWorker, days: workedDays}
             const newWorkers = [...workers.slice(0, selectedWorker), newWorker, ...workers.slice(selectedWorker + 1)];
             return  newWorkers
         } else if (filter === "weekends") {
             const weekendDays = workersArr.filter(item => item.weekend);
-            const newWorker = {...workers[selectedWorker], days: weekendDays}
+            const newWorker = {...targetWorker, days: weekendDays}
             const newWorkers = [...workers.slice(0, selectedWorker), newWorker, ...workers.slice(selectedWorker + 1)];
             return  newWorkers
         } else if (filter === "vacation") {
             const vacationDays = workersArr.filter(item => item.vacation);
-            const newWorker = {...workers[selectedWorker], days: vacationDays}
+            const newWorker = {...targetWorker, days: vacationDays}
             const newWorkers = [...workers.slice(0, selectedWorker), newWorker, ...workers.slice(selectedWorker + 1)];
             return  newWorkers
         } else {
@@ -59,9 +61,11 @@ class DaysFieldPresonal extends Component {
     getWorkerPresonalDays (workerNumber) {
         const {workers, ChangeDayType, selectedWorker, filter} = this.props;
         const visibleWorkers = this.filterWorkers(workers[selectedWorker].days, selectedWorker, filter)
+        const visibleWorker = visibleWorkers[workerNumber];
+        const targetWorker = workers[workerNumber];
         let daysInMonth = [];
 
-        if (visibleWorkers[workerNumber].days.length === 0) {
+        if (visibleWorker.days.length === 0) {
             daysInMonth.push(
                 <td className = "days-field-personal__item days-field-personal__no-items" 
                     key={workerNumber}>
@@ -72,12 +76,12 @@ class DaysFieldPresonal extends Component {
             daysInMonth.push(
                 <td className = "days-field-personal__item" 
                     key={workerNumber}>
-                    {workers[workerNumber].name}
+                    {targetWorker.name}
                 </td>
             )
         }
 
-        const daysFieldElements = visibleWorkers[workerNumber].days.map((item) => {
+        const daysFieldElements = visibleWorker.days.map((item) => {
             
             let classNames = "days-field-personal__item";
             const {weekend, vacation, worked, selected, workingShiftDay, changeShiftMenuOpen} = item;
@@ -107,14 +111,14 @@ class DaysFieldPresonal extends Component {
                     key = {item.id}>
                         <DaysFieldItemPersonal
                             workingHours = {item.workingHours}
-                            workerNumber = {workers[workerNumber].id}
+                            workerNumber = {targetWorker.id}
                             dayNumber = {item.id}
-                            openDayMenu = {() => ChangeDayType(workers[workerNumber].id, item.id, "selected", null, null, "personal")}
-                            openChangeShiftMenu = {() => ChangeDayType(workers[workerNumber].id, item.id, "changeShiftMenuOpen", null, null, "personal")}
-                            onMakeDayWeekend = {() => ChangeDayType(workers[workerNumber].id, item.id, "weekend", null, null, "personal")}
-                            onMakeDayVacation = {() => ChangeDayType(workers[workerNumber].id, item.id, "vacation", null, null, "personal")}
-                            closeDayMenu = {() => ChangeDayType(workers[workerNumber].id, item.id, "selected", null, null, "personal")}
-                            takeOff = {() => ChangeDayType(workers[workerNumber].id, item.id, "takeOf", null, null, "personal")}/>
+                            openDayMenu = {() => ChangeDayType(targetWorker.id, item.id, "selected", null, null, "personal")}
+                            openChangeShiftMenu = {() => ChangeDayType(targetWorker.id, item.id, "changeShiftMenuOpen", null, null, "personal")}
+                            onMakeDayWeekend = {() => ChangeDayType(targetWorker.id, item.id, "weekend", null, null, "personal")}
+                            onMakeDayVacation = {() => ChangeDayType(targetWorker.id, item.id, "vacation", null, null, "personal")}
+                            closeDayMenu = {() => ChangeDayType(targetWorker.id, item.id, "selected", null, null, "personal")}
+                            takeOff = {() => ChangeDayType(targetWorker.id, item.id, "takeOf", null, null, "personal")}/>
                 </td>
             )
         })

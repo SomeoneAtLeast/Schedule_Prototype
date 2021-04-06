@@ -46,39 +46,44 @@ const reducer = (state = initialState, action) => {
         }
         case "Change-Day-Type": {
 
-            if (action.workerId === 0 || action.dayId === 0) {
+            const objKey = action.objKey;
+            const workerId = action.workerId;
+            const dayId = action.dayId;
+            const scheduleType = action.scheduleType;
+            let workingTime = action.workingTime;
+            let hoursCount = action.hoursCount;
+
+            if (workerId === 0 || dayId === 0) {
                 return {
                     ...state 
                 }
             }
 
-            if (action.workingTime === undefined) {
-                action.workingTime = null;
+            if (workingTime === undefined) {
+                workingTime = null;
             }
 
-            const {workers} = state;
-            const workerIndex = workers.findIndex(elem => elem.id === action.workerId);
-            const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === action.dayId); 
+            const {workers, selectedWorker, selectedDay} = state;
+            const workerIndex = workers.findIndex(elem => elem.id === workerId);
+            const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === dayId); 
             const newWorkers = [...workers.slice()];
-
-            if (action.objKey === "selected" && newWorkers[workerIndex].days[dayIndex].changeShiftMenuOpen === true) {
-                newWorkers[workerIndex].days[dayIndex].changeShiftMenuOpen = false
-            }
-            
-            let selectedWorker = state.selectedWorker;
-            let selectedDay = state.selectedDay;
 
             const targetDay = newWorkers[workerIndex].days[dayIndex];
 
-            if (action.objKey === "worked") {
+            if (objKey === "selected" && targetDay.changeShiftMenuOpen === true) {
+                targetDay.changeShiftMenuOpen = false
+            }
+
+
+            if (objKey === "worked") {
                 targetDay.worked = true;
                 targetDay.weekend = false;
                 targetDay.vacation = false;
                 targetDay.changeShiftMenuOpen = false;
                 targetDay.selected = false;
-                targetDay.workingShiftDay = action.workingTime;
-                targetDay.workingHours = action.hoursCount;
-            } else if (action.objKey === "weekend") {
+                targetDay.workingShiftDay = workingTime;
+                targetDay.workingHours = hoursCount;
+            } else if (objKey === "weekend") {
                 targetDay.weekend = true;
                 targetDay.worked = false;
                 targetDay.vacation = false;
@@ -86,7 +91,7 @@ const reducer = (state = initialState, action) => {
                 targetDay.selected = false;
                 targetDay.workingShiftDay = null
                 targetDay.workingHours = 0;
-            } else if (action.objKey === "vacation") {
+            } else if (objKey === "vacation") {
                 targetDay.vacation = true;
                 targetDay.worked = false;
                 targetDay.weekend = false;
@@ -94,11 +99,11 @@ const reducer = (state = initialState, action) => {
                 targetDay.selected = false;
                 targetDay.workingShiftDay = null
                 targetDay.workingHours = 0;
-            } else if (action.objKey === "selected") {
+            } else if (objKey === "selected") {
                 targetDay.selected = !targetDay.selected;
-            } else if (action.objKey === "changeShiftMenuOpen") {
+            } else if (objKey === "changeShiftMenuOpen") {
                 targetDay.changeShiftMenuOpen = !targetDay.changeShiftMenuOpen;
-            } else if (action.objKey === "takeOf") {
+            } else if (objKey === "takeOf") {
                 targetDay.weekend = false;
                 targetDay.worked = false;
                 targetDay.vacation = false;
@@ -108,9 +113,8 @@ const reducer = (state = initialState, action) => {
                 targetDay.workingHours = 0;
             }
 
-            if (action.scheduleType === "common") {
-
-                if (action.objKey === "worked") {
+            if (scheduleType === "common") {
+                if (objKey === "worked") {
                     newWorkers.forEach((item) => {
                         item.days.forEach((item) => {
                             if (item.selected) {
@@ -118,12 +122,12 @@ const reducer = (state = initialState, action) => {
                                 item.weekend = false;
                                 item.vacation = false;
                                 item.selected = false;
-                                item.workingShiftDay = action.workingTime;
-                                item.workingHours = action.hoursCount;
+                                item.workingShiftDay = workingTime;
+                                item.workingHours = hoursCount;
                             }
                         })
                     })
-                } else if (action.objKey === "weekend") {
+                } else if (objKey === "weekend") {
                     newWorkers.forEach((item) => {
                         item.days.forEach((item) => {
                             if (item.selected) {
@@ -136,7 +140,7 @@ const reducer = (state = initialState, action) => {
                             }
                         })
                     })
-                } else if (action.objKey === "vacation") {
+                } else if (objKey === "vacation") {
                     newWorkers.forEach((item) => {
                         item.days.forEach((item) => {
                             if (item.selected) {
@@ -149,7 +153,7 @@ const reducer = (state = initialState, action) => {
                             }
                         })
                     })
-                } else if (action.objKey === "takeOf") {
+                } else if (objKey === "takeOf") {
                     newWorkers.forEach((item) => {
                         item.days.forEach((item) => {
                             if (item.selected) {
@@ -162,7 +166,7 @@ const reducer = (state = initialState, action) => {
                             }
                         })
                     })
-                } else if (action.objKey === "clear") {
+                } else if (objKey === "clear") {
                     newWorkers.forEach((item) => {
                         item.days.forEach((item) => {
                             if (item.selected) {
@@ -173,11 +177,11 @@ const reducer = (state = initialState, action) => {
                 }
             }
 
-            if (action.scheduleType === "personal") {
-                if (action.objKey === "selected") {
+            if (scheduleType === "personal") {
+                if (objKey === "selected") {
                     newWorkers[workerIndex].days.forEach(item => {
                         if (item.id !== (dayIndex + 1)) {
-                            item[action.objKey] = false;
+                            item[objKey] = false;
                             item.changeShiftMenuOpen = false;
                         }  
                     });
@@ -185,8 +189,8 @@ const reducer = (state = initialState, action) => {
             }
             return {
                 ...state,
-                selectedWorker: selectedWorker,
-                selectedDay: selectedDay,
+                selectedWorker,
+                selectedDay,
                 workers: newWorkers
             }
         }
@@ -244,42 +248,44 @@ const reducer = (state = initialState, action) => {
             }
         }
         case "Change-Shift-Text": {
-            const index = action.dataArr.findIndex(elem => elem.id === action.id); 
-            const obj = action.dataArr[index];
+            const dataArr = action.dataArr;
+
+            const index = dataArr.findIndex(elem => elem.id === action.id); 
+            const obj = dataArr[index];
             const newObj = {...obj};
             newObj[action.objKey] = action.e.target.value;
-            const newArr = [...action.dataArr.slice(0, index), newObj, ...action.dataArr.slice(index + 1)];
-            if (action.dataArr === state.shifts) {
+            const newArr = [...dataArr.slice(0, index), newObj, ...dataArr.slice(index + 1)];
+            if (dataArr === state.shifts) {
                 return {
                     ...state,
                     shifts: newArr
                 } 
-            } else if (action.dataArr === state.glTable) {
+            } else if (dataArr === state.glTable) {
                 return {
                     ...state,
                     glTable: newArr
                 } 
-            } else if (action.dataArr === state.kmShifts) {
+            } else if (dataArr === state.kmShifts) {
                 return {
                     ...state,
                     kmShifts: newArr
                 } 
-            } else if (action.dataArr === state.kmTable) {
+            } else if (dataArr === state.kmTable) {
                 return {
                     ...state,
                     kmTable: newArr
                 } 
-            } else if (action.dataArr === state.workTeamsNames) {
+            } else if (dataArr === state.workTeamsNames) {
                 return {
                     ...state,
                     workTeamsNames: newArr
                 } 
-            } else if (action.dataArr === state.months) {
+            } else if (dataArr === state.months) {
                 return {
                     ...state,
                     months: newArr
                 } 
-            } else if (action.dataArr === state.workers) {
+            } else if (dataArr === state.workers) {
                 return {
                     ...state,
                     workers: newArr
@@ -306,14 +312,18 @@ const reducer = (state = initialState, action) => {
                     seatsActive: false,
                     workingshiftsActive: false
                 }
-            } else if (action.btnName === "seatsBtn") {
+            } 
+
+            if (action.btnName === "seatsBtn") {
                 return {
                     ...state,
                     scheduleActive: false,
                     workingshiftsActive: false,
                     seatsActive: true
                 }
-            } else if (action.btnName === "workingshiftsBtn") {
+            }
+
+            if (action.btnName === "workingshiftsBtn") {
                 return {
                     ...state,
                     scheduleActive: false,
@@ -324,21 +334,24 @@ const reducer = (state = initialState, action) => {
         }
         break;
         case "Change-Selected-Page": {
-            if(action.location.pathname === "/seats/") {
+
+            const url =  action.location.pathname;
+
+            if(url === "/seats/") {
                 return {
                     ...state,
                     scheduleActive: false,
                     workingshiftsActive: false,
                     seatsActive: true
                 }
-            } else if (action.location.pathname === "/workingshifts/") {
+            } else if (url === "/workingshifts/") {
                 return {
                     ...state,
                     scheduleActive: false,
                     workingshiftsActive: true,
                     seatsActive: false
                 }
-            } else if (action.location.pathname === "/") {
+            } else if (url === "/") {
                 return {
                     ...state,
                     scheduleActive: true,
@@ -360,12 +373,13 @@ const reducer = (state = initialState, action) => {
         case "Change-Schedule-Text": {
             const {workers} = state;
             const workerIndex = workers.findIndex(elem => elem.id === action.workerId);
-            const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === action.dayId); 
-            const oldDay = workers[workerIndex].days[dayIndex];
+            const targetWorker = workers[workerIndex];
+            const dayIndex = targetWorker.days.findIndex(elem => elem.id === action.dayId); 
+            const oldDay = targetWorker.days[dayIndex];
             const newDay = {...oldDay}
             newDay[action.objKey] = action.e.target.value;
-            const newDays = [...workers[workerIndex].days.slice(0, dayIndex), newDay, ...workers[workerIndex].days.slice(dayIndex + 1)];
-            const newWorker = {...workers[workerIndex], days: newDays}
+            const newDays = [...targetWorker.days.slice(0, dayIndex), newDay, ...targetWorker.days.slice(dayIndex + 1)];
+            const newWorker = {...targetWorker, days: newDays}
             const newWorkers = [...workers.slice(0, workerIndex), newWorker, ...workers.slice(workerIndex + 1)];
 
             return {

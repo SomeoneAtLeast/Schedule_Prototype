@@ -6,22 +6,9 @@ import {SelectWorker, ChangeDayType, SelectDay, ChangeScheduleText} from "../../
 import "./days-field-common.scss"
 
 const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText}) => {
-    const daysNumbers = workers[0].days.map((item) => {
-
-        return (
-            <th className = "days-field-common-days-item" 
-                key={item.id}>
-                <div>
-                    {item.id}
-                </div>
-                <div>
-                    {item.dayName}
-                </div>
-            </th>
-        )
-    })
 
     const getWorkerElement = (workerNumber) => {
+        const targetWorker = workers[workerNumber];
         let daysInMonth = [];
 
         daysInMonth.push(
@@ -29,33 +16,34 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType, Chang
                 key={workerNumber}
                 onClick={() => SelectWorker(workerNumber)}>
                     <Link to={`/personalschedule/${workerNumber + 1}`} className = "days-field-common-item-link">
-                        {workers[workerNumber].name}
+                        {targetWorker.name}
                     </Link>
             </td>
         )
 
         for (let i = 1; i <= workers[0].days.length; i++) {
             let classNames = "days-field-common-item";
+            const targetDay = targetWorker.days[i - 1];
 
-            if (workers[workerNumber].days[i - 1].selected) {
+            if (targetDay.selected) {
                 classNames += " selected";
             }
 
-            if (workers[workerNumber].days[i - 1].worked) {
-                classNames += ` worked-${workers[workerNumber].days[i - 1].workingShiftDay}`;
+            if (targetDay.worked) {
+                classNames += ` worked-${targetDay.workingShiftDay}`;
             }
 
-            if (workers[workerNumber].days[i - 1].weekend) {
+            if (targetDay.weekend) {
                 classNames += " weekend";
             }
 
-            if (workers[workerNumber].days[i - 1].vacation) {
+            if (targetDay.vacation) {
                 classNames += " vacation";
             }
 
             const SelectDayAndChangeDayType = () => {
-                SelectDay(workers[workerNumber].id, workers[workerNumber].days[i - 1].id);
-                ChangeDayType(workers[workerNumber].id, workers[workerNumber].days[i - 1].id, "selected")
+                SelectDay(targetWorker.id, targetDay.id);
+                ChangeDayType(targetWorker.id, targetDay.id, "selected")
             }
             daysInMonth.push(
                 <td className = {classNames}
@@ -66,8 +54,8 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType, Chang
                                 className="days-field-common-item-input"
                                 type="text"
                                 maxLength={2}
-                                value={workers[workerNumber].days[i - 1].workingHours}
-                                onChange={(e) => ChangeScheduleText(workers[workerNumber].id, workers[workerNumber].days[i - 1].id, "workingHours", e)}
+                                value={targetDay.workingHours}
+                                onChange={(e) => ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e)}
                             />
                         </div>
                 </td>
@@ -108,7 +96,21 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType, Chang
                         <th className = "days-field-common-days-item">
                             Апрель
                         </th>
-                        {daysNumbers}
+                            {
+                                workers[0].days.map((item) => {
+                                    return (
+                                        <th className = "days-field-common-days-item" 
+                                            key={item.id}>
+                                            <div>
+                                                {item.id}
+                                            </div>
+                                            <div>
+                                                {item.dayName}
+                                            </div>
+                                        </th>
+                                    )
+                                })
+                            }
                     </tr>
                     {getWorkersElements()}
                 </tbody>
