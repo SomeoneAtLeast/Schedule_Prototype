@@ -9,9 +9,6 @@ import DaysFieldItemPersonal from "../days-field-personal-item";
 
 
 class DaysFieldPresonal extends Component {
-    constructor(props) {
-        super(props)
-    }
 
     componentDidMount() {
         this.props.SelectWorker(this.props.id);

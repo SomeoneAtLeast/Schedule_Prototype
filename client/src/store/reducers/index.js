@@ -204,7 +204,7 @@ const reducer = (state = initialState, action) => {
                 vacationActive: false
             }
         }
-        case "Make-Filter-Active": {
+        case "Make-Filter-Active": 
             if (action.id === -1) {
                 return {
                     ...state,
@@ -238,7 +238,6 @@ const reducer = (state = initialState, action) => {
                     weekendsActive: false
                 }
             }
-        }
         break;
         case "Select-Day": {
             return {
@@ -304,7 +303,7 @@ const reducer = (state = initialState, action) => {
                 seats: newSeats
             }
         }
-        case "Make-Active-Nav-Btn": {
+        case "Make-Active-Nav-Btn":
             if (action.btnName === "scheduleBtn") {
                 return {
                     ...state,
@@ -331,7 +330,6 @@ const reducer = (state = initialState, action) => {
                     workingshiftsActive: true
                 }
             }
-        }
         break;
         case "Change-Selected-Page": {
 

@@ -5,9 +5,6 @@ import {ChangeShiftText} from "../../store/actions"
 
 import  "./working-shifts-social-item.scss"
 class WorkingShiftsSocialItem extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     makeCells(startNumber, finishNumber, shiftNumberName) {
         const {shift, shifts, id, ChangeShiftText} = this.props;
