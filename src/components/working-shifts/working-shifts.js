@@ -77,13 +77,19 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
                 let insideValue = "";
                 let MaxLength = nameMaxLength;
 
-                if (value == "name") {
+                if (value === "name") {
                     insideValue = "name"
-                } else if (value == "teamName") {
+                }
+                
+                if (value === "teamName") {
                     insideValue = "teamName"
-                } else if (value == "shiftNumber") {
+                }
+                
+                if (value === "shiftNumber") {
                     insideValue = "shiftNumber"
-                } else if (value == "shiftName") {
+                }
+                
+                if (value === "shiftName") {
                     insideValue = "shiftName"
                     MaxLength = shiftNameMaxLength;
                 }

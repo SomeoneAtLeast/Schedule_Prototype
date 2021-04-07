@@ -17,15 +17,15 @@ const MainNav = ({scheduleActive, seatsActive, workingshiftsActive, MakeActiveNa
     let workingshiftsClass = "main-nav__item";
 
     if (scheduleActive) {
-        scheduleClass += " active-main-nav__item";
+        scheduleClass += " main-nav__item--active";
     } 
     
     if (seatsActive) {
-        seatsClass += " active-main-nav__item";
+        seatsClass += " main-nav__item--active";
     }
 
     if (workingshiftsActive) {
-        workingshiftsClass += " active-main-nav__item";
+        workingshiftsClass += " main-nav__item--active";
     }
 
     return (
