@@ -1,0 +1,5 @@
+{
+    "port": 5000,
+    "jwtSecret": "dabdabdab",
+    "mongoUri": "mongodb+srv://SomeoneAtLeast:4815162342@schedulecluster.sidpw.mongodb.net/ScheduleDatabase?retryWrites=true&w=majority"
+}
