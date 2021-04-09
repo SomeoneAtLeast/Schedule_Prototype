@@ -25,3 +25,9 @@ a {
 	text-decoration: none;
 	outline: none;
 }
+
+#root {
+    display: flex;
+    min-height: 98vh;
+    flex-direction: column;
+}
