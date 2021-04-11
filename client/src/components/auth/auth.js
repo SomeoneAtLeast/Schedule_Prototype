@@ -1,15 +1,27 @@
-import React, {useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import {connect} from "react-redux"
 import {useHttp} from "../../hooks/http.hook"
 
 import "./auth.scss"
 
 const Auth = () => {
-    const {loading, request} = useHttp();
+    const {loading, request, error, clearError} = useHttp();
     const [form, setForm] = useState ({
         email: "",
         password: ""
     })
+
+    const kek =     useCallback( () => {
+
+        if(error !== null)
+        console.log("ошибка")
+    }, [error])
+
+    useEffect(() => {
+        kek();
+        clearError();
+    }, [error, kek, clearError])
+
 
     const onChangeFormText = e => {
         setForm({
