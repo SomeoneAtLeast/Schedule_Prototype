@@ -1,26 +1,37 @@
-import React, {useEffect, useState, useCallback} from "react";
+import React, {useEffect, useState} from "react";
 import {connect} from "react-redux"
 import {useHttp} from "../../hooks/http.hook"
 
+
 import "./auth.scss"
 
+import logo from "./../../global-imgs/logo.png"
+
 const Auth = () => {
+
     const {loading, request, error, clearError} = useHttp();
     const [form, setForm] = useState ({
         email: "",
         password: ""
     })
 
-    const kek =     useCallback( () => {
+    const [errorStatus, setError] = useState ({
+        errorActive: false
+    })
 
-        if(error !== null)
-        console.log("ошибка")
-    }, [error])
 
     useEffect(() => {
-        kek();
+
+        if (error !== null) {
+            console.log("не null")
+            setError({
+                errorActive: true 
+            })
+     
+        }
+
         clearError();
-    }, [error, kek, clearError])
+    }, [error, clearError])
 
 
     const onChangeFormText = e => {
@@ -39,22 +50,39 @@ const Auth = () => {
         }
     }
 
+    const {errorActive} = errorStatus;
+    
+    if (errorActive) {
+        console.log(errorActive)
+    }
+
     return (
         <div className="auth">
             <main className="auth__content">
+                <div className="auth__content-logo-wrapper">
+                    <img
+                        className="auth__content-logo"
+                        src={logo} 
+                        alt="Логотип"/>
+                    <span className="auth__content-logo-text">ГРАФИК</span>
+                </div>
                 <div className="auth__inputs">
                     <label className="auth__input-wrapper">
                         <span className="auth__input-text">Логин</span>
-                        <input 
-                            type="email"
+                        <input
+                            className="auth__input" 
+                            type="text"
                             name="email"
+                            maxLength={40}
                             onChange={onChangeFormText}/>
                     </label>
                     <label className="auth__input-wrapper">
                         <span className="auth__input-text">Пароль</span>
-                        <input 
+                        <input
+                            className="auth__input" 
                             type="password"
                             name="password"
+                            maxLength={40}
                             onChange={onChangeFormText}/>
                     </label>
                 </div>
