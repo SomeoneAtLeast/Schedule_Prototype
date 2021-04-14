@@ -1,37 +1,38 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux"
-import {useHttp} from "../../hooks/http.hook"
+// import {useHttp} from "../../hooks/http.hook"
+import WithService from "../../hoc"
 
 
 import "./auth.scss"
 
 import logo from "./../../global-imgs/logo.png"
 
-const Auth = () => {
+const Auth = ({Service}) => {
 
-    const {loading, request, error, clearError} = useHttp();
+    // const {loading, request, error, clearError} = useHttp();
     const [form, setForm] = useState ({
         email: "",
         password: ""
     })
 
-    const [errorStatus, setError] = useState ({
-        errorActive: false
-    })
+    // const [errorStatus, setError] = useState ({
+    //     errorActive: false
+    // })
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (error !== null) {
-            console.log("не null")
-            setError({
-                errorActive: true 
-            })
+    //     if (error !== null) {
+    //         console.log("не null")
+    //         setError({
+    //             errorActive: true 
+    //         })
      
-        }
+    //     }
 
-        clearError();
-    }, [error, clearError])
+    //     clearError();
+    // }, [error, clearError])
 
 
     const onChangeFormText = e => {
@@ -43,18 +44,18 @@ const Auth = () => {
 
     const onRegister = async () => {
         try {
-            const data = await request("/api/auth/register", "POST", {...form})
+            const data = await Service.getRequest("/api/auth/register", "POST", {...form})
             console.log("Data", data)
         } catch (e) {
 
         }
     }
 
-    const {errorActive} = errorStatus;
+    // const {errorActive} = errorStatus;
     
-    if (errorActive) {
-        console.log(errorActive)
-    }
+    // if (errorActive) {
+    //     console.log(errorActive)
+    // }
 
     return (
         <div className="auth">
@@ -88,14 +89,12 @@ const Auth = () => {
                 </div>
                 <div className="auth__btns">
                     <button 
-                            className="auth__input-btn"
-                            disabled={loading}>
+                            className="auth__input-btn">
                             Войти
                         </button>
                         <button 
                             className="auth__input-btn"
-                            onClick={onRegister}
-                            disabled={loading}>
+                            onClick={onRegister}>
                             Зарегистрироваться
                         </button>
                 </div>
@@ -104,4 +103,4 @@ const Auth = () => {
     )
 }
 
-export default connect()(Auth);
+export default WithService()(connect()(Auth));

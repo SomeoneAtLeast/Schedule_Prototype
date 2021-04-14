@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import {Route, Link, Switch, Redirect} from 'react-router-dom';
 import {connect} from "react-redux"
 import {ChangeSelectedPage} from "../../store/actions"
+
 import "./app.scss";
 
 import logo from "./../../global-imgs/logo.png";
@@ -17,7 +18,7 @@ import DaysFieldCommonControls from "../days-field-common-controls"
 import WorkingShifts from "../working-shifts"
 
 
-class App extends Component{
+class App extends Component {
 
     componentDidMount() {
         this.props.ChangeSelectedPage(this.props.location);
@@ -28,7 +29,6 @@ class App extends Component{
     }
 
     render () {
-
     const isAuthenticated = false;
     
         if (isAuthenticated) {
