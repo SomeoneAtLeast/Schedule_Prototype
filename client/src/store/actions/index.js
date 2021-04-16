@@ -97,6 +97,22 @@ const ShowOrCloseWorkingHours = () => {
     }
 }
 
+const SetError = (value) => {
+    return {
+        type: "Set-Error ",
+        value
+    }
+}
+
+const SetLoading = (value) => {
+    console.log(value)
+    return {
+        type: "Set-Loading ",
+        value
+    }
+}
+
+
 export {
     SelectWorker,
     ClearAllDays,
@@ -109,5 +125,7 @@ export {
     MakeActiveNavBtn,
     ChangeSelectedPage,
     ShowOrCloseWorkingHours,
-    ChangeScheduleText
+    ChangeScheduleText,
+    SetError,
+    SetLoading
 }

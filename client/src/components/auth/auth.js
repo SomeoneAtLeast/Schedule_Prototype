@@ -1,39 +1,21 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import {useHttp} from "../../hooks/http.hook"
 import {connect} from "react-redux"
-// import {useHttp} from "../../hooks/http.hook"
-import WithService from "../../hoc"
-
+import Context from "../../context";
 
 import "./auth.scss"
 
 import logo from "./../../global-imgs/logo.png"
 
-const Auth = ({Service}) => {
+const Auth = () => {
 
-    // const {loading, request, error, clearError} = useHttp();
+    const auth = useContext(Context);
+    const {loading, error, success, request, clearError, clearSuccess} = useHttp();
+
     const [form, setForm] = useState ({
         email: "",
         password: ""
     })
-
-    // const [errorStatus, setError] = useState ({
-    //     errorActive: false
-    // })
-
-
-    // useEffect(() => {
-
-    //     if (error !== null) {
-    //         console.log("не null")
-    //         setError({
-    //             errorActive: true 
-    //         })
-     
-    //     }
-
-    //     clearError();
-    // }, [error, clearError])
-
 
     const onChangeFormText = e => {
         setForm({
@@ -42,21 +24,26 @@ const Auth = ({Service}) => {
         })
     }
 
-    const onRegister = async () => {
-        try {
-            const data = await Service.getRequest("/api/auth/register", "POST", {...form})
-            console.log("Data", data)
-        } catch (e) {
-
-        }
+    const clearMessage = () => {
+        clearError()
+        clearSuccess()
     }
 
-    // const {errorActive} = errorStatus;
-    
-    // if (errorActive) {
-    //     console.log(errorActive)
-    // }
+    const onRegister = async () => {
+        try {
+            const data = await request("/api/auth/register", "POST", {...form});
+            console.log(data)
+        } catch (e) {}
+    }
 
+    const onLogin = async () => {
+        try {
+            const data = await request("/api/auth/login", "POST", {...form});
+            auth.login(data.token, data.userId);
+            clearMessage()
+        } catch (e) {}
+    }
+    
     return (
         <div className="auth">
             <main className="auth__content">
@@ -75,7 +62,8 @@ const Auth = ({Service}) => {
                             type="text"
                             name="email"
                             maxLength={40}
-                            onChange={onChangeFormText}/>
+                            onChange={onChangeFormText}
+                            onFocus={clearMessage}/>
                     </label>
                     <label className="auth__input-wrapper">
                         <span className="auth__input-text">Пароль</span>
@@ -84,17 +72,31 @@ const Auth = ({Service}) => {
                             type="password"
                             name="password"
                             maxLength={40}
-                            onChange={onChangeFormText}/>
+                            onChange={onChangeFormText}
+                            onFocus={clearMessage}/>
                     </label>
                 </div>
+                <div className="auth__error">
+                    <span className="auth__error-text">
+                        {error}
+                    </span>
+                </div>
+                <div className="auth__success">
+                    <span className="auth__success-text">
+                        {success}
+                    </span>
+                </div>
                 <div className="auth__btns">
-                    <button 
-                            className="auth__input-btn">
+                        <button 
+                            className="auth__input-btn"
+                            onClick={onLogin}
+                            disabled={loading}>
                             Войти
                         </button>
                         <button 
                             className="auth__input-btn"
-                            onClick={onRegister}>
+                            onClick={onRegister}
+                            disabled={loading}>
                             Зарегистрироваться
                         </button>
                 </div>
@@ -103,4 +105,4 @@ const Auth = ({Service}) => {
     )
 }
 
-export default WithService()(connect()(Auth));
+export default connect()(Auth);

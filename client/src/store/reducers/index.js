@@ -21,7 +21,9 @@ const initialState = {
     scheduleActive: true,
     seatsActive: false,
     workingshiftsActive: false,
-    makeWorkingBtnActive: false
+    makeWorkingBtnActive: false,
+    error: null,
+    loading: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -333,7 +335,7 @@ const reducer = (state = initialState, action) => {
         break;
         case "Change-Selected-Page": {
 
-            const url =  action.location.pathname;
+            const url = action.location.pathname;
 
             if(url === "/seats/") {
                 return {
@@ -383,6 +385,18 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 workers: newWorkers
+            }
+        }
+        case "Set-Error": {
+            return {
+                ...state,
+                error: action.value
+            }
+        }
+        case "Set-Loading": {
+            return {
+                ...state,
+                loading: action.value
             }
         }
         default:

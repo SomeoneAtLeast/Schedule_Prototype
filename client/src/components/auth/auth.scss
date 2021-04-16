@@ -106,3 +106,13 @@
         transform: scale(0.95);
     }
 }
+
+.auth__error-text {
+    color: #e12f2f;
+    font-size: 13px;
+}
+
+.auth__success-text {
+    color: #009f0a;
+    font-size: 13px;
+}

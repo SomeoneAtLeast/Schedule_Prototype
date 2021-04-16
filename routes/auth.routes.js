@@ -10,12 +10,11 @@ const router = Router();
 router.post(
     "/register",
     [
-        check("email", "Некорректный email").isEmail(),
-        check("password", "Минимальная длина пароля - 6 символов").isLength({min: 6})
+        check("email").normalizeEmail().isEmail(),
+        check("password").isLength({min: 6})
     ],
     async (req, res) => {
     try {
-        console.log(req.body);
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -29,7 +28,7 @@ router.post(
         const candidate = await User.findOne({email});
 
         if (candidate) {
-            return res.status(400).json({message: "зачем"})
+            return res.status(400).json({message: "Что-то не так"})
         };
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -49,8 +48,8 @@ router.post(
 router.post(
     "/login",
     [
-        check("email", "Введите корректный email").normalizeEmail().isEmail(),
-        check("password", "Введите пароль").exists()
+        check("email").normalizeEmail().isEmail(),
+        check("password").exists()
     ],
     async (req, res) => {
         try {
@@ -75,7 +74,7 @@ router.post(
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            return res.status(400).json({message: "почему"})
+            return res.status(400).json({message: "Что-то не так"})
         };
 
         const token = jwt.sign(
