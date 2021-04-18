@@ -29,12 +29,12 @@ const Auth = () => {
         clearSuccess()
     }
 
-    const onRegister = async () => {
-        try {
-            const data = await request("/api/auth/register", "POST", {...form});
-            console.log(data)
-        } catch (e) {}
-    }
+    // const onRegister = async () => {
+    //     try {
+    //         const data = await request("/api/auth/register", "POST", {...form});
+    //         console.log(data)
+    //     } catch (e) {}
+    // }
 
     const onLogin = async () => {
         try {
@@ -44,6 +44,12 @@ const Auth = () => {
         } catch (e) {}
     }
     
+    const onKeyDown = (e) => {
+        if (e.keyCode === 13) {
+            onLogin();
+          }
+    }
+
     return (
         <div className="auth">
             <main className="auth__content">
@@ -63,7 +69,8 @@ const Auth = () => {
                             name="email"
                             maxLength={40}
                             onChange={onChangeFormText}
-                            onFocus={clearMessage}/>
+                            onFocus={clearMessage}
+                            onKeyDown={onKeyDown}/>
                     </label>
                     <label className="auth__input-wrapper">
                         <span className="auth__input-text">Пароль</span>
@@ -73,7 +80,8 @@ const Auth = () => {
                             name="password"
                             maxLength={40}
                             onChange={onChangeFormText}
-                            onFocus={clearMessage}/>
+                            onFocus={clearMessage}
+                            onKeyDown={onKeyDown}/>
                     </label>
                 </div>
                 <div className="auth__error">
@@ -93,12 +101,12 @@ const Auth = () => {
                             disabled={loading}>
                             Войти
                         </button>
-                        <button 
+                        {/* <button 
                             className="auth__input-btn"
                             onClick={onRegister}
                             disabled={loading}>
                             Зарегистрироваться
-                        </button>
+                        </button> */}
                 </div>
             </main>
         </div>

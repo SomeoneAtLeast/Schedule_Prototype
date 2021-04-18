@@ -18,6 +18,7 @@ import MainNav from "../main-nav"
 import SeatsField from "../seats-field"
 import DaysFieldCommonControls from "../days-field-common-controls"
 import WorkingShifts from "../working-shifts"
+import UserControls from "../user-controls";
 
 
 const App = ({ChangeSelectedPage, location}) => {
@@ -31,51 +32,56 @@ const App = ({ChangeSelectedPage, location}) => {
     
     if (isAuthenticated) {
         return (
-            <div className = "app">
-                <header className="header">
-                    <div className="header__main-nav">
-                        <div className="header__main-nav-logo-wrapper">
-                            <Link 
-                                className="header__main-nav-link"
-                                to="/">
-                                    <img className="header__main-nav-logo"
-                                    src={logo}
-                                    alt="Логотип"/>
-                            </Link>
+            <Context.Provider value={{
+                token, login, logout, userId, isAuthenticated
+              }}>
+                <div className = "app">
+                    <header className="header">
+                        <div className="header__main-nav">
+                            <div className="header__main-nav-logo-wrapper">
+                                <Link 
+                                    className="header__main-nav-link"
+                                    to="/">
+                                        <img className="header__main-nav-logo"
+                                        src={logo}
+                                        alt="Логотип"/>
+                                </Link>
+                            </div>
+                            <Route path="/" component={MainNav}/>
                         </div>
-                        <Route path="/" component={MainNav}/>
-                    </div>
-                </header>
-                <main className="main">
-                    <Route path="/personalschedule/:id" exact render={() => {
-                        return (
-                        <div className="controls">
-                            <Route path="/personalschedule/:id" exact component={FilterList}/>
+                    </header>
+                    <main className="main">
+                        <Route path="/personalschedule/:id" exact render={() => {
+                            return (
+                            <div className="controls">
+                                <Route path="/personalschedule/:id" exact component={FilterList}/>
+                            </div>
+                            )
+                        }}/>
+                        <Route path="/" exact>
+                            <div className="controls">
+                                <Route path="/" exact component={DaysFieldCommonControls}/>
+                                <Route path="/" exact component={UserControls}/>
+                            </div>
+                        </Route>
+                        <div className="main-content">
+                            <Switch>
+                                <Route path="/" exact component={DaysFieldCommon}/>
+                                <Route path="/personalschedule/:id" render={({match}) => {
+                                    const {id} = match.params;
+                                    return (
+                                        <DaysFieldPresonal
+                                            id = {id - 1}/>
+                                    )
+                                }}/>
+                                <Route path="/seats" exact component={SeatsField}/>
+                                <Route path="/workingshifts" exact component={WorkingShifts}/>
+                                <Redirect to="/"/>
+                            </Switch>
                         </div>
-                        )
-                    }}/>
-                    <Route path="/" exact>
-                        <div className="controls">
-                            <Route path="/" exact component={DaysFieldCommonControls}/>
-                        </div>
-                    </Route>
-                    <div className="main-content">
-                        <Switch>
-                            <Route path="/" exact component={DaysFieldCommon}/>
-                            <Route path="/personalschedule/:id" render={({match}) => {
-                                const {id} = match.params;
-                                return (
-                                    <DaysFieldPresonal
-                                        id = {id - 1}/>
-                                )
-                            }}/>
-                            <Route path="/seats" exact component={SeatsField}/>
-                            <Route path="/workingshifts" exact component={WorkingShifts}/>
-                            <Redirect to="/"/>
-                        </Switch>
-                    </div>
-                </main>
-            </div>
+                    </main>
+                </div>
+            </Context.Provider>
         )
     }
 
@@ -85,8 +91,8 @@ const App = ({ChangeSelectedPage, location}) => {
                 token, login, logout, userId, isAuthenticated
               }}>
                 <Switch>
-                    <Route path="/" exact component={Auth}/>
-                    <Redirect to="/"/>
+                    <Route path="/auth" exact component={Auth}/>
+                    <Redirect to="/auth"/>
                 </Switch>
             </Context.Provider>
         )

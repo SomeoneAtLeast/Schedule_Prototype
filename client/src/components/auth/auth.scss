@@ -53,10 +53,6 @@
     }
 }
 
-.auth__input-text {
-    color: rgba(0, 0, 0, 0.85);
-}
-
 .auth__input {
     border: none;
     outline: none;
@@ -75,9 +71,6 @@
 }
 
 .auth__btns {
-    display: flex;
-    justify-content: space-between;
-    width: 320px;
     margin-top: 20px;
 }
 
@@ -86,7 +79,7 @@
     align-items: center;
     justify-content: flex-start;
     box-sizing: border-box;
-    padding: 10px 20px;
+    padding: 10px 40px;
     border-radius: 5px;
     border: 2px solid rgba(0, 0, 0, 0.85);
     outline: none;
@@ -95,7 +88,7 @@
     font-family: "Roboto-Regular", sans-serif;
     cursor: pointer;
     transition: 0.3s;
-    font-size: 15px;
+    font-size: 16px;
 
     &:hover {
         color: rgba(0, 0, 0, 1);
@@ -115,4 +108,32 @@
 .auth__success-text {
     color: #009f0a;
     font-size: 13px;
+}
+
+@media (max-width: 600px) { 
+
+    .auth__content {
+        width: 310px;
+        padding: 60px 40px 40px;
+    }
+    
+    .auth__content-logo {
+        width: 23px;
+    }
+    
+    .auth__content-logo-text {
+        font-size: 18px;
+    }
+
+    .auth__input-text {
+        font-size: 14px;
+    }
+    
+    .auth__input {
+        font-size: 14px;
+    }
+
+    .auth__input-btn {
+        font-size: 14px;
+    }
 }
