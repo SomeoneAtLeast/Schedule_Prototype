@@ -3,11 +3,11 @@ import {useHttp} from "../../hooks/http.hook"
 import {connect} from "react-redux"
 import Context from "../../context";
 
-import "./auth.scss"
+import "./login.scss"
 
 import logo from "./../../global-imgs/logo.png"
 
-const Auth = () => {
+const Login = () => {
 
     const auth = useContext(Context);
     const {loading, error, success, request, clearError, clearSuccess} = useHttp();
@@ -29,13 +29,6 @@ const Auth = () => {
         clearSuccess()
     }
 
-    // const onRegister = async () => {
-    //     try {
-    //         const data = await request("/api/auth/register", "POST", {...form});
-    //         console.log(data)
-    //     } catch (e) {}
-    // }
-
     const onLogin = async () => {
         try {
             const data = await request("/api/auth/login", "POST", {...form});
@@ -51,20 +44,20 @@ const Auth = () => {
     }
 
     return (
-        <div className="auth">
-            <main className="auth__content">
-                <div className="auth__content-logo-wrapper">
+        <div className="login">
+            <main className="login__content">
+                <div className="login__content-logo-wrapper">
                     <img
-                        className="auth__content-logo"
+                        className="login__content-logo"
                         src={logo} 
                         alt="Логотип"/>
-                    <span className="auth__content-logo-text">ГРАФИК</span>
+                    <span className="login__content-logo-text">ГРАФИК</span>
                 </div>
-                <div className="auth__inputs">
-                    <label className="auth__input-wrapper">
-                        <span className="auth__input-text">Логин</span>
+                <div className="login__inputs">
+                    <label className="login__input-wrapper">
+                        <span className="login__input-text">Логин</span>
                         <input
-                            className="auth__input" 
+                            className="login__input" 
                             type="text"
                             name="email"
                             maxLength={40}
@@ -72,10 +65,10 @@ const Auth = () => {
                             onFocus={clearMessage}
                             onKeyDown={onKeyDown}/>
                     </label>
-                    <label className="auth__input-wrapper">
-                        <span className="auth__input-text">Пароль</span>
+                    <label className="login__input-wrapper">
+                        <span className="login__input-text">Пароль</span>
                         <input
-                            className="auth__input" 
+                            className="login__input" 
                             type="password"
                             name="password"
                             maxLength={40}
@@ -84,33 +77,27 @@ const Auth = () => {
                             onKeyDown={onKeyDown}/>
                     </label>
                 </div>
-                <div className="auth__error">
-                    <span className="auth__error-text">
+                <div className="login__error">
+                    <span className="login__error-text">
                         {error}
                     </span>
                 </div>
-                <div className="auth__success">
-                    <span className="auth__success-text">
+                <div className="login__success">
+                    <span className="login__success-text">
                         {success}
                     </span>
                 </div>
-                <div className="auth__btns">
+                <div className="login__btns">
                         <button 
-                            className="auth__input-btn"
+                            className="login__input-btn"
                             onClick={onLogin}
                             disabled={loading}>
                             Войти
                         </button>
-                        {/* <button 
-                            className="auth__input-btn"
-                            onClick={onRegister}
-                            disabled={loading}>
-                            Зарегистрироваться
-                        </button> */}
                 </div>
             </main>
         </div>
     )
 }
 
-export default connect()(Auth);
+export default connect()(Login);

@@ -250,7 +250,6 @@ const reducer = (state = initialState, action) => {
         }
         case "Change-Shift-Text": {
             const dataArr = action.dataArr;
-
             const index = dataArr.findIndex(elem => elem.id === action.id); 
             const obj = dataArr[index];
             const newObj = {...obj};

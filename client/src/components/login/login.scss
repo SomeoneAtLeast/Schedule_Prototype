@@ -1,4 +1,4 @@
-.auth {
+.login {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,7 +7,7 @@
     
 }
 
-.auth__content {
+.login__content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,7 +20,7 @@
     padding: 60px 60px 40px;
 }
 
-.auth__content-logo-wrapper {
+.login__content-logo-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,22 +28,22 @@
     margin-bottom: 30px; 
 }
 
-.auth__content-logo {
+.login__content-logo {
     width: 27px;
     margin-bottom: 10px;
 }
 
-.auth__content-logo-text {
+.login__content-logo-text {
     color: rgba(0, 0, 0, 0.85);
     font-size: 22px;
 }
 
-.auth__inputs {
+.login__inputs {
     width: 100%;
     margin-bottom: 20px;
 }
 
-.auth__input-wrapper {
+.login__input-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -53,7 +53,7 @@
     }
 }
 
-.auth__input {
+.login__input {
     border: none;
     outline: none;
     font-family: "Roboto-Regular", sans-serif;
@@ -70,14 +70,12 @@
     }
 }
 
-.auth__btns {
+.login__btns {
     margin-top: 20px;
 }
 
-.auth__input-btn {
+.login__input-btn {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
     box-sizing: border-box;
     padding: 10px 40px;
     border-radius: 5px;
@@ -100,40 +98,40 @@
     }
 }
 
-.auth__error-text {
+.login__error-text {
     color: #e12f2f;
     font-size: 13px;
 }
 
-.auth__success-text {
+.login__success-text {
     color: #009f0a;
     font-size: 13px;
 }
 
 @media (max-width: 600px) { 
 
-    .auth__content {
+    .login__content {
         width: 310px;
         padding: 60px 40px 40px;
     }
     
-    .auth__content-logo {
+    .login__content-logo {
         width: 23px;
     }
     
-    .auth__content-logo-text {
+    .login__content-logo-text {
         font-size: 18px;
     }
 
-    .auth__input-text {
+    .login__input-text {
         font-size: 14px;
     }
     
-    .auth__input {
+    .login__input {
         font-size: 14px;
     }
 
-    .auth__input-btn {
+    .login__input-btn {
         font-size: 14px;
     }
 }
