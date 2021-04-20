@@ -31,15 +31,58 @@ const App = ({ChangeSelectedPage, location}) => {
         ChangeSelectedPage(location);
     }, [ChangeSelectedPage, location])
 
-    if (!isAuthenticated) {
+    if (isAuthenticated) {
         return (
             <Context.Provider value={{
                 token, login, logout, userId, isAuthenticated
                 }}>
-                <Switch>
-                    <Route path="/auth" exact component={Login}/>
-                    <Redirect to="/auth"/>
-                </Switch>
+                <div className = "app">
+                    <header className="header">
+                        <div className="header__main-nav">
+                            <div className="header__main-nav-logo-wrapper">
+                                <Link 
+                                    className="header__main-nav-link"
+                                    to="/">
+                                        <img className="header__main-nav-logo"
+                                        src={logo}
+                                        alt="Логотип"/>
+                                </Link>
+                            </div>
+                            <Route path="/" component={MainNav}/>
+                        </div>
+                    </header>
+                    <main className="main">
+                        <Route path="/personalschedule/:id" exact render={() => {
+                            return (
+                            <div className="controls">
+                                <Route path="/personalschedule/:id" exact component={FilterList}/>
+                            </div>
+                            )
+                        }}/>
+                        <Route path="/" exact>
+                            <div className="controls">
+                                <Route path="/" exact component={DaysFieldCommonControls}/>
+                                <Route path="/" exact component={UserControls}/>
+                            </div>
+                        </Route>
+                        <div className="main-content">
+                            <Switch>
+                                <Route path="/" exact component={DaysFieldCommon}/>
+                                <Route path="/personalschedule/:id" render={({match}) => {
+                                    const {id} = match.params;
+                                    return (
+                                        <DaysFieldPresonal
+                                            id = {id - 1}/>
+                                    )
+                                }}/>
+                                <Route path="/seats" component={SeatsField}/>
+                                <Route path="/workingshifts" component={WorkingShifts}/>
+                                <Route path="/register" component={Register}/>
+                                <Redirect to="/"/>
+                            </Switch>
+                        </div>
+                    </main>
+                </div>
             </Context.Provider>
         )
     }
@@ -48,53 +91,10 @@ const App = ({ChangeSelectedPage, location}) => {
         <Context.Provider value={{
             token, login, logout, userId, isAuthenticated
             }}>
-            <div className = "app">
-                <header className="header">
-                    <div className="header__main-nav">
-                        <div className="header__main-nav-logo-wrapper">
-                            <Link 
-                                className="header__main-nav-link"
-                                to="/">
-                                    <img className="header__main-nav-logo"
-                                    src={logo}
-                                    alt="Логотип"/>
-                            </Link>
-                        </div>
-                        <Route path="/" component={MainNav}/>
-                    </div>
-                </header>
-                <main className="main">
-                    <Route path="/personalschedule/:id" exact render={() => {
-                        return (
-                        <div className="controls">
-                            <Route path="/personalschedule/:id" exact component={FilterList}/>
-                        </div>
-                        )
-                    }}/>
-                    <Route path="/" exact>
-                        <div className="controls">
-                            <Route path="/" exact component={DaysFieldCommonControls}/>
-                            <Route path="/" exact component={UserControls}/>
-                        </div>
-                    </Route>
-                    <div className="main-content">
-                        <Switch>
-                            <Route path="/" exact component={DaysFieldCommon}/>
-                            <Route path="/personalschedule/:id" render={({match}) => {
-                                const {id} = match.params;
-                                return (
-                                    <DaysFieldPresonal
-                                        id = {id - 1}/>
-                                )
-                            }}/>
-                            <Route path="/seats" component={SeatsField}/>
-                            <Route path="/workingshifts" component={WorkingShifts}/>
-                            <Route path="/register" component={Register}/>
-                            <Redirect to="/"/>
-                        </Switch>
-                    </div>
-                </main>
-            </div>
+            <Switch>
+                <Route path="/auth" exact component={Login}/>
+                <Redirect to="/auth"/>
+            </Switch>
         </Context.Provider>
     )
 }

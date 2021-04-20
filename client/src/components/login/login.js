@@ -33,9 +33,16 @@ const Login = () => {
         try {
             const data = await request("/api/auth/login", "POST", {...form});
             auth.login(data.token, data.userId);
-            clearMessage()
         } catch (e) {}
     }
+
+    const onTest = async () => {
+        try {
+            const data = await request("/api/test/test", "GET");
+            console.log(data[1].name);
+        } catch (e) {}
+    }
+
     
     const onKeyDown = (e) => {
         if (e.keyCode === 13) {
@@ -60,6 +67,7 @@ const Login = () => {
                             className="login__input" 
                             type="text"
                             name="email"
+                            value={form.email}
                             maxLength={40}
                             onChange={onChangeFormText}
                             onFocus={clearMessage}
@@ -71,6 +79,7 @@ const Login = () => {
                             className="login__input" 
                             type="password"
                             name="password"
+                            value={form.password}
                             maxLength={40}
                             onChange={onChangeFormText}
                             onFocus={clearMessage}
@@ -93,6 +102,13 @@ const Login = () => {
                             onClick={onLogin}
                             disabled={loading}>
                             Войти
+                        </button>
+
+                        <button 
+                            className="login__input-btn"
+                            onClick={onTest}
+                            disabled={loading}>
+                           TEST
                         </button>
                 </div>
             </main>
