@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useCallback, useEffect} from "react";
 import {connect} from "react-redux"
+import {ShiftsLoaded, ShiftsRequested} from "../../store/actions"
 import PropTypes from 'prop-types';
+import {useHttp} from "../../hooks/http.hook"
 import {ChangeShiftText} from "../../store/actions"
 
 import  "./working-shifts.scss"
@@ -8,8 +10,28 @@ import  "./working-shifts.scss"
 import WorkingShiftsSocialItem from "../working-shifts-social-item"
 import WorkingShiftsKmItem from "../working-shifts-km-item"
 
-const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTable, ChangeShiftText}) => {
+const WorkingShifts = ({ShiftsLoaded, ShiftsRequested, shifts, kmShifts, months, workTeamsNames, glTable, kmTable, ChangeShiftText}) => {
+    console.log(shifts);
 
+
+    const {request} = useHttp();
+
+    const getShifts = useCallback(async () => {
+        try {
+            const data = await request("/api/shifts/shifts", "GET");
+            ShiftsLoaded(data);
+
+        } catch (e) {}
+    }, [request, ShiftsLoaded]);
+
+    useEffect(() => {
+        ShiftsRequested();
+        getShifts();
+        console.log("3");
+    }, [getShifts, ShiftsRequested])
+
+    ShiftsRequested();
+    getShifts();
         const table = (startTime, finishTime, numberOfRows, shiftNumber, key) => {
             let rows = [];
             
@@ -52,6 +74,10 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
         }
 
         const tables = (tablesNumber) => {
+            if (shifts.length === 0) {
+                return
+            }
+            console.log(shifts)
             let tablesArr = [];
             for (let i = 0; i <= (tablesNumber - 1); i++) {
                 tablesArr.push(table(shifts[i].startTime, shifts[i].finishTime, 0, i, i + 100))
@@ -188,7 +214,9 @@ WorkingShifts.propTypes = {
 
 
 const mapDispatchToProps = {
-    ChangeShiftText
+    ChangeShiftText,
+    ShiftsLoaded,
+    ShiftsRequested
 }
 
 const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmTable}) => {

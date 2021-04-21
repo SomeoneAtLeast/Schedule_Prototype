@@ -36,13 +36,6 @@ const Login = () => {
         } catch (e) {}
     }
 
-    const onTest = async () => {
-        try {
-            const data = await request("/api/test/test", "GET");
-            console.log(data[1].name);
-        } catch (e) {}
-    }
-
     
     const onKeyDown = (e) => {
         if (e.keyCode === 13) {
@@ -102,13 +95,6 @@ const Login = () => {
                             onClick={onLogin}
                             disabled={loading}>
                             Войти
-                        </button>
-
-                        <button 
-                            className="login__input-btn"
-                            onClick={onTest}
-                            disabled={loading}>
-                           TEST
                         </button>
                 </div>
             </main>

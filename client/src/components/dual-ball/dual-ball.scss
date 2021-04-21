@@ -1,0 +1,21 @@
+.dual-ball {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EEE;
+    width: 100%;
+    height: 86%;
+}
+
+.dual-ball__img {
+    width: 200px;
+    height: 200px;
+}
+
+@media (max-width: 1485px) { 
+
+    .dual-ball {
+        height: 84%;
+    }
+    
+}

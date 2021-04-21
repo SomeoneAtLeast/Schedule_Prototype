@@ -1,3 +1,29 @@
+const SeatsLoaded = (seats) => {
+    return {
+        type: "Seats-Loaded",
+        seats
+    }
+}
+
+const SeatsRequested = () => {
+    return {
+        type: "Seats-Requested"
+    }
+}
+
+const ShiftsLoaded = (shifts) => {
+    return {
+        type: "Shifts-Loaded",
+        shifts
+    }
+}
+
+const ShiftsRequested = () => {
+    return {
+        type: "Shifts-Requested"
+    }
+}
+
 const SelectWorker = (id) => {
     return {
         type: "Select-Worker",
@@ -104,16 +130,12 @@ const SetError = (value) => {
     }
 }
 
-const SetLoading = (value) => {
-    console.log(value)
-    return {
-        type: "Set-Loading ",
-        value
-    }
-}
-
 
 export {
+    SeatsLoaded,
+    SeatsRequested,
+    ShiftsLoaded,
+    ShiftsRequested,
     SelectWorker,
     ClearAllDays,
     ChangeDayType,
@@ -126,6 +148,5 @@ export {
     ChangeSelectedPage,
     ShowOrCloseWorkingHours,
     ChangeScheduleText,
-    SetError,
-    SetLoading
+    SetError
 }

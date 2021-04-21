@@ -105,7 +105,7 @@ SeatsItem.propTypes = {
     oldIp: PropTypes.string,
     newIp: PropTypes.string,
     seatNumber: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.string,
     ChangeSeatText: PropTypes.func,
 }
 

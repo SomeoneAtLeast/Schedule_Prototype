@@ -1,6 +1,5 @@
 import {workers} from "../../models/schedule-model"
-import {shifts, kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
-import {seats} from "../../models/seats-model"
+import {kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 
 const initialState = {
     workers,
@@ -11,23 +10,47 @@ const initialState = {
     workedActive: false,
     weekendsActive: false,
     vacationActive: false,
-    shifts,
+    shifts: [],
     glTable,
     kmTable: kmArr,
     kmShifts,
     workTeamsNames,
     months,
-    seats,
+    seats: [],
     scheduleActive: true,
     seatsActive: false,
     workingshiftsActive: false,
     makeWorkingBtnActive: false,
     error: null,
-    loading: false
+    loading: true
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case "Seats-Loaded":
+            return {
+                ...state,
+                seats: action.seats,
+                loading: false
+            }
+        case "Seats-Requested":
+            return {
+                ...state,
+                loading: true
+            }
+        case "Shifts-Loaded":
+            console.log(state.shifts);
+
+            return {
+                ...state,
+                shifts: action.shifts,
+                loading: false
+            }
+        case "Shifts-Requested":
+            return {
+                ...state,
+                loading: true
+            }
         case "Select-Worker":
             return {
                 ...state,
@@ -390,12 +413,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.value
-            }
-        }
-        case "Set-Loading": {
-            return {
-                ...state,
-                loading: action.value
             }
         }
         default:
