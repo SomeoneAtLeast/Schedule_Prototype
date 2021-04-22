@@ -39,8 +39,6 @@ const reducer = (state = initialState, action) => {
                 loading: true
             }
         case "Shifts-Loaded":
-            console.log(state.shifts);
-
             return {
                 ...state,
                 shifts: action.shifts,

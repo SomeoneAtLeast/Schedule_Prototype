@@ -20,16 +20,21 @@ import DaysFieldCommonControls from "../days-field-common-controls"
 import WorkingShifts from "../working-shifts"
 import UserControls from "../user-controls";
 import Register from "../register";
+import DualBall from "../dual-ball";
 
 
 const App = ({ChangeSelectedPage, location}) => {
 
-    const {token, login, logout, userId} = useAuth();
+    const {token, login, logout, userId, ready} = useAuth();
     const isAuthenticated = !!token;
 
     useEffect(() => {
         ChangeSelectedPage(location);
     }, [ChangeSelectedPage, location])
+
+    if (!ready) {
+        return <DualBall/>
+    }
 
     if (isAuthenticated) {
         return (
