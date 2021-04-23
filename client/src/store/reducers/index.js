@@ -1,5 +1,5 @@
 import {workers} from "../../models/schedule-model"
-import {kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
+import {kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 
 const initialState = {
     workers,
@@ -13,7 +13,7 @@ const initialState = {
     shifts: [],
     glTable,
     kmTable: kmArr,
-    kmShifts,
+    kmShifts: [],
     workTeamsNames,
     months,
     seats: [],
@@ -42,6 +42,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 shifts: action.shifts,
+                kmShifts: action.shiftsKm,
                 loading: false
             }
         case "Shifts-Requested":

@@ -11,10 +11,11 @@ const SeatsRequested = () => {
     }
 }
 
-const ShiftsLoaded = (shifts) => {
+const ShiftsLoaded = (shifts, shiftsKm) => {
     return {
         type: "Shifts-Loaded",
-        shifts
+        shifts,
+        shiftsKm
     }
 }
 

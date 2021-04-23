@@ -4,7 +4,7 @@ const schema = new Schema({
     finishTime: {type: String},
     firstShiftNumber: {type: String},
     fourthShiftNumber: {type: String},
-    id: {type: String},
+    id: {type: Number},
     secondShiftNumber: {type: String},
     startTime: {type: String},
     thirdShiftNumber: {type: String},
