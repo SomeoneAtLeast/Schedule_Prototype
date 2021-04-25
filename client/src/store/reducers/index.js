@@ -3,8 +3,10 @@ import {kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/s
 
 const initialState = {
     workers,
+    currentMonth: 1,
     selectedWorker: 0,
     selectedDay: 0,
+    selectedMonth: 0,
     filter: "all",
     allActive: true,
     workedActive: false,
@@ -87,12 +89,12 @@ const reducer = (state = initialState, action) => {
                 workingTime = null;
             }
 
-            const {workers, selectedWorker, selectedDay} = state;
+            const {workers, selectedWorker, currentMonth, selectedDay} = state;
             const workerIndex = workers.findIndex(elem => elem.id === workerId);
-            const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === dayId); 
+            const dayIndex = workers[workerIndex].months[currentMonth - 1].days.findIndex(elem => elem.id === dayId); 
             const newWorkers = [...workers.slice()];
 
-            const targetDay = newWorkers[workerIndex].days[dayIndex];
+            const targetDay = newWorkers[workerIndex].months[currentMonth - 1].days[dayIndex];
 
             if (objKey === "selected" && targetDay.changeShiftMenuOpen === true) {
                 targetDay.changeShiftMenuOpen = false
@@ -140,7 +142,7 @@ const reducer = (state = initialState, action) => {
             if (scheduleType === "common") {
                 if (objKey === "worked") {
                     newWorkers.forEach((item) => {
-                        item.days.forEach((item) => {
+                        item.months[currentMonth - 1].days.forEach((item) => {
                             if (item.selected) {
                                 item.worked = true;
                                 item.weekend = false;
@@ -153,7 +155,7 @@ const reducer = (state = initialState, action) => {
                     })
                 } else if (objKey === "weekend") {
                     newWorkers.forEach((item) => {
-                        item.days.forEach((item) => {
+                        item.months[currentMonth - 1].days.forEach((item) => {
                             if (item.selected) {
                                 item.weekend = true
                                 item.worked = false;
@@ -166,7 +168,7 @@ const reducer = (state = initialState, action) => {
                     })
                 } else if (objKey === "vacation") {
                     newWorkers.forEach((item) => {
-                        item.days.forEach((item) => {
+                        item.months[currentMonth - 1].days.forEach((item) => {
                             if (item.selected) {
                                 item.vacation = true
                                 item.worked = false;
@@ -179,7 +181,7 @@ const reducer = (state = initialState, action) => {
                     })
                 } else if (objKey === "takeOf") {
                     newWorkers.forEach((item) => {
-                        item.days.forEach((item) => {
+                        item.months[currentMonth - 1].days.forEach((item) => {
                             if (item.selected) {
                                 item.vacation = false
                                 item.worked = false;
@@ -192,7 +194,7 @@ const reducer = (state = initialState, action) => {
                     })
                 } else if (objKey === "clear") {
                     newWorkers.forEach((item) => {
-                        item.days.forEach((item) => {
+                        item.months[currentMonth - 1].days.forEach((item) => {
                             if (item.selected) {
                                 item.selected = false;
                             }
@@ -268,6 +270,13 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 selectedWorker: action.selectedWorker,
                 selectedDay: action.selectedDay,
+            }
+        }
+        case "Select-Month": {
+            return {
+                ...state,
+                selectedWorker: action.selectedWorker,
+                selectedMonth: action.selectedMonth,
             }
         }
         case "Change-Shift-Text": {
@@ -392,15 +401,18 @@ const reducer = (state = initialState, action) => {
             }
         }
         case "Change-Schedule-Text": {
-            const {workers} = state;
+            const {workers, currentMonth} = state;
             const workerIndex = workers.findIndex(elem => elem.id === action.workerId);
             const targetWorker = workers[workerIndex];
-            const dayIndex = targetWorker.days.findIndex(elem => elem.id === action.dayId); 
-            const oldDay = targetWorker.days[dayIndex];
-            const newDay = {...oldDay}
+            const dayIndex = targetWorker.months[currentMonth - 1].days.findIndex(elem => elem.id === action.dayId); 
+            const oldDay = targetWorker.months[currentMonth - 1].days[dayIndex];
+            const newDay = {...oldDay};
             newDay[action.objKey] = action.e.target.value;
-            const newDays = [...targetWorker.days.slice(0, dayIndex), newDay, ...targetWorker.days.slice(dayIndex + 1)];
-            const newWorker = {...targetWorker, days: newDays}
+            const newDays = [...targetWorker.months[currentMonth - 1].days.slice(0, dayIndex), newDay, ...targetWorker.months[currentMonth - 1].days.slice(dayIndex + 1)];
+            const oldMonth = {...targetWorker.months[currentMonth - 1]};
+            const newMonth = {...oldMonth, days: newDays};
+            const newMonths = [...targetWorker.months.slice(0, currentMonth - 1), newMonth, ...targetWorker.months.slice(currentMonth)];
+            const newWorker = {...targetWorker, months: newMonths};
             const newWorkers = [...workers.slice(0, workerIndex), newWorker, ...workers.slice(workerIndex + 1)];
 
             return {
@@ -414,8 +426,29 @@ const reducer = (state = initialState, action) => {
                 error: action.value
             }
         }
+        case "Change-Month": {
+
+            let {currentMonth} = state;
+
+            if (action.direction === "back" && currentMonth >= 2) {
+                return {
+                    ...state,
+                    currentMonth: --currentMonth
+                }
+            }
+
+            if (action.direction === "next" && currentMonth <= 11) {
+                return {
+                    ...state,
+                    currentMonth: ++currentMonth
+                }
+            }
+            console.log(currentMonth)
+            return state; 
+        }
         default:
             return state;    
     }
 }
+
 export default reducer;

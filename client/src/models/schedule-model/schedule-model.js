@@ -1,40 +1,4088 @@
-const totalDays = 30;
-const dayNames7 = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
-const dayNames30 = [
-    ...dayNames7, ...dayNames7, ...dayNames7, ...dayNames7, dayNames7[0], dayNames7[1]
-    ];
+// const totalDays = 30;
+// const dayNames7 = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
+// const dayNames30 = [
+//     ...dayNames7, ...dayNames7, ...dayNames7, ...dayNames7, dayNames7[0], dayNames7[1]
+//     ];
 
 
-const totalWorkers = 30;
-let emptyWorkers = [];
+// const totalWorkers = 30;
+// let emptyWorkers = [];
 
-for (let i = 1; i <= totalWorkers; i++) {
-    emptyWorkers.push(
+// for (let i = 1; i <= totalWorkers; i++) {
+//     emptyWorkers.push(
+//         {
+//             name: `Иванов Иван Иванович № ${i}`,
+//             id: i,
+//             days: [],
+//             workingShiftTotal: null,
+//         }
+//     )
+// }
+
+// emptyWorkers.forEach((item) => {
+//     for (let i = 1; i <= totalDays; i++) {
+//         item.days.push(
+//             {   
+//                 dayName: dayNames30[i - 1],
+//                 selected: false,
+//                 worked: false,
+//                 weekend: false,
+//                 vacation: false,
+//                 workingHours: 0,
+//                 changeShiftMenuOpen: false,
+//                 workingShiftDay: null,
+//                 id: i
+//             }
+//         )
+//     }
+// })
+
+// export const workers = emptyWorkers;
+
+
+// console.log(workers)
+
+
+// 5
+
+
+export const workers = [
+    {
+      "name": "Иванов Иван Иванович № 1",
+      "id": 1,
+      "months": [
         {
-            name: `Иванов Иван Иванович № ${i}`,
-            id: i,
-            days: [],
-            workingShiftTotal: null,
-        }
-    )
-}
-
-emptyWorkers.forEach((item) => {
-    for (let i = 1; i <= totalDays; i++) {
-        item.days.push(
-            {   
-                dayName: dayNames30[i - 1],
-                selected: false,
-                worked: false,
-                weekend: false,
-                vacation: false,
-                workingHours: 0,
-                changeShiftMenuOpen: false,
-                workingShiftDay: null,
-                id: i
-            }
-        )
+            name: "Январь",
+            id: 1,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Февраль",
+            id: 2,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Март",
+            id: 3,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Апрель",
+            id: 4,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Май",
+            id: 5,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Июнь",
+            id: 6,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Июль",
+            id: 7,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Август",
+            id: 8,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Сентябрь",
+            id: 9,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Октябрь",
+            id: 10,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Ноябрь",
+            id: 11,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+        {
+            name: "Декабрь",
+            id: 12,
+            "days": [
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 1
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 2
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 3
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 4
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 5
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 6
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 7
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 8
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 9
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 10
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 11
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 12
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 13
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 14
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 15
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 16
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 17
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 18
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 19
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 20
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 21
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 22
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 23
+                },
+                {
+                  "dayName": "ср",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 24
+                },
+                {
+                  "dayName": "чт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 25
+                },
+                {
+                  "dayName": "пт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 26
+                },
+                {
+                  "dayName": "сб",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 27
+                },
+                {
+                  "dayName": "вс",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 28
+                },
+                {
+                  "dayName": "пн",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 29
+                },
+                {
+                  "dayName": "вт",
+                  "selected": false,
+                  "worked": false,
+                  "weekend": false,
+                  "vacation": false,
+                  "workingHours": 0,
+                  "changeShiftMenuOpen": false,
+                  "workingShiftDay": null,
+                  "id": 30
+                }
+              ]
+        },
+      ],
     }
-})
-
-export const workers = emptyWorkers;
+  ]

@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
-import {SelectWorker, ChangeDayType, SelectDay, ChangeScheduleText} from "../../store/actions"
+import {SelectWorker, ChangeDayType, ChangeMonth, SelectDay, ChangeScheduleText} from "../../store/actions"
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText}) => {
+const DaysFieldCommon = ({workers, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth}) => {
 
     const getWorkerElement = (workerNumber) => {
         const targetWorker = workers[workerNumber];
@@ -20,10 +20,10 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType, Chang
                     </Link>
             </td>
         )
-
-        for (let i = 1; i <= workers[0].days.length; i++) {
+        
+        for (let i = 1; i <= workers[0].months[currentMonth - 1].days.length; i++) {
             let classNames = "days-field-common-item";
-            const targetDay = targetWorker.days[i - 1];
+            const targetDay = targetWorker.months[currentMonth - 1].days[i - 1];
 
             if (targetDay.selected) {
                 classNames += " selected";
@@ -45,6 +45,7 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType, Chang
                 SelectDay(targetWorker.id, targetDay.id);
                 ChangeDayType(targetWorker.id, targetDay.id, "selected")
             }
+
             daysInMonth.push(
                 <td className = {classNames}
                     key={i + 1000}
@@ -90,14 +91,31 @@ const DaysFieldCommon = ({workers, SelectWorker, SelectDay, ChangeDayType, Chang
 
     return (
         <div className="days-field-common-wrapper">
+            <div className = "days-field-common-years">
+                        2021
+            </div>
             <table className = "days-field-common">
                 <tbody>
                     <tr className = "days-field-common-items-row">
                         <th className = "days-field-common-days-item">
-                            Апрель
+                            <div className = "days-field-common-days-item-btn-group">
+                                <button
+                                    className = "days-field-common-days-item-btn days-field-common-days-item-btn-left"
+                                    onClick={() => ChangeMonth("back")}>
+                                    ←
+                                </button>
+                                <div className = "days-field-common-days-item-month">
+                                    {workers[0].months[currentMonth - 1].name}
+                                </div>
+                                <button
+                                    className = "days-field-common-days-item-btn days-field-common-days-item-btn-right"
+                                    onClick={() => ChangeMonth("next")}>
+                                    →
+                                </button>
+                            </div>
                         </th>
                             {
-                                workers[0].days.map((item) => {
+                                workers[0].months[currentMonth - 1].days.map((item) => {
                                     return (
                                         <th className = "days-field-common-days-item" 
                                             key={item.id}>
@@ -131,12 +149,14 @@ const mapDispatchToProps = {
     SelectWorker, 
     ChangeDayType,
     SelectDay,
-    ChangeScheduleText
+    ChangeScheduleText,
+    ChangeMonth
 }
 
-const mapStateToProps = ({workers}) => {
+const mapStateToProps = ({workers, currentMonth}) => {
     return {
-        workers
+        workers,
+        currentMonth
     }
 }
 

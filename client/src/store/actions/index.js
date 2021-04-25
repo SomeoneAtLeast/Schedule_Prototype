@@ -50,6 +50,14 @@ const ChangeDayType = (workerId, dayId, objKey, workingTime, hoursCount, schedul
     }
 }
 
+const ChangeMonth = (direction) => {
+    return {
+        type: "Change-Month",
+        direction
+    }
+}
+
+
 const FilterSelect = (filter) => {
     return {
         type: "Filter-Select",
@@ -64,12 +72,11 @@ const MakeFilterActive = (id) => {
     }
 }
 
-const SelectDay = (selectedWorker, selectedDay, ChangeDayType) => {
+const SelectDay = (selectedWorker, selectedDay) => {
     return {
         type: "Select-Day",
         selectedWorker, 
         selectedDay,
-        ChangeDayType
     }
 }
 
@@ -140,6 +147,7 @@ export {
     SelectWorker,
     ClearAllDays,
     ChangeDayType,
+    ChangeMonth,
     FilterSelect,
     MakeFilterActive,
     SelectDay,
