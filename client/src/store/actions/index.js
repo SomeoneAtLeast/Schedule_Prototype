@@ -57,6 +57,12 @@ const ChangeMonth = (direction) => {
     }
 }
 
+const ChangeYear = (direction) => {
+    return {
+        type: "Change-Year",
+        direction
+    }
+}
 
 const FilterSelect = (filter) => {
     return {
@@ -148,6 +154,7 @@ export {
     ClearAllDays,
     ChangeDayType,
     ChangeMonth,
+    ChangeYear,
     FilterSelect,
     MakeFilterActive,
     SelectDay,

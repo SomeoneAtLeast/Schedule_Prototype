@@ -1,4 +1,5 @@
 .days-field-personal-wrapper {
+    border-radius: 20px 0 0 0;
     background-color: #EEE;
     height: 100%;
 }
@@ -8,13 +9,26 @@
     overflow: scroll;
 }
 
+.days-field-personal-years {
+    position: relative;
+    text-align: center;
+    background: linear-gradient(360deg, #7F39D0, #5b13ac);
+    padding: 15px;
+    border-radius: 10px 0 0 0;
+    color: white;
+    font-size: 18px;
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
+    z-index: 3; 
+}
+
+
 .days-field-personal {
     background-color: #FFF;
     margin-bottom: auto;
     border-collapse: collapse;
 }
 
-.days-field-personal-items-row:first-child {
+.days-field-personal__items-row:first-child {
     
     .days-field-personal__item {
         width: 2%;
@@ -24,6 +38,44 @@
         box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
         background: linear-gradient(175deg, #934BE6, #7b20e2);
     }
+}
+
+.days-field-personal__item-btn-group {
+    display: flex;
+    align-items: flex-end;
+    margin-left: 54px;
+}
+
+.days-field-personal__item-btn {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    outline: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &-left {
+        &:hover {
+            transform: translateX(-5px);
+        }
+    }
+
+    &-right {
+        &:hover {
+            transform: translateX(5px);
+        }
+    }
+
+    &:active {
+        transform: translateX(0);
+    }
+}
+
+
+.days-field-personal__item-month {
+    width: 85px;
 }
 
 .days-field-personal .days-field-personal--selected {
@@ -95,21 +147,41 @@
 
 @media (max-width: 1485px) { 
 
-    .days-field-personal-items-row:first-child {
+    .days-field-personal-years {
+        font-size: 16px;
+    }
+
+    .days-field-personal__items-row:first-child {
         .days-field-personal__item {
             box-sizing: border-box;
             width: 2%;
             height: 54px;
         }
     }
+
+    .days-field-personal__item-btn-group {
+        margin-left: 0;
+    }
+
+    .days-field-personal__item-month {
+        width: 73px;
+    }
 }
 
 
 @media (max-width: 1000px) { 
 
-    .days-field-personal-items-row:first-child {
+    .days-field-personal-years {
+        font-size: 14px;
+    }
+
+    .days-field-personal__items-row:first-child {
         .days-field-personal__item {
             height: 48px;
         }
+    }
+
+    .days-field-personal__item-month {
+        width: 65px;
     }
 }

@@ -141,7 +141,7 @@ const WorkingShifts = ({ShiftsLoaded, ShiftsRequested, shifts, kmShifts, months,
             return (
                 <div className="seats-field">
                     <div className="seats-field-title">
-                        Рабочие места
+                        Апрель
                     </div>
                     <DualBall/>
                 </div>

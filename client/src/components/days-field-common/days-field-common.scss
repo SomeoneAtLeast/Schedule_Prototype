@@ -1,15 +1,12 @@
 .days-field-common-wrapper {
     overflow: scroll;
-    max-height: 85vh;
-
+    max-height: 80vh;
 }
-
 
 .days-field-common {
     border-collapse: collapse;
     background-color: #FFF;
 }
-
 
 .days-field-common-years {
     position: sticky;
@@ -24,7 +21,7 @@
     z-index: 3; 
 }
 
-.days-field-common-item {
+.days-field-common__item {
     padding: 5px 0;
     color: rgba(0, 0, 0, 0.85);
     border: 1px solid #DDD;
@@ -49,19 +46,19 @@
         transition: 0.2s;
     
         &:active {
-            .days-field-common-item-link {
+            .days-field-common__item-link {
                 transform: scale(0.95);
             }
         }
     }
 }
 
-.days-field-common-item-input-wrapper {
+.days-field-common__item-input-wrapper {
     display: flex;
     justify-content: center;
 }
 
-.days-field-common-item-input {
+.days-field-common__item-input {
     display: block;
     background-color: transparent;
     border: none;
@@ -82,7 +79,7 @@
     }
 }
 
-.days-field-common-days-item {
+.days-field-common__days-item {
     width: 2%;
     font-weight: normal;
     padding: 10px;
@@ -94,13 +91,19 @@
     z-index: 2; 
 }
 
-.days-field-common-days-item-btn-group {
+.days-field-common__days-item-btn-group {
     display: flex;
     justify-content: center;
     align-items: flex-end;
+
+    &--year {
+        .days-field-common__days-item-btn {
+            font-size: 20px;
+        }
+    }
 }
 
-.days-field-common-days-item-btn {
+.days-field-common__days-item-btn {
     background-color: transparent;
     border: none;
     padding: 0;
@@ -127,12 +130,15 @@
     }
 }
 
+.days-field-common__days-item-year {
+    width: 65px;
+}
 
-.days-field-common-days-item-month {
+.days-field-common__days-item-month {
     width: 85px;
 }
 
-.days-field-common-item-link {
+.days-field-common__item-link {
     transition: 0.3s;
     display: block;
     color: rgba(0, 0, 0, 0.85);
@@ -190,31 +196,47 @@
 
 @media (max-width: 1485px) { 
 
-    .days-field-common-item {
+    .days-field-common__item {
         font-size: 14px;
     }
 
-    .days-field-common-days-item {
+    .days-field-common__days-item {
         font-size: 14px;
     }
 
-    .days-field-common-item-link {
+    .days-field-common__item-link {
         white-space: normal;
+    }
+
+    .days-field-common-years {
+        font-size: 16px;
+    }
+
+    .days-field-common__days-item-month {
+        width: 73px;
     }
 
 }
 
 @media (max-width: 1000px) { 
     
-    .days-field-common-item {
+    .days-field-common__item {
         font-size: 12px;
     }
 
-    .days-field-common-days-item {
+    .days-field-common__days-item {
         font-size: 12px;
     }
 
-    .days-field-common-item-input {
+    .days-field-common__item-input {
         font-size: 12px;
+    }
+
+    .days-field-common-years {
+        font-size: 14px;
+    }
+
+    .days-field-common__days-item-month {
+        width: 65px;
     }
 }

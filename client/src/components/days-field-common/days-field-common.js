@@ -1,29 +1,33 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
-import {SelectWorker, ChangeDayType, ChangeMonth, SelectDay, ChangeScheduleText} from "../../store/actions"
+import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays} from "../../store/actions"
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth}) => {
+const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth, ChangeYear, ClearAllDays}) => {
+
+    useEffect(() => {
+        ClearAllDays();
+    }, [currentMonth, currentYear, ClearAllDays])
 
     const getWorkerElement = (workerNumber) => {
         const targetWorker = workers[workerNumber];
         let daysInMonth = [];
 
         daysInMonth.push(
-            <td className = "days-field-common-item" 
+            <td className = "days-field-common__item" 
                 key={workerNumber}
                 onClick={() => SelectWorker(workerNumber)}>
-                    <Link to={`/personalschedule/${workerNumber + 1}`} className = "days-field-common-item-link">
+                    <Link to={`/personalschedule/${workerNumber + 1}`} className = "days-field-common__item-link">
                         {targetWorker.name}
                     </Link>
             </td>
         )
         
-        for (let i = 1; i <= workers[0].months[currentMonth - 1].days.length; i++) {
-            let classNames = "days-field-common-item";
-            const targetDay = targetWorker.months[currentMonth - 1].days[i - 1];
+        for (let i = 1; i <= workers[0].years[currentYear - 1].months[currentMonth - 1].days.length; i++) {
+            let classNames = "days-field-common__item";
+            const targetDay = targetWorker.years[currentYear - 1].months[currentMonth - 1].days[i - 1];
 
             if (targetDay.selected) {
                 classNames += " selected";
@@ -50,9 +54,9 @@ const DaysFieldCommon = ({workers, currentMonth, SelectWorker, SelectDay, Change
                 <td className = {classNames}
                     key={i + 1000}
                     onClick={() => SelectDayAndChangeDayType()}>
-                        <div className="days-field-common-item-input-wrapper">
+                        <div className="days-field-common__item-input-wrapper">
                             <input 
-                                className="days-field-common-item-input"
+                                className="days-field-common__item-input"
                                 type="text"
                                 maxLength={2}
                                 value={targetDay.workingHours}
@@ -75,7 +79,7 @@ const DaysFieldCommon = ({workers, currentMonth, SelectWorker, SelectDay, Change
             i++
             return (
                 <tr 
-                    className = "days-field-common-items-row"
+                    className = "days-field-common__items-row"
                     key={worker.name}>
                     {getWorkerElement(i - 1)}
                 </tr>
@@ -87,53 +91,68 @@ const DaysFieldCommon = ({workers, currentMonth, SelectWorker, SelectDay, Change
         )
     }
 
-
-
     return (
-        <div className="days-field-common-wrapper">
+        <>
             <div className = "days-field-common-years">
-                        2021
+                                {/* Сделать адаптив*/}
+                <div className = "days-field-common__days-item-btn-group days-field-common__days-item-btn-group--year">
+                    <button
+                        className = "days-field-common__days-item-btn days-field-common__days-item-btn-left"
+                        onClick={() => ChangeYear("back")}>
+                        ←
+                    </button>
+                    <div className = "days-field-common__days-item-year">
+                        {workers[0].years[currentYear - 1].name}
+                    </div>
+                    <button
+                        className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"
+                        onClick={() => ChangeYear("next")}>
+                        →
+                    </button>
+                </div>
             </div>
-            <table className = "days-field-common">
-                <tbody>
-                    <tr className = "days-field-common-items-row">
-                        <th className = "days-field-common-days-item">
-                            <div className = "days-field-common-days-item-btn-group">
-                                <button
-                                    className = "days-field-common-days-item-btn days-field-common-days-item-btn-left"
-                                    onClick={() => ChangeMonth("back")}>
-                                    ←
-                                </button>
-                                <div className = "days-field-common-days-item-month">
-                                    {workers[0].months[currentMonth - 1].name}
+            <div className="days-field-common-wrapper">
+                <table className = "days-field-common">
+                    <tbody>
+                        <tr className = "days-field-common__items-row">
+                            <th className = "days-field-common__days-item">
+                                <div className = "days-field-common__days-item-btn-group">
+                                    <button
+                                        className = "days-field-common__days-item-btn days-field-common__days-item-btn-left"
+                                        onClick={() => ChangeMonth("back")}>
+                                        ←
+                                    </button>
+                                    <div className = "days-field-common__days-item-month">
+                                        {workers[0].years[currentYear - 1].months[currentMonth - 1].name}
+                                    </div>
+                                    <button
+                                        className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"
+                                        onClick={() => ChangeMonth("next")}>
+                                        →
+                                    </button>
                                 </div>
-                                <button
-                                    className = "days-field-common-days-item-btn days-field-common-days-item-btn-right"
-                                    onClick={() => ChangeMonth("next")}>
-                                    →
-                                </button>
-                            </div>
-                        </th>
-                            {
-                                workers[0].months[currentMonth - 1].days.map((item) => {
-                                    return (
-                                        <th className = "days-field-common-days-item" 
-                                            key={item.id}>
-                                            <div>
-                                                {item.id}
-                                            </div>
-                                            <div>
-                                                {item.dayName}
-                                            </div>
-                                        </th>
-                                    )
-                                })
-                            }
-                    </tr>
-                    {getWorkersElements()}
-                </tbody>
-            </table>
-        </div>
+                            </th>
+                                {
+                                    workers[0].years[currentYear - 1].months[currentMonth - 1].days.map((item) => {
+                                        return (
+                                            <th className = "days-field-common__days-item" 
+                                                key={item.id}>
+                                                <div>
+                                                    {item.id}
+                                                </div>
+                                                <div>
+                                                    {item.dayName}
+                                                </div>
+                                            </th>
+                                        )
+                                    })
+                                }
+                        </tr>
+                        {getWorkersElements()}
+                    </tbody>
+                </table>
+            </div>
+        </>
     )
 }
 
@@ -150,12 +169,15 @@ const mapDispatchToProps = {
     ChangeDayType,
     SelectDay,
     ChangeScheduleText,
-    ChangeMonth
+    ChangeMonth,
+    ChangeYear,
+    ClearAllDays
 }
 
-const mapStateToProps = ({workers, currentMonth}) => {
+const mapStateToProps = ({workers, currentYear, currentMonth}) => {
     return {
         workers,
+        currentYear,
         currentMonth
     }
 }
