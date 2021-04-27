@@ -12,7 +12,7 @@ import logo from "./../../global-imgs/logo.png";
 
 import Login from "../login";
 import FilterList from "../filter-list";
-import DaysFieldPresonal from "../days-field-porsonal"
+import DaysFieldPresonal from "../days-field-personal"
 import DaysFieldCommon from "../days-field-common"
 import MainNav from "../main-nav"
 import SeatsField from "../seats-field"

@@ -183,17 +183,17 @@ class DaysFieldPresonal extends Component {
                 <div className = "days-field-personal-years">
                 {/* Убрать cammon и сделать адаптив*/}
 
-                    <div className = "days-field-common__days-item-btn-group days-field-common__days-item-btn-group--year">
+                    <div className = "days-field-personal__item-btn-group days-field-personal__item-btn-group--year">
                         <button
-                            className = "days-field-common__days-item-btn days-field-common__days-item-btn-left"
+                            className = "days-field-personal__item-btn days-field-personal__item-btn-left"
                             onClick={() => ChangeYearAndClearDays("back")}>
                             ←
                         </button>
-                        <div className = "days-field-common__days-item-year">
+                        <div className = "days-field-personal__item-year">
                             {workers[0].years[currentYear - 1].name}
                         </div>
                         <button
-                            className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"
+                            className = "days-field-personal__item-btn days-field-personal__item-btn-right"
                             onClick={() => ChangeYearAndClearDays("next")}>
                             →
                         </button>

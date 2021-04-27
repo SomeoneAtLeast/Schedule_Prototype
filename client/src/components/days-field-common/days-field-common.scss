@@ -216,6 +216,10 @@
         width: 73px;
     }
 
+    .days-field-common__days-item-year {
+        width: 55px;
+    }
+
 }
 
 @media (max-width: 1000px) { 
@@ -238,5 +242,9 @@
 
     .days-field-common__days-item-month {
         width: 65px;
+    }
+
+    .days-field-common__days-item-year {
+        width: 45px;
     }
 }

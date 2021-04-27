@@ -1,8 +1,8 @@
-import {workers} from "../../models/schedule-model"
+// import {workers} from "../../models/schedule-model"
 import {kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 
 const initialState = {
-    workers,
+    workers: [],
     currentYear: 1,
     currentMonth: 1,
     selectedWorker: 0,
@@ -30,6 +30,17 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case "Workers-Loaded":
+            return {
+                ...state,
+                workers: action.workers,
+                loading: false
+            }
+        case "Workers-Requested":
+            return {
+                ...state,
+                loading: true
+            }
         case "Seats-Loaded":
             return {
                 ...state,

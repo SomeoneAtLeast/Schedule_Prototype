@@ -1,11 +1,28 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useCallback} from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
-import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays} from "../../store/actions"
+import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays, WorkersLoaded, WorkersRequested} from "../../store/actions"
+import {useHttp} from "../../hooks/http.hook"
+import DualBall from "../dual-ball";
+
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth, ChangeYear, ClearAllDays}) => {
+const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, WorkersRequested, loading}) => {
+
+    const {request} = useHttp();
+
+    const getWorkers = useCallback(async () => {
+        try {
+            const data = await request("/api/workers/workers", "GET");
+            WorkersLoaded(data);
+        } catch (e) {}
+    }, [request, WorkersLoaded]);
+
+    useEffect(() => {
+        WorkersRequested();
+        getWorkers();
+    }, [getWorkers, WorkersRequested]);
 
     useEffect(() => {
         ClearAllDays();
@@ -91,10 +108,15 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
         )
     }
 
+    if (loading) {
+        return (
+            <DualBall/>
+        )
+    }
+
     return (
         <>
             <div className = "days-field-common-years">
-                                {/* Сделать адаптив*/}
                 <div className = "days-field-common__days-item-btn-group days-field-common__days-item-btn-group--year">
                     <button
                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-left"
@@ -171,14 +193,17 @@ const mapDispatchToProps = {
     ChangeScheduleText,
     ChangeMonth,
     ChangeYear,
-    ClearAllDays
+    ClearAllDays,
+    WorkersLoaded,
+    WorkersRequested
 }
 
-const mapStateToProps = ({workers, currentYear, currentMonth}) => {
+const mapStateToProps = ({workers, currentYear, currentMonth, loading}) => {
     return {
         workers,
         currentYear,
-        currentMonth
+        currentMonth,
+        loading
     }
 }
 

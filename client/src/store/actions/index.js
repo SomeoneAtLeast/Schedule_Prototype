@@ -1,3 +1,16 @@
+const WorkersLoaded = (workers) => {
+    return {
+        type: "Workers-Loaded",
+        workers
+    }
+}
+
+const WorkersRequested = () => {
+    return {
+        type: "Workers-Requested"
+    }
+}
+
 const SeatsLoaded = (seats) => {
     return {
         type: "Seats-Loaded",
@@ -146,6 +159,8 @@ const SetError = (value) => {
 
 
 export {
+    WorkersLoaded,
+    WorkersRequested,
     SeatsLoaded,
     SeatsRequested,
     ShiftsLoaded,

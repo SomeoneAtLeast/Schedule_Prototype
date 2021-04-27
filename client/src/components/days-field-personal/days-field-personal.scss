@@ -43,7 +43,14 @@
 .days-field-personal__item-btn-group {
     display: flex;
     align-items: flex-end;
+    justify-content: center;
     margin-left: 54px;
+
+    &--year {
+        .days-field-personal__item-btn {
+            font-size: 20px;
+        }
+    }
 }
 
 .days-field-personal__item-btn {
@@ -76,6 +83,10 @@
 
 .days-field-personal__item-month {
     width: 85px;
+}
+
+.days-field-personal__item-year {
+    width: 65px;
 }
 
 .days-field-personal .days-field-personal--selected {
@@ -166,6 +177,10 @@
     .days-field-personal__item-month {
         width: 73px;
     }
+
+    .days-field-personal__item-year {
+        width: 55px;
+    }
 }
 
 
@@ -183,5 +198,9 @@
 
     .days-field-personal__item-month {
         width: 65px;
+    }
+
+    .days-field-personal__item-year {
+        width: 45px;
     }
 }
