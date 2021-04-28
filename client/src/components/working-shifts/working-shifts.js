@@ -1,9 +1,8 @@
-import React, {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {connect} from "react-redux"
-import {ShiftsLoaded, ShiftsRequested} from "../../store/actions"
+import {ShiftsLoaded, ChangeShiftText} from "../../store/actions"
 import PropTypes from 'prop-types';
 import {useHttp} from "../../hooks/http.hook"
-import {ChangeShiftText} from "../../store/actions"
 
 import  "./working-shifts.scss"
 
@@ -11,22 +10,24 @@ import WorkingShiftsSocialItem from "../working-shifts-social-item"
 import WorkingShiftsKmItem from "../working-shifts-km-item"
 import DualBall from "../dual-ball";
 
-const WorkingShifts = ({ShiftsLoaded, ShiftsRequested, shifts, kmShifts, months, workTeamsNames, glTable, kmTable, ChangeShiftText, loading}) => {
+const WorkingShifts = ({ShiftsLoaded, shifts, kmShifts, months, workTeamsNames, glTable, kmTable, ChangeShiftText}) => {
+
+    const [loading, setLoading] = useState(true);
 
     const {request} = useHttp();
-
+    
     const getShifts = useCallback(async () => {
         try {
             const shiftsData = await request("/api/shifts/shifts", "GET");
             const shiftsKmData = await request("/api/shifts/shifts-km", "GET");
             ShiftsLoaded(shiftsData, shiftsKmData);
+            setLoading(false)
         } catch (e) {}
     }, [request, ShiftsLoaded]);
 
     useEffect(() => {
-        ShiftsRequested();
         getShifts();
-    }, [getShifts, ShiftsRequested])
+    }, [getShifts])
 
         const table = (startTime, finishTime, numberOfRows, shiftNumber, key) => {
             let rows = [];
@@ -218,8 +219,7 @@ WorkingShifts.propTypes = {
 
 const mapDispatchToProps = {
     ChangeShiftText,
-    ShiftsLoaded,
-    ShiftsRequested
+    ShiftsLoaded
 }
 
 const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmTable, loading}) => {

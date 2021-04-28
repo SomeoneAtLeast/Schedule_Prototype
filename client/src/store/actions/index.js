@@ -5,22 +5,10 @@ const WorkersLoaded = (workers) => {
     }
 }
 
-const WorkersRequested = () => {
-    return {
-        type: "Workers-Requested"
-    }
-}
-
 const SeatsLoaded = (seats) => {
     return {
         type: "Seats-Loaded",
         seats
-    }
-}
-
-const SeatsRequested = () => {
-    return {
-        type: "Seats-Requested"
     }
 }
 
@@ -29,12 +17,6 @@ const ShiftsLoaded = (shifts, shiftsKm) => {
         type: "Shifts-Loaded",
         shifts,
         shiftsKm
-    }
-}
-
-const ShiftsRequested = () => {
-    return {
-        type: "Shifts-Requested"
     }
 }
 
@@ -150,21 +132,10 @@ const ShowOrCloseWorkingHours = () => {
     }
 }
 
-const SetError = (value) => {
-    return {
-        type: "Set-Error ",
-        value
-    }
-}
-
-
 export {
     WorkersLoaded,
-    WorkersRequested,
     SeatsLoaded,
-    SeatsRequested,
     ShiftsLoaded,
-    ShiftsRequested,
     SelectWorker,
     ClearAllDays,
     ChangeDayType,
@@ -178,6 +149,5 @@ export {
     MakeActiveNavBtn,
     ChangeSelectedPage,
     ShowOrCloseWorkingHours,
-    ChangeScheduleText,
-    SetError
+    ChangeScheduleText
 }

@@ -1,14 +1,16 @@
-import React, {useEffect, useCallback} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
-import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays, WorkersLoaded, WorkersRequested} from "../../store/actions"
+import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays, WorkersLoaded} from "../../store/actions"
 import {useHttp} from "../../hooks/http.hook"
 import DualBall from "../dual-ball";
 
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, WorkersRequested, loading}) => {
+const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded}) => {
+
+    const [loading, setLoading] = useState(true);
 
     const {request} = useHttp();
 
@@ -16,17 +18,17 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
         try {
             const data = await request("/api/workers/workers", "GET");
             WorkersLoaded(data);
+            setLoading(false)
         } catch (e) {}
     }, [request, WorkersLoaded]);
 
     useEffect(() => {
-        WorkersRequested();
         getWorkers();
-    }, [getWorkers, WorkersRequested]);
+    }, [getWorkers]);
 
     useEffect(() => {
         ClearAllDays();
-    }, [currentMonth, currentYear, ClearAllDays])
+    }, [currentMonth, currentYear, ClearAllDays]);
 
     const getWorkerElement = (workerNumber) => {
         const targetWorker = workers[workerNumber];
@@ -194,8 +196,7 @@ const mapDispatchToProps = {
     ChangeMonth,
     ChangeYear,
     ClearAllDays,
-    WorkersLoaded,
-    WorkersRequested
+    WorkersLoaded
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, loading}) => {

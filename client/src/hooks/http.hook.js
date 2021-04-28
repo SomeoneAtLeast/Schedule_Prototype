@@ -1,12 +1,10 @@
 import {useState, useCallback} from "react";
 
 export const useHttp = () => {
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
     const request = useCallback (async(url, method = "GET", body = null, headers = {}) => {
-        setLoading(true);
         try {
 
             if (body) {
@@ -21,12 +19,10 @@ export const useHttp = () => {
                 throw new Error(data.message || "Что-то пошло не так")
             }
 
-            setLoading(false);
             setSuccess(data.message)
 
             return data
         } catch (e) {
-            setLoading(false);
             setError(e.message)
             throw e
         }
@@ -35,5 +31,5 @@ export const useHttp = () => {
     const clearError = useCallback(() => setError(null), []);
     const clearSuccess = useCallback(() => setSuccess(null), []);
 
-    return {loading, request, error, success, clearError, clearSuccess}
+    return {request, error, success, clearError, clearSuccess}
 }

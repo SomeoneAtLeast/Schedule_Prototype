@@ -24,8 +24,6 @@ const initialState = {
     seatsActive: false,
     workingshiftsActive: false,
     makeWorkingBtnActive: false,
-    error: null,
-    loading: true
 }
 
 const reducer = (state = initialState, action) => {
@@ -36,21 +34,11 @@ const reducer = (state = initialState, action) => {
                 workers: action.workers,
                 loading: false
             }
-        case "Workers-Requested":
-            return {
-                ...state,
-                loading: true
-            }
         case "Seats-Loaded":
             return {
                 ...state,
                 seats: action.seats,
                 loading: false
-            }
-        case "Seats-Requested":
-            return {
-                ...state,
-                loading: true
             }
         case "Shifts-Loaded":
             return {
@@ -58,11 +46,6 @@ const reducer = (state = initialState, action) => {
                 shifts: action.shifts,
                 kmShifts: action.shiftsKm,
                 loading: false
-            }
-        case "Shifts-Requested":
-            return {
-                ...state,
-                loading: true
             }
         case "Select-Worker":
             return {
@@ -438,12 +421,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 workers: newWorkers
-            }
-        }
-        case "Set-Error": {
-            return {
-                ...state,
-                error: action.value
             }
         }
         case "Change-Month": {

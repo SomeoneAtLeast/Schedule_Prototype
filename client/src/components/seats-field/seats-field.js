@@ -1,6 +1,6 @@
-import React, {useEffect, useCallback} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import {connect} from "react-redux"
-import {SeatsLoaded, SeatsRequested} from "../../store/actions"
+import {SeatsLoaded} from "../../store/actions"
 import PropTypes from 'prop-types';
 import {useHttp} from "../../hooks/http.hook"
 
@@ -10,7 +10,9 @@ import SeatsItem from "../seats-item";
 import DualBall from "../dual-ball";
 
 
-const SeatsField = ({SeatsLoaded, SeatsRequested, seats, loading}) => {
+const SeatsField = ({SeatsLoaded, seats}) => {
+
+    const [loading, setLoading] = useState(true);
 
     const {request} = useHttp();
 
@@ -18,13 +20,13 @@ const SeatsField = ({SeatsLoaded, SeatsRequested, seats, loading}) => {
         try {
             const data = await request("/api/seats/seats", "GET");
             SeatsLoaded(data);
+            setLoading(false)
         } catch (e) {}
     }, [request, SeatsLoaded]);
 
     useEffect(() => {
-        SeatsRequested();
         getSeats();
-    }, [getSeats, SeatsRequested]);
+    }, [getSeats]);
 
     
     const table = (elements, upfrom, upTo, lower) => {
@@ -107,8 +109,7 @@ const mapStateToProps = ({seats, loading}) => {
 }
 
 const mapDispatchToProps = {
-    SeatsLoaded,
-    SeatsRequested
+    SeatsLoaded
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SeatsField);
