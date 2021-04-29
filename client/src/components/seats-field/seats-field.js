@@ -100,11 +100,9 @@ SeatsField.propTypes = {
 }
 
 
-const mapStateToProps = ({seats, loading}) => {
+const mapStateToProps = ({seats}) => {
     return {
         seats,
-        loading
-
     }
 }
 

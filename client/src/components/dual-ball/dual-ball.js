@@ -3,9 +3,9 @@ import React from 'react';
 import "./dual-ball.scss"
 import dualBallImg from "./dual-ball.gif"
 
-const DualBall = () => {
+const DualBall = ({className}) => {
     return (
-        <div className="dual-ball">
+        <div className={"dual-ball " + className}>
             <img 
                 className="dual-ball__img"
                 src={dualBallImg}

@@ -222,7 +222,7 @@ const mapDispatchToProps = {
     ShiftsLoaded
 }
 
-const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmTable, loading}) => {
+const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmTable}) => {
 
     return {
         shifts,
@@ -230,8 +230,7 @@ const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmT
         months,
         workTeamsNames,
         glTable,
-        kmTable,
-        loading
+        kmTable
     }
 }
 
