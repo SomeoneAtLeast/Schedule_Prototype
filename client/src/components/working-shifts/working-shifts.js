@@ -1,14 +1,33 @@
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {connect} from "react-redux"
+import {ShiftsLoaded, ChangeShiftText} from "../../store/actions"
 import PropTypes from 'prop-types';
-import {ChangeShiftText} from "../../store/actions"
+import {useHttp} from "../../hooks/http.hook"
 
 import  "./working-shifts.scss"
 
 import WorkingShiftsSocialItem from "../working-shifts-social-item"
 import WorkingShiftsKmItem from "../working-shifts-km-item"
+import DualBall from "../dual-ball";
 
-const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTable, ChangeShiftText}) => {
+const WorkingShifts = ({ShiftsLoaded, shifts, kmShifts, months, workTeamsNames, glTable, kmTable, ChangeShiftText}) => {
+
+    const [loading, setLoading] = useState(true);
+
+    const {request} = useHttp();
+    
+    const getShifts = useCallback(async () => {
+        try {
+            const shiftsData = await request("/api/shifts/shifts", "GET");
+            const shiftsKmData = await request("/api/shifts/shifts-km", "GET");
+            ShiftsLoaded(shiftsData, shiftsKmData);
+            setLoading(false)
+        } catch (e) {}
+    }, [request, ShiftsLoaded]);
+
+    useEffect(() => {
+        getShifts();
+    }, [getShifts])
 
         const table = (startTime, finishTime, numberOfRows, shiftNumber, key) => {
             let rows = [];
@@ -52,6 +71,9 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
         }
 
         const tables = (tablesNumber) => {
+            if (shifts.length === 0) {
+                return
+            }
             let tablesArr = [];
             for (let i = 0; i <= (tablesNumber - 1); i++) {
                 tablesArr.push(table(shifts[i].startTime, shifts[i].finishTime, 0, i, i + 100))
@@ -113,6 +135,14 @@ const WorkingShifts = ({shifts, kmShifts, months, workTeamsNames, glTable, kmTab
 
             return (
                 glCells
+            )
+        }
+
+        if (loading) {
+            return (
+                <div className="working-shifts">
+                    <DualBall/>
+                </div>
             )
         }
 
@@ -188,10 +218,11 @@ WorkingShifts.propTypes = {
 
 
 const mapDispatchToProps = {
-    ChangeShiftText
+    ChangeShiftText,
+    ShiftsLoaded
 }
 
-const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmTable}) => {
+const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmTable, loading}) => {
 
     return {
         shifts,
@@ -200,6 +231,7 @@ const mapStateToProps = ({shifts, kmShifts, workTeamsNames, months, glTable, kmT
         workTeamsNames,
         glTable,
         kmTable,
+        loading
     }
 }
 

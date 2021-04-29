@@ -1,7 +1,16 @@
 .error-message {
-    margin: 30% auto 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10% auto 0 auto;
     width: 300px;
     height: 300px;
+    border-radius: 10px;
     background-color: rgb(163, 73, 73);
-    color: white;
+}
+
+.error-message-text {
+    color: white; 
+    font-size: 20px;
+    text-align: center;
 }

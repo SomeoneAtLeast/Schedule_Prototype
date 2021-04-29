@@ -1,31 +1,52 @@
-import {workers} from "../../models/schedule-model"
-import {shifts, kmShifts, kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
-import {seats} from "../../models/seats-model"
+// import {workers} from "../../models/schedule-model"
+import {kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 
 const initialState = {
-    workers,
+    workers: [],
+    currentYear: 1,
+    currentMonth: 1,
     selectedWorker: 0,
     selectedDay: 0,
+    selectedMonth: 0,
     filter: "all",
     allActive: true,
     workedActive: false,
     weekendsActive: false,
     vacationActive: false,
-    shifts,
+    shifts: [],
     glTable,
     kmTable: kmArr,
-    kmShifts,
+    kmShifts: [],
     workTeamsNames,
     months,
-    seats,
+    seats: [],
     scheduleActive: true,
     seatsActive: false,
     workingshiftsActive: false,
-    makeWorkingBtnActive: false
+    makeWorkingBtnActive: false,
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case "Workers-Loaded":
+            return {
+                ...state,
+                workers: action.workers,
+                loading: false
+            }
+        case "Seats-Loaded":
+            return {
+                ...state,
+                seats: action.seats,
+                loading: false
+            }
+        case "Shifts-Loaded":
+            return {
+                ...state,
+                shifts: action.shifts,
+                kmShifts: action.shiftsKm,
+                loading: false
+            }
         case "Select-Worker":
             return {
                 ...state,
@@ -34,7 +55,7 @@ const reducer = (state = initialState, action) => {
         case "Clear-All-Days": {
             const newWorkers = [...state.workers]
             newWorkers.forEach((item) => {
-                item.days.forEach((item) => {
+                item.years[state.currentYear - 1].months[state.currentMonth - 1].days.forEach((item) => {
                     item.selected = false;
                     item.changeShiftMenuOpen = false
                 })
@@ -63,12 +84,12 @@ const reducer = (state = initialState, action) => {
                 workingTime = null;
             }
 
-            const {workers, selectedWorker, selectedDay} = state;
+            const {workers, selectedWorker, currentYear, currentMonth, selectedDay} = state;
             const workerIndex = workers.findIndex(elem => elem.id === workerId);
-            const dayIndex = workers[workerIndex].days.findIndex(elem => elem.id === dayId); 
+            const dayIndex = workers[workerIndex].years[currentYear - 1].months[currentMonth - 1].days.findIndex(elem => elem.id === dayId); 
             const newWorkers = [...workers.slice()];
 
-            const targetDay = newWorkers[workerIndex].days[dayIndex];
+            const targetDay = newWorkers[workerIndex].years[currentYear - 1].months[currentMonth - 1].days[dayIndex];
 
             if (objKey === "selected" && targetDay.changeShiftMenuOpen === true) {
                 targetDay.changeShiftMenuOpen = false
@@ -116,7 +137,7 @@ const reducer = (state = initialState, action) => {
             if (scheduleType === "common") {
                 if (objKey === "worked") {
                     newWorkers.forEach((item) => {
-                        item.days.forEach((item) => {
+                        item.years[currentYear - 1].months[currentMonth - 1].days.forEach((item) => {
                             if (item.selected) {
                                 item.worked = true;
                                 item.weekend = false;
@@ -129,7 +150,7 @@ const reducer = (state = initialState, action) => {
                     })
                 } else if (objKey === "weekend") {
                     newWorkers.forEach((item) => {
-                        item.days.forEach((item) => {
+                        item.years[currentYear - 1].months[currentMonth - 1].days.forEach((item) => {
                             if (item.selected) {
                                 item.weekend = true
                                 item.worked = false;
@@ -142,7 +163,7 @@ const reducer = (state = initialState, action) => {
                     })
                 } else if (objKey === "vacation") {
                     newWorkers.forEach((item) => {
-                        item.days.forEach((item) => {
+                        item.years[currentYear - 1].months[currentMonth - 1].days.forEach((item) => {
                             if (item.selected) {
                                 item.vacation = true
                                 item.worked = false;
@@ -155,7 +176,7 @@ const reducer = (state = initialState, action) => {
                     })
                 } else if (objKey === "takeOf") {
                     newWorkers.forEach((item) => {
-                        item.days.forEach((item) => {
+                        item.years[currentYear - 1].months[currentMonth - 1].days.forEach((item) => {
                             if (item.selected) {
                                 item.vacation = false
                                 item.worked = false;
@@ -168,7 +189,7 @@ const reducer = (state = initialState, action) => {
                     })
                 } else if (objKey === "clear") {
                     newWorkers.forEach((item) => {
-                        item.days.forEach((item) => {
+                        item.years[currentYear - 1].months[currentMonth - 1].days.forEach((item) => {
                             if (item.selected) {
                                 item.selected = false;
                             }
@@ -179,7 +200,7 @@ const reducer = (state = initialState, action) => {
 
             if (scheduleType === "personal") {
                 if (objKey === "selected") {
-                    newWorkers[workerIndex].days.forEach(item => {
+                    newWorkers[workerIndex].years[currentYear - 1].months[currentMonth - 1].days.forEach(item => {
                         if (item.id !== (dayIndex + 1)) {
                             item[objKey] = false;
                             item.changeShiftMenuOpen = false;
@@ -246,9 +267,15 @@ const reducer = (state = initialState, action) => {
                 selectedDay: action.selectedDay,
             }
         }
+        case "Select-Month": {
+            return {
+                ...state,
+                selectedWorker: action.selectedWorker,
+                selectedMonth: action.selectedMonth,
+            }
+        }
         case "Change-Shift-Text": {
             const dataArr = action.dataArr;
-
             const index = dataArr.findIndex(elem => elem.id === action.id); 
             const obj = dataArr[index];
             const newObj = {...obj};
@@ -333,7 +360,7 @@ const reducer = (state = initialState, action) => {
         break;
         case "Change-Selected-Page": {
 
-            const url =  action.location.pathname;
+            const url = action.location.pathname;
 
             if(url === "/seats/") {
                 return {
@@ -369,15 +396,26 @@ const reducer = (state = initialState, action) => {
             }
         }
         case "Change-Schedule-Text": {
-            const {workers} = state;
+            const {workers, currentYear, currentMonth} = state;
             const workerIndex = workers.findIndex(elem => elem.id === action.workerId);
             const targetWorker = workers[workerIndex];
-            const dayIndex = targetWorker.days.findIndex(elem => elem.id === action.dayId); 
-            const oldDay = targetWorker.days[dayIndex];
-            const newDay = {...oldDay}
+            const dayIndex = targetWorker.years[currentYear - 1].months[currentMonth - 1].days.findIndex(elem => elem.id === action.dayId); 
+            const oldDay = targetWorker.years[currentYear - 1].months[currentMonth - 1].days[dayIndex];
+            const newDay = {...oldDay};
             newDay[action.objKey] = action.e.target.value;
-            const newDays = [...targetWorker.days.slice(0, dayIndex), newDay, ...targetWorker.days.slice(dayIndex + 1)];
-            const newWorker = {...targetWorker, days: newDays}
+            const newDays = [...targetWorker.years[currentYear - 1].months[currentMonth - 1].days.slice(0, dayIndex), newDay, ...targetWorker.years[currentYear - 1].months[currentMonth - 1].days.slice(dayIndex + 1)];
+            const oldMonth = {...targetWorker.years[currentYear - 1].months[currentMonth - 1]};
+            const newMonth = {...oldMonth, days: newDays};
+            const newMonths = [...targetWorker.years[currentYear - 1].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[currentYear - 1].months.slice(currentMonth)];
+
+
+            const oldYear = {...targetWorker.years[currentYear - 1]};
+            const newYear = {...oldYear, months: newMonths};
+
+            const newYears = [...targetWorker.years.slice(0, currentYear - 1), newYear, ...targetWorker.years.slice(currentYear)];
+
+
+            const newWorker = {...targetWorker, years: newYears};
             const newWorkers = [...workers.slice(0, workerIndex), newWorker, ...workers.slice(workerIndex + 1)];
 
             return {
@@ -385,8 +423,49 @@ const reducer = (state = initialState, action) => {
                 workers: newWorkers
             }
         }
+        case "Change-Month": {
+
+            let {currentMonth} = state;
+
+            if (action.direction === "back" && currentMonth >= 2) {
+                return {
+                    ...state,
+                    currentMonth: --currentMonth
+                }
+            }
+
+            if (action.direction === "next" && currentMonth <= 11) {
+                return {
+                    ...state,
+                    currentMonth: ++currentMonth
+                }
+            }
+
+            return state; 
+        }
+        case "Change-Year": {
+
+            let {currentYear} = state;
+
+            if (action.direction === "back" && currentYear >= 2) {
+                return {
+                    ...state,
+                    currentYear: --currentYear
+                }
+            }
+
+            if (action.direction === "next" && currentYear <= 1) {
+                return {
+                    ...state,
+                    currentYear: ++currentYear
+                }
+            }
+
+            return state; 
+        }        
         default:
             return state;    
     }
 }
+
 export default reducer;

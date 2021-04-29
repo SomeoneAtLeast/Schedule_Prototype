@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux"
-import {ClearAllDays, ChangeDayType, SelectWorker, ShowOrCloseWorkingHours} from "../../store/actions"
+import {ClearAllDays, ChangeDayType, SelectWorker, ShowOrCloseWorkingHours, ChangeMonth, ChangeYear} from "../../store/actions"
 
 import "./days-field-personal.scss"
 
@@ -32,22 +32,41 @@ class DaysFieldPresonal extends Component {
     }
 
     filterWorkers(workersArr, selectedWorker, filter) {
-        const {workers} = this.props;
+
+        const {workers, currentYear, currentMonth} = this.props;
         const targetWorker = workers[selectedWorker];
 
         if(filter === "worked") {
             const workedDays = workersArr.filter(item => item.worked);
-            const newWorker = {...targetWorker, days: workedDays}
+            const oldMonth = {...targetWorker.years[currentYear - 1].months[currentMonth - 1]};
+            const newMonth = {...oldMonth, days: workedDays};
+            const newMonths = [...targetWorker.years[currentYear - 1].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[currentYear - 1].months.slice(currentMonth)];
+            const oldYear = {...targetWorker.years[currentYear - 1]};
+            const newYear = {...oldYear, months: newMonths};
+            const newYears = [...targetWorker.years.slice(0, currentYear - 1), newYear, ...targetWorker.years.slice(currentYear)];
+            const newWorker = {...targetWorker, years: newYears}
             const newWorkers = [...workers.slice(0, selectedWorker), newWorker, ...workers.slice(selectedWorker + 1)];
             return  newWorkers
         } else if (filter === "weekends") {
             const weekendDays = workersArr.filter(item => item.weekend);
-            const newWorker = {...targetWorker, days: weekendDays}
+            const oldMonth = {...targetWorker.years[currentYear - 1].months[currentMonth - 1]};
+            const newMonth = {...oldMonth, days: weekendDays};
+            const newMonths = [...targetWorker.years[currentYear - 1].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[currentYear - 1].months.slice(currentMonth)];
+            const oldYear = {...targetWorker.years[currentYear - 1]};
+            const newYear = {...oldYear, months: newMonths};
+            const newYears = [...targetWorker.years.slice(0, currentYear - 1), newYear, ...targetWorker.years.slice(currentYear)];
+            const newWorker = {...targetWorker, years: newYears}
             const newWorkers = [...workers.slice(0, selectedWorker), newWorker, ...workers.slice(selectedWorker + 1)];
             return  newWorkers
         } else if (filter === "vacation") {
             const vacationDays = workersArr.filter(item => item.vacation);
-            const newWorker = {...targetWorker, days: vacationDays}
+            const oldMonth = {...targetWorker.years[currentYear - 1].months[currentMonth - 1]};
+            const newMonth = {...oldMonth, days: vacationDays};
+            const newMonths = [...targetWorker.years[currentYear - 1].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[currentYear - 1].months.slice(currentMonth)];
+            const oldYear = {...targetWorker.years[currentYear - 1]};
+            const newYear = {...oldYear, months: newMonths};
+            const newYears = [...targetWorker.years.slice(0, currentYear - 1), newYear, ...targetWorker.years.slice(currentYear)];
+            const newWorker = {...targetWorker, years: newYears}
             const newWorkers = [...workers.slice(0, selectedWorker), newWorker, ...workers.slice(selectedWorker + 1)];
             return  newWorkers
         } else {
@@ -56,13 +75,13 @@ class DaysFieldPresonal extends Component {
     }
 
     getWorkerPresonalDays (workerNumber) {
-        const {workers, ChangeDayType, selectedWorker, filter} = this.props;
-        const visibleWorkers = this.filterWorkers(workers[selectedWorker].days, selectedWorker, filter)
+        const {workers, ChangeDayType, currentYear, currentMonth, selectedWorker, filter} = this.props;
+        const visibleWorkers = this.filterWorkers(workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days, selectedWorker, filter)
         const visibleWorker = visibleWorkers[workerNumber];
         const targetWorker = workers[workerNumber];
         let daysInMonth = [];
 
-        if (visibleWorker.days.length === 0) {
+        if (visibleWorker.years[currentYear - 1].months[currentMonth - 1].days.length === 0) {
             daysInMonth.push(
                 <td className = "days-field-personal__item days-field-personal__no-items" 
                     key={workerNumber}>
@@ -78,7 +97,7 @@ class DaysFieldPresonal extends Component {
             )
         }
 
-        const daysFieldElements = visibleWorker.days.map((item) => {
+        const daysFieldElements = visibleWorker.years[currentYear - 1].months[currentMonth - 1].days.map((item) => {
             
             let classNames = "days-field-personal__item";
             const {weekend, vacation, worked, selected, workingShiftDay, changeShiftMenuOpen} = item;
@@ -130,8 +149,8 @@ class DaysFieldPresonal extends Component {
     }
 
     render() {
-        const {workers, selectedWorker, filter, id} = this.props;
-        const visibleDays = this.filterDays(workers[selectedWorker].days, filter)
+        const {workers, currentYear, currentMonth, selectedWorker, ChangeMonth, ChangeYear, ClearAllDays, filter, id} = this.props;
+        const visibleDays = this.filterDays(workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days, filter)
 
         const daysNumbers = visibleDays.map((item) => {
 
@@ -148,18 +167,62 @@ class DaysFieldPresonal extends Component {
             )
         })
 
+        // потом повесить на useEffect
+        const ChangeYearAndClearDays = (value) => {
+            ChangeYear(value);
+            ClearAllDays();
+        }
+        
+        const ChangeMonthAndClearDays = (value) => {
+            ChangeMonth(value);
+            ClearAllDays();
+        }
+        
         return (
             <div className="days-field-personal-wrapper">
+                <div className = "days-field-personal-years">
+                {/* Убрать cammon и сделать адаптив*/}
+
+                    <div className = "days-field-personal__item-btn-group days-field-personal__item-btn-group--year">
+                        <button
+                            className = "days-field-personal__item-btn days-field-personal__item-btn-left"
+                            onClick={() => ChangeYearAndClearDays("back")}>
+                            ←
+                        </button>
+                        <div className = "days-field-personal__item-year">
+                            {workers[0].years[currentYear - 1].name}
+                        </div>
+                        <button
+                            className = "days-field-personal__item-btn days-field-personal__item-btn-right"
+                            onClick={() => ChangeYearAndClearDays("next")}>
+                            →
+                        </button>
+                    </div>
+                </div>
                 <div className="days-field-personal-content-field">
                     <table className = "days-field-personal">
                         <tbody>
-                            <tr className = "days-field-personal-items-row">
+                            <tr className = "days-field-personal__items-row">
                                 <th className = "days-field-personal__item">
-                                    Апрель
+                                    <div className = "days-field-personal__item-btn-group">
+                                        <button
+                                            className = "days-field-personal__item-btn days-field-personal__item-btn-left"
+                                            onClick={() => ChangeMonthAndClearDays("back")}>
+                                            ←
+                                        </button>
+                                        <div className = "days-field-personal__item-month">
+                                            {workers[0].years[currentYear - 1].months[currentMonth - 1].name}
+                                        </div>
+                                        <button
+                                            className = "days-field-personal__item-btn days-field-personal__item-btn-right"
+                                            onClick={() => ChangeMonthAndClearDays("next")}>
+                                            →
+                                        </button>
+                                    </div>
                                 </th>
                                 {daysNumbers}
                             </tr>
-                            <tr className = "days-field-personal-items-row">
+                            <tr className = "days-field-personal__items-row">
                                 {this.getWorkerPresonalDays(id)}
                             </tr>
                         </tbody>
@@ -186,16 +249,20 @@ const mapDispatchToProps = {
     ClearAllDays, 
     ChangeDayType,
     SelectWorker,
-    ShowOrCloseWorkingHours
+    ShowOrCloseWorkingHours,
+    ChangeMonth,
+    ChangeYear
 }
 
-const mapStateToProps = ({workers, selectedDay, filter, selectedWorker, makeWorkingBtnActive}) => {
+const mapStateToProps = ({workers, selectedDay, filter, selectedWorker, makeWorkingBtnActive, currentMonth, currentYear}) => {
     return {
         workers,
         selectedWorker,
         selectedDay,
         filter,
-        makeWorkingBtnActive
+        makeWorkingBtnActive,
+        currentMonth,
+        currentYear
     }
 }
 

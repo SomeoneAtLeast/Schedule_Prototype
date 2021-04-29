@@ -1,14 +1,34 @@
-import React from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import {connect} from "react-redux"
+import {SeatsLoaded} from "../../store/actions"
 import PropTypes from 'prop-types';
+import {useHttp} from "../../hooks/http.hook"
 
 import "./seats-field.scss"
 
 import SeatsItem from "../seats-item";
+import DualBall from "../dual-ball";
 
 
-const SeatsField = ({seats}) => {
+const SeatsField = ({SeatsLoaded, seats}) => {
 
+    const [loading, setLoading] = useState(true);
+
+    const {request} = useHttp();
+
+    const getSeats = useCallback(async () => {
+        try {
+            const data = await request("/api/seats/seats", "GET");
+            SeatsLoaded(data);
+            setLoading(false)
+        } catch (e) {}
+    }, [request, SeatsLoaded]);
+
+    useEffect(() => {
+        getSeats();
+    }, [getSeats]);
+
+    
     const table = (elements, upfrom, upTo, lower) => {
         const upseats = elements.filter((item) => {
             return item.key >= upfrom && item.key <= upTo;
@@ -48,16 +68,28 @@ const SeatsField = ({seats}) => {
         )
     })
     
+
+    if (loading) {
+        return (
+            <div className="seats-field">
+                <div className="seats-field-title">
+                    Рабочие места
+                </div>
+                <DualBall/>
+            </div>
+        )
+    }
+
     return (
         <div className="seats-field">
             <div className="seats-field-title">
                 Рабочие места
             </div>
             <div className="seats-field-tables">
-                {table(arrangementsFieldElements, 10, 12, 16)}
-                {table(arrangementsFieldElements, 16, 18, 22)}
-                {table(arrangementsFieldElements, 22, 24, 28)}
-                {table(arrangementsFieldElements, 28, 30, 34)}
+                {table(arrangementsFieldElements, 0, 2, 6)}
+                {table(arrangementsFieldElements, 6, 8, 12)}
+                {table(arrangementsFieldElements, 12, 14, 18)}
+                {table(arrangementsFieldElements, 18, 20, 24)}
             </div>
         </div>
     )
@@ -68,10 +100,16 @@ SeatsField.propTypes = {
 }
 
 
-const mapStateToProps = ({seats}) => {
+const mapStateToProps = ({seats, loading}) => {
     return {
-        seats
+        seats,
+        loading
+
     }
 }
 
-export default connect(mapStateToProps)(SeatsField);
+const mapDispatchToProps = {
+    SeatsLoaded
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SeatsField);

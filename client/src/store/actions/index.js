@@ -1,3 +1,25 @@
+const WorkersLoaded = (workers) => {
+    return {
+        type: "Workers-Loaded",
+        workers
+    }
+}
+
+const SeatsLoaded = (seats) => {
+    return {
+        type: "Seats-Loaded",
+        seats
+    }
+}
+
+const ShiftsLoaded = (shifts, shiftsKm) => {
+    return {
+        type: "Shifts-Loaded",
+        shifts,
+        shiftsKm
+    }
+}
+
 const SelectWorker = (id) => {
     return {
         type: "Select-Worker",
@@ -23,6 +45,20 @@ const ChangeDayType = (workerId, dayId, objKey, workingTime, hoursCount, schedul
     }
 }
 
+const ChangeMonth = (direction) => {
+    return {
+        type: "Change-Month",
+        direction
+    }
+}
+
+const ChangeYear = (direction) => {
+    return {
+        type: "Change-Year",
+        direction
+    }
+}
+
 const FilterSelect = (filter) => {
     return {
         type: "Filter-Select",
@@ -37,12 +73,11 @@ const MakeFilterActive = (id) => {
     }
 }
 
-const SelectDay = (selectedWorker, selectedDay, ChangeDayType) => {
+const SelectDay = (selectedWorker, selectedDay) => {
     return {
         type: "Select-Day",
         selectedWorker, 
         selectedDay,
-        ChangeDayType
     }
 }
 
@@ -98,9 +133,14 @@ const ShowOrCloseWorkingHours = () => {
 }
 
 export {
+    WorkersLoaded,
+    SeatsLoaded,
+    ShiftsLoaded,
     SelectWorker,
     ClearAllDays,
     ChangeDayType,
+    ChangeMonth,
+    ChangeYear,
     FilterSelect,
     MakeFilterActive,
     SelectDay,

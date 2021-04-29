@@ -7,18 +7,19 @@ import {HashRouter as Router, Route} from 'react-router-dom';
 import ErrorBoundry from "../src/components/error-boundry"
 import store from "./store/store"
 
+
 ReactDOM.render(
   <Provider store = {store}>
     <ErrorBoundry>
-      <Router>
-        <React.StrictMode>
-          <Route path="/" render={({location}) => {
-              return (
-                <App location={location}/>
-              )
-          }}/>
-        </React.StrictMode>
-      </Router>
+        <Router>
+          <React.StrictMode>
+            <Route path="/" render={({location}) => {
+                return (
+                  <App location={location}/>
+                )
+            }}/>
+          </React.StrictMode>
+        </Router>
     </ErrorBoundry>
   </Provider>
   , document.getElementById('root')

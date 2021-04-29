@@ -27,13 +27,13 @@ class FilterList extends Component {
     }
 
     render() {
-        const {workers, selectedWorker, FilterSelect, MakeFilterActive, allActive,
+        const {workers, currentYear, currentMonth, selectedWorker, FilterSelect, MakeFilterActive, allActive,
               workedActive, weekendsActive, vacationActive} = this.props;
 
-        const workedQuantity = workers[selectedWorker].days.filter(item => item.worked).length;
-        const weekendsQuantity = workers[selectedWorker].days.filter(item => item.weekend).length;
-        const vacationQuantity = workers[selectedWorker].days.filter(item => item.vacation).length;
-        const allDaysQuantity = workers[selectedWorker].days.length;
+        const workedQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.worked).length;
+        const weekendsQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.weekend).length;
+        const vacationQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.vacation).length;
+        const allDaysQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.length;
 
         const buttons = [
             {name: "all",  label: "Все дни", img: allImg, id: -1, quantity: allDaysQuantity, active: allActive},
@@ -88,14 +88,16 @@ const mapDispatchToProps = {
     SelectWorker
 }
 
-const mapStateToProps = ({workers, selectedWorker, allActive, workedActive, weekendsActive, vacationActive}) => {
+const mapStateToProps = ({workers, selectedWorker, allActive, workedActive, weekendsActive, vacationActive, currentMonth, currentYear}) => {
     return {
         workers,
         selectedWorker,
         allActive,
         workedActive,
         weekendsActive,
-        vacationActive
+        vacationActive,
+        currentMonth,
+        currentYear
     }
 }
 

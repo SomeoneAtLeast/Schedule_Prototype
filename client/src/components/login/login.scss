@@ -1,0 +1,137 @@
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.2);
+    
+}
+
+.login__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 380px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, .8);
+    box-shadow: 0px 0px 8px 3px rgba(191, 191, 191, 0.9);
+    padding: 60px 60px 40px;
+}
+
+.login__content-logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px; 
+}
+
+.login__content-logo {
+    width: 27px;
+    margin-bottom: 10px;
+}
+
+.login__content-logo-text {
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 22px;
+}
+
+.login__inputs {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.login__input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    &:first-child {
+        margin-bottom: 10px;
+    }
+}
+
+.login__input {
+    border: none;
+    outline: none;
+    font-family: "Roboto-Regular", sans-serif;
+    background-color: transparent;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.85);
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    width: 70%;
+    transition: 0.3s;
+
+    &:hover,
+    &:focus {
+        border-bottom: 2px solid #7700FF;
+    }
+}
+
+.login__btns {
+    margin-top: 20px;
+}
+
+.login__input-btn {
+    display: flex;
+    box-sizing: border-box;
+    padding: 10px 40px;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.85);
+    outline: none;
+    color: rgba(0, 0, 0, 0.85);
+    background-color: transparent;
+    font-family: "Roboto-Regular", sans-serif;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+
+    &:hover {
+        color: rgba(0, 0, 0, 1);
+        transform: scale(0.97);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.login__error-text {
+    color: #e12f2f;
+    font-size: 13px;
+}
+
+.login__success-text {
+    color: #009f0a;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) { 
+
+    .login__content {
+        width: 310px;
+        padding: 60px 40px 40px;
+    }
+    
+    .login__content-logo {
+        width: 23px;
+    }
+    
+    .login__content-logo-text {
+        font-size: 18px;
+    }
+
+    .login__input-text {
+        font-size: 14px;
+    }
+    
+    .login__input {
+        font-size: 14px;
+    }
+
+    .login__input-btn {
+        font-size: 14px;
+    }
+}
