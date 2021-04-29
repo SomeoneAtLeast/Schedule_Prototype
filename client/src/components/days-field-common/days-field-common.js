@@ -112,7 +112,7 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
 
     if (loading) {
         return (
-            <DualBall/>
+            <DualBall className={"dual-ball-days-field"}/>
         )
     }
 
@@ -199,12 +199,11 @@ const mapDispatchToProps = {
     WorkersLoaded
 }
 
-const mapStateToProps = ({workers, currentYear, currentMonth, loading}) => {
+const mapStateToProps = ({workers, currentYear, currentMonth}) => {
     return {
         workers,
         currentYear,
-        currentMonth,
-        loading
+        currentMonth
     }
 }
 

@@ -4,8 +4,27 @@
     align-items: center;
     background-color: transparent;
     width: 100%;
-    min-height: 600px;
+    min-height: 780px;
     height: 86%;
+
+    &-days-field {
+        border-radius: 10px 0 0 0;
+        background-color: #fff;
+    }
+
+    &-days-field-personal {
+        background-color: #eee;
+    }
+
+    &-days-filter-list {
+
+        align-items: flex-start;
+
+        .dual-ball__img {
+            width: 50px;
+            height: 50px;
+        }
+    }
 }
 
 .dual-ball__img {

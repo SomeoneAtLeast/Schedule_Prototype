@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
-import React, {Component} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux"
-import {FilterSelect, MakeFilterActive, SelectWorker} from "../../store/actions"
+import {FilterSelect, MakeFilterActive, SelectWorker, WorkersLoaded} from "../../store/actions"
+import {useHttp} from "../../hooks/http.hook"
 
 import "./filter-list.scss"
 
@@ -12,59 +13,85 @@ import workImg from "./../../global-imgs/work.svg"
 import weekendImg from "./../../global-imgs/weekend.svg"
 import vacationdImg from "./../../global-imgs/vacation.svg"
 
-class FilterList extends Component {
+import DualBall from "../dual-ball";
 
-    componentDidMount() {
-        this.props.SelectWorker(this.props.match.params.id - 1)
-    }
+const FilterList = ({WorkersLoaded, SelectWorker, match, workers, currentYear, currentMonth, selectedWorker, FilterSelect, MakeFilterActive, allActive,
+    workedActive, weekendsActive, vacationActive}) => {
 
-    componentDidUpdate() {
-        this.props.SelectWorker(this.props.match.params.id - 1)
-    }
+        console.log(match.params.id)
+    const [loading, setLoading] = useState(true);
 
-    componentWillUnmount() {
-        this.props.FilterSelect("all")
-    }
+    const {request} = useHttp();
 
-    render() {
-        const {workers, currentYear, currentMonth, selectedWorker, FilterSelect, MakeFilterActive, allActive,
-              workedActive, weekendsActive, vacationActive} = this.props;
+    console.log(0)
 
-        const workedQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.worked).length;
-        const weekendsQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.weekend).length;
-        const vacationQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.vacation).length;
-        const allDaysQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.length;
+    const getWorkers = useCallback(async () => {
+        try {
+            const data = await request("/api/workers/workers", "GET");
+            WorkersLoaded(data);
+            setLoading(false);
 
-        const buttons = [
-            {name: "all",  label: "Все дни", img: allImg, id: -1, quantity: allDaysQuantity, active: allActive},
-            {name: "worked",  label: "Рабочие", img: workImg, id: -2, quantity: workedQuantity, active: workedActive},
-            {name: "weekends",  label: "Выходные", img: weekendImg, id: -3, quantity: weekendsQuantity, active: weekendsActive},
-            {name: "vacation",  label: "Отпуск", img: vacationdImg, id: -4, quantity: vacationQuantity, active: vacationActive}
-        ]
+            console.log(1)
+        } catch (e) {}
+    }, [request, WorkersLoaded]);
 
+    useEffect(() => {
+        SelectWorker(match.params.id - 1);
+        getWorkers();
+    }, [getWorkers, SelectWorker, match.params.id]);
+
+    // componentDidMount() {
+    //     this.props.SelectWorker(this.props.match.params.id - 1)
+    // }
+
+    // componentDidUpdate() {
+    //     this.props.SelectWorker(this.props.match.params.id - 1)
+    // }
+
+    // componentWillUnmount() {
+    //     this.props.FilterSelect("all")
+    // }
+
+    if (loading) {
         return (
-            <ul className = "filter-list">
-
-                {
-                    buttons.map((item) => {
-                        const {label, quantity, id, img, active, name} = item;
-                        return (
-                            <FilterItem
-                                btnText={label}
-                                btnQuantity={quantity}
-                                id = {id}
-                                key = {id}
-                                img={img}
-                                active={active}
-                                FilterSelect={() => FilterSelect(name)}
-                                MakeFilterActive={() => MakeFilterActive(id)}
-                            />
-                        )
-                    })
-                }
-            </ul>
+            <DualBall className={"dual-ball-days-filter-list"}/>
         )
     }
+
+    const workedQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.worked).length;
+    const weekendsQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.weekend).length;
+    const vacationQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.vacation).length;
+    const allDaysQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.length;
+
+    const buttons = [
+        {name: "all",  label: "Все дни", img: allImg, id: -1, quantity: allDaysQuantity, active: allActive},
+        {name: "worked",  label: "Рабочие", img: workImg, id: -2, quantity: workedQuantity, active: workedActive},
+        {name: "weekends",  label: "Выходные", img: weekendImg, id: -3, quantity: weekendsQuantity, active: weekendsActive},
+        {name: "vacation",  label: "Отпуск", img: vacationdImg, id: -4, quantity: vacationQuantity, active: vacationActive}
+    ]
+
+    return (
+        <ul className = "filter-list">
+
+            {
+                buttons.map((item) => {
+                    const {label, quantity, id, img, active, name} = item;
+                    return (
+                        <FilterItem
+                            btnText={label}
+                            btnQuantity={quantity}
+                            id = {id}
+                            key = {id}
+                            img={img}
+                            active={active}
+                            FilterSelect={() => FilterSelect(name)}
+                            MakeFilterActive={() => MakeFilterActive(id)}
+                        />
+                    )
+                })
+            }
+        </ul>
+    )
 }
 
 FilterList.propTypes = {
@@ -85,7 +112,8 @@ FilterList.propTypes = {
 const mapDispatchToProps = {
     FilterSelect,
     MakeFilterActive,
-    SelectWorker
+    SelectWorker, 
+    WorkersLoaded
 }
 
 const mapStateToProps = ({workers, selectedWorker, allActive, workedActive, weekendsActive, vacationActive, currentMonth, currentYear}) => {

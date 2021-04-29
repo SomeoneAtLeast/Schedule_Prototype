@@ -1,25 +1,51 @@
-import React, { Component } from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux"
-import {ClearAllDays, ChangeDayType, SelectWorker, ShowOrCloseWorkingHours, ChangeMonth, ChangeYear} from "../../store/actions"
+import {ClearAllDays, ChangeDayType, SelectWorker, ChangeMonth, ChangeYear, WorkersLoaded} from "../../store/actions"
+import {useHttp} from "../../hooks/http.hook"
 
 import "./days-field-personal.scss"
 
 import DaysFieldItemPersonal from "../days-field-personal-item";
+import DualBall from "../dual-ball";
+
+const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, ChangeMonth, ChangeYear, selectedWorker, SelectWorker, WorkersLoaded, ClearAllDays, filter, id}) => {
+
+    const [loading, setLoading] = useState(true);
+
+    const {request} = useHttp();
+
+    console.log(0)
+    const getWorkers = useCallback(async () => {
+        try {
+            const data = await request("/api/workers/workers", "GET");
+            WorkersLoaded(data);
+            setLoading(false);
+
+            console.log(1)
+        } catch (e) {}
+    }, [request, WorkersLoaded]);
+
+    useEffect(() => {
+        SelectWorker(id);
+        getWorkers();
+    }, [getWorkers, SelectWorker, id]);
+
+    useEffect(() => {
+        ClearAllDays();
+    }, [currentMonth, currentYear, ClearAllDays]);
 
 
-class DaysFieldPresonal extends Component {
+    // componentDidMount() {
+    //     this.props.SelectWorker(this.props.id);
+    //     this.props.ClearAllDays();
+    // }
 
-    componentDidMount() {
-        this.props.SelectWorker(this.props.id);
-        this.props.ClearAllDays();
-    }
+    // componentWillUnmount() {
+    //     this.props.ClearAllDays();
+    // }
 
-    componentWillUnmount() {
-        this.props.ClearAllDays();
-    }
-
-    filterDays(workers, filter) {
+    const filterDays = (workers, filter) => {
         if(filter === "worked") {
             return  workers.filter(item => item.worked)
         } else if (filter === "weekends") {
@@ -31,9 +57,8 @@ class DaysFieldPresonal extends Component {
         }
     }
 
-    filterWorkers(workersArr, selectedWorker, filter) {
+    const filterWorkers = (workersArr, selectedWorker, filter) => {
 
-        const {workers, currentYear, currentMonth} = this.props;
         const targetWorker = workers[selectedWorker];
 
         if(filter === "worked") {
@@ -74,9 +99,9 @@ class DaysFieldPresonal extends Component {
         }
     }
 
-    getWorkerPresonalDays (workerNumber) {
-        const {workers, ChangeDayType, currentYear, currentMonth, selectedWorker, filter} = this.props;
-        const visibleWorkers = this.filterWorkers(workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days, selectedWorker, filter)
+    const getWorkerPresonalDays = (workerNumber) => {
+
+        const visibleWorkers = filterWorkers(workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days, selectedWorker, filter)
         const visibleWorker = visibleWorkers[workerNumber];
         const targetWorker = workers[workerNumber];
         let daysInMonth = [];
@@ -147,90 +172,82 @@ class DaysFieldPresonal extends Component {
             daysInMonth
         )
     }
-
-    render() {
-        const {workers, currentYear, currentMonth, selectedWorker, ChangeMonth, ChangeYear, ClearAllDays, filter, id} = this.props;
-        const visibleDays = this.filterDays(workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days, filter)
-
-        const daysNumbers = visibleDays.map((item) => {
-
-            return (
-                <th className = "days-field-personal__item" 
-                    key={item.id}>
-                        <div>
-                            {item.id}
-                        </div>
-                        <div>
-                            {item.dayName}
-                        </div>
-                </th>
-            )
-        })
-
-        // потом повесить на useEffect
-        const ChangeYearAndClearDays = (value) => {
-            ChangeYear(value);
-            ClearAllDays();
-        }
-        
-        const ChangeMonthAndClearDays = (value) => {
-            ChangeMonth(value);
-            ClearAllDays();
-        }
-        
+    
+    if (loading) {
         return (
-            <div className="days-field-personal-wrapper">
-                <div className = "days-field-personal-years">
-                {/* Убрать cammon и сделать адаптив*/}
+            <DualBall className={"dual-ball-days-field-personal"}/>
+        )
+    }
 
-                    <div className = "days-field-personal__item-btn-group days-field-personal__item-btn-group--year">
-                        <button
-                            className = "days-field-personal__item-btn days-field-personal__item-btn-left"
-                            onClick={() => ChangeYearAndClearDays("back")}>
-                            ←
-                        </button>
-                        <div className = "days-field-personal__item-year">
-                            {workers[0].years[currentYear - 1].name}
-                        </div>
-                        <button
-                            className = "days-field-personal__item-btn days-field-personal__item-btn-right"
-                            onClick={() => ChangeYearAndClearDays("next")}>
-                            →
-                        </button>
+    const visibleDays = filterDays(workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days, filter)
+
+    const daysNumbers = visibleDays.map((item) => {
+
+        return (
+            <th className = "days-field-personal__item" 
+                key={item.id}>
+                    <div>
+                        {item.id}
                     </div>
-                </div>
-                <div className="days-field-personal-content-field">
-                    <table className = "days-field-personal">
-                        <tbody>
-                            <tr className = "days-field-personal__items-row">
-                                <th className = "days-field-personal__item">
-                                    <div className = "days-field-personal__item-btn-group">
-                                        <button
-                                            className = "days-field-personal__item-btn days-field-personal__item-btn-left"
-                                            onClick={() => ChangeMonthAndClearDays("back")}>
-                                            ←
-                                        </button>
-                                        <div className = "days-field-personal__item-month">
-                                            {workers[0].years[currentYear - 1].months[currentMonth - 1].name}
-                                        </div>
-                                        <button
-                                            className = "days-field-personal__item-btn days-field-personal__item-btn-right"
-                                            onClick={() => ChangeMonthAndClearDays("next")}>
-                                            →
-                                        </button>
-                                    </div>
-                                </th>
-                                {daysNumbers}
-                            </tr>
-                            <tr className = "days-field-personal__items-row">
-                                {this.getWorkerPresonalDays(id)}
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div>
+                        {item.dayName}
+                    </div>
+            </th>
+        )
+    })
+    console.log(2)
+
+    console.log(3)
+    return (
+        <div className="days-field-personal-wrapper">
+            <div className = "days-field-personal-years">
+                <div className = "days-field-personal__item-btn-group days-field-personal__item-btn-group--year">
+                    <button
+                        className = "days-field-personal__item-btn days-field-personal__item-btn-left"
+                        onClick={() => ChangeYear("back")}>
+                        ←
+                    </button>
+                    <div className = "days-field-personal__item-year">
+                        {workers[0].years[currentYear - 1].name}
+                    </div>
+                    <button
+                        className = "days-field-personal__item-btn days-field-personal__item-btn-right"
+                        onClick={() => ChangeYear("next")}>
+                        →
+                    </button>
                 </div>
             </div>
-        )  
-    }
+            <div className="days-field-personal-content-field">
+                <table className = "days-field-personal">
+                    <tbody>
+                        <tr className = "days-field-personal__items-row">
+                            <th className = "days-field-personal__item">
+                                <div className = "days-field-personal__item-btn-group">
+                                    <button
+                                        className = "days-field-personal__item-btn days-field-personal__item-btn-left"
+                                        onClick={() => ChangeMonth("back")}>
+                                        ←
+                                    </button>
+                                    <div className = "days-field-personal__item-month">
+                                        {workers[0].years[currentYear - 1].months[currentMonth - 1].name}
+                                    </div>
+                                    <button
+                                        className = "days-field-personal__item-btn days-field-personal__item-btn-right"
+                                        onClick={() => ChangeMonth("next")}>
+                                        →
+                                    </button>
+                                </div>
+                            </th>
+                            {daysNumbers}
+                        </tr>
+                        <tr className = "days-field-personal__items-row">
+                            {getWorkerPresonalDays(id)}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    )  
 }
 
 DaysFieldPresonal.propTypes = {
@@ -242,16 +259,15 @@ DaysFieldPresonal.propTypes = {
     workers: PropTypes.array,
     selectedWorker: PropTypes.number,
     id: PropTypes.number,
-    ShowOrCloseWorkingHours: PropTypes.func,
 }
 
 const mapDispatchToProps = { 
     ClearAllDays, 
     ChangeDayType,
     SelectWorker,
-    ShowOrCloseWorkingHours,
     ChangeMonth,
-    ChangeYear
+    ChangeYear,
+    WorkersLoaded
 }
 
 const mapStateToProps = ({workers, selectedDay, filter, selectedWorker, makeWorkingBtnActive, currentMonth, currentYear}) => {
