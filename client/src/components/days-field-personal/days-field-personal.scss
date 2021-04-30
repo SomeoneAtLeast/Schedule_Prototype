@@ -185,7 +185,7 @@
     .days-field-personal__item-btn-group {
 
         &--month {
-            margin-left: 44px;
+            margin-left: 0;
         }
     }
 }
@@ -209,22 +209,5 @@
 
     .days-field-personal__item-year {
         width: 45px;
-    }
-    
-    .days-field-personal__item-btn-group {
-
-        &--month {
-            margin-left: 34px;
-        }
-    }
-}
-
-@media (max-width: 600px) { 
-    
-    .days-field-personal__item-btn-group {
-
-        &--month {
-            margin-left: 0;
-        }
     }
 }
