@@ -15,14 +15,11 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
 
     const {request} = useHttp();
 
-    console.log(0)
     const getWorkers = useCallback(async () => {
         try {
             const data = await request("/api/workers/workers", "GET");
             WorkersLoaded(data);
             setLoading(false);
-
-            console.log(1)
         } catch (e) {}
     }, [request, WorkersLoaded]);
 
@@ -195,9 +192,7 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
             </th>
         )
     })
-    console.log(2)
 
-    console.log(3)
     return (
         <div className="days-field-personal-wrapper">
             <div className = "days-field-personal-years">
@@ -222,7 +217,7 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
                     <tbody>
                         <tr className = "days-field-personal__items-row">
                             <th className = "days-field-personal__item">
-                                <div className = "days-field-personal__item-btn-group">
+                                <div className = "days-field-personal__item-btn-group days-field-personal__item-btn-group--month">
                                     <button
                                         className = "days-field-personal__item-btn days-field-personal__item-btn-left"
                                         onClick={() => ChangeMonth("back")}>

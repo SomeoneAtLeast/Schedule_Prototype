@@ -44,12 +44,16 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    margin-left: 54px;
 
     &--year {
         .days-field-personal__item-btn {
             font-size: 20px;
         }
+    }
+
+    &--month {
+        justify-content: flex-start;
+        margin-left: 54px;
     }
 }
 
@@ -170,16 +174,19 @@
         }
     }
 
-    .days-field-personal__item-btn-group {
-        margin-left: 0;
-    }
-
     .days-field-personal__item-month {
         width: 73px;
     }
 
     .days-field-personal__item-year {
         width: 55px;
+    }
+
+    .days-field-personal__item-btn-group {
+
+        &--month {
+            margin-left: 44px;
+        }
     }
 }
 
@@ -202,5 +209,22 @@
 
     .days-field-personal__item-year {
         width: 45px;
+    }
+    
+    .days-field-personal__item-btn-group {
+
+        &--month {
+            margin-left: 34px;
+        }
+    }
+}
+
+@media (max-width: 600px) { 
+    
+    .days-field-personal__item-btn-group {
+
+        &--month {
+            margin-left: 0;
+        }
     }
 }

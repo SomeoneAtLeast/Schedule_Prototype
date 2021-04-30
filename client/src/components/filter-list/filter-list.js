@@ -18,39 +18,23 @@ import DualBall from "../dual-ball";
 const FilterList = ({WorkersLoaded, SelectWorker, match, workers, currentYear, currentMonth, selectedWorker, FilterSelect, MakeFilterActive, allActive,
     workedActive, weekendsActive, vacationActive}) => {
 
-        console.log(match.params.id)
     const [loading, setLoading] = useState(true);
 
     const {request} = useHttp();
-
-    console.log(0)
 
     const getWorkers = useCallback(async () => {
         try {
             const data = await request("/api/workers/workers", "GET");
             WorkersLoaded(data);
             setLoading(false);
-
-            console.log(1)
         } catch (e) {}
     }, [request, WorkersLoaded]);
 
     useEffect(() => {
         SelectWorker(match.params.id - 1);
         getWorkers();
-    }, [getWorkers, SelectWorker, match.params.id]);
-
-    // componentDidMount() {
-    //     this.props.SelectWorker(this.props.match.params.id - 1)
-    // }
-
-    // componentDidUpdate() {
-    //     this.props.SelectWorker(this.props.match.params.id - 1)
-    // }
-
-    // componentWillUnmount() {
-    //     this.props.FilterSelect("all")
-    // }
+        return () => FilterSelect("all")
+    }, [getWorkers, SelectWorker, match.params.id, FilterSelect]);
 
     if (loading) {
         return (
