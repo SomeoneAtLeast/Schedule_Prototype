@@ -98,6 +98,11 @@
     }
 }
 
+.login__error,
+.login__success {
+    text-align: center;
+}
+
 .login__error-text {
     color: #e12f2f;
     font-size: 13px;

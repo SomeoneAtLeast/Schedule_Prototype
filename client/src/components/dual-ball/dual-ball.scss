@@ -37,5 +37,12 @@
     .dual-ball {
         height: 84%;
     }
-    
+}
+
+@media (max-width: 600px) { 
+
+    .dual-ball__img {
+        width: 100px;
+        height: 100px;
+    }
 }
