@@ -16,11 +16,12 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
 
     const getWorkers = useCallback(async () => {
         try {
-            const data = await request("/api/workers/workers", "GET");
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            console.log(data)
             WorkersLoaded(data);
             setLoading(false)
         } catch (e) {}
-    }, [request, WorkersLoaded]);
+    }, [request, WorkersLoaded, currentYear]);
 
     useEffect(() => {
         getWorkers();
@@ -44,9 +45,9 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
             </td>
         )
         
-        for (let i = 1; i <= workers[0].years[currentYear - 1].months[currentMonth - 1].days.length; i++) {
+        for (let i = 1; i <= workers[0].years[0].months[currentMonth - 1].days.length; i++) {
             let classNames = "days-field-common__item";
-            const targetDay = targetWorker.years[currentYear - 1].months[currentMonth - 1].days[i - 1];
+            const targetDay = targetWorker.years[0].months[currentMonth - 1].days[i - 1];
 
             if (targetDay.selected) {
                 classNames += " selected";
@@ -126,7 +127,7 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
                         ←
                     </button>
                     <div className = "days-field-common__days-item-year">
-                        {workers[0].years[currentYear - 1].name}
+                        {workers[0].years[0].name}
                     </div>
                     <button
                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"
@@ -147,7 +148,7 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
                                         ←
                                     </button>
                                     <div className = "days-field-common__days-item-month">
-                                        {workers[0].years[currentYear - 1].months[currentMonth - 1].name}
+                                        {workers[0].years[0].months[currentMonth - 1].name}
                                     </div>
                                     <button
                                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"
@@ -157,7 +158,7 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
                                 </div>
                             </th>
                                 {
-                                    workers[0].years[currentYear - 1].months[currentMonth - 1].days.map((item) => {
+                                    workers[0].years[0].months[currentMonth - 1].days.map((item) => {
                                         return (
                                             <th className = "days-field-common__days-item" 
                                                 key={item.id}>
