@@ -38,7 +38,7 @@ const FilterList = ({WorkersLoaded, SelectWorker, match, workers, currentYear, c
 
     if (loading) {
         return (
-            <DualBall className={"dual-ball-days-filter-list"}/>
+            <DualBall className={"dual-ball--days-filter-list"}/>
         )
     }
 

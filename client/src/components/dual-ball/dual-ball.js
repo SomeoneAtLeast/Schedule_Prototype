@@ -1,7 +1,7 @@
 import React from 'react';
 
 import "./dual-ball.scss"
-import dualBallImg from "./dual-ball.gif"
+import dualBallImg from "./dual-ball.svg"
 
 const DualBall = ({className}) => {
     return (

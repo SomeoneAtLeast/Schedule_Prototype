@@ -11,17 +11,27 @@ import "./days-field-common.scss"
 const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded}) => {
 
     const [loading, setLoading] = useState(true);
-
+    const [loadingYear, setloadingYear] = useState(true);
     const {request} = useHttp();
 
     const getWorkers = useCallback(async () => {
         try {
+            setloadingYear(true);
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             console.log(data)
             WorkersLoaded(data);
-            setLoading(false)
+            setLoading(false);
+            setloadingYear(false);
         } catch (e) {}
     }, [request, WorkersLoaded, currentYear]);
+
+    const updateWorkers = async () => {
+        try {
+            const data = await request("/api//workers/workers-update", "POST", workers);
+            console.log(data)
+        } catch (e) {}
+    }
+
 
     useEffect(() => {
         getWorkers();
@@ -113,13 +123,16 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
 
     if (loading) {
         return (
-            <DualBall className={"dual-ball-days-field"}/>
+            <DualBall className={"dual-ball--days-field-common"}/>
         )
     }
 
     return (
         <>
             <div className = "days-field-common-years">
+                <button onClick={() => updateWorkers()}>
+                    СОХРАНИТЬ
+                </button>
                 <div className = "days-field-common__days-item-btn-group days-field-common__days-item-btn-group--year">
                     <button
                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-left"
@@ -127,7 +140,7 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
                         ←
                     </button>
                     <div className = "days-field-common__days-item-year">
-                        {workers[0].years[0].name}
+                        { !loadingYear ?  workers[0].years[0].name : <DualBall className={"dual-ball--days-field-common-year-and-month"}/>}
                     </div>
                     <button
                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"

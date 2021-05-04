@@ -172,7 +172,7 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
     
     if (loading) {
         return (
-            <DualBall className={"dual-ball-days-field-personal"}/>
+            <DualBall className={"dual-ball--days-field-personal"}/>
         )
     }
 

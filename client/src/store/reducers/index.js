@@ -84,7 +84,7 @@ const reducer = (state = initialState, action) => {
                 workingTime = null;
             }
 
-            const {workers, selectedWorker, currentYear, currentMonth, selectedDay} = state;
+            const {workers, selectedWorker, currentMonth, selectedDay} = state;
             const workerIndex = workers.findIndex(elem => elem.id === workerId);
             const dayIndex = workers[workerIndex].years[0].months[currentMonth - 1].days.findIndex(elem => elem.id === dayId); 
             const newWorkers = [...workers.slice()];

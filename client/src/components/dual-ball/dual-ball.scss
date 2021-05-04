@@ -7,22 +7,31 @@
     min-height: 780px;
     height: 86%;
 
-    &-days-field {
+    &--days-field-common {
         border-radius: 10px 0 0 0;
         background-color: #fff;
     }
 
-    &-days-field-personal {
+    &--days-field-personal {
         background-color: #eee;
     }
 
-    &-days-filter-list {
+    &--days-filter-list {
 
         align-items: flex-start;
 
         .dual-ball__img {
             width: 50px;
             height: 50px;
+        }
+    }
+
+    &--days-field-common-year-and-month {
+        display: inline;
+        .dual-ball__img {
+            vertical-align: bottom;
+            width: 19px;
+            height: 19px;
         }
     }
 }
