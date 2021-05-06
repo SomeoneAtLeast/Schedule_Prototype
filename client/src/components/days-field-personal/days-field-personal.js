@@ -17,11 +17,11 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
 
     const getWorkers = useCallback(async () => {
         try {
-            const data = await request("/api/workers/workers", "GET");
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             WorkersLoaded(data);
             setLoading(false);
         } catch (e) {}
-    }, [request, WorkersLoaded]);
+    }, [request, WorkersLoaded, currentYear]);
 
     useEffect(() => {
         SelectWorker(id);
@@ -31,16 +31,6 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
     useEffect(() => {
         ClearAllDays();
     }, [currentMonth, currentYear, ClearAllDays]);
-
-
-    // componentDidMount() {
-    //     this.props.SelectWorker(this.props.id);
-    //     this.props.ClearAllDays();
-    // }
-
-    // componentWillUnmount() {
-    //     this.props.ClearAllDays();
-    // }
 
     const filterDays = (workers, filter) => {
         if(filter === "worked") {
@@ -60,10 +50,10 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
 
         if(filter === "worked") {
             const workedDays = workersArr.filter(item => item.worked);
-            const oldMonth = {...targetWorker.years[currentYear - 1].months[currentMonth - 1]};
+            const oldMonth = {...targetWorker.years[0].months[currentMonth - 1]};
             const newMonth = {...oldMonth, days: workedDays};
-            const newMonths = [...targetWorker.years[currentYear - 1].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[currentYear - 1].months.slice(currentMonth)];
-            const oldYear = {...targetWorker.years[currentYear - 1]};
+            const newMonths = [...targetWorker.years[0].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[0].months.slice(currentMonth)];
+            const oldYear = {...targetWorker.years[0]};
             const newYear = {...oldYear, months: newMonths};
             const newYears = [...targetWorker.years.slice(0, currentYear - 1), newYear, ...targetWorker.years.slice(currentYear)];
             const newWorker = {...targetWorker, years: newYears}
@@ -71,10 +61,10 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
             return  newWorkers
         } else if (filter === "weekends") {
             const weekendDays = workersArr.filter(item => item.weekend);
-            const oldMonth = {...targetWorker.years[currentYear - 1].months[currentMonth - 1]};
+            const oldMonth = {...targetWorker.years[0].months[currentMonth - 1]};
             const newMonth = {...oldMonth, days: weekendDays};
-            const newMonths = [...targetWorker.years[currentYear - 1].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[currentYear - 1].months.slice(currentMonth)];
-            const oldYear = {...targetWorker.years[currentYear - 1]};
+            const newMonths = [...targetWorker.years[0].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[0].months.slice(currentMonth)];
+            const oldYear = {...targetWorker.years[0]};
             const newYear = {...oldYear, months: newMonths};
             const newYears = [...targetWorker.years.slice(0, currentYear - 1), newYear, ...targetWorker.years.slice(currentYear)];
             const newWorker = {...targetWorker, years: newYears}
@@ -82,10 +72,10 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
             return  newWorkers
         } else if (filter === "vacation") {
             const vacationDays = workersArr.filter(item => item.vacation);
-            const oldMonth = {...targetWorker.years[currentYear - 1].months[currentMonth - 1]};
+            const oldMonth = {...targetWorker.years[0].months[currentMonth - 1]};
             const newMonth = {...oldMonth, days: vacationDays};
-            const newMonths = [...targetWorker.years[currentYear - 1].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[currentYear - 1].months.slice(currentMonth)];
-            const oldYear = {...targetWorker.years[currentYear - 1]};
+            const newMonths = [...targetWorker.years[0].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[0].months.slice(currentMonth)];
+            const oldYear = {...targetWorker.years[0]};
             const newYear = {...oldYear, months: newMonths};
             const newYears = [...targetWorker.years.slice(0, currentYear - 1), newYear, ...targetWorker.years.slice(currentYear)];
             const newWorker = {...targetWorker, years: newYears}
@@ -98,12 +88,12 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
 
     const getWorkerPresonalDays = (workerNumber) => {
 
-        const visibleWorkers = filterWorkers(workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days, selectedWorker, filter)
+        const visibleWorkers = filterWorkers(workers[selectedWorker].years[0].months[currentMonth - 1].days, selectedWorker, filter)
         const visibleWorker = visibleWorkers[workerNumber];
         const targetWorker = workers[workerNumber];
         let daysInMonth = [];
 
-        if (visibleWorker.years[currentYear - 1].months[currentMonth - 1].days.length === 0) {
+        if (visibleWorker.years[0].months[currentMonth - 1].days.length === 0) {
             daysInMonth.push(
                 <td className = "days-field-personal__item days-field-personal__no-items" 
                     key={workerNumber}>
@@ -119,7 +109,7 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
             )
         }
 
-        const daysFieldElements = visibleWorker.years[currentYear - 1].months[currentMonth - 1].days.map((item) => {
+        const daysFieldElements = visibleWorker.years[0].months[currentMonth - 1].days.map((item) => {
             
             let classNames = "days-field-personal__item";
             const {weekend, vacation, worked, selected, workingShiftDay, changeShiftMenuOpen} = item;
@@ -176,7 +166,7 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
         )
     }
 
-    const visibleDays = filterDays(workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days, filter)
+    const visibleDays = filterDays(workers[selectedWorker].years[0].months[currentMonth - 1].days, filter)
 
     const daysNumbers = visibleDays.map((item) => {
 
@@ -203,7 +193,7 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
                         ←
                     </button>
                     <div className = "days-field-personal__item-year">
-                        {workers[0].years[currentYear - 1].name}
+                        {workers[0].years[0].name}
                     </div>
                     <button
                         className = "days-field-personal__item-btn days-field-personal__item-btn-right"
@@ -224,7 +214,7 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
                                         ←
                                     </button>
                                     <div className = "days-field-personal__item-month">
-                                        {workers[0].years[currentYear - 1].months[currentMonth - 1].name}
+                                        {workers[0].years[0].months[currentMonth - 1].name}
                                     </div>
                                     <button
                                         className = "days-field-personal__item-btn days-field-personal__item-btn-right"

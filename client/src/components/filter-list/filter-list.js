@@ -24,11 +24,11 @@ const FilterList = ({WorkersLoaded, SelectWorker, match, workers, currentYear, c
 
     const getWorkers = useCallback(async () => {
         try {
-            const data = await request("/api/workers/workers", "GET");
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             WorkersLoaded(data);
             setLoading(false);
         } catch (e) {}
-    }, [request, WorkersLoaded]);
+    }, [request, WorkersLoaded, currentYear]);
 
     useEffect(() => {
         SelectWorker(match.params.id - 1);
@@ -42,10 +42,10 @@ const FilterList = ({WorkersLoaded, SelectWorker, match, workers, currentYear, c
         )
     }
 
-    const workedQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.worked).length;
-    const weekendsQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.weekend).length;
-    const vacationQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.filter(item => item.vacation).length;
-    const allDaysQuantity = workers[selectedWorker].years[currentYear - 1].months[currentMonth - 1].days.length;
+    const workedQuantity = workers[selectedWorker].years[0].months[currentMonth - 1].days.filter(item => item.worked).length;
+    const weekendsQuantity = workers[selectedWorker].years[0].months[currentMonth - 1].days.filter(item => item.weekend).length;
+    const vacationQuantity = workers[selectedWorker].years[0].months[currentMonth - 1].days.filter(item => item.vacation).length;
+    const allDaysQuantity = workers[selectedWorker].years[0].months[currentMonth - 1].days.length;
 
     const buttons = [
         {name: "all",  label: "Все дни", img: allImg, id: -1, quantity: allDaysQuantity, active: allActive},

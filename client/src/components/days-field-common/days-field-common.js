@@ -18,20 +18,11 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
         try {
             setloadingYear(true);
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
-            console.log(data)
             WorkersLoaded(data);
             setLoading(false);
             setloadingYear(false);
         } catch (e) {}
     }, [request, WorkersLoaded, currentYear]);
-
-    const updateWorkers = async () => {
-        try {
-            const data = await request("/api//workers/workers-update", "POST", workers);
-            console.log(data)
-        } catch (e) {}
-    }
-
 
     useEffect(() => {
         getWorkers();
@@ -130,9 +121,6 @@ const DaysFieldCommon = ({workers, currentYear, currentMonth, SelectWorker, Sele
     return (
         <>
             <div className = "days-field-common-years">
-                <button onClick={() => updateWorkers()}>
-                    СОХРАНИТЬ
-                </button>
                 <div className = "days-field-common__days-item-btn-group days-field-common__days-item-btn-group--year">
                     <button
                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-left"
