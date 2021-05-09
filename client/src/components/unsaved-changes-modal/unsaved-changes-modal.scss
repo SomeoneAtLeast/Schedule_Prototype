@@ -1,0 +1,14 @@
+.unsaved-changes-modal {
+    position: absolute;
+    background: linear-gradient(360deg, #ea6153, #d04737);
+    border-radius: 10px;
+    text-align: center;
+    top: 30%;
+    left: 35%;
+    width: 400px;
+    height: 200px;
+    z-index: 3;
+    color: white;
+    font-size: 18px;
+    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.4);
+}

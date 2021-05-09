@@ -5,6 +5,13 @@ const WorkersLoaded = (workers) => {
     }
 }
 
+const GetWorkersOnServer = (workers) => {
+    return {
+        type: "Get-Workers-On-Server",
+        workers
+    }
+}
+
 const SeatsLoaded = (seats) => {
     return {
         type: "Seats-Loaded",
@@ -149,5 +156,6 @@ export {
     MakeActiveNavBtn,
     ChangeSelectedPage,
     ShowOrCloseWorkingHours,
-    ChangeScheduleText
+    ChangeScheduleText,
+    GetWorkersOnServer
 }

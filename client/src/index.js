@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './components/app';
 import {Provider} from "react-redux";
-import {HashRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import ErrorBoundry from "../src/components/error-boundry"
 import store from "./store/store"
 

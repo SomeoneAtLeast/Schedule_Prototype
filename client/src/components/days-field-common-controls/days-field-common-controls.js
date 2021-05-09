@@ -27,7 +27,7 @@ const DaysFieldCommonControls = ({workers, currentYear, currentMonth, selectedWo
         try {
             setSaveProcess(true)
             await ClearAllDays();
-            await request("/api/workers/workers-update", "POST", workers, {year: currentYear, month: currentMonth});
+            await request("/api//workers/workers-update", "POST", workers, {year: currentYear, month: currentMonth});
             setSaveProcess(false)
         } catch (e) {}
     }

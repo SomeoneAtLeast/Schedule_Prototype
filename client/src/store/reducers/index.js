@@ -1,8 +1,11 @@
 // import {workers} from "../../models/schedule-model"
+import isEqual from 'lodash-es/isEqual';
 import {kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 
 const initialState = {
+    workersOnServer: [],
     workers: [],
+    unsavedChanges: false,
     currentYear: 1,
     currentMonth: 1,
     selectedWorker: 0,
@@ -33,6 +36,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 workers: action.workers,
                 loading: false
+            }
+        case "Get-Workers-On-Server":
+            return {
+                ...state,
+                workersOnServer: action.workers
             }
         case "Seats-Loaded":
             return {
@@ -94,7 +102,6 @@ const reducer = (state = initialState, action) => {
             if (objKey === "selected" && targetDay.changeShiftMenuOpen === true) {
                 targetDay.changeShiftMenuOpen = false
             }
-
 
             if (objKey === "worked") {
                 targetDay.worked = true;
@@ -445,11 +452,19 @@ const reducer = (state = initialState, action) => {
         }
         case "Change-Year": {
 
-            let {currentYear} = state;
+            let {currentYear, workers, workersOnServer} = state;
+            
+            if (!isEqual(workers, workersOnServer)) {
+                return {
+                    ...state,
+                    unsavedChanges: true
+                }
+            }
 
             if (action.direction === "back" && currentYear >= 2) {
                 return {
                     ...state,
+                    unsavedChanges: false,
                     currentYear: --currentYear
                 }
             }
@@ -457,6 +472,7 @@ const reducer = (state = initialState, action) => {
             if (action.direction === "next" && currentYear <= 1) {
                 return {
                     ...state,
+                    unsavedChanges: false,
                     currentYear: ++currentYear
                 }
             }
