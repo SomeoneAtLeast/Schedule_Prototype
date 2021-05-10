@@ -139,6 +139,13 @@ const ShowOrCloseWorkingHours = () => {
     }
 }
 
+const UnsavedChangesStatus = (status) => {
+    return {
+        type: "Unsaved-Changes-Status",
+        status
+    }
+}
+
 export {
     WorkersLoaded,
     SeatsLoaded,
@@ -157,5 +164,6 @@ export {
     ChangeSelectedPage,
     ShowOrCloseWorkingHours,
     ChangeScheduleText,
-    GetWorkersOnServer
+    GetWorkersOnServer,
+    UnsavedChangesStatus
 }

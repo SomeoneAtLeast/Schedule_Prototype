@@ -2,14 +2,14 @@ import React, {useEffect, useState, useCallback} from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
-import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays, WorkersLoaded, GetWorkersOnServer} from "../../store/actions"
+import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus} from "../../store/actions"
 import {useHttp} from "../../hooks/http.hook"
 import DualBall from "../dual-ball";
 import UnsavedChangesModal from "../unsaved-changes-modal";
 
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer}) => {
+const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus}) => {
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
     const {request} = useHttp();
@@ -24,18 +24,31 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
         } catch (e) {}
     }, [request, WorkersLoaded, currentYear]);
 
-    const tryChangeYear = useCallback(async (value) => {
+    const tryChangeYear = async (value) => {
         try {
+            await ClearAllDays();
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             GetWorkersOnServer(data);
             ChangeYear(value);
         } catch (e) {}
-    }, [request, ChangeYear, GetWorkersOnServer, currentYear]);
+    };
 
+    const tryChangeMonth = async (value) => {
+        try {
+            await ClearAllDays();
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            GetWorkersOnServer(data);
+            ChangeMonth(value);
+        } catch (e) {}
+    };
 
     useEffect(() => {
         getWorkers();
-    }, [getWorkers]);
+
+        return () => {
+            UnsavedChangesStatus(false);
+          };
+    }, [getWorkers, UnsavedChangesStatus]);
 
     useEffect(() => {
         ClearAllDays();
@@ -129,6 +142,7 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
 
     return (
         <>
+                        {unsavedChanges ? <UnsavedChangesModal/> : null}
             <div className = "days-field-common-years">
                 <div className = "days-field-common__days-item-btn-group days-field-common__days-item-btn-group--year">
                     <button
@@ -147,7 +161,6 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
                 </div>
             </div>
             <div className="days-field-common-wrapper">
-                {unsavedChanges ? <UnsavedChangesModal/> : null}
                 <table className = "days-field-common">
                     <tbody>
                         <tr className = "days-field-common__items-row">
@@ -155,7 +168,7 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
                                 <div className = "days-field-common__days-item-btn-group">
                                     <button
                                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-left"
-                                        onClick={() => ChangeMonth("back")}>
+                                        onClick={() => tryChangeMonth("back")}>
                                         ←
                                     </button>
                                     <div className = "days-field-common__days-item-month">
@@ -163,7 +176,7 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
                                     </div>
                                     <button
                                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"
-                                        onClick={() => ChangeMonth("next")}>
+                                        onClick={() => tryChangeMonth("next")}>
                                         →
                                     </button>
                                 </div>
@@ -209,7 +222,8 @@ const mapDispatchToProps = {
     ChangeYear,
     ClearAllDays,
     WorkersLoaded,
-    GetWorkersOnServer
+    GetWorkersOnServer,
+    UnsavedChangesStatus
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, unsavedChanges}) => {

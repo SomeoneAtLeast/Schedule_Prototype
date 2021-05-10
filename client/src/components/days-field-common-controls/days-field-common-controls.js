@@ -1,8 +1,7 @@
-import React, {useCallback, useState} from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux"
 import PropTypes from 'prop-types';
 import {useHttp} from "../../hooks/http.hook"
-
 import {ChangeDayType, ShowOrCloseWorkingHours, ClearAllDays, WorkersLoaded} from "../../store/actions"
 
 import "./days-field-common-controls.scss"
@@ -27,19 +26,19 @@ const DaysFieldCommonControls = ({workers, currentYear, currentMonth, selectedWo
         try {
             setSaveProcess(true)
             await ClearAllDays();
-            await request("/api//workers/workers-update", "POST", workers, {year: currentYear, month: currentMonth});
+            await request("/api/workers/workers-update", "POST", workers, {year: currentYear, month: currentMonth});
             setSaveProcess(false)
         } catch (e) {}
     }
 
-    const getWorkers = useCallback(async () => {
+    const getWorkers = async () => {
         try {
             setLoadingWorkers(true)
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             WorkersLoaded(data);
             setLoadingWorkers(false)
         } catch (e) {}
-    }, [request, WorkersLoaded, currentYear]);
+    };
 
     const buttons = [
         {

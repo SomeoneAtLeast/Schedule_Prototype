@@ -432,11 +432,19 @@ const reducer = (state = initialState, action) => {
         }
         case "Change-Month": {
 
-            let {currentMonth} = state;
+            let {currentMonth, workers, workersOnServer} = state;
+
+            if (!isEqual(workers, workersOnServer)) {
+                return {
+                    ...state,
+                    unsavedChanges: true
+                }
+            }
 
             if (action.direction === "back" && currentMonth >= 2) {
                 return {
                     ...state,
+                    unsavedChanges: false,
                     currentMonth: --currentMonth
                 }
             }
@@ -444,6 +452,7 @@ const reducer = (state = initialState, action) => {
             if (action.direction === "next" && currentMonth <= 11) {
                 return {
                     ...state,
+                    unsavedChanges: false,
                     currentMonth: ++currentMonth
                 }
             }
@@ -478,7 +487,13 @@ const reducer = (state = initialState, action) => {
             }
 
             return state; 
-        }        
+        }
+        case "Unsaved-Changes-Status": {
+            return {
+                ...state,
+                unsavedChanges: action.status
+            }
+        }          
         default:
             return state;    
     }
