@@ -14,7 +14,7 @@ const UnsavedChangesModal = ({workers, currentYear, currentMonth, WorkersLoaded,
     
     const saveWorkers = async () => {
         try {
-            await ClearAllDays();
+            ClearAllDays();
             await request("/api/workers/workers-update", "POST", workers, {year: currentYear, month: currentMonth});
             UnsavedChangesStatus(false);
         } catch (e) {}

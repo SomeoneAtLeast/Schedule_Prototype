@@ -26,7 +26,7 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
 
     const tryChangeYear = async (value) => {
         try {
-            await ClearAllDays();
+            ClearAllDays();
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             GetWorkersOnServer(data);
             ChangeYear(value);
@@ -35,7 +35,7 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
 
     const tryChangeMonth = async (value) => {
         try {
-            await ClearAllDays();
+            ClearAllDays();
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             GetWorkersOnServer(data);
             ChangeMonth(value);
