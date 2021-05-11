@@ -142,7 +142,7 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
 
     return (
         <>
-                        {unsavedChanges ? <UnsavedChangesModal/> : null}
+            {unsavedChanges ? <UnsavedChangesModal className={"unsaved-changes-modal--days-field-common"}/> : null}
             <div className = "days-field-common-years">
                 <div className = "days-field-common__days-item-btn-group days-field-common__days-item-btn-group--year">
                     <button
@@ -151,7 +151,7 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
                         ←
                     </button>
                     <div className = "days-field-common__days-item-year">
-                        { !loadingYear ?  workers[0].years[0].name : <DualBall className={"dual-ball--days-field-common-year-and-month"}/>}
+                        {!loadingYear ?  workers[0].years[0].name : <DualBall className={"dual-ball--days-field-year-and-month"}/>}
                     </div>
                     <button
                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"

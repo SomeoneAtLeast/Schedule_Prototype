@@ -9,7 +9,7 @@ import cancelImg from "./../../global-imgs/cancel.svg"
 import saveImg from "./../../global-imgs/save.svg"
 import crossImg from "../../global-imgs/cross.svg"
 
-const UnsavedChangesModal = ({workers, currentYear, currentMonth, WorkersLoaded, ClearAllDays, UnsavedChangesStatus}) => {
+const UnsavedChangesModal = ({workers, currentYear, currentMonth, WorkersLoaded, ClearAllDays, UnsavedChangesStatus, className}) => {
     const {request} = useHttp();
     
     const saveWorkers = async () => {
@@ -30,7 +30,7 @@ const UnsavedChangesModal = ({workers, currentYear, currentMonth, WorkersLoaded,
 
     return (
         <div className="unsaved-changes-modal-wrapper">
-            <div className="unsaved-changes-modal">
+            <div className={"unsaved-changes-modal " + className}>
                 <button className="unsaved-changes-modal__btn-exit">
                     <img 
                         className="unsaved-changes-modal__btn-exit-img"

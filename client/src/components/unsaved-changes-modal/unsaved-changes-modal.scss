@@ -12,7 +12,6 @@
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-around;
-    background: linear-gradient(360deg, #ea6153, #d04737);
     border-radius: 10px;
     padding: 30px 10px;
     text-align: center;
@@ -26,6 +25,14 @@
     color: white;
     font-size: 20px;
     box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.5);
+
+    &--days-field-common {
+        background: linear-gradient(360deg, #ea6153, #d04737);
+    }
+
+    &--days-field-personal {
+        background: linear-gradient(360deg, #7F39D0, #5b13ac);
+    }
 }
 
 .unsaved-changes-modal__text {

@@ -56,7 +56,6 @@ const FilterList = ({WorkersLoaded, SelectWorker, match, workers, currentYear, c
 
     return (
         <ul className = "filter-list">
-
             {
                 buttons.map((item) => {
                     const {label, quantity, id, img, active, name} = item;

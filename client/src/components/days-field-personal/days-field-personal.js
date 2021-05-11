@@ -1,32 +1,59 @@
 import React, {useEffect, useState, useCallback} from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux"
-import {ClearAllDays, ChangeDayType, SelectWorker, ChangeMonth, ChangeYear, WorkersLoaded} from "../../store/actions"
+import {ClearAllDays, ChangeDayType, SelectWorker, ChangeMonth, ChangeYear, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus} from "../../store/actions"
 import {useHttp} from "../../hooks/http.hook"
 
 import "./days-field-personal.scss"
 
 import DaysFieldItemPersonal from "../days-field-personal-item";
+import UnsavedChangesModal from "../unsaved-changes-modal";
 import DualBall from "../dual-ball";
 
-const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, ChangeMonth, ChangeYear, selectedWorker, SelectWorker, WorkersLoaded, ClearAllDays, filter, id}) => {
+const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, ChangeDayType, ChangeMonth, ChangeYear, selectedWorker, SelectWorker, WorkersLoaded, ClearAllDays, filter, id, GetWorkersOnServer, UnsavedChangesStatus}) => {
 
     const [loading, setLoading] = useState(true);
+    const [loadingYear, setloadingYear] = useState(true);
 
     const {request} = useHttp();
 
     const getWorkers = useCallback(async () => {
         try {
+            setloadingYear(true);
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             WorkersLoaded(data);
             setLoading(false);
+            setloadingYear(false);
         } catch (e) {}
     }, [request, WorkersLoaded, currentYear]);
+
+    const tryChangeYear = async (value) => {
+        try {
+            ClearAllDays();
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            GetWorkersOnServer(data);
+            ChangeYear(value);
+        } catch (e) {}
+    };
+
+    const tryChangeMonth = async (value) => {
+        try {
+            ClearAllDays();
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            GetWorkersOnServer(data);
+            ChangeMonth(value);
+        } catch (e) {}
+    };
+
 
     useEffect(() => {
         SelectWorker(id);
         getWorkers();
-    }, [getWorkers, SelectWorker, id]);
+
+        return () => {
+            UnsavedChangesStatus(false);
+          };
+    }, [getWorkers, UnsavedChangesStatus, SelectWorker, id]);
 
     useEffect(() => {
         ClearAllDays();
@@ -185,19 +212,20 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
 
     return (
         <div className="days-field-personal-wrapper">
+            {unsavedChanges ? <UnsavedChangesModal className={"unsaved-changes-modal--days-field-personal"}/> : null}
             <div className = "days-field-personal-years">
                 <div className = "days-field-personal__item-btn-group days-field-personal__item-btn-group--year">
                     <button
                         className = "days-field-personal__item-btn days-field-personal__item-btn-left"
-                        onClick={() => ChangeYear("back")}>
+                        onClick={() => tryChangeYear("back")}>
                         ←
                     </button>
                     <div className = "days-field-personal__item-year">
-                        {workers[0].years[0].name}
+                        {!loadingYear ?  workers[0].years[0].name : <DualBall className={"dual-ball--days-field-year-and-month"}/>}
                     </div>
                     <button
                         className = "days-field-personal__item-btn days-field-personal__item-btn-right"
-                        onClick={() => ChangeYear("next")}>
+                        onClick={() => tryChangeYear("next")}>
                         →
                     </button>
                 </div>
@@ -210,7 +238,7 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
                                 <div className = "days-field-personal__item-btn-group days-field-personal__item-btn-group--month">
                                     <button
                                         className = "days-field-personal__item-btn days-field-personal__item-btn-left"
-                                        onClick={() => ChangeMonth("back")}>
+                                        onClick={() => tryChangeMonth("back")}>
                                         ←
                                     </button>
                                     <div className = "days-field-personal__item-month">
@@ -218,7 +246,7 @@ const DaysFieldPresonal = ({workers, currentYear, currentMonth, ChangeDayType, C
                                     </div>
                                     <button
                                         className = "days-field-personal__item-btn days-field-personal__item-btn-right"
-                                        onClick={() => ChangeMonth("next")}>
+                                        onClick={() => tryChangeMonth("next")}>
                                         →
                                     </button>
                                 </div>
@@ -252,10 +280,12 @@ const mapDispatchToProps = {
     SelectWorker,
     ChangeMonth,
     ChangeYear,
-    WorkersLoaded
+    WorkersLoaded,
+    GetWorkersOnServer,
+    UnsavedChangesStatus
 }
 
-const mapStateToProps = ({workers, selectedDay, filter, selectedWorker, makeWorkingBtnActive, currentMonth, currentYear}) => {
+const mapStateToProps = ({workers, selectedDay, filter, selectedWorker, makeWorkingBtnActive, currentMonth, currentYear, unsavedChanges}) => {
     return {
         workers,
         selectedWorker,
@@ -263,7 +293,8 @@ const mapStateToProps = ({workers, selectedDay, filter, selectedWorker, makeWork
         filter,
         makeWorkingBtnActive,
         currentMonth,
-        currentYear
+        currentYear,
+        unsavedChanges
     }
 }
 
