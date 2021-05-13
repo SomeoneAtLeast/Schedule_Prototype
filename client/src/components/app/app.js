@@ -11,6 +11,7 @@ import logo from "./../../global-imgs/logo.png";
 
 import Login from "../login";
 import FilterList from "../filter-list";
+import SaveAndCancel from "../save-and-cancel";
 import DaysFieldPresonal from "../days-field-personal"
 import DaysFieldCommon from "../days-field-common"
 import MainNav from "../main-nav"
@@ -60,12 +61,15 @@ const App = ({ChangeSelectedPage, location}) => {
                             return (
                             <div className="controls">
                                 <Route path="/personalschedule/:id" exact component={FilterList}/>
+                                <Route path="/personalschedule/:id" exact component={SaveAndCancel}/>
+                                <Route path="/personalschedule/:id" exact component={UserControls}/>
                             </div>
                             )
                         }}/>
                         <Route path="/" exact>
                             <div className="controls">
                                 <Route path="/" exact component={DaysFieldCommonControls}/>
+                                <Route path="/" exact component={SaveAndCancel}/>
                                 <Route path="/" exact component={UserControls}/>
                             </div>
                         </Route>
