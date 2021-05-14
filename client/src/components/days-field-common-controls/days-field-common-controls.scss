@@ -28,6 +28,10 @@
     font-size: 15px;
 }
 
+.days-field-common-controls__sub-menu-item-btn {
+    padding: 10px 15px;
+}
+
 .days-field-common-controls__item-btn {
     
     border: 2px solid transparent;
@@ -81,10 +85,9 @@
 }
 
 .days-field-common-controls__sub-menu {
-    padding: 5px 0 2px 80px;
+    padding: 5px 45px 2px 45px;
     list-style: none;
     flex-wrap: wrap;
-    display: flex;
     justify-content: space-between;
     display: none;
 }
@@ -160,7 +163,7 @@
     }
 
     .days-field-common-controls__sub-menu {
-        padding: 5px 0 2px 40px;
+        padding: 5px 3px 2px 3px;
     }
 
     .days-field-common-controls__item-btn-with-sub-menu {
