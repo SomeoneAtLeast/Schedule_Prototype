@@ -56,9 +56,9 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
 
     const getWorkerElement = (workerNumber) => {
         const targetWorker = workers[workerNumber];
-        let daysInMonth = [];
+        let monthData = [];
 
-        daysInMonth.push(
+        monthData.push(
             <td className = "days-field-common__item" 
                 key={workerNumber}
                 onClick={() => SelectWorker(workerNumber)}>
@@ -93,7 +93,7 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
                 ChangeDayType(targetWorker.id, targetDay.id, "selected")
             }
 
-            daysInMonth.push(
+            monthData.push(
                 <td className = {classNames}
                     key={i + 1000}
                     onClick={() => SelectDayAndChangeDayType()}>
@@ -110,8 +110,28 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
             )
         }
 
+        for (let i = 1; i <= workers[0].years[0].months[currentMonth - 1].additionalInformation.length; i++) {
+            let classNames = "days-field-common__item";
+            const targetInformation = targetWorker.years[0].months[currentMonth - 1].additionalInformation[i - 1];
+
+
+            monthData.push(
+                <td className = {classNames}
+                    key={i + 2000}>
+                        <div className="days-field-common__item-input-wrapper">
+                            <input 
+                                className="days-field-common__item-input"
+                                type="text"
+                                maxLength={2}
+                                value={targetInformation.value}/>
+                        </div>
+                </td>
+            )
+        }
+
+
         return (
-            daysInMonth
+            monthData
         )
     }
 
@@ -181,21 +201,33 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
                                     </button>
                                 </div>
                             </th>
-                                {
-                                    workers[0].years[0].months[currentMonth - 1].days.map((item) => {
-                                        return (
-                                            <th className = "days-field-common__days-item" 
-                                                key={item.id}>
-                                                <div>
-                                                    {item.id}
-                                                </div>
-                                                <div>
-                                                    {item.dayName}
-                                                </div>
-                                            </th>
-                                        )
-                                    })
-                                }
+                            {
+                                workers[0].years[0].months[currentMonth - 1].days.map((item) => {
+                                    return (
+                                        <th className = "days-field-common__days-item" 
+                                            key={item.id}>
+                                            <div>
+                                                {item.id}
+                                            </div>
+                                            <div>
+                                                {item.dayName}
+                                            </div>
+                                        </th>
+                                    )
+                                })
+                            }
+                            {
+                                workers[0].years[0].months[currentMonth - 1].additionalInformation.map((item) => {
+                                    return (
+                                        <th className = "days-field-common__days-item" 
+                                            key={item.id}>
+                                            <div>
+                                                {item.title}
+                                            </div>
+                                        </th>
+                                    )
+                                })
+                            }
                         </tr>
                         {getWorkersElements()}
                     </tbody>
