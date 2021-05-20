@@ -95,7 +95,8 @@
     }
 }
 
-.days-field-common__days-item {
+.days-field-common__days-item,
+.days-field-common__additional-information-item {
     width: 2%;
     font-weight: normal;
     padding: 10px;
@@ -107,7 +108,6 @@
 
 
     &:first-child {
-        position: sticky;
         left: 0;
         z-index: 3; 
     }

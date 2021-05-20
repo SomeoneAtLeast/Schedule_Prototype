@@ -52,6 +52,36 @@ const ChangeDayType = (workerId, dayId, objKey, workingTime, hoursCount, schedul
     }
 }
 
+const ChangeMonthlyNorm = () => {
+    return {
+        type: "Change-Monthly-Norm",
+    }
+}
+
+const ChangeNumberOfShifts = () => {
+    return {
+        type: "Change-Number-Of-Shifts",
+    }
+}
+
+const ChangeNumberOfBreaks = () => {
+    return {
+        type: "Change-Number-Of-Breaks"
+    }
+}
+
+const ChangeNorm = () => {
+    return {
+        type: "Change-Norm"
+    }
+}
+
+const ChangeWithTrainingAndBreaks = () => {
+    return {
+        type: "Change-With-Training/Breaks"
+    }
+}
+
 const ChangeMonth = (direction) => {
     return {
         type: "Change-Month",
@@ -165,5 +195,10 @@ export {
     ShowOrCloseWorkingHours,
     ChangeScheduleText,
     GetWorkersOnServer,
-    UnsavedChangesStatus
+    UnsavedChangesStatus,
+    ChangeMonthlyNorm,
+    ChangeNumberOfShifts,
+    ChangeNumberOfBreaks,
+    ChangeNorm,
+    ChangeWithTrainingAndBreaks
 }

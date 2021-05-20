@@ -2,16 +2,27 @@ import React, {useEffect, useState, useCallback} from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
-import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus} from "../../store/actions"
+import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays,
+WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks} from "../../store/actions"
 import {useHttp} from "../../hooks/http.hook"
 import DualBall from "../dual-ball";
 import UnsavedChangesModal from "../unsaved-changes-modal";
 
+
+// Месячная норма по графику = сложить часы каждого дня +
+// Сегмент = вручную -
+// Смены = количество непустых ячеек +
+// Перерывы = смены * 50 / 60 (с округлением до ближайшего целого) +
+// Норма = Месячная норма по графику +
+// С обучением / перерывами = Норма - Перерывы (до округления) - 8
+
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText, ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus}) => {
+const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText,
+ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks}) => {
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
+
     const {request} = useHttp();
 
     const getWorkers = useCallback(async () => {
@@ -44,12 +55,11 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
 
     useEffect(() => {
         getWorkers();
-
         return () => {
             UnsavedChangesStatus(false);
           };
     }, [getWorkers, UnsavedChangesStatus]);
-
+    
     useEffect(() => {
         ClearAllDays();
     }, [currentMonth, currentYear, ClearAllDays]);
@@ -103,7 +113,7 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
                                 type="text"
                                 maxLength={2}
                                 value={targetDay.workingHours}
-                                onChange={(e) => ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e)}
+                                onChange={(e) =>  {ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks()}}
                             />
                         </div>
                 </td>
@@ -128,7 +138,6 @@ const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, Se
                 </td>
             )
         }
-
 
         return (
             monthData
@@ -255,7 +264,12 @@ const mapDispatchToProps = {
     ClearAllDays,
     WorkersLoaded,
     GetWorkersOnServer,
-    UnsavedChangesStatus
+    UnsavedChangesStatus,
+    ChangeMonthlyNorm,
+    ChangeNumberOfShifts,
+    ChangeNumberOfBreaks,
+    ChangeNorm,
+    ChangeWithTrainingAndBreaks
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, unsavedChanges}) => {
@@ -263,7 +277,7 @@ const mapStateToProps = ({workers, currentYear, currentMonth, unsavedChanges}) =
         workers,
         currentYear,
         currentMonth,
-        unsavedChanges,
+        unsavedChanges
     }
 }
 

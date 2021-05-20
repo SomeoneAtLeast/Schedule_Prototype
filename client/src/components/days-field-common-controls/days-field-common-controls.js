@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux"
 import PropTypes from 'prop-types';
 
-import {ChangeDayType, ShowOrCloseWorkingHours, ClearAllDays, WorkersLoaded} from "../../store/actions"
+import {ChangeDayType, ShowOrCloseWorkingHours, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks} from "../../store/actions"
 
 import "./days-field-common-controls.scss"
 
@@ -12,7 +12,7 @@ import vacationdImg from "./../../global-imgs/vacation.svg"
 import clearImg from "./../../global-imgs/clear.svg"
 import takeOfImg from "./../../global-imgs/take-off.svg"
 
-const DaysFieldCommonControls = ({selectedWorker, selectedDay, makeWorkingBtnActive, ChangeDayType, ShowOrCloseWorkingHours, ClearAllDays, WorkersLoaded}) => {
+const DaysFieldCommonControls = ({selectedWorker, selectedDay, makeWorkingBtnActive, ChangeDayType, ShowOrCloseWorkingHours, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks}) => {
 
 
     const buttons = [
@@ -64,9 +64,9 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, makeWorkingBtnAct
                 },
             ]
         },
-        {name: "weekend",  label: "Назначить выходным", img: weekendImg, id: -3},
-        {name: "vacation",  label: "Назначить отпуском", img: vacationdImg, id: -4},
-        {name: "takeOf",  label: "Снять назначения", img: takeOfImg, id: -5},
+        {name: "weekend",  label: "Назначить выходным", hoursCount: 0, img: weekendImg, id: -3},
+        {name: "vacation",  label: "Назначить отпуском", hoursCount: 0, img: vacationdImg, id: -4},
+        {name: "takeOf",  label: "Снять назначения", hoursCount: 0, img: takeOfImg, id: -5},
         {name: "clear",  label: "Убрать выделения", img: clearImg, id: -6},
     ]
 
@@ -74,7 +74,7 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, makeWorkingBtnAct
         <ul className="days-field-common-controls">
             {
                 buttons.map((item) => {
-                    const {name, label, img, id} = item;
+                    const {name, label, hoursCount, img, id} = item;
 
                     if (item.subMenu) {
                         let subMenuClassNames = "days-field-common-controls__sub-menu";
@@ -104,7 +104,7 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, makeWorkingBtnAct
                                                 <li className="days-field-common-controls__sub-menu-item" key = {id}>
                                                     <button
                                                         className={`days-field-common-controls__sub-menu-item-btn days-field-common-controls__sub-menu-item-btn-${workingTime}`}
-                                                        onClick={() => ChangeDayType(selectedWorker, selectedDay, name, workingTime, hoursCount)}>   
+                                                        onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, workingTime, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks()}}>   
                                                             <span className="days-field-common-controls__sub-menu-item-btn-text">
                                                                 {workingTime}
                                                             </span>
@@ -121,7 +121,7 @@ const DaysFieldCommonControls = ({selectedWorker, selectedDay, makeWorkingBtnAct
                             <li className="days-field-common-controls__item" key = {id}>
                                 <button
                                     className="days-field-common-controls__item-btn"
-                                    onClick={() => ChangeDayType(selectedWorker, selectedDay, name)}>   
+                                    onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, hoursCount, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks()}}>   
                                         <img className="days-field-common-controls__item-btn-img" src={img} alt={label}></img>
                                         <span className="days-field-common-controls__item-btn-text">
                                             {label}
@@ -148,8 +148,11 @@ DaysFieldCommonControls.propTypes = {
 const mapDispatchToProps = {
     ChangeDayType,
     ShowOrCloseWorkingHours,
-    ClearAllDays,
-    WorkersLoaded
+    ChangeMonthlyNorm,
+    ChangeNumberOfShifts,
+    ChangeNumberOfBreaks,
+    ChangeNorm,
+    ChangeWithTrainingAndBreaks
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, selectedWorker, selectedDay, makeWorkingBtnActive}) => {

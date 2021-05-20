@@ -60,6 +60,133 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 selectedWorker: action.id
             }
+        case "Change-Monthly-Norm": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+
+            newWorkers.forEach((worker) => {
+                let workingHours = 0;
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const targetDays = worker.years[0].months[currentMonth - 1].days;
+
+                targetDays.forEach((day) => {
+                    workingHours = workingHours + day.workingHours
+
+                })
+                targetMonth.additionalInformation[0].value = workingHours;
+            })
+
+
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-Number-Of-Shifts": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+        
+            newWorkers.forEach((worker) => {
+                let shifts = 0;
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const targetDays = worker.years[0].months[currentMonth - 1].days;
+        
+                targetDays.forEach((day) => {
+                    if (day.workingHours > 0) {
+                        shifts = shifts + 1
+                    }
+                })
+
+                targetMonth.additionalInformation[2].value = shifts;
+            })
+        
+        
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-Number-Of-Breaks": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+        
+            newWorkers.forEach((worker) => {
+                let shifts = 0;
+
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const targetDays = worker.years[0].months[currentMonth - 1].days;
+        
+                targetDays.forEach((day) => {
+                    if (day.workingHours > 0) {
+                        shifts = shifts + 1
+                    }
+                })
+
+                const initialValue = shifts * 50 / 60;
+                const breaksOrgignal = Number(initialValue.toFixed(1));
+                const breaks = Math.round(initialValue);
+
+                targetMonth.additionalInformation[3].value = breaks;
+                targetMonth.additionalInformation[10].value = breaksOrgignal;
+            })
+        
+        
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-Norm": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+        
+            newWorkers.forEach((worker) => {
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const norm = targetMonth.additionalInformation[0].value
+  
+                targetMonth.additionalInformation[4].value = norm;
+            })
+        
+        
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-With-Training/Breaks": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+        
+            newWorkers.forEach((worker) => {
+                let shifts = 0;
+
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const targetDays = worker.years[0].months[currentMonth - 1].days;
+        
+                targetDays.forEach((day) => {
+                    if (day.workingHours > 0) {
+                        shifts = shifts + 1
+                    }
+                })
+
+                const initialBreaks = shifts * 50 / 60;
+                const norm = targetMonth.additionalInformation[0].value;
+                const withTrainingBreaksOrigin = norm - initialBreaks - 8;
+                let withTrainingBreaks = Number(withTrainingBreaksOrigin.toFixed(2));
+
+                if (withTrainingBreaks < 0) {
+                    withTrainingBreaks = 0;
+                }
+
+                targetMonth.additionalInformation[5].value = withTrainingBreaks;
+            })
+        
+            
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
         case "Clear-All-Days": {
             const newWorkers = [...state.workers]
             newWorkers.forEach((item) => {
@@ -96,12 +223,12 @@ const reducer = (state = initialState, action) => {
             const workerIndex = workers.findIndex(elem => elem.id === workerId);
             const dayIndex = workers[workerIndex].years[0].months[currentMonth - 1].days.findIndex(elem => elem.id === dayId); 
             const newWorkers = [...workers.slice()];
-
             const targetDay = newWorkers[workerIndex].years[0].months[currentMonth - 1].days[dayIndex];
 
             if (objKey === "selected" && targetDay.changeShiftMenuOpen === true) {
                 targetDay.changeShiftMenuOpen = false
             }
+
 
             if (objKey === "worked") {
                 targetDay.worked = true;
@@ -215,6 +342,7 @@ const reducer = (state = initialState, action) => {
                     });
                 }
             }
+
             return {
                 ...state,
                 selectedWorker,
@@ -409,7 +537,8 @@ const reducer = (state = initialState, action) => {
             const dayIndex = targetWorker.years[0].months[currentMonth - 1].days.findIndex(elem => elem.id === action.dayId); 
             const oldDay = targetWorker.years[0].months[currentMonth - 1].days[dayIndex];
             const newDay = {...oldDay};
-            newDay[action.objKey] = action.e.target.value;
+            const hours = Number(action.e.target.value);
+            newDay[action.objKey] = hours;
             const newDays = [...targetWorker.years[0].months[currentMonth - 1].days.slice(0, dayIndex), newDay, ...targetWorker.years[0].months[currentMonth - 1].days.slice(dayIndex + 1)];
             const oldMonth = {...targetWorker.years[0].months[currentMonth - 1]};
             const newMonth = {...oldMonth, days: newDays};
