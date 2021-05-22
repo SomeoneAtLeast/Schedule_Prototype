@@ -82,6 +82,18 @@ const ChangeWithTrainingAndBreaks = () => {
     }
 }
 
+const ChangeWithADecreasingCoefficient = () => {
+    return {
+        type: "Change-With-A-Decreasing-Coefficient"
+    }
+}
+
+const ChangeTotalWithTheNight = () => {
+    return {
+        type: "Change-Total-With-The-Night"
+    }
+}
+
 const ChangeMonth = (direction) => {
     return {
         type: "Change-Month",
@@ -123,6 +135,15 @@ const ChangeScheduleText = (workerId, dayId, objKey, e) => {
         type: "Change-Schedule-Text",
         workerId,
         dayId,
+        objKey,
+        e 
+    }
+}
+
+const ChangeAdditionalInformationText = (workerId, objKey, e) => {
+    return {
+        type: "Change-Additional-Information-Text",
+        workerId,
         objKey,
         e 
     }
@@ -200,5 +221,8 @@ export {
     ChangeNumberOfShifts,
     ChangeNumberOfBreaks,
     ChangeNorm,
-    ChangeWithTrainingAndBreaks
+    ChangeWithTrainingAndBreaks,
+    ChangeAdditionalInformationText,
+    ChangeWithADecreasingCoefficient,
+    ChangeTotalWithTheNight
 }

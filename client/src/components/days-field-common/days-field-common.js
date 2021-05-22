@@ -3,23 +3,32 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
 import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays,
-WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks} from "../../store/actions"
+WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks,
+ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight} from "../../store/actions"
 import {useHttp} from "../../hooks/http.hook"
 import DualBall from "../dual-ball";
 import UnsavedChangesModal from "../unsaved-changes-modal";
 
 
 // Месячная норма по графику = сложить часы каждого дня +
-// Сегмент = вручную -
+// Сегмент = вручную +
 // Смены = количество непустых ячеек +
 // Перерывы = смены * 50 / 60 (с округлением до ближайшего целого) +
 // Норма = Месячная норма по графику +
-// С обучением / перерывами = Норма - Перерывы (до округления) - 8
+// С обучением / перерывами = Норма - Перерывы (до округления) - 8 +
+// С понижающим коэффициентом = С обучением / перерывами * Коэффициент (с округлением до ближайшего целого) +
+// Итог с учетом ночи = С понижающим коэффициентом * Коэффициент ночь (с округлением до ближайшего целого) +
+// План по сообщениям (День) = С понижающим коэффициентом * на эффективность вверху графика - 
+// Благодарности = вручную +
+// Коэффициент = вручную + 
+// Обучение = вручную + 
+
 
 import "./days-field-common.scss"
 
 const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText,
-ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks}) => {
+ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts,
+ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight}) => {
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
 
@@ -113,7 +122,7 @@ ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, Unsave
                                 type="text"
                                 maxLength={2}
                                 value={targetDay.workingHours}
-                                onChange={(e) =>  {ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks()}}
+                                onChange={(e) =>  {ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight()}}
                             />
                         </div>
                 </td>
@@ -124,7 +133,6 @@ ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, Unsave
             let classNames = "days-field-common__item";
             const targetInformation = targetWorker.years[0].months[currentMonth - 1].additionalInformation[i - 1];
 
-
             monthData.push(
                 <td className = {classNames}
                     key={i + 2000}>
@@ -132,8 +140,9 @@ ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, Unsave
                             <input 
                                 className="days-field-common__item-input"
                                 type="text"
-                                maxLength={2}
-                                value={targetInformation.value}/>
+                                maxLength={4}
+                                value={targetInformation.value}
+                                onChange={(e) => {ChangeAdditionalInformationText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight()}}/>
                         </div>
                 </td>
             )
@@ -269,7 +278,10 @@ const mapDispatchToProps = {
     ChangeNumberOfShifts,
     ChangeNumberOfBreaks,
     ChangeNorm,
-    ChangeWithTrainingAndBreaks
+    ChangeWithTrainingAndBreaks,
+    ChangeAdditionalInformationText,
+    ChangeWithADecreasingCoefficient,
+    ChangeTotalWithTheNight
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, unsavedChanges}) => {

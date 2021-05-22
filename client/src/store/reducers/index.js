@@ -171,7 +171,8 @@ const reducer = (state = initialState, action) => {
 
                 const initialBreaks = shifts * 50 / 60;
                 const norm = targetMonth.additionalInformation[0].value;
-                const withTrainingBreaksOrigin = norm - initialBreaks - 8;
+                const training = targetMonth.additionalInformation[14].value;
+                const withTrainingBreaksOrigin = norm - initialBreaks - training;
                 let withTrainingBreaks = Number(withTrainingBreaksOrigin.toFixed(2));
 
                 if (withTrainingBreaks < 0) {
@@ -179,6 +180,43 @@ const reducer = (state = initialState, action) => {
                 }
 
                 targetMonth.additionalInformation[5].value = withTrainingBreaks;
+            })
+        
+            
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-With-A-Decreasing-Coefficient": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+        
+            newWorkers.forEach((worker) => {
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const withTrainingBreaks = targetMonth.additionalInformation[5].value;
+                const withADecreasingCoefficient = withTrainingBreaks * targetMonth.additionalInformation[11].value
+
+                targetMonth.additionalInformation[6].value = withADecreasingCoefficient.toFixed();
+            })
+        
+            
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-Total-With-The-Night": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+        
+            newWorkers.forEach((worker) => {
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
+                const coefficientNight = targetMonth.additionalInformation[12].value;
+                const totalWithTheNight = withADecreasingCoefficient * coefficientNight;
+
+                targetMonth.additionalInformation[7].value = totalWithTheNight.toFixed();
             })
         
             
@@ -531,32 +569,85 @@ const reducer = (state = initialState, action) => {
             }
         }
         case "Change-Schedule-Text": {
-            const {workers, currentYear, currentMonth} = state;
-            const workerIndex = workers.findIndex(elem => elem.id === action.workerId);
-            const targetWorker = workers[workerIndex];
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+            const workerIndex = newWorkers.findIndex(elem => elem.id === action.workerId);
+            const targetWorker = newWorkers[workerIndex];
             const dayIndex = targetWorker.years[0].months[currentMonth - 1].days.findIndex(elem => elem.id === action.dayId); 
-            const oldDay = targetWorker.years[0].months[currentMonth - 1].days[dayIndex];
-            const newDay = {...oldDay};
-            const hours = Number(action.e.target.value);
-            newDay[action.objKey] = hours;
-            const newDays = [...targetWorker.years[0].months[currentMonth - 1].days.slice(0, dayIndex), newDay, ...targetWorker.years[0].months[currentMonth - 1].days.slice(dayIndex + 1)];
-            const oldMonth = {...targetWorker.years[0].months[currentMonth - 1]};
-            const newMonth = {...oldMonth, days: newDays};
-            const newMonths = [...targetWorker.years[0].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[0].months.slice(currentMonth)];
+            const targetDay = targetWorker.years[0].months[currentMonth - 1].days[dayIndex];
+            
+            if (isNaN(action.e.target.value)) {
+                return {
+                    ...state
+                }
+            }
 
-
-            const oldYear = {...targetWorker.years[0]};
-            const newYear = {...oldYear, months: newMonths};
-
-            const newYears = [...targetWorker.years.slice(0, 0), newYear, ...targetWorker.years.slice(currentYear)];
-
-
-            const newWorker = {...targetWorker, years: newYears};
-            const newWorkers = [...workers.slice(0, workerIndex), newWorker, ...workers.slice(workerIndex + 1)];
+            targetDay[action.objKey] = +action.e.target.value;
 
             return {
                 ...state,
                 workers: newWorkers
+            }
+        }
+        case "Change-Additional-Information-Text": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+            const targetMonth = newWorkers[action.workerId].years[0].months[currentMonth - 1];
+
+            if (action.objKey === "segment") {
+                targetMonth.additionalInformation[1].value = action.e.target.value;
+
+                return {
+                    ...state,
+                    workers: newWorkers
+                }
+            }
+        
+            
+            if (isNaN(action.e.target.value)) {
+                return {
+                    ...state
+                }
+            }
+            
+            if (action.objKey === "coefficient") {
+                targetMonth.additionalInformation[11].value = action.e.target.value;
+
+                return {
+                    ...state,
+                    workers: newWorkers
+                }
+            }
+
+            if (action.objKey === "acknowledgements") {
+                targetMonth.additionalInformation[9].value = action.e.target.value;
+
+                return {
+                    ...state,
+                    workers: newWorkers
+                }
+            }
+
+            if (action.objKey === "coefficientNight") {
+                targetMonth.additionalInformation[12].value = action.e.target.value;
+
+                return {
+                    ...state,
+                    workers: newWorkers
+                }
+            }
+
+            if (action.objKey === "training") {
+                targetMonth.additionalInformation[14].value = action.e.target.value;
+
+                return {
+                    ...state,
+                    workers: newWorkers
+                }
+            }
+
+            return {
+                ...state,
             }
         }
         case "Change-Month": {
