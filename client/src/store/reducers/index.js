@@ -1,10 +1,10 @@
-// import {workers} from "../../models/schedule-model"
 import isEqual from 'lodash-es/isEqual';
 import {kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 
 const initialState = {
     workersOnServer: [],
     workers: [],
+    dates: [],
     unsavedChanges: false,
     currentYear: 1,
     currentMonth: 1,
@@ -35,6 +35,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 workers: action.workers,
+                loading: false
+            }
+        case "Dates-Loaded":
+            return {
+                ...state,
+                dates: action.dates,
                 loading: false
             }
         case "Get-Workers-On-Server":

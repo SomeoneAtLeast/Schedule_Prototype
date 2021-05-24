@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
 import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays,
 WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks,
-ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight} from "../../store/actions"
+ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded} from "../../store/actions"
 import {useHttp} from "../../hooks/http.hook"
 import DualBall from "../dual-ball";
 import UnsavedChangesModal from "../unsaved-changes-modal";
@@ -19,16 +19,16 @@ import UnsavedChangesModal from "../unsaved-changes-modal";
 // С понижающим коэффициентом = С обучением / перерывами * Коэффициент (с округлением до ближайшего целого) +
 // Итог с учетом ночи = С понижающим коэффициентом * Коэффициент ночь (с округлением до ближайшего целого) +
 // План по сообщениям (День) = С понижающим коэффициентом * на эффективность вверху графика - 
-// Благодарности = вручную +
-// Коэффициент = вручную + 
-// Обучение = вручную + 
+// Благодарности = вручную + СДЕЛАТЬ 3 По-умолчанию
+// Коэффициент = вручную + СДЕЛАТЬ 1 По-умолчанию
+// Обучение = вручную + СДЕЛАТЬ 8 По-умолчанию
 
 
 import "./days-field-common.scss"
 
-const DaysFieldCommon = ({workers, unsavedChanges, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText,
+const DaysFieldCommon = ({workers, dates, unsavedChanges, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText,
 ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts,
-ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight}) => {
+ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded}) => {
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
 
@@ -36,18 +36,27 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
 
     const getWorkers = useCallback(async () => {
         try {
-            setloadingYear(true);
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             WorkersLoaded(data);
             setLoading(false);
-            setloadingYear(false);
         } catch (e) {}
     }, [request, WorkersLoaded, currentYear]);
+
+    
+    const getDates = useCallback(async () => {
+        try {
+            setloadingYear(true);
+            const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
+            DatesLoaded(data)
+            setloadingYear(false);
+            console.log(dates)
+        } catch (e) {}
+    }, [request, currentYear, DatesLoaded, dates]);
 
     const tryChangeYear = async (value) => {
         try {
             ClearAllDays();
-            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
             GetWorkersOnServer(data);
             ChangeYear(value);
         } catch (e) {}
@@ -56,18 +65,19 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
     const tryChangeMonth = async (value) => {
         try {
             ClearAllDays();
-            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
             GetWorkersOnServer(data);
             ChangeMonth(value);
         } catch (e) {}
     };
 
     useEffect(() => {
+        getDates();
         getWorkers();
         return () => {
             UnsavedChangesStatus(false);
           };
-    }, [getWorkers, UnsavedChangesStatus]);
+    }, [getWorkers, getDates, UnsavedChangesStatus]);
     
     useEffect(() => {
         ClearAllDays();
@@ -172,7 +182,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
         )
     }
 
-    if (loading) {
+    if (loading && loadingYear) {
         return (
             <DualBall className={"dual-ball--days-field-common"}/>
         )
@@ -189,7 +199,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                         ←
                     </button>
                     <div className = "days-field-common__days-item-year">
-                        {!loadingYear ?  workers[0].years[0].name : <DualBall className={"dual-ball--days-field-year-and-month"}/>}
+                        {!loadingYear ?  dates[0].name : <DualBall className={"dual-ball--days-field-year-and-month"}/>}
                     </div>
                     <button
                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"
@@ -210,7 +220,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                                         ←
                                     </button>
                                     <div className = "days-field-common__days-item-month">
-                                        {workers[0].years[0].months[currentMonth - 1].name}
+                                        {dates[0].months[currentMonth - 1].name}
                                     </div>
                                     <button
                                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"
@@ -220,7 +230,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                                 </div>
                             </th>
                             {
-                                workers[0].years[0].months[currentMonth - 1].days.map((item) => {
+                                dates[0].months[currentMonth - 1].days.map((item) => {
                                     return (
                                         <th className = "days-field-common__days-item" 
                                             key={item.id}>
@@ -235,7 +245,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                                 })
                             }
                             {
-                                workers[0].years[0].months[currentMonth - 1].additionalInformation.map((item) => {
+                                dates[0].months[currentMonth - 1].additionalInformation.map((item) => {
                                     return (
                                         <th className = "days-field-common__days-item" 
                                             key={item.id}>
@@ -281,15 +291,17 @@ const mapDispatchToProps = {
     ChangeWithTrainingAndBreaks,
     ChangeAdditionalInformationText,
     ChangeWithADecreasingCoefficient,
-    ChangeTotalWithTheNight
+    ChangeTotalWithTheNight,
+    DatesLoaded
 }
 
-const mapStateToProps = ({workers, currentYear, currentMonth, unsavedChanges}) => {
+const mapStateToProps = ({workers, currentYear, currentMonth, unsavedChanges, dates}) => {
     return {
         workers,
         currentYear,
         currentMonth,
-        unsavedChanges
+        unsavedChanges,
+        dates
     }
 }
 

@@ -16,9 +16,10 @@ router.post("/workers-update", async (req, res) => {
     try {
         const currentYear = Number(req.headers.year);
         const currentMonth = Number(req.headers.month);
-        console.log(currentYear , currentMonth)
+
         const workers = req.body;
         let workersСhanges = []
+
         workers.forEach(elem => {
             workersСhanges.push(
                 elem.years[0].months[currentMonth - 1].days
@@ -27,7 +28,7 @@ router.post("/workers-update", async (req, res) => {
 
         let i = 1;
 
-        workersСhanges.forEach(elem => {
+        workersСhanges.forEach(() => {
             const updatePath = `years.${currentYear - 1}.months.${currentMonth - 1}.days`;
             const target = {};
             target[updatePath] = workersСhanges[i - 1];

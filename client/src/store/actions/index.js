@@ -5,6 +5,13 @@ const WorkersLoaded = (workers) => {
     }
 }
 
+const DatesLoaded = (dates) => {
+    return {
+        type: "Dates-Loaded",
+        dates
+    }
+}
+
 const GetWorkersOnServer = (workers) => {
     return {
         type: "Get-Workers-On-Server",
@@ -199,6 +206,7 @@ const UnsavedChangesStatus = (status) => {
 
 export {
     WorkersLoaded,
+    DatesLoaded,
     SeatsLoaded,
     ShiftsLoaded,
     SelectWorker,
