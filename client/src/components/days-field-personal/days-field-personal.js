@@ -49,7 +49,7 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
     useEffect(() => {
         SelectWorker(id);
         getWorkers();
-
+        console.log("1")
         return () => {
             UnsavedChangesStatus(false);
           };

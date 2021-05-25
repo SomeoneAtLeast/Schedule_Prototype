@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux"
 import PropTypes from 'prop-types';
-import {ChangeDayType, ShowOrCloseWorkingHours, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient} from "../../store/actions"
+import {ChangeDayType, ShowOrCloseWorkingHours, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeMessagePlan, ChangeTotalWithTheNight} from "../../store/actions"
 
 import "./days-field-common-controls.scss"
 
@@ -12,7 +12,7 @@ import clearImg from "./../../global-imgs/clear.svg"
 import takeOfImg from "./../../global-imgs/take-off.svg"
 
 const DaysFieldCommonControls = ({selectedWorker, selectedDay, makeWorkingBtnActive, ChangeDayType, ShowOrCloseWorkingHours,
-ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient}) => {
+ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeMessagePlan, ChangeTotalWithTheNight}) => {
 
 
     const buttons = [
@@ -104,7 +104,7 @@ ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, Chang
                                                 <li className="days-field-common-controls__sub-menu-item" key = {id}>
                                                     <button
                                                         className={`days-field-common-controls__sub-menu-item-btn days-field-common-controls__sub-menu-item-btn-${workingTime}`}
-                                                        onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, workingTime, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient()}}>   
+                                                        onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, workingTime, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();     ChangeTotalWithTheNight(); ChangeMessagePlan()}}>   
                                                             <span className="days-field-common-controls__sub-menu-item-btn-text">
                                                                 {workingTime}
                                                             </span>
@@ -121,7 +121,7 @@ ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, Chang
                             <li className="days-field-common-controls__item" key = {id}>
                                 <button
                                     className="days-field-common-controls__item-btn"
-                                    onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, hoursCount, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient()}}>   
+                                    onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, hoursCount, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan()}}>   
                                         <img className="days-field-common-controls__item-btn-img" src={img} alt={label}></img>
                                         <span className="days-field-common-controls__item-btn-text">
                                             {label}
@@ -153,7 +153,9 @@ const mapDispatchToProps = {
     ChangeNumberOfBreaks,
     ChangeNorm,
     ChangeWithTrainingAndBreaks,
-    ChangeWithADecreasingCoefficient
+    ChangeWithADecreasingCoefficient,
+    ChangeMessagePlan,
+    ChangeTotalWithTheNight
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, selectedWorker, selectedDay, makeWorkingBtnActive}) => {

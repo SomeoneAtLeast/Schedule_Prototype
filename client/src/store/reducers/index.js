@@ -35,13 +35,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 workers: action.workers,
-                loading: false
             }
         case "Dates-Loaded":
             return {
                 ...state,
                 dates: action.dates,
-                loading: false
             }
         case "Get-Workers-On-Server":
             return {
@@ -52,14 +50,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 seats: action.seats,
-                loading: false
             }
         case "Shifts-Loaded":
             return {
                 ...state,
                 shifts: action.shifts,
                 kmShifts: action.shiftsKm,
-                loading: false
             }
         case "Select-Worker":
             return {
@@ -96,14 +92,26 @@ const reducer = (state = initialState, action) => {
                 let shifts = 0;
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
-        
-                targetDays.forEach((day) => {
-                    if (day.workingHours > 0) {
-                        shifts = shifts + 1
-                    }
-                })
+                const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
 
-                targetMonth.additionalInformation[2].value = shifts;
+                if (isNightWorker) {
+
+                    targetDays.forEach((day) => {
+                        if (day.workingHours > 3) {
+                            shifts = shifts + 1
+                        }
+                    })
+
+                    targetMonth.additionalInformation[2].value = shifts + 1;
+                } else {
+                    targetDays.forEach((day) => {
+                        if (day.workingHours > 0) {
+                            shifts = shifts + 1
+                        }
+                    })
+
+                    targetMonth.additionalInformation[2].value = shifts;
+                }
             })
         
         
@@ -121,12 +129,24 @@ const reducer = (state = initialState, action) => {
 
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
-        
-                targetDays.forEach((day) => {
-                    if (day.workingHours > 0) {
-                        shifts = shifts + 1
-                    }
-                })
+                const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
+
+                if (isNightWorker) {
+
+                    targetDays.forEach((day) => {
+                        if (day.workingHours > 3) {
+                            shifts = shifts + 1
+                        }
+                    })
+
+                    shifts = shifts + 1;
+                } else {
+                    targetDays.forEach((day) => {
+                        if (day.workingHours > 0) {
+                            shifts = shifts + 1
+                        }
+                    })
+                }
 
                 const initialValue = shifts * 50 / 60;
                 const breaksOrgignal = Number(initialValue.toFixed(1));
@@ -168,12 +188,24 @@ const reducer = (state = initialState, action) => {
 
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
-        
-                targetDays.forEach((day) => {
-                    if (day.workingHours > 0) {
-                        shifts = shifts + 1
-                    }
-                })
+                const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
+
+                if (isNightWorker) {
+
+                    targetDays.forEach((day) => {
+                        if (day.workingHours > 3) {
+                            shifts = shifts + 1
+                        }
+                    })
+
+                    shifts = shifts + 1;
+                } else {
+                    targetDays.forEach((day) => {
+                        if (day.workingHours > 0) {
+                            shifts = shifts + 1
+                        }
+                    })
+                }
 
                 const initialBreaks = shifts * 50 / 60;
                 const norm = targetMonth.additionalInformation[0].value;
@@ -222,7 +254,41 @@ const reducer = (state = initialState, action) => {
                 const coefficientNight = targetMonth.additionalInformation[12].value;
                 const totalWithTheNight = withADecreasingCoefficient * coefficientNight;
 
-                targetMonth.additionalInformation[7].value = totalWithTheNight.toFixed();
+                targetMonth.additionalInformation[7].value = totalWithTheNight.toFixed(1);
+            })
+        
+            
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-Message-Plan": {
+            const {workers, dates, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+        
+            newWorkers.forEach((worker) => {
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
+                const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
+                const efficiencyPerHour = dates[0].months[currentMonth - 1].efficiencyPerHour;
+                const coefficientNight = targetMonth.additionalInformation[12].value;
+
+
+                if (isNightWorker) {
+
+                    const messagePlan = (withADecreasingCoefficient / 2 * efficiencyPerHour) + (withADecreasingCoefficient / 2 * (coefficientNight * 10));
+                    targetMonth.additionalInformation[8].value = messagePlan.toFixed();
+
+                    return {
+                        ...state,
+                        workers: newWorkers
+                    }
+                }
+
+                const messagePlan = withADecreasingCoefficient * efficiencyPerHour;
+
+                targetMonth.additionalInformation[8].value = messagePlan.toFixed();
             })
         
             
@@ -688,7 +754,7 @@ const reducer = (state = initialState, action) => {
         case "Change-Year": {
 
             let {currentYear, workers, workersOnServer} = state;
-            
+
             if (!isEqual(workers, workersOnServer)) {
                 return {
                     ...state,
@@ -709,6 +775,32 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     unsavedChanges: false,
                     currentYear: ++currentYear
+                }
+            }
+
+            return state; 
+        }
+        case "Change-Incidents-Per-Hour": {
+
+            const {dates, currentMonth} = state;
+            const newDates = [...dates]
+            let targetValue = newDates[0].months[currentMonth - 1].efficiencyPerHour;
+
+            if (action.direction === "back" && targetValue > 0) {
+                newDates[0].months[currentMonth - 1].efficiencyPerHour = --targetValue;
+
+                return {
+                    ...state,
+                    dates: newDates
+                }
+            }
+
+            if (action.direction === "next") {
+                newDates[0].months[currentMonth - 1].efficiencyPerHour = ++targetValue;
+
+                return {
+                    ...state,
+                    dates: newDates
                 }
             }
 

@@ -101,6 +101,12 @@ const ChangeTotalWithTheNight = () => {
     }
 }
 
+const ChangeMessagePlan = () => {
+    return {
+        type: "Change-Message-Plan"
+    }
+}
+
 const ChangeMonth = (direction) => {
     return {
         type: "Change-Month",
@@ -111,6 +117,13 @@ const ChangeMonth = (direction) => {
 const ChangeYear = (direction) => {
     return {
         type: "Change-Year",
+        direction
+    }
+}
+
+const ChangeIncidentsPerHour = (direction) => {
+    return {
+        type: "Change-Incidents-Per-Hour",
         direction
     }
 }
@@ -232,5 +245,7 @@ export {
     ChangeWithTrainingAndBreaks,
     ChangeAdditionalInformationText,
     ChangeWithADecreasingCoefficient,
-    ChangeTotalWithTheNight
+    ChangeTotalWithTheNight,
+    ChangeIncidentsPerHour,
+    ChangeMessagePlan
 }

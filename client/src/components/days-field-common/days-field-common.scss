@@ -113,6 +113,11 @@
     }
 }
 
+.days-field-common__additional-information-item {
+    font-size: 14px;
+}
+
+.days-field-common__incidents-per-hour-group,
 .days-field-common__days-item-btn-group {
     display: flex;
     justify-content: center;
@@ -125,6 +130,11 @@
     }
 }
 
+.days-field-common__incidents-per-hour-group {
+    margin-top: 3px;
+}
+
+.days-field-common__incidents-per-hour-btn,
 .days-field-common__days-item-btn {
     background-color: transparent;
     border: none;
@@ -158,6 +168,12 @@
 
 .days-field-common__days-item-month {
     width: 85px;
+}
+
+.days-field-common__incidents-per-hour-value {
+    display: flex;
+    justify-content: center;
+    width: 35px;
 }
 
 .days-field-common__item-link {

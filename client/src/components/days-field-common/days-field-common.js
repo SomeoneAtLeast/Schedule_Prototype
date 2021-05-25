@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
 import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays,
 WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks,
-ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded} from "../../store/actions"
+ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan} from "../../store/actions"
 import {useHttp} from "../../hooks/http.hook"
 import DualBall from "../dual-ball";
 import UnsavedChangesModal from "../unsaved-changes-modal";
@@ -12,23 +12,26 @@ import UnsavedChangesModal from "../unsaved-changes-modal";
 
 // Месячная норма по графику = сложить часы каждого дня +
 // Сегмент = вручную +
-// Смены = количество непустых ячеек +
+// Смены (день) = количество непустых ячеек +
+// Смены (ночь) = количество ячеек имеющих более 3 рабочих часов + 1 +
 // Перерывы = смены * 50 / 60 (с округлением до ближайшего целого) +
 // Норма = Месячная норма по графику +
-// С обучением / перерывами = Норма - Перерывы (до округления) - 8 +
+// С обучением / перерывами = Норма - Перерывы (до округления) - Обучение +
 // С понижающим коэффициентом = С обучением / перерывами * Коэффициент (с округлением до ближайшего целого) +
 // Итог с учетом ночи = С понижающим коэффициентом * Коэффициент ночь (с округлением до ближайшего целого) +
-// План по сообщениям (День) = С понижающим коэффициентом * на эффективность вверху графика - 
-// Благодарности = вручную + СДЕЛАТЬ 3 По-умолчанию
-// Коэффициент = вручную + СДЕЛАТЬ 1 По-умолчанию
-// Обучение = вручную + СДЕЛАТЬ 8 По-умолчанию
+// План по сообщениям (День) = С понижающим коэффициентом * на эффективность вверху графика +
+// План по сообщениям (Ночь) = (С понижающим коэффициентом / 2 * на эффективность вверху графика) + (С понижающим коэффициентом / 2 * (Коэффициент Ночь * 10)) +
+// Благодарности = вручную + СДЕЛАТЬ 3 По-умолчанию + 
+// Коэффициент = вручную + СДЕЛАТЬ 1 По-умолчанию +
+// Коэффициент Ночь = вручную + СДЕЛАТЬ 1 По-умолчанию +
+// Обучение = вручную + СДЕЛАТЬ 8 По-умолчанию +
 
 
 import "./days-field-common.scss"
 
 const DaysFieldCommon = ({workers, dates, unsavedChanges, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText,
 ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts,
-ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded}) => {
+ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan}) => {
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
 
@@ -39,48 +42,55 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             WorkersLoaded(data);
             setLoading(false);
+            console.log("getWorkers")
         } catch (e) {}
     }, [request, WorkersLoaded, currentYear]);
 
     
     const getDates = useCallback(async () => {
         try {
-            setloadingYear(true);
             const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
-            DatesLoaded(data)
+            DatesLoaded(data);
             setloadingYear(false);
-            console.log(dates)
+            console.log("getDates")
         } catch (e) {}
-    }, [request, currentYear, DatesLoaded, dates]);
+    }, [request, currentYear, DatesLoaded]);
 
     const tryChangeYear = async (value) => {
         try {
             ClearAllDays();
-            const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             GetWorkersOnServer(data);
             ChangeYear(value);
+            console.log("tryChangeYear")
         } catch (e) {}
     };
 
     const tryChangeMonth = async (value) => {
         try {
             ClearAllDays();
-            const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             GetWorkersOnServer(data);
             ChangeMonth(value);
+            console.log("tryChangeMonth")
         } catch (e) {}
     };
 
     useEffect(() => {
-        getDates();
-        getWorkers();
+
+            getDates();
+            getWorkers();  
+            setloadingYear(true);
+            console.log("useEffect")
         return () => {
             UnsavedChangesStatus(false);
+            console.log("UnsavedChangesStatus")
           };
     }, [getWorkers, getDates, UnsavedChangesStatus]);
     
     useEffect(() => {
         ClearAllDays();
+        console.log("ClearAllDays")
     }, [currentMonth, currentYear, ClearAllDays]);
 
     const getWorkerElement = (workerNumber) => {
@@ -132,7 +142,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                                 type="text"
                                 maxLength={2}
                                 value={targetDay.workingHours}
-                                onChange={(e) =>  {ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight()}}
+                                onChange={(e) =>  {ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan()}}
                             />
                         </div>
                 </td>
@@ -152,7 +162,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                                 type="text"
                                 maxLength={4}
                                 value={targetInformation.value}
-                                onChange={(e) => {ChangeAdditionalInformationText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight()}}/>
+                                onChange={(e) => {ChangeAdditionalInformationText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan()}}/>
                         </div>
                 </td>
             )
@@ -246,8 +256,36 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                             }
                             {
                                 dates[0].months[currentMonth - 1].additionalInformation.map((item) => {
+
+                                    if (item.name === "messagePlan") {
+                                        return (
+                                            <th className = "days-field-common__additional-information-item" 
+                                                key={item.id}>
+                                                <div>
+                                                    {item.title}
+                                                </div>
+                                                <div className="days-field-common__incidents-per-hour-group">
+                                                    <button
+                                                        className = "days-field-common__incidents-per-hour-btn days-field-common__incidents-per-hour-btn-left"
+                                                        onClick={() => {ChangeIncidentsPerHour("back"); ChangeMessagePlan()}}>
+                                                        ←
+                                                    </button>
+                                                    <div className = "days-field-common__incidents-per-hour-value">
+                                                        {dates[0].months[currentMonth - 1].efficiencyPerHour}
+                                                    </div>
+                                                    <button
+                                                        className = "days-field-common__incidents-per-hour-btn days-field-common__incidents-per-hour-btn-right"
+                                                        onClick={() => {ChangeIncidentsPerHour("next"); ChangeMessagePlan()}}>
+                                                        →
+                                                    </button>
+
+                                                </div>
+                                            </th>
+                                        )
+                                    }
+
                                     return (
-                                        <th className = "days-field-common__days-item" 
+                                        <th className = "days-field-common__additional-information-item" 
                                             key={item.id}>
                                             <div>
                                                 {item.title}
@@ -292,7 +330,9 @@ const mapDispatchToProps = {
     ChangeAdditionalInformationText,
     ChangeWithADecreasingCoefficient,
     ChangeTotalWithTheNight,
-    DatesLoaded
+    DatesLoaded,
+    ChangeIncidentsPerHour,
+    ChangeMessagePlan
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, unsavedChanges, dates}) => {
