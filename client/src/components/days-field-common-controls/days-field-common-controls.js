@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux"
 import PropTypes from 'prop-types';
-import {ChangeDayType, ShowOrCloseWorkingHours, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeMessagePlan, ChangeTotalWithTheNight} from "../../store/actions"
+import {ChangeDayType, ShowOrCloseWorkingHours, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeMessagePlan, ChangeTotalWithTheNight, ChangeAdjustment} from "../../store/actions"
 
 import "./days-field-common-controls.scss"
 
@@ -12,7 +12,7 @@ import clearImg from "./../../global-imgs/clear.svg"
 import takeOfImg from "./../../global-imgs/take-off.svg"
 
 const DaysFieldCommonControls = ({selectedWorker, selectedDay, makeWorkingBtnActive, ChangeDayType, ShowOrCloseWorkingHours,
-ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeMessagePlan, ChangeTotalWithTheNight}) => {
+ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeMessagePlan, ChangeTotalWithTheNight, ChangeAdjustment}) => {
 
 
     const buttons = [
@@ -62,6 +62,11 @@ ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, Chang
                     hoursCount: 11,
                     id: -56
                 },
+                {
+                    workingTime: "21-09",
+                    hoursCount: 11,
+                    id: -57
+                },
             ]
         },
         {name: "weekend",  label: "Назначить выходным", hoursCount: 0, img: weekendImg, id: -3},
@@ -104,7 +109,8 @@ ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, Chang
                                                 <li className="days-field-common-controls__sub-menu-item" key = {id}>
                                                     <button
                                                         className={`days-field-common-controls__sub-menu-item-btn days-field-common-controls__sub-menu-item-btn-${workingTime}`}
-                                                        onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, workingTime, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();     ChangeTotalWithTheNight(); ChangeMessagePlan()}}>   
+                                                        onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, workingTime, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks();
+                                                        ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();     ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}>   
                                                             <span className="days-field-common-controls__sub-menu-item-btn-text">
                                                                 {workingTime}
                                                             </span>
@@ -121,7 +127,8 @@ ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, Chang
                             <li className="days-field-common-controls__item" key = {id}>
                                 <button
                                     className="days-field-common-controls__item-btn"
-                                    onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, hoursCount, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan()}}>   
+                                    onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, hoursCount, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks();
+                                    ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}>   
                                         <img className="days-field-common-controls__item-btn-img" src={img} alt={label}></img>
                                         <span className="days-field-common-controls__item-btn-text">
                                             {label}
@@ -155,7 +162,8 @@ const mapDispatchToProps = {
     ChangeWithTrainingAndBreaks,
     ChangeWithADecreasingCoefficient,
     ChangeMessagePlan,
-    ChangeTotalWithTheNight
+    ChangeTotalWithTheNight,
+    ChangeAdjustment
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, selectedWorker, selectedDay, makeWorkingBtnActive}) => {

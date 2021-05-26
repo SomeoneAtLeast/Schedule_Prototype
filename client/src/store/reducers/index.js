@@ -93,6 +93,7 @@ const reducer = (state = initialState, action) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
+                const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
 
                 if (isNightWorker) {
 
@@ -103,6 +104,15 @@ const reducer = (state = initialState, action) => {
                     })
 
                     targetMonth.additionalInformation[2].value = shifts + 1;
+                } else if (isKmWorker) {
+
+                    targetDays.forEach((day) => {
+                        if (day.workingHours > 3) {
+                            shifts = shifts + 1
+                        }
+                    })
+
+                    targetMonth.additionalInformation[2].value = shifts;
                 } else {
                     targetDays.forEach((day) => {
                         if (day.workingHours > 0) {
@@ -130,6 +140,7 @@ const reducer = (state = initialState, action) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
+                const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
 
                 if (isNightWorker) {
 
@@ -140,6 +151,14 @@ const reducer = (state = initialState, action) => {
                     })
 
                     shifts = shifts + 1;
+                } else if (isKmWorker) {
+
+                    targetDays.forEach((day) => {
+                        if (day.workingHours > 3) {
+                            shifts = shifts + 1
+                        }
+                    })
+
                 } else {
                     targetDays.forEach((day) => {
                         if (day.workingHours > 0) {
@@ -189,6 +208,7 @@ const reducer = (state = initialState, action) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
+                const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
 
                 if (isNightWorker) {
 
@@ -199,6 +219,14 @@ const reducer = (state = initialState, action) => {
                     })
 
                     shifts = shifts + 1;
+                } else if (isKmWorker) {
+
+                    targetDays.forEach((day) => {
+                        if (day.workingHours > 3) {
+                            shifts = shifts + 1
+                        }
+                    })
+
                 } else {
                     targetDays.forEach((day) => {
                         if (day.workingHours > 0) {
@@ -289,6 +317,31 @@ const reducer = (state = initialState, action) => {
                 const messagePlan = withADecreasingCoefficient * efficiencyPerHour;
 
                 targetMonth.additionalInformation[8].value = messagePlan.toFixed();
+            })
+        
+            
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-Adjustment": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+        
+            newWorkers.forEach((worker) => {
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const monthlyNorm = targetMonth.additionalInformation[0].value;
+                const totalWithTheNight = targetMonth.additionalInformation[7].value;
+                const adjustment = totalWithTheNight / monthlyNorm;
+
+                if (isNaN(adjustment)) {
+                    return {
+                        ...state
+                    }
+                }
+    
+                targetMonth.additionalInformation[13].value = adjustment.toFixed(2);
             })
         
             
@@ -805,6 +858,27 @@ const reducer = (state = initialState, action) => {
             }
 
             return state; 
+        }
+        case "Change-Number-Of-Acknowledgements": {
+
+            const {dates, currentMonth} = state;
+            const newDates = [...dates]
+            let targetValue = newDates[0].months[currentMonth - 1].numberOfAcknowledgements;
+
+            if (action.direction === "back" && targetValue > 0) {
+                targetValue = targetValue - 0.1;
+            }
+
+            if (action.direction === "next") {
+                targetValue = targetValue + 0.1;
+            }
+
+            newDates[0].months[currentMonth - 1].numberOfAcknowledgements = Number(targetValue.toFixed(1));
+
+            return {
+                ...state,
+                dates: newDates
+            }
         }
         case "Unsaved-Changes-Status": {
             return {

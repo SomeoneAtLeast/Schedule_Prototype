@@ -107,6 +107,13 @@ const ChangeMessagePlan = () => {
     }
 }
 
+const ChangeAdjustment = () => {
+    return {
+        type: "Change-Adjustment"
+    }
+}
+
+
 const ChangeMonth = (direction) => {
     return {
         type: "Change-Month",
@@ -127,6 +134,14 @@ const ChangeIncidentsPerHour = (direction) => {
         direction
     }
 }
+
+const ChangeNumberOfAcknowledgements = (direction) => {
+    return {
+        type: "Change-Number-Of-Acknowledgements",
+        direction
+    }
+}
+
 
 const FilterSelect = (filter) => {
     return {
@@ -247,5 +262,7 @@ export {
     ChangeWithADecreasingCoefficient,
     ChangeTotalWithTheNight,
     ChangeIncidentsPerHour,
-    ChangeMessagePlan
+    ChangeMessagePlan,
+    ChangeAdjustment,
+    ChangeNumberOfAcknowledgements
 }
