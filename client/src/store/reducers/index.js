@@ -298,8 +298,10 @@ const reducer = (state = initialState, action) => {
             newWorkers.forEach((worker) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
+                const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
                 const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
                 const efficiencyPerHour = dates[0].months[currentMonth - 1].efficiencyPerHour;
+                const numberOfAcknowledgements = dates[0].months[currentMonth - 1].numberOfAcknowledgements;
                 const coefficientNight = targetMonth.additionalInformation[12].value;
 
 
@@ -307,6 +309,17 @@ const reducer = (state = initialState, action) => {
 
                     const messagePlan = (withADecreasingCoefficient / 2 * efficiencyPerHour) + (withADecreasingCoefficient / 2 * (coefficientNight * 10));
                     targetMonth.additionalInformation[8].value = messagePlan.toFixed();
+
+                    return {
+                        ...state,
+                        workers: newWorkers
+                    }
+                }
+
+                if (isKmWorker) {
+
+                    const messagePlan = withADecreasingCoefficient * numberOfAcknowledgements;
+                    targetMonth.additionalInformation[8].value = messagePlan.toFixed(2);
 
                     return {
                         ...state,

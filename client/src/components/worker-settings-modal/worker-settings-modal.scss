@@ -1,0 +1,97 @@
+.worker-settings-modal {
+    position: absolute;
+    box-sizing: border-box;
+    background: linear-gradient(70deg, #e8e8e8, #d2d2d2);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    margin-left: -210px;
+    margin-top: -150px;
+    width: 420px;
+    height: 300px;
+    padding: 20px 20px;
+    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.5);
+}
+
+.worker-settings-modal__exit-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background-color: transparent;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        transform: rotate(80deg);
+    }
+
+    &:active {
+        transform: rotate(0deg);
+    }
+}
+
+.worker-settings-modal__exit-btn-img {
+    width: 40px;
+}
+
+.worker-settings-modal__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.worker-settings-modal__title-img {
+    opacity: 0.7;
+    margin-right: 10px;
+}
+
+.worker-settings-modal__form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.worker-settings-modal__form-input-label {
+    display: flex;
+    justify-content: space-between;
+    width: 93%;
+
+    &:not(:last-child) {
+        margin-bottom: 20px;
+    }
+}
+
+.worker-settings-modal__form-input-name {
+    font-size: 18px;
+}
+
+.worker-settings-modal__form-input {
+    border: none;
+    outline: none;
+    font-family: "Roboto-Regular", sans-serif;
+    background-color: transparent;
+    text-align: center;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.85);
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    width: 84%;
+    transition: 0.3s;
+
+    &:hover,
+    &:focus {
+        border-bottom: 2px solid #FF4F12;
+    }
+}
+
+.worker-settings-modal__form-select {
+    font-family: "Roboto-Regular", sans-serif;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    width: 85%;
+}
+
+.worker-settings-modal__form-select-option {
+    padding: 15px;
+}

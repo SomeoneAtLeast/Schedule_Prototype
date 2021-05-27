@@ -2,12 +2,15 @@ import React, {useEffect, useState, useCallback} from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
+import {useHttp} from "../../hooks/http.hook"
 import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays,
 WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks,
 ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements} from "../../store/actions"
-import {useHttp} from "../../hooks/http.hook"
 import DualBall from "../dual-ball";
 import UnsavedChangesModal from "../unsaved-changes-modal";
+import WorkerSettingsModal from "../worker-settings-modal";
+
+import WorkerSettingsImg from "../../global-imgs/worker-settings.svg"
 
 
 // Месячная норма по графику = сложить часы каждого дня +
@@ -22,7 +25,7 @@ import UnsavedChangesModal from "../unsaved-changes-modal";
 // Итог с учетом ночи = С понижающим коэффициентом * Коэффициент ночь (с округлением до ближайшего целого) +
 // План по сообщениям (День) = С понижающим коэффициентом * на эффективность вверху графика +
 // План по сообщениям (Ночь) = (С понижающим коэффициентом / 2 * на эффективность вверху графика) + (С понижающим коэффициентом / 2 * (Коэффициент Ночь * 10)) +
-// План по сообщениям (КМ) = С понижающим коэффициентом * благодарности вверху -
+// План по сообщениям (КМ) = С понижающим коэффициентом * благодарности вверху +
 // Благодарности = вручную + СДЕЛАТЬ 3 По-умолчанию + 
 // Коэффициент = вручную + СДЕЛАТЬ 1 По-умолчанию +
 // Коэффициент Ночь = вручную + СДЕЛАТЬ 1 По-умолчанию +
@@ -37,6 +40,7 @@ ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, Unsave
 ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements}) => {
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
+    const [showWorkerSettingsModal, setShowWorkerSettingsModal] = useState(false);
 
     const {request} = useHttp();
 
@@ -76,7 +80,6 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
     };
 
     useEffect(() => {
-
             getDates();
             getWorkers();  
             setloadingYear(true);
@@ -95,9 +98,19 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
 
         monthData.push(
             <td className = "days-field-common__item" 
-                key={workerNumber}
-                onClick={() => SelectWorker(workerNumber)}>
-                    <Link to={`/personalschedule/${workerNumber + 1}`} className = "days-field-common__item-link">
+                key={workerNumber}>
+                    <button 
+                        className = "days-field-common__item-worker-settings-btn"
+                        onClick={() => {setShowWorkerSettingsModal(!showWorkerSettingsModal); SelectWorker(workerNumber)}}>
+                        <img 
+                            src={WorkerSettingsImg}
+                            alt="Настройки сотрудника"
+                            className = "days-field-common__item-worker-settings-btn-img"/>
+                    </button>
+                    <Link 
+                        to={`/personalschedule/${workerNumber + 1}`}
+                        className = "days-field-common__item-link"
+                        onClick={() => SelectWorker(workerNumber)}>
                         {targetWorker.name}
                     </Link>
             </td>
@@ -313,6 +326,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                     </tbody>
                 </table>
             </div>
+            {showWorkerSettingsModal ? <WorkerSettingsModal setShowWorkerSettingsModal={setShowWorkerSettingsModal}/> : null}
         </>
     )
 }

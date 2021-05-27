@@ -23,6 +23,7 @@
 }
 
 .days-field-common__item {
+    position: relative;
     padding: 0;
     color: rgba(0, 0, 0, 0.85);
     border: 1px solid #DDD;
@@ -55,13 +56,21 @@
             background-color: #FFF;
             padding: 17px;
             border-right: 1px solid #DDD;
+
+            &:hover {
+                color: #ea6153;
+            }
+
+            &:active {
+                font-size: 96%;
+            }
         }
 
-        &:active {
-            .days-field-common__item-link {
-                transform: scale(0.95);
+        &:hover {
+            .days-field-common__item-worker-settings-btn { 
+                opacity: 1;
             }
-        } 
+        }
     }
 
     &:nth-child(2){
@@ -91,8 +100,35 @@
 
     &:focus {
         transform: scale(1.1);
-        color: #4be872;
+        color: #5b13ac;
     }
+}
+
+.days-field-common__item-worker-settings-btn {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    opacity: 0;
+    padding: 0;
+    border: none;
+    border-radius: 13px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+        transform: scale(1.4) rotate(30deg);
+    }
+
+    &:active {
+        transform: scale(1.4) rotate(-30deg);
+    }
+    
+}
+
+.days-field-common__item-worker-settings-btn-img {
+    width: 12px;
+    opacity: 0.8;
 }
 
 .days-field-common__days-item,
@@ -101,7 +137,7 @@
     font-weight: normal;
     padding: 10px;
     color: white;
-    box-shadow: 0 3px 3px 0 rgba(0,0,0,.2);
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
     background: linear-gradient(175deg, #ea6153, #e34938);
     position: sticky;
     top: 0;
@@ -246,6 +282,25 @@
         white-space: normal;
     }
 
+    .days-field-common__item-worker-settings-btn {
+
+        top: 6px;
+        right: 6px;
+
+        &:hover {
+            transform: scale(1.2) rotate(30deg);
+        }
+    
+        &:active {
+            transform: scale(1.2) rotate(-30deg);
+        }
+        
+    }
+
+    .days-field-common__item-worker-settings-btn-img {
+        width: 15px;
+    }
+
     .days-field-common-years {
         font-size: 16px;
     }
@@ -272,6 +327,11 @@
 
     .days-field-common__item-input {
         font-size: 12px;
+    }
+
+    .days-field-common__item-worker-settings-btn {
+        opacity: 1;
+        
     }
 
     .days-field-common-years {
