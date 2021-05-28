@@ -1,13 +1,14 @@
 .worker-settings-modal {
     position: absolute;
     box-sizing: border-box;
-    background: linear-gradient(70deg, #e8e8e8, #d2d2d2);
+    background: linear-gradient(360deg, #ea6153, #d04737);
+    color: white;
     border-radius: 10px;
     top: 50%;
     left: 50%;
-    margin-left: -210px;
+    margin-left: -225px;
     margin-top: -150px;
-    width: 420px;
+    width: 450px;
     height: 300px;
     padding: 20px 20px;
     box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.5);
@@ -32,7 +33,7 @@
 }
 
 .worker-settings-modal__exit-btn-img {
-    width: 40px;
+    width: 25px;
 }
 
 .worker-settings-modal__title {
@@ -43,7 +44,6 @@
 }
 
 .worker-settings-modal__title-img {
-    opacity: 0.7;
     margin-right: 10px;
 }
 
@@ -70,28 +70,57 @@
 .worker-settings-modal__form-input {
     border: none;
     outline: none;
-    font-family: "Roboto-Regular", sans-serif;
+    font-family: inherit;
     background-color: transparent;
     text-align: center;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.85);
-    color: rgba(0, 0, 0, 0.85);
+    border-bottom: 2px solid white;
+    color: white;
     font-size: 16px;
-    width: 84%;
+    width: 75%;
     transition: 0.3s;
 
     &:hover,
     &:focus {
-        border-bottom: 2px solid #FF4F12;
+        border-bottom: 2px solid #ff886c;
+    }
+}
+
+.worker-settings-modal__form-select-label {
+    position: relative;
+
+    &::after {
+        position: absolute;
+        content: "";
+        top: 9px;
+        right: 11px;
+        width: 12px;
+        height: 7px;
+        background: white;
+        clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+        transition: 0.3s;
+    }
+
+    &:hover {
+        &::after {
+            background: #ff886c;
+        }
     }
 }
 
 .worker-settings-modal__form-select {
-    font-family: "Roboto-Regular", sans-serif;
-    color: rgba(0, 0, 0, 0.85);
+    appearance: none;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    font-family: inherit;
+    background: linear-gradient(360deg, #ea6153, #d04737);
+    color: white;
     font-size: 16px;
-    width: 85%;
+    width: 76%;
+    cursor: pointer;
 }
 
+
 .worker-settings-modal__form-select-option {
-    padding: 15px;
+    background: #ea6153;
 }

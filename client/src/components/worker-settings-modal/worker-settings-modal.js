@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 
 import "./worker-settings-modal.scss"
 
-import crossImg from "../../global-imgs/cross-black.svg"
+import crossImg from "../../global-imgs/cross.svg"
 import worker from "../../global-imgs/worker.svg"
 
 const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWorkerSettingsModal}) => {
@@ -36,7 +36,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                     src={worker}
                     alt="Иконка сотрудника"/>
                 <span className="worker-settings-modal__title-text">
-                    Сотрудник
+                    Карточка сотрудника
                 </span>
             </div>
             <form className="worker-settings-modal__form">
@@ -50,7 +50,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                     onChange={onChangeFormText}
                     value={userData.workerName}/>
                 </label>
-                <label className="worker-settings-modal__form-input-label">
+                <label className="worker-settings-modal__form-input-label worker-settings-modal__form-select-label">
                     <span className="worker-settings-modal__form-input-name">Тип</span>
                     <select 
                         className="worker-settings-modal__form-select"
@@ -65,7 +65,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                             <option className="worker-settings-modal__form-select-option">КМ</option>
                     </select>
                 </label>
-                <label className="worker-settings-modal__form-input-label">
+                <label className="worker-settings-modal__form-input-label worker-settings-modal__form-select-label">
                     <span className="worker-settings-modal__form-input-name">Смена</span>
                     <select 
                         className="worker-settings-modal__form-select"
