@@ -363,6 +363,47 @@ const reducer = (state = initialState, action) => {
                 workers: newWorkers
             }
         }
+        case "Save-Worker-Settings": {
+
+            const workerData = action.workerData;
+
+            const {workers, selectedWorker, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+            const targetWorker = newWorkers[selectedWorker];
+            const targetMonth = newWorkers[selectedWorker].years[0].months[currentMonth - 1];
+
+            targetWorker.name = workerData.workerName;
+
+            targetMonth.monthlyShiftData.nightWorker = false;
+            targetMonth.monthlyShiftData.kmWorker = false;
+            targetMonth.monthlyShiftData.groupLeader = false;
+            targetMonth.monthlyShiftData.director = false;
+            
+            if (workerData.workerType === "Ночная смена SMM") {
+                targetMonth.monthlyShiftData.nightWorker = true;
+            }
+
+            if (workerData.workerType === "КМ") {
+                targetMonth.monthlyShiftData.kmWorker = true;
+            }
+
+            if (workerData.workerType === "Групп Лидер") {
+                targetMonth.monthlyShiftData.groupLeader = true;
+            }
+
+            if (workerData.workerType === "Руководитель") {
+                targetMonth.monthlyShiftData.director = true;
+            }
+
+            targetMonth.monthlyShiftData.workingShiftMonth = action.workingShiftMonth;
+            targetMonth.additionalInformation[1].value = action.segment;
+
+            return {
+                ...state,
+                workers: newWorkers
+            }
+
+        }
         case "Clear-All-Days": {
             const newWorkers = [...state.workers]
             newWorkers.forEach((item) => {

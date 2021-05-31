@@ -101,7 +101,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                 key={workerNumber}>
                     <button 
                         className = "days-field-common__item-worker-settings-btn"
-                        onClick={() => {setShowWorkerSettingsModal(!showWorkerSettingsModal); SelectWorker(workerNumber)}}>
+                        onClick={() => {setShowWorkerSettingsModal(true); SelectWorker(workerNumber)}}>
                         <img 
                             src={WorkerSettingsImg}
                             alt="Настройки сотрудника"
@@ -171,7 +171,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                                 className="days-field-common__item-input"
                                 type="text"
                                 maxLength={4}
-                                value={targetInformation.value}
+                                value={targetInformation.value ? targetInformation.value : "-"}
                                 onChange={(e) => {ChangeAdditionalInformationText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm();
                                 ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}/>
                         </div>

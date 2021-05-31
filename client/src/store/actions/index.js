@@ -113,6 +113,12 @@ const ChangeAdjustment = () => {
     }
 }
 
+const SaveWorkerSettings = (workerData) => {
+    return {
+        type: "Save-Worker-Settings",
+        workerData
+    }
+}
 
 const ChangeMonth = (direction) => {
     return {
@@ -264,5 +270,6 @@ export {
     ChangeIncidentsPerHour,
     ChangeMessagePlan,
     ChangeAdjustment,
-    ChangeNumberOfAcknowledgements
+    ChangeNumberOfAcknowledgements,
+    SaveWorkerSettings
 }

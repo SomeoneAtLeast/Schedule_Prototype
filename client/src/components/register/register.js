@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
-
+import {Link} from "react-router-dom";
 import {useHttp} from "../../hooks/http.hook"
 import {connect} from "react-redux"
 
