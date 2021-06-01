@@ -14,27 +14,19 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
         let workerType = "Дневная смена SMM";
 
         if (targetMonthlyShiftData.nightWorker) {
-            workerType = "Ночная смена SMM"
-
-            return
+            return workerType = "Ночная смена SMM"
         }
 
         if (targetMonthlyShiftData.kmWorker) {
-            workerType = "КМ"
-
-            return
+            return workerType = "КМ"
         }
 
         if (targetMonthlyShiftData.groupLeader) {
-            workerType = "Групп Лидер"
-
-            return
+            return workerType = "Групп Лидер"
         }
 
         if (targetMonthlyShiftData.director) {
-            workerType = "Руководитель"
-
-            return
+            return workerType = "Руководитель"
         }
 
         return workerType
@@ -58,99 +50,102 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
         })
     }
 
+    const workerTypes = ["Руководитель", "Групп Лидер", "Дневная смена SMM", "Ночная смена SMM", "КМ"];
+    const workingShifts = ["Не задано", "09-18", "11-20", "08-20", "09-21", "10-22", "11-23", "12-24", "14-02", "21-09"];  
+    const segments = ["Не задано", "А", "Г", "Н_Г", "Ж", "Ж_", "3", "К", "К_", "Н", "Н_", "О", "О_", "О_1", "Э"];  
+
     return (
-        <div className="worker-settings-modal">
-            <button 
-                className="worker-settings-modal__exit-btn"
-                onClick={() => setShowWorkerSettingsModal(false)}>
-                <img 
-                    className="worker-settings-modal__exit-btn-img"
-                    src={crossImg}
-                    alt="Выйти"/>
-            </button>
-            <div className="worker-settings-modal__title">
-                <img 
-                    className="worker-settings-modal__title-img"
-                    src={worker}
-                    alt="Иконка сотрудника"/>
-                <span className="worker-settings-modal__title-text">
-                    Карточка сотрудника
-                </span>
+        <div className="worker-settings-modal-wrapper">
+            <div className="worker-settings-modal">
+                <button 
+                    className="worker-settings-modal__exit-btn"
+                    onClick={() => setShowWorkerSettingsModal(false)}>
+                    <img 
+                        className="worker-settings-modal__exit-btn-img"
+                        src={crossImg}
+                        alt="Выйти"/>
+                </button>
+                <div className="worker-settings-modal__title">
+                    <img 
+                        className="worker-settings-modal__title-img"
+                        src={worker}
+                        alt="Иконка сотрудника"/>
+                    <span className="worker-settings-modal__title-text">
+                        Карточка сотрудника
+                    </span>
+                </div>
+                <form className="worker-settings-modal__form">
+                    <label className="worker-settings-modal__form-input-label">
+                        <span className="worker-settings-modal__form-input-name">ФИО</span>
+                        <input
+                        className="worker-settings-modal__form-input"
+                        type="text"
+                        name="workerName"
+                        maxLength={31}
+                        onChange={onChangeFormText}
+                        value={workerData.workerName}/>
+                    </label>
+                    <label className="worker-settings-modal__form-input-label worker-settings-modal__form-select-label">
+                        <span className="worker-settings-modal__form-input-name">Тип</span>
+                        <select 
+                            className="worker-settings-modal__form-select"
+                            name="workerType" 
+                            value={workerData.workerType} 
+                            onChange={onChangeFormText}>
+                                {
+                                    workerTypes.map((item) => {
+                                        return (
+                                            <option className="worker-settings-modal__form-select-option">{item}</option>
+                                        )
+                                    })
+                                }
+                        </select>
+                    </label>
+                    <label className="worker-settings-modal__form-input-label worker-settings-modal__form-select-label">
+                        <span className="worker-settings-modal__form-input-name">Смена</span>
+                        <select 
+                            className="worker-settings-modal__form-select"
+                            name="workingShiftMonth" 
+                            value={workerData.workingShiftMonth} 
+                            onChange={onChangeFormText}>
+                                {
+                                    workingShifts.map((item) => {
+                                        let classNames = "worker-settings-modal__form-select-shifts-option";
+
+                                        if (item !== "Не задано") {
+                                            classNames += ` worker-settings-modal__form-select-shifts-option-${item}`
+                                        }
+
+                                        return (
+                                            <option className={classNames}>{item}</option>
+                                        )
+                                    })
+                                }
+                        </select>
+                    </label>
+                    <label className="worker-settings-modal__form-input-label worker-settings-modal__form-select-label">
+                        <span className="worker-settings-modal__form-input-name">Сегмент</span>
+                        <select 
+                            className="worker-settings-modal__form-select"
+                            name="segment" 
+                            value={workerData.segment} 
+                            onChange={onChangeFormText}>
+                                {
+                                    segments.map((item) => {
+                                        return (
+                                            <option className="worker-settings-modal__form-select-option">{item}</option>
+                                        )
+                                    })
+                                }
+                        </select>
+                    </label>
+                </form>
+                <button 
+                    className="worker-settings-modal__btn"
+                    onClick={() => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false)}}>
+                        Сохранить
+                </button>
             </div>
-            <form className="worker-settings-modal__form">
-                <label className="worker-settings-modal__form-input-label">
-                    <span className="worker-settings-modal__form-input-name">ФИО</span>
-                    <input
-                    className="worker-settings-modal__form-input"
-                    type="text"
-                    name="workerName"
-                    maxLength={32}
-                    onChange={onChangeFormText}
-                    value={workerData.workerName}/>
-                </label>
-                <label className="worker-settings-modal__form-input-label worker-settings-modal__form-select-label">
-                    <span className="worker-settings-modal__form-input-name">Тип</span>
-                    <select 
-                        className="worker-settings-modal__form-select"
-                        name="workerType" 
-                        value={workerData.workerType} 
-                        onChange={onChangeFormText}>
-                            <option className="worker-settings-modal__form-select-option">Руководитель</option>
-                            <option className="worker-settings-modal__form-select-option">Групп Лидер</option>
-                            <option className="worker-settings-modal__form-select-option">Дневная смена SMM</option>
-                            <option className="worker-settings-modal__form-select-option">Ночная смена SMM</option>
-                            <option className="worker-settings-modal__form-select-option">КМ</option>
-                    </select>
-                </label>
-                <label className="worker-settings-modal__form-input-label worker-settings-modal__form-select-label">
-                    <span className="worker-settings-modal__form-input-name">Смена</span>
-                    <select 
-                        className="worker-settings-modal__form-select"
-                        name="workingShiftMonth" 
-                        value={workerData.workingShiftMonth} 
-                        onChange={onChangeFormText}>
-                            <option className="worker-settings-modal__form-select-option">Не задано</option>
-                            <option className="worker-settings-modal__form-select-option">09-18</option>
-                            <option className="worker-settings-modal__form-select-option">11-20</option>
-                            <option className="worker-settings-modal__form-select-option">08-20</option>
-                            <option className="worker-settings-modal__form-select-option">09-21</option>
-                            <option className="worker-settings-modal__form-select-option">10-22</option>
-                            <option className="worker-settings-modal__form-select-option">11-23</option>
-                            <option className="worker-settings-modal__form-select-option">12-24</option>
-                            <option className="worker-settings-modal__form-select-option">14-02</option>
-                            <option className="worker-settings-modal__form-select-option">21-09</option>
-                    </select>
-                </label>
-                <label className="worker-settings-modal__form-input-label worker-settings-modal__form-select-label">
-                    <span className="worker-settings-modal__form-input-name">Сегмент</span>
-                    <select 
-                        className="worker-settings-modal__form-select"
-                        name="segment" 
-                        value={workerData.segment} 
-                        onChange={onChangeFormText}>
-                            <option className="worker-settings-modal__form-select-option">Не задано</option>
-                            <option className="worker-settings-modal__form-select-option">А</option>
-                            <option className="worker-settings-modal__form-select-option">Г</option>
-                            <option className="worker-settings-modal__form-select-option">Н_Г</option>
-                            <option className="worker-settings-modal__form-select-option">Ж</option>
-                            <option className="worker-settings-modal__form-select-option">Ж_</option>
-                            <option className="worker-settings-modal__form-select-option">3</option>
-                            <option className="worker-settings-modal__form-select-option">К</option>
-                            <option className="worker-settings-modal__form-select-option">К_</option>
-                            <option className="worker-settings-modal__form-select-option">Н</option>
-                            <option className="worker-settings-modal__form-select-option">Н_</option>
-                            <option className="worker-settings-modal__form-select-option">О</option>
-                            <option className="worker-settings-modal__form-select-option">О_</option>
-                            <option className="worker-settings-modal__form-select-option">О_1</option>
-                            <option className="worker-settings-modal__form-select-option">Э</option>
-                    </select>
-                </label>
-            </form>
-            <button 
-                className="worker-settings-modal__btn"
-                onClick={() => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false)}}>
-                    Сохранить
-            </button>
         </div>
     )
 

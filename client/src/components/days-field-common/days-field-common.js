@@ -94,10 +94,17 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
 
     const getWorkerElement = (workerNumber) => {
         const targetWorker = workers[workerNumber];
+        const targetMonth = targetWorker.years[0].months[currentMonth - 1];
         let monthData = [];
+        let classNames = "days-field-common__item-link";
+
+        if (targetMonth.monthlyShiftData.workingShiftMonth &&
+            targetMonth.monthlyShiftData.workingShiftMonth !== "Не задано") {
+            classNames += ` days-field-common__item-link-${targetMonth.monthlyShiftData.workingShiftMonth}`;
+        }
 
         monthData.push(
-            <td className = "days-field-common__item" 
+            <td className = "days-field-common__item"
                 key={workerNumber}>
                     <button 
                         className = "days-field-common__item-worker-settings-btn"
@@ -109,7 +116,7 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
                     </button>
                     <Link 
                         to={`/personalschedule/${workerNumber + 1}`}
-                        className = "days-field-common__item-link"
+                        className = {classNames}
                         onClick={() => SelectWorker(workerNumber)}>
                         {targetWorker.name}
                     </Link>

@@ -374,11 +374,14 @@ const reducer = (state = initialState, action) => {
 
             targetWorker.name = workerData.workerName;
 
-            targetMonth.monthlyShiftData.nightWorker = false;
-            targetMonth.monthlyShiftData.kmWorker = false;
-            targetMonth.monthlyShiftData.groupLeader = false;
-            targetMonth.monthlyShiftData.director = false;
-            
+            console.log(targetMonth.monthlyShiftData)
+
+            targetMonth.monthlyShiftData.nightWorker = null;
+            targetMonth.monthlyShiftData.kmWorker = null;
+            targetMonth.monthlyShiftData.groupLeader = null;
+            targetMonth.monthlyShiftData.director = null;
+
+            console.log(targetMonth.monthlyShiftData)
             if (workerData.workerType === "Ночная смена SMM") {
                 targetMonth.monthlyShiftData.nightWorker = true;
             }
@@ -394,10 +397,15 @@ const reducer = (state = initialState, action) => {
             if (workerData.workerType === "Руководитель") {
                 targetMonth.monthlyShiftData.director = true;
             }
+            console.log(targetMonth.monthlyShiftData)
 
-            targetMonth.monthlyShiftData.workingShiftMonth = action.workingShiftMonth;
-            targetMonth.additionalInformation[1].value = action.segment;
+            if (workerData.workingShiftMonth) {
+                targetMonth.monthlyShiftData.workingShiftMonth = workerData.workingShiftMonth;
+            }
 
+            targetMonth.additionalInformation[1].value = workerData.segment;
+
+            console.log(targetMonth.monthlyShiftData)
             return {
                 ...state,
                 workers: newWorkers
@@ -772,17 +780,7 @@ const reducer = (state = initialState, action) => {
             const {workers, currentMonth} = state;
             const newWorkers = [...workers.slice()];
             const targetMonth = newWorkers[action.workerId].years[0].months[currentMonth - 1];
-
-            if (action.objKey === "segment") {
-                targetMonth.additionalInformation[1].value = action.e.target.value;
-
-                return {
-                    ...state,
-                    workers: newWorkers
-                }
-            }
         
-            
             if (isNaN(action.e.target.value)) {
                 return {
                     ...state

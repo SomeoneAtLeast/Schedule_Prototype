@@ -1,3 +1,12 @@
+.worker-settings-modal-wrapper {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 5;
+}
+
 .worker-settings-modal {
     position: absolute;
     box-sizing: border-box;
@@ -11,7 +20,9 @@
     width: 450px;
     height: 330px;
     padding: 20px 20px;
+    font-size: 19px;
     box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.5);
+    z-index: 3;
 }
 
 .worker-settings-modal__exit-btn {
@@ -92,13 +103,14 @@
     &::after {
         position: absolute;
         content: "";
-        top: 9px;
+        top: 8px;
         right: 11px;
         width: 12px;
         height: 7px;
         background: white;
         clip-path: polygon(100% 0%, 0 0%, 50% 100%);
         transition: 0.3s;
+        cursor: pointer;
     }
 
     &:hover {
@@ -121,9 +133,52 @@
     cursor: pointer;
 }
 
-
 .worker-settings-modal__form-select-option {
     background: #ea6153;
+}
+
+.worker-settings-modal__form-select-shifts-option {
+    color: white;
+}
+
+.worker-settings-modal__form-select-shifts-option:first-child {
+    background: white;
+}
+
+.worker-settings-modal__form-select-shifts-option-09-18 {
+    background-color:#ffa8d5;
+}
+
+.worker-settings-modal__form-select-shifts-option-11-20 {
+    background-color:#ce6b9e;
+}
+
+.worker-settings-modal__form-select-shifts-option-08-20 {
+    background-color:#23c6db;
+}
+
+.worker-settings-modal__form-select-shifts-option-09-21 {
+    background-color:#cccb79;
+}
+
+.worker-settings-modal__form-select-shifts-option-10-22 {
+    background-color:#6fc48c;
+}
+
+.worker-settings-modal__form-select-shifts-option-11-23 {
+    background-color:#d55959;
+}
+
+.worker-settings-modal__form-select-shifts-option-12-24 {
+    background-color:#aca88b;
+}
+
+.worker-settings-modal__form-select-shifts-option-14-02 {
+    background-color:#ae9478;
+}
+
+.worker-settings-modal__form-select-shifts-option-21-09 {
+    background-color: #5e69a6;
 }
 
 .worker-settings-modal__btn {
@@ -156,4 +211,105 @@
             transform: translateY(-2px);
         }
     }
+}
+
+@media (max-width: 1485px) { 
+
+    .worker-settings-modal {
+        font-size: 17px;
+        width: 390px;
+        height: 315px;
+        margin-left: -195px;
+        margin-top: -155px;
+    }
+
+    .worker-settings-modal__form-input-name {
+        font-size: 16px;
+    }
+
+    .worker-settings-modal__form-input,
+    .worker-settings-modal__form-select {
+        font-size: 14px;
+    }
+
+    .worker-settings-modal__btn {
+        font-size: 14px;
+    }
+
+    .worker-settings-modal__form-select-label {
+
+        &::after {
+            width: 11px;
+            height: 6px;
+        }
+    }
+    
+}
+
+@media (max-width: 1000px) { 
+
+    .worker-settings-modal {
+        font-size: 15px;
+        width: 350px;
+        height: 302px;
+        margin-left: -175px;
+        margin-top: -151px;
+    }
+
+    .worker-settings-modal__form-input-name {
+        font-size: 14px;
+    }
+
+    .worker-settings-modal__form-input,
+    .worker-settings-modal__form-select {
+        font-size: 12px;
+    }
+
+    .worker-settings-modal__btn {
+        font-size: 12px;
+    }
+
+    .worker-settings-modal__form-select-label {
+
+        &::after {
+            width: 10px;
+            height: 6px;
+            top: 7px;
+        }
+    }
+    
+}
+
+@media (max-width: 600px) { 
+
+    .worker-settings-modal {
+        font-size: 13px;
+        width: 295px;
+        height: 291px;
+        margin-left: -210px;
+        margin-top: -146px;
+        padding: 20px 10px;
+    }
+
+    .worker-settings-modal__form-input-name {
+        font-size: 12px;
+    }
+
+    .worker-settings-modal__form-input,
+    .worker-settings-modal__form-select {
+        font-size: 11px;
+    }
+
+    .worker-settings-modal__btn {
+        font-size: 11px;
+    }
+
+    .worker-settings-modal__form-select-label {
+        &::after {
+            width: 9px;
+            height: 6px;
+            top: 6px;
+        }
+    }
+    
 }
