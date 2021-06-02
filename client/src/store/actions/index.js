@@ -190,6 +190,15 @@ const ChangeAdditionalInformationText = (workerId, objKey, e) => {
     }
 }
 
+const ChangeShiftAndTeamText = (workerId, objKey, e) => {
+    return {
+        type: "Change-Shift-And-Team-Text",
+        workerId,
+        objKey,
+        e 
+    }
+}
+
 const ChangeShiftText = (id, dataArr, objKey, e) => {
     return {
         type: "Change-Shift-Text",
@@ -271,5 +280,6 @@ export {
     ChangeMessagePlan,
     ChangeAdjustment,
     ChangeNumberOfAcknowledgements,
-    SaveWorkerSettings
+    SaveWorkerSettings,
+    ChangeShiftAndTeamText
 }

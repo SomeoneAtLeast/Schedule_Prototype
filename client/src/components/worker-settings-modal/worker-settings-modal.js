@@ -1,13 +1,15 @@
 import React, {useState} from "react";
 import {connect} from "react-redux"
-import {SaveWorkerSettings} from "../../store/actions"
+import {SaveWorkerSettings, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient,
+    ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm} from "../../store/actions"
 
 import "./worker-settings-modal.scss"
 
 import crossImg from "../../global-imgs/cross.svg"
 import worker from "../../global-imgs/worker.svg"
 
-const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWorkerSettingsModal, SaveWorkerSettings}) => {
+const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWorkerSettingsModal, SaveWorkerSettings, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks,
+    ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm}) => {
 
     const workerTypeConverter = () => {
         const targetMonthlyShiftData = workers[selectedWorker].years[0].months[currentMonth - 1].monthlyShiftData;
@@ -51,7 +53,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
     }
 
     const workerTypes = ["Руководитель", "Групп Лидер", "Дневная смена SMM", "Ночная смена SMM", "КМ"];
-    const workingShifts = ["Не задано", "09-18", "11-20", "08-20", "09-21", "10-22", "11-23", "12-24", "14-02", "21-09"];  
+    const workingShifts = ["Не задано", "Руководитель", "09-18", "11-20", "08-20", "09-21", "10-22", "11-23", "12-24", "14-02", "21-09"];  
     const segments = ["Не задано", "А", "Г", "Н_Г", "Ж", "Ж_", "3", "К", "К_", "Н", "Н_", "О", "О_", "О_1", "Э"];  
 
     return (
@@ -95,7 +97,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                                 {
                                     workerTypes.map((item) => {
                                         return (
-                                            <option className="worker-settings-modal__form-select-option">{item}</option>
+                                            <option className="worker-settings-modal__form-select-option" key={item}>{item}</option>
                                         )
                                     })
                                 }
@@ -111,13 +113,18 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                                 {
                                     workingShifts.map((item) => {
                                         let classNames = "worker-settings-modal__form-select-shifts-option";
+                                        let verifiedWorkingTime = item;
+                                            
+                                        if (verifiedWorkingTime === "Руководитель") {
+                                            verifiedWorkingTime = "director"
+                                        }
 
-                                        if (item !== "Не задано") {
-                                            classNames += ` worker-settings-modal__form-select-shifts-option-${item}`
+                                        if (verifiedWorkingTime !== "Не задано") {
+                                            classNames += ` worker-settings-modal__form-select-shifts-option-${verifiedWorkingTime}`
                                         }
 
                                         return (
-                                            <option className={classNames}>{item}</option>
+                                            <option className={classNames} key={item}>{item}</option>
                                         )
                                     })
                                 }
@@ -133,7 +140,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                                 {
                                     segments.map((item) => {
                                         return (
-                                            <option className="worker-settings-modal__form-select-option">{item}</option>
+                                            <option className="worker-settings-modal__form-select-option" key={item}>{item}</option>
                                         )
                                     })
                                 }
@@ -142,7 +149,8 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                 </form>
                 <button 
                     className="worker-settings-modal__btn"
-                    onClick={() => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false)}}>
+                    onClick={() => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false); ChangeMonthlyNorm();
+                        ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}>
                         Сохранить
                 </button>
             </div>
@@ -152,7 +160,16 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
 }
 
 const mapDispatchToProps = {
-    SaveWorkerSettings
+    SaveWorkerSettings,
+    ChangeMonthlyNorm,
+    ChangeNumberOfShifts,
+    ChangeNumberOfBreaks,
+    ChangeWithTrainingAndBreaks,
+    ChangeWithADecreasingCoefficient,
+    ChangeTotalWithTheNight, 
+    ChangeMessagePlan, 
+    ChangeAdjustment,
+    ChangeNorm
 }
 
 const mapStateToProps = ({workers, selectedWorker, currentMonth}) => {

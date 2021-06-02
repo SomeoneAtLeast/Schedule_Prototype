@@ -59,7 +59,7 @@
             border-right: 1px solid #DDD;
 
             &:hover {
-                color: #ea6153;
+                color: rgba(0, 0, 0, 0.6);
             }
 
             &:active {
@@ -76,6 +76,19 @@
 
     &:nth-child(2){
         border-left: none;
+    }
+
+    &--specified {
+        .days-field-common__item-worker-settings-btn + .days-field-common__item-link {
+            
+            &:hover {
+                color:  rgba(255, 255, 255, 0.6) 
+            }
+        }
+
+        .days-field-common__item-worker-settings-btn-img {
+            fill: white;
+        }
     }
 }
 
@@ -131,7 +144,8 @@
 
 .days-field-common__item-worker-settings-btn-img {
     width: 12px;
-    opacity: 0.8;
+    height: 12px;
+    fill: #3f3f3f;
 }
 
 .days-field-common__days-item,
@@ -224,56 +238,62 @@
     white-space: nowrap;
 }
 
+.worked-director,
+.days-field-common__item:first-child .days-field-common__item-link--director {
+    background-color:#db9191;
+    color: white;
+}
+
 .worked-09-18,
-.days-field-common__item:first-child .days-field-common__item-link-09-18 {
+.days-field-common__item:first-child .days-field-common__item-link--09-18 {
     background-color:#ffa8d5;
     color: white;
 }
 
 .worked-11-20,
-.days-field-common__item:first-child .days-field-common__item-link-11-20 {
+.days-field-common__item:first-child .days-field-common__item-link--11-20 {
     background-color:#ce6b9e;
     color: white;
 }
 
 .worked-08-20,
-.days-field-common__item:first-child .days-field-common__item-link-08-20 {
+.days-field-common__item:first-child .days-field-common__item-link--08-20 {
     background-color:#23c6db;
     color: white;
 }
 
 .worked-09-21,
-.days-field-common__item:first-child .days-field-common__item-link-09-21 {
+.days-field-common__item:first-child .days-field-common__item-link--09-21 {
     background-color:#cccb79;
     color: white;
 }
 
 .worked-10-22,
-.days-field-common__item:first-child .days-field-common__item-link-10-22 {
+.days-field-common__item:first-child .days-field-common__item-link--10-22 {
     background-color:#6fc48c;
     color: white;
 }
 
 .worked-11-23,
-.days-field-common__item:first-child .days-field-common__item-link-11-23 {
+.days-field-common__item:first-child .days-field-common__item-link--11-23 {
     background-color:#d55959;
     color: white;
 }
 
 .worked-12-24,
-.days-field-common__item:first-child .days-field-common__item-link-12-24 {
+.days-field-common__item:first-child .days-field-common__item-link--12-24 {
     background-color:#aca88b;
     color: white;
 }
 
 .worked-14-02,
-.days-field-common__item:first-child .days-field-common__item-link-14-02 {
+.days-field-common__item:first-child .days-field-common__item-link--14-02 {
     background-color:#ae9478;
     color: white;
 }
 
 .worked-21-09,
-.days-field-common__item:first-child .days-field-common__item-link-21-09 {
+.days-field-common__item:first-child .days-field-common__item-link--21-09 {
     background-color: #5e69a6;
     color: white;
 }
@@ -305,7 +325,6 @@
     }
 
     .days-field-common__item-worker-settings-btn {
-
         top: 6px;
         right: 6px;
 

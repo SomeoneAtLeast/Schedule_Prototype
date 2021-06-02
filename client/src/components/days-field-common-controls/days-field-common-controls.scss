@@ -104,6 +104,10 @@
     overflow: hidden;
     transition: 0.2s;
 
+    &:first-child {
+        width: 100%;
+    }
+
     &:hover {
         border: 2px solid rgb(243, 243, 243);
     }
@@ -111,6 +115,13 @@
     &:active {
         transform: scale(0.95);
     }
+}
+
+.days-field-common-controls__sub-menu-item-btn-director {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(70deg, #db9191, #d7a5a5);
+    width: 100%;
 }
 
 .days-field-common-controls__sub-menu-item-btn-09-18 {

@@ -23,6 +23,11 @@ ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, Chang
             id: -2,
             subMenu: [
                 {
+                    workingTime: "Руководитель",
+                    hoursCount: 8,
+                    id: -48
+                },
+                {
                     workingTime: "09-18",
                     hoursCount: 8,
                     id: -49
@@ -67,6 +72,7 @@ ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, Chang
                     hoursCount: 11,
                     id: -57
                 },
+                
             ]
         },
         {name: "weekend",  label: "Назначить выходным", hoursCount: 0, img: weekendImg, id: -3},
@@ -104,11 +110,16 @@ ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, Chang
                                     {
                                         item.subMenu.map((subItem) => {
                                             const {workingTime, hoursCount, id} = subItem;
+                                            let verifiedWorkingTime = workingTime;
+                                            
+                                            if (verifiedWorkingTime === "Руководитель") {
+                                                verifiedWorkingTime = "director"
+                                            }
 
                                             return (
                                                 <li className="days-field-common-controls__sub-menu-item" key = {id}>
                                                     <button
-                                                        className={`days-field-common-controls__sub-menu-item-btn days-field-common-controls__sub-menu-item-btn-${workingTime}`}
+                                                        className={`days-field-common-controls__sub-menu-item-btn days-field-common-controls__sub-menu-item-btn-${verifiedWorkingTime}`}
                                                         onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, workingTime, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks();
                                                         ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();     ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}>   
                                                             <span className="days-field-common-controls__sub-menu-item-btn-text">
