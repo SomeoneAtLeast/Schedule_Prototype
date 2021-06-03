@@ -16,8 +16,11 @@ import WorkerSettingsModal from "../worker-settings-modal";
 // Смены (день) = количество непустых ячеек +
 // Смены (ночь) = количество ячеек имеющих более 3 рабочих часов +
 // Смены (KM) = количество ячеек имеющих более 3 рабочих часов + 1 +
+// Смены (ГЛ) = не задаются +
 // Перерывы = смены * 50 / 60 (с округлением до ближайшего целого) +
+// Перерывы (ГЛ) = не задаются +
 // Норма = Месячная норма по графику +
+// Норма (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и суммируем их нормы, часы ГЛ не учитываются +
 // С обучением / перерывами = Норма - Перерывы (до округления) - Обучение +
 // С понижающим коэффициентом = С обучением / перерывами * Коэффициент (с округлением до ближайшего целого) +
 // Итог с учетом ночи = С понижающим коэффициентом * Коэффициент ночь (с округлением до ближайшего целого) +
@@ -30,6 +33,9 @@ import WorkerSettingsModal from "../worker-settings-modal";
 // Корректировка = Итог с учетом ночи / Месячная норма по графику +
 // Обучение = вручную + СДЕЛАТЬ 8 По-умолчанию +
 
+
+
+// После открытия попапа не работает назначение
 
 import "./days-field-common.scss"
 
@@ -147,8 +153,9 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                             <input 
                                 className="days-field-common__item-input"
                                 type="text"
-                                maxLength={4}
-                                onChange={(e) => ChangeShiftAndTeamText(targetWorker.id - 1, targetInformation.name, e)}
+                                maxLength={2}
+                                onChange={(e) => {ChangeShiftAndTeamText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm();
+                                    ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}
                                 value={targetInformation.value}/>
                         </div>
                 </td>

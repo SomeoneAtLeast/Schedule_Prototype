@@ -89,13 +89,18 @@ const reducer = (state = initialState, action) => {
             const newWorkers = [...workers.slice()];
         
             newWorkers.forEach((worker) => {
-                let shifts = 0;
+
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
                 const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
+                const groupLeader = targetMonth.monthlyShiftData.groupLeader;
 
-                if (isNightWorker) {
+                let shifts = 0;
+
+                if (groupLeader) {
+                    targetMonth.additionalInformation[2].value = "-";
+                } else if (isNightWorker) {
 
                     targetDays.forEach((day) => {
                         if (day.workingHours > 3) {
@@ -135,12 +140,14 @@ const reducer = (state = initialState, action) => {
             const newWorkers = [...workers.slice()];
         
             newWorkers.forEach((worker) => {
-                let shifts = 0;
 
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
                 const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
+                const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+                let shifts = 0;
 
                 if (isNightWorker) {
 
@@ -168,8 +175,13 @@ const reducer = (state = initialState, action) => {
                 }
 
                 const initialValue = shifts * 50 / 60;
-                const breaksOrgignal = Number(initialValue.toFixed(1));
-                const breaks = Math.round(initialValue);
+                let breaksOrgignal = Number(initialValue.toFixed(1));
+                let breaks = Math.round(initialValue);
+
+                if (groupLeader) {
+                    breaksOrgignal = "-";
+                    breaks = "-";
+                }
 
                 targetMonth.additionalInformation[3].value = breaks;
                 targetMonth.additionalInformation[10].value = breaksOrgignal;
@@ -184,10 +196,36 @@ const reducer = (state = initialState, action) => {
         case "Change-Norm": {
             const {workers, currentMonth} = state;
             const newWorkers = [...workers.slice()];
-        
+
             newWorkers.forEach((worker) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
-                const norm = targetMonth.additionalInformation[0].value
+                const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+                let norm = targetMonth.additionalInformation[0].value;
+
+                if (groupLeader) {
+                    const groupLeaderTeamNumber = worker.years[0].months[currentMonth - 1].shiftAndTeam[1].value;
+                    let normAllWorkers = 0;
+
+                    newWorkers.forEach((worker) => {
+                        const targetMonth = worker.years[0].months[currentMonth - 1];
+                        const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+                        if (targetMonth.shiftAndTeam[1].value === groupLeaderTeamNumber &&
+                            !isGroupLeader) {
+                            let workingHours = 0;
+                            const targetDays = worker.years[0].months[currentMonth - 1].days;
+        
+                            targetDays.forEach((day) => {
+                                workingHours = workingHours + day.workingHours
+            
+                            })
+    
+                            normAllWorkers = normAllWorkers + workingHours;
+                        }
+                    })
+
+                    norm = normAllWorkers;
+                }
   
                 targetMonth.additionalInformation[4].value = norm;
             })
@@ -834,7 +872,7 @@ const reducer = (state = initialState, action) => {
             }
             
             if (action.objKey === "shift№") {
-                targetMonth.shiftAndTeam[0].value = action.e.target.value;
+                targetMonth.shiftAndTeam[0].value = Number(action.e.target.value);
 
                 return {
                     ...state,
@@ -843,7 +881,7 @@ const reducer = (state = initialState, action) => {
             }
 
             if (action.objKey === "team№") {
-                targetMonth.shiftAndTeam[1].value = action.e.target.value;
+                targetMonth.shiftAndTeam[1].value = Number(action.e.target.value);
 
                 return {
                     ...state,
