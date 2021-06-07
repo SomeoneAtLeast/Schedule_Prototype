@@ -107,6 +107,18 @@ const ChangeMessagePlan = () => {
     }
 }
 
+const ChangeAcknowledgements = () => {
+    return {
+        type: "Change-Acknowledgements"
+    }
+}
+
+const ChangeSecondBreaks = () => {
+    return {
+        type: "Change-Second-Breaks"
+    }
+}
+
 const ChangeAdjustment = () => {
     return {
         type: "Change-Adjustment"
@@ -281,5 +293,7 @@ export {
     ChangeAdjustment,
     ChangeNumberOfAcknowledgements,
     SaveWorkerSettings,
-    ChangeShiftAndTeamText
+    ChangeShiftAndTeamText,
+    ChangeAcknowledgements,
+    ChangeSecondBreaks
 }

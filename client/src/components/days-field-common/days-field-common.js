@@ -5,7 +5,8 @@ import {connect} from "react-redux"
 import {useHttp} from "../../hooks/http.hook"
 import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays,
 WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks,
-ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText} from "../../store/actions"
+ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment,
+ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText, ChangeAcknowledgements, ChangeSecondBreaks} from "../../store/actions"
 import DualBall from "../dual-ball";
 import UnsavedChangesModal from "../unsaved-changes-modal";
 import WorkerSettingsModal from "../worker-settings-modal";
@@ -13,21 +14,41 @@ import WorkerSettingsModal from "../worker-settings-modal";
 
 // Месячная норма по графику = сложить часы каждого дня +
 // Сегмент = вручную +
+
 // Смены (день) = количество непустых ячеек +
 // Смены (ночь) = количество ячеек имеющих более 3 рабочих часов +
 // Смены (KM) = количество ячеек имеющих более 3 рабочих часов + 1 +
 // Смены (ГЛ) = не задаются +
+
 // Перерывы = смены * 50 / 60 (с округлением до ближайшего целого) +
 // Перерывы (ГЛ) = не задаются +
+
 // Норма = Месячная норма по графику +
 // Норма (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и суммируем их нормы, часы ГЛ не учитываются +
+
 // С обучением / перерывами = Норма - Перерывы (до округления) - Обучение +
+// С обучением / перерывами (ГЛ) = ищем всех сотрудников с тем же номером команды,
+// что и у гл и суммируем их С обучением / перерывами, гл не учитывается, потом округление до ближайшего целого +
+
 // С понижающим коэффициентом = С обучением / перерывами * Коэффициент (с округлением до ближайшего целого) +
+// С понижающим коэффициентом (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и суммируем С понижающим коэффициентом, часы ГЛ не учитываются
+// (с округлением до ближайшего целого) +
+
 // Итог с учетом ночи = С понижающим коэффициентом * Коэффициент ночь (с округлением до ближайшего целого) +
+// Итог с учетом ночи (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем Итог с учетом ночи, часы ГЛ не учитываются
+// (с округлением до ближайшего целого) +
+
 // План по сообщениям (День) = С понижающим коэффициентом * на эффективность вверху графика +
 // План по сообщениям (Ночь) = (С понижающим коэффициентом / 2 * на эффективность вверху графика) + (С понижающим коэффициентом / 2 * (Коэффициент Ночь * 10)) +
 // План по сообщениям (КМ) = С понижающим коэффициентом * благодарности вверху +
+// План по сообщениям (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем План по сообщениям , план ГЛ не учитываются
+// (с округлением до ближайшего целого) +
+
 // Благодарности = вручную + СДЕЛАТЬ 3 По-умолчанию + 
+// Благодарности (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем Благодарности , Благодарности ГЛ не учитываются + 
+
+// Вторые перерывы (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем Перерывы + 
+
 // Коэффициент = вручную + СДЕЛАТЬ 1 По-умолчанию +
 // Коэффициент Ночь = вручную + СДЕЛАТЬ 1 По-умолчанию +
 // Корректировка = Итог с учетом ночи / Месячная норма по графику +
@@ -36,13 +57,15 @@ import WorkerSettingsModal from "../worker-settings-modal";
 
 
 // После открытия попапа не работает назначение
+// После снятия выделения последний день все еще селектед
+// Коэфф сбрасиывается не на 0, а на -
 
 import "./days-field-common.scss"
 
 const DaysFieldCommon = ({workers, dates, unsavedChanges, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText,
 ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts,
 ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight,
-DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText}) => {
+DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText, ChangeAcknowledgements, ChangeSecondBreaks}) => {
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
     const [showWorkerSettingsModal, setShowWorkerSettingsModal] = useState(false);
@@ -155,7 +178,8 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 type="text"
                                 maxLength={2}
                                 onChange={(e) => {ChangeShiftAndTeamText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm();
-                                    ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}
+                                    ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
+                                    ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}}
                                 value={targetInformation.value}/>
                         </div>
                 </td>
@@ -203,7 +227,8 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 maxLength={2}
                                 value={targetDay.workingHours}
                                 onChange={(e) =>  {ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e); ChangeMonthlyNorm();
-                                ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}
+                                ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
+                                ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}}
                             />
                         </div>
                 </td>
@@ -224,7 +249,8 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 maxLength={4}
                                 value={targetInformation.value ? targetInformation.value : "-"}
                                 onChange={(e) => {ChangeAdditionalInformationText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm();
-                                ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}/>
+                                ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
+                                 ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}}/>
                         </div>
                 </td>
             )
@@ -426,7 +452,9 @@ const mapDispatchToProps = {
     ChangeMessagePlan,
     ChangeAdjustment,
     ChangeNumberOfAcknowledgements,
-    ChangeShiftAndTeamText
+    ChangeShiftAndTeamText,
+    ChangeAcknowledgements,
+    ChangeSecondBreaks
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, unsavedChanges, dates}) => {

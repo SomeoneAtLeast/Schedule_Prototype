@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {connect} from "react-redux"
 import {SaveWorkerSettings, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient,
-    ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm} from "../../store/actions"
+    ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm, ChangeAcknowledgements, ChangeSecondBreaks} from "../../store/actions"
 
 import "./worker-settings-modal.scss"
 
@@ -9,7 +9,7 @@ import crossImg from "../../global-imgs/cross.svg"
 import worker from "../../global-imgs/worker.svg"
 
 const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWorkerSettingsModal, SaveWorkerSettings, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks,
-    ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm}) => {
+    ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm, ChangeAcknowledgements, ChangeSecondBreaks}) => {
 
     const workerTypeConverter = () => {
         const targetMonthlyShiftData = workers[selectedWorker].years[0].months[currentMonth - 1].monthlyShiftData;
@@ -150,7 +150,8 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                 <button 
                     className="worker-settings-modal__btn"
                     onClick={() => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false); ChangeMonthlyNorm();
-                        ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}>
+                        ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
+                        ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}}>
                         Сохранить
                 </button>
             </div>
@@ -169,7 +170,9 @@ const mapDispatchToProps = {
     ChangeTotalWithTheNight, 
     ChangeMessagePlan, 
     ChangeAdjustment,
-    ChangeNorm
+    ChangeNorm,
+    ChangeAcknowledgements,
+    ChangeSecondBreaks
 }
 
 const mapStateToProps = ({workers, selectedWorker, currentMonth}) => {

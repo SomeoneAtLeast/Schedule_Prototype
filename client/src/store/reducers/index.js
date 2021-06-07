@@ -247,6 +247,7 @@ const reducer = (state = initialState, action) => {
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
                 const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
+                const groupLeader = targetMonth.monthlyShiftData.groupLeader;
 
                 if (isNightWorker) {
 
@@ -283,6 +284,62 @@ const reducer = (state = initialState, action) => {
                     withTrainingBreaks = 0;
                 }
 
+                if (groupLeader) {
+                    const groupLeaderTeamNumber = worker.years[0].months[currentMonth - 1].shiftAndTeam[1].value;
+                    let withTrainingBreaksAllWorkers = 0;
+
+                    newWorkers.forEach((worker) => {
+                        const targetMonth = worker.years[0].months[currentMonth - 1];
+                        const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+                        if (targetMonth.shiftAndTeam[1].value === groupLeaderTeamNumber &&
+                            !isGroupLeader) {
+                            let shifts = 0;
+                            const targetDays = worker.years[0].months[currentMonth - 1].days;
+        
+                            if (isNightWorker) {
+
+                                targetDays.forEach((day) => {
+                                    if (day.workingHours > 3) {
+                                        shifts = shifts + 1
+                                    }
+                                })
+            
+                                shifts = shifts + 1;
+                            } else if (isKmWorker) {
+            
+                                targetDays.forEach((day) => {
+                                    if (day.workingHours > 3) {
+                                        shifts = shifts + 1
+                                    }
+                                })
+            
+                            } else {
+                                targetDays.forEach((day) => {
+                                    if (day.workingHours > 0) {
+                                        shifts = shifts + 1
+                                    }
+                                })
+                            }
+            
+                            const initialBreaks = shifts * 50 / 60;
+
+                            const norm = targetMonth.additionalInformation[0].value;
+                            const training = targetMonth.additionalInformation[14].value;
+                            let withTrainingBreaks = norm - initialBreaks - training;
+            
+                            if (withTrainingBreaks < 0) {
+                                withTrainingBreaks = 0;
+                            }
+
+
+                            withTrainingBreaksAllWorkers = withTrainingBreaksAllWorkers + withTrainingBreaks;
+                        }
+                    })
+
+                    withTrainingBreaks = Number(withTrainingBreaksAllWorkers.toFixed(0));
+                }
+
                 targetMonth.additionalInformation[5].value = withTrainingBreaks;
             })
         
@@ -299,7 +356,32 @@ const reducer = (state = initialState, action) => {
             newWorkers.forEach((worker) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const withTrainingBreaks = targetMonth.additionalInformation[5].value;
-                const withADecreasingCoefficient = withTrainingBreaks * targetMonth.additionalInformation[11].value
+                let withADecreasingCoefficient = withTrainingBreaks * targetMonth.additionalInformation[11].value;
+                const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+
+                if (groupLeader) {
+                    const groupLeaderTeamNumber = worker.years[0].months[currentMonth - 1].shiftAndTeam[1].value;
+                    let withADecreasingCoefficientAllWorkers = 0;
+
+                    newWorkers.forEach((worker) => {
+                        const targetMonth = worker.years[0].months[currentMonth - 1];
+                        const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+                        if (targetMonth.shiftAndTeam[1].value === groupLeaderTeamNumber &&
+                            !isGroupLeader) {
+                            const withTrainingBreaks = targetMonth.additionalInformation[5].value;
+                            const workingHours = withTrainingBreaks.toFixed() * targetMonth.additionalInformation[11].value;
+
+    
+                            withADecreasingCoefficientAllWorkers = withADecreasingCoefficientAllWorkers + workingHours;
+                        }
+                    })
+
+                    withADecreasingCoefficient = Number(withADecreasingCoefficientAllWorkers);
+                }
+
+
 
                 targetMonth.additionalInformation[6].value = withADecreasingCoefficient.toFixed();
             })
@@ -313,12 +395,37 @@ const reducer = (state = initialState, action) => {
         case "Change-Total-With-The-Night": {
             const {workers, currentMonth} = state;
             const newWorkers = [...workers.slice()];
-        
+
             newWorkers.forEach((worker) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
                 const coefficientNight = targetMonth.additionalInformation[12].value;
-                const totalWithTheNight = withADecreasingCoefficient * coefficientNight;
+                let totalWithTheNight = withADecreasingCoefficient * coefficientNight;
+                const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+
+                if (groupLeader) {
+                    const groupLeaderTeamNumber = worker.years[0].months[currentMonth - 1].shiftAndTeam[1].value;
+                    let totalWithTheNightAllWorkers = 0;
+
+                    newWorkers.forEach((worker) => {
+                        const targetMonth = worker.years[0].months[currentMonth - 1];
+                        const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
+                        const coefficientNight = targetMonth.additionalInformation[12].value;
+                        const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+                        if (targetMonth.shiftAndTeam[1].value === groupLeaderTeamNumber &&
+                            !isGroupLeader) {
+
+                            const workingHours = withADecreasingCoefficient * coefficientNight;
+
+    
+                            totalWithTheNightAllWorkers = totalWithTheNightAllWorkers + workingHours;
+                        }
+                    })
+
+                    totalWithTheNight = Number(totalWithTheNightAllWorkers);
+                }
 
                 targetMonth.additionalInformation[7].value = totalWithTheNight.toFixed(1);
             })
@@ -337,6 +444,7 @@ const reducer = (state = initialState, action) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
                 const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
+                const groupLeader = targetMonth.monthlyShiftData.groupLeader;
                 const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
                 const efficiencyPerHour = dates[0].months[currentMonth - 1].efficiencyPerHour;
                 const numberOfAcknowledgements = dates[0].months[currentMonth - 1].numberOfAcknowledgements;
@@ -365,9 +473,117 @@ const reducer = (state = initialState, action) => {
                     }
                 }
 
-                const messagePlan = withADecreasingCoefficient * efficiencyPerHour;
+                let messagePlan = withADecreasingCoefficient * efficiencyPerHour;
+
+
+                if (groupLeader) {
+                    const groupLeaderTeamNumber = worker.years[0].months[currentMonth - 1].shiftAndTeam[1].value;
+                    let messagePlanAllWorkers = 0;
+
+                    newWorkers.forEach((worker) => {
+                        const targetMonth = worker.years[0].months[currentMonth - 1];
+                        const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
+                        const efficiencyPerHour = dates[0].months[currentMonth - 1].efficiencyPerHour;
+                        const numberOfAcknowledgements = dates[0].months[currentMonth - 1].numberOfAcknowledgements;
+                        const coefficientNight = targetMonth.additionalInformation[12].value;
+                        const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
+                        let messagePlanOneWorker = 0;
+                        
+                        if (targetMonth.shiftAndTeam[1].value === groupLeaderTeamNumber &&
+                            !isGroupLeader) {
+
+                            if (isNightWorker) {
+                                messagePlanOneWorker = (withADecreasingCoefficient / 2 * efficiencyPerHour) + (withADecreasingCoefficient / 2 * (coefficientNight * 10));
+                            }
+            
+                            if (isKmWorker) {
+                                messagePlanOneWorker = withADecreasingCoefficient * numberOfAcknowledgements;
+                            }
+            
+                            messagePlanOneWorker = withADecreasingCoefficient * efficiencyPerHour;
+                            messagePlanAllWorkers = messagePlanAllWorkers + messagePlanOneWorker;
+                        }
+                    })
+
+                    messagePlan = messagePlanAllWorkers
+                }
+
 
                 targetMonth.additionalInformation[8].value = messagePlan.toFixed();
+            })
+        
+            
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-Acknowledgements": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+        
+            newWorkers.forEach((worker) => {
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+                let acknowledgements = 0;
+
+                if (groupLeader) {
+                    const groupLeaderTeamNumber = worker.years[0].months[currentMonth - 1].shiftAndTeam[1].value;
+                    let acknowledgementsAllWorkers = 0;
+
+                    newWorkers.forEach((worker) => {
+                        const targetMonth = worker.years[0].months[currentMonth - 1];
+                        const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+                        if (targetMonth.shiftAndTeam[1].value === groupLeaderTeamNumber &&
+                            !isGroupLeader) {
+                            const acknowledgementsOneWorker = targetMonth.additionalInformation[9].value;
+    
+                            acknowledgementsAllWorkers = acknowledgementsAllWorkers + Number(acknowledgementsOneWorker);
+                        }
+                    })
+
+                    acknowledgements = acknowledgementsAllWorkers;
+                    targetMonth.additionalInformation[9].value = acknowledgements;
+                }
+
+            })
+        
+            
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-Second-Breaks": {
+            const {workers, currentMonth} = state;
+            const newWorkers = [...workers.slice()];
+        
+            newWorkers.forEach((worker) => {
+                const targetMonth = worker.years[0].months[currentMonth - 1];
+                const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+                let secondBreaks = 0;
+
+                if (groupLeader) {
+                    const groupLeaderTeamNumber = worker.years[0].months[currentMonth - 1].shiftAndTeam[1].value;
+                    let secondBreaksAllWorkers = 0;
+
+                    newWorkers.forEach((worker) => {
+                        const targetMonth = worker.years[0].months[currentMonth - 1];
+                        const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+                        if (targetMonth.shiftAndTeam[1].value === groupLeaderTeamNumber &&
+                            !isGroupLeader) {
+                            const secondBreaksOneWorker = targetMonth.additionalInformation[10].value;
+    
+                            secondBreaksAllWorkers = secondBreaksAllWorkers + secondBreaksOneWorker;
+                        }
+                    })
+
+                    secondBreaks = secondBreaksAllWorkers;
+                    targetMonth.additionalInformation[10].value = secondBreaks;
+                }
+
             })
         
             
