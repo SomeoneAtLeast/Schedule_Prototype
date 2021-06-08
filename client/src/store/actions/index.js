@@ -119,9 +119,27 @@ const ChangeSecondBreaks = () => {
     }
 }
 
+const ChangeСoefficient = () => {
+    return {
+        type: "Change-Сoefficient",
+    }
+}
+
+const ChangeСoefficientNight = () => {
+    return {
+        type: "Change-Сoefficient-Night",
+    }
+}
+
 const ChangeAdjustment = () => {
     return {
         type: "Change-Adjustment"
+    }
+}
+
+const ChangeTraining = () => {
+    return {
+        type: "Change-Training"
     }
 }
 
@@ -295,5 +313,8 @@ export {
     SaveWorkerSettings,
     ChangeShiftAndTeamText,
     ChangeAcknowledgements,
-    ChangeSecondBreaks
+    ChangeSecondBreaks,
+    ChangeСoefficient,
+    ChangeСoefficientNight,
+    ChangeTraining
 }

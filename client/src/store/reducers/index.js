@@ -95,10 +95,11 @@ const reducer = (state = initialState, action) => {
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
                 const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+                const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
 
                 let shifts = 0;
 
-                if (groupLeader) {
+                if (groupLeader || nonLinearWorker) {
                     targetMonth.additionalInformation[2].value = "-";
                 } else if (isNightWorker) {
 
@@ -145,6 +146,7 @@ const reducer = (state = initialState, action) => {
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
                 const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
+                const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
 
                 let shifts = 0;
@@ -178,7 +180,7 @@ const reducer = (state = initialState, action) => {
                 let breaksOrgignal = Number(initialValue.toFixed(1));
                 let breaks = Math.round(initialValue);
 
-                if (groupLeader) {
+                if (groupLeader || nonLinearWorker) {
                     breaksOrgignal = "-";
                     breaks = "-";
                 }
@@ -247,6 +249,7 @@ const reducer = (state = initialState, action) => {
                 const targetDays = worker.years[0].months[currentMonth - 1].days;
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
                 const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
+                const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
 
                 if (isNightWorker) {
@@ -278,6 +281,7 @@ const reducer = (state = initialState, action) => {
                 const norm = targetMonth.additionalInformation[0].value;
                 const training = targetMonth.additionalInformation[14].value;
                 const withTrainingBreaksOrigin = norm - initialBreaks - training;
+                console.log(norm, initialBreaks, training)
                 let withTrainingBreaks = Number(withTrainingBreaksOrigin.toFixed(2));
 
                 if (withTrainingBreaks < 0) {
@@ -340,6 +344,10 @@ const reducer = (state = initialState, action) => {
                     withTrainingBreaks = Number(withTrainingBreaksAllWorkers.toFixed(0));
                 }
 
+                if (nonLinearWorker) {
+                    withTrainingBreaks = norm;
+                }
+
                 targetMonth.additionalInformation[5].value = withTrainingBreaks;
             })
         
@@ -357,6 +365,7 @@ const reducer = (state = initialState, action) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const withTrainingBreaks = targetMonth.additionalInformation[5].value;
                 let withADecreasingCoefficient = withTrainingBreaks * targetMonth.additionalInformation[11].value;
+                const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
 
 
@@ -381,7 +390,9 @@ const reducer = (state = initialState, action) => {
                     withADecreasingCoefficient = Number(withADecreasingCoefficientAllWorkers);
                 }
 
-
+                if (nonLinearWorker) {
+                    withADecreasingCoefficient = withTrainingBreaks;
+                }
 
                 targetMonth.additionalInformation[6].value = withADecreasingCoefficient.toFixed();
             })
@@ -401,8 +412,8 @@ const reducer = (state = initialState, action) => {
                 const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
                 const coefficientNight = targetMonth.additionalInformation[12].value;
                 let totalWithTheNight = withADecreasingCoefficient * coefficientNight;
+                const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
-
 
                 if (groupLeader) {
                     const groupLeaderTeamNumber = worker.years[0].months[currentMonth - 1].shiftAndTeam[1].value;
@@ -427,6 +438,16 @@ const reducer = (state = initialState, action) => {
                     totalWithTheNight = Number(totalWithTheNightAllWorkers);
                 }
 
+                if (nonLinearWorker) {
+                    totalWithTheNight = Number(withADecreasingCoefficient);
+                }
+
+                if (isNaN(totalWithTheNight)) {
+                    return {
+                        ...state
+                    }
+                }
+                
                 targetMonth.additionalInformation[7].value = totalWithTheNight.toFixed(1);
             })
         
@@ -444,6 +465,7 @@ const reducer = (state = initialState, action) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
                 const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
+                const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
                 const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
                 const efficiencyPerHour = dates[0].months[currentMonth - 1].efficiencyPerHour;
@@ -454,7 +476,15 @@ const reducer = (state = initialState, action) => {
                 if (isNightWorker) {
 
                     const messagePlan = (withADecreasingCoefficient / 2 * efficiencyPerHour) + (withADecreasingCoefficient / 2 * (coefficientNight * 10));
+
+                    if (isNaN(messagePlan)) {
+                        return {
+                            ...state
+                        }
+                    }
+
                     targetMonth.additionalInformation[8].value = messagePlan.toFixed();
+
 
                     return {
                         ...state,
@@ -466,6 +496,17 @@ const reducer = (state = initialState, action) => {
 
                     const messagePlan = withADecreasingCoefficient * numberOfAcknowledgements;
                     targetMonth.additionalInformation[8].value = messagePlan.toFixed(2);
+
+                    return {
+                        ...state,
+                        workers: newWorkers
+                    }
+                }
+
+                if (nonLinearWorker) {
+
+                    const messagePlan = "-";
+                    targetMonth.additionalInformation[8].value = messagePlan;
 
                     return {
                         ...state,
@@ -508,7 +549,6 @@ const reducer = (state = initialState, action) => {
                     messagePlan = messagePlanAllWorkers
                 }
 
-
                 targetMonth.additionalInformation[8].value = messagePlan.toFixed();
             })
         
@@ -524,6 +564,7 @@ const reducer = (state = initialState, action) => {
         
             newWorkers.forEach((worker) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
+                const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
                 let acknowledgements = 0;
 
@@ -547,6 +588,9 @@ const reducer = (state = initialState, action) => {
                     targetMonth.additionalInformation[9].value = acknowledgements;
                 }
 
+                if (nonLinearWorker) {
+                    targetMonth.additionalInformation[9].value = "-";
+                }
             })
         
             
@@ -592,6 +636,50 @@ const reducer = (state = initialState, action) => {
                 workers: newWorkers
             }
         }
+        case "Change-Сoefficient": {
+            const {workers, currentMonth, selectedWorker} = state;
+            const newWorkers = [...workers.slice()];
+            const targetMonth = newWorkers[selectedWorker].years[0].months[currentMonth - 1];
+            const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
+            const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+
+            if (groupLeader || nonLinearWorker) {
+                targetMonth.additionalInformation[11].value = "-";
+            } else {   
+                targetMonth.additionalInformation[11].value = 1; 
+            }
+    
+
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-Сoefficient-Night": {
+            const {workers, currentMonth, selectedWorker} = state;
+            const newWorkers = [...workers.slice()];
+            const targetMonth = newWorkers[selectedWorker].years[0].months[currentMonth - 1];
+            const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
+            const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
+            const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+
+            if (groupLeader || nonLinearWorker) {
+                targetMonth.additionalInformation[12].value = "-";
+            } else if (isNightWorker) {
+                targetMonth.additionalInformation[12].value = 0.75; 
+            }
+            else {   
+                targetMonth.additionalInformation[12].value = 1; 
+            }
+    
+
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
         case "Change-Adjustment": {
             const {workers, currentMonth} = state;
             const newWorkers = [...workers.slice()];
@@ -600,18 +688,44 @@ const reducer = (state = initialState, action) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
                 const monthlyNorm = targetMonth.additionalInformation[0].value;
                 const totalWithTheNight = targetMonth.additionalInformation[7].value;
-                const adjustment = totalWithTheNight / monthlyNorm;
+                const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
+                const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+                let adjustment = totalWithTheNight / monthlyNorm;
 
                 if (isNaN(adjustment)) {
                     return {
                         ...state
                     }
                 }
-    
-                targetMonth.additionalInformation[13].value = adjustment.toFixed(2);
+
+                if (groupLeader || nonLinearWorker) {
+                    targetMonth.additionalInformation[13].value = "-";
+                } else {
+                    targetMonth.additionalInformation[13].value = adjustment.toFixed(2);
+                }
             })
         
             
+            return {
+                ...state,
+                workers: newWorkers
+            }
+        }
+        case "Change-Training": {
+            const {workers, currentMonth, selectedWorker} = state;
+            const newWorkers = [...workers.slice()];
+            const targetMonth = newWorkers[selectedWorker].years[0].months[currentMonth - 1];
+            const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
+            const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+
+
+            if (groupLeader || nonLinearWorker) {
+                targetMonth.additionalInformation[14].value = "-";
+            } else {   
+                targetMonth.additionalInformation[14].value = 8; 
+            }
+    
+
             return {
                 ...state,
                 workers: newWorkers
@@ -631,6 +745,7 @@ const reducer = (state = initialState, action) => {
             targetMonth.monthlyShiftData.nightWorker = null;
             targetMonth.monthlyShiftData.kmWorker = null;
             targetMonth.monthlyShiftData.groupLeader = null;
+            targetMonth.monthlyShiftData.nonLinearWorker = null;
             targetMonth.monthlyShiftData.director = null;
 
             if (workerData.workerType === "Ночная смена SMM") {
@@ -643,6 +758,10 @@ const reducer = (state = initialState, action) => {
 
             if (workerData.workerType === "Групп Лидер") {
                 targetMonth.monthlyShiftData.groupLeader = true;
+            }
+
+            if (workerData.workerType === "Нелинейный сотрудник") {
+                targetMonth.monthlyShiftData.nonLinearWorker = true;
             }
 
             if (workerData.workerType === "Руководитель") {
@@ -1029,13 +1148,13 @@ const reducer = (state = initialState, action) => {
             const {workers, currentMonth} = state;
             const newWorkers = [...workers.slice()];
             const targetMonth = newWorkers[action.workerId].years[0].months[currentMonth - 1];
-        
+            
             if (isNaN(action.e.target.value)) {
                 return {
                     ...state
                 }
             }
-            
+
             if (action.objKey === "coefficient") {
                 targetMonth.additionalInformation[11].value = action.e.target.value;
 

@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import {connect} from "react-redux"
 import {SaveWorkerSettings, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient,
-    ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm, ChangeAcknowledgements, ChangeSecondBreaks} from "../../store/actions"
+    ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm, ChangeAcknowledgements, ChangeSecondBreaks, ChangeСoefficient, ChangeСoefficientNight,
+    ChangeTraining} from "../../store/actions"
 
 import "./worker-settings-modal.scss"
 
@@ -9,7 +10,8 @@ import crossImg from "../../global-imgs/cross.svg"
 import worker from "../../global-imgs/worker.svg"
 
 const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWorkerSettingsModal, SaveWorkerSettings, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks,
-    ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm, ChangeAcknowledgements, ChangeSecondBreaks}) => {
+    ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm, ChangeAcknowledgements, ChangeSecondBreaks,
+    ChangeСoefficient, ChangeСoefficientNight, ChangeTraining}) => {
 
     const workerTypeConverter = () => {
         const targetMonthlyShiftData = workers[selectedWorker].years[0].months[currentMonth - 1].monthlyShiftData;
@@ -25,6 +27,10 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
 
         if (targetMonthlyShiftData.groupLeader) {
             return workerType = "Групп Лидер"
+        }
+
+        if (targetMonthlyShiftData.nonLinearWorker) {
+            return workerType = "Нелинейный сотрудник"
         }
 
         if (targetMonthlyShiftData.director) {
@@ -52,7 +58,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
         })
     }
 
-    const workerTypes = ["Руководитель", "Групп Лидер", "Дневная смена SMM", "Ночная смена SMM", "КМ"];
+    const workerTypes = ["Руководитель", "Нелинейный сотрудник", "Групп Лидер", "Ночная смена SMM", "Дневная смена SMM", "КМ"];
     const workingShifts = ["Не задано", "Руководитель", "09-18", "11-20", "08-20", "09-21", "10-22", "11-23", "12-24", "14-02", "21-09"];  
     const segments = ["Не задано", "А", "Г", "Н_Г", "Ж", "Ж_", "3", "К", "К_", "Н", "Н_", "О", "О_", "О_1", "Э"];  
 
@@ -149,9 +155,10 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                 </form>
                 <button 
                     className="worker-settings-modal__btn"
-                    onClick={() => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false); ChangeMonthlyNorm();
-                        ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
-                        ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}}>
+                    onClick={(e) => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false); ChangeСoefficient(); ChangeMonthlyNorm();
+                        ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeTraining(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
+                        ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks();
+                        ChangeСoefficientNight()}}>
                         Сохранить
                 </button>
             </div>
@@ -172,7 +179,10 @@ const mapDispatchToProps = {
     ChangeAdjustment,
     ChangeNorm,
     ChangeAcknowledgements,
-    ChangeSecondBreaks
+    ChangeSecondBreaks,
+    ChangeСoefficient,
+    ChangeСoefficientNight,
+    ChangeTraining
 }
 
 const mapStateToProps = ({workers, selectedWorker, currentMonth}) => {
