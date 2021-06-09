@@ -155,10 +155,9 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                 </form>
                 <button 
                     className="worker-settings-modal__btn"
-                    onClick={(e) => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false); ChangeСoefficient(); ChangeMonthlyNorm();
-                        ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeTraining(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
-                        ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks();
-                        ChangeСoefficientNight()}}>
+                    onClick={(e) => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false); ChangeAcknowledgements(); ChangeСoefficient(); ChangeСoefficientNight(); ChangeTraining(); ChangeMonthlyNorm();
+                        ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeSecondBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
+                        ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}>
                         Сохранить
                 </button>
             </div>
@@ -166,6 +165,9 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
     )
 
 }
+
+
+
 
 const mapDispatchToProps = {
     SaveWorkerSettings,
