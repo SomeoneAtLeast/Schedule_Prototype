@@ -155,7 +155,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                 </form>
                 <button 
                     className="worker-settings-modal__btn"
-                    onClick={(e) => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false); ChangeAcknowledgements(); ChangeСoefficient(); ChangeСoefficientNight(); ChangeTraining(); ChangeMonthlyNorm();
+                    onClick={(e) => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false); ChangeAcknowledgements(e); ChangeСoefficient(); ChangeСoefficientNight(); ChangeTraining(); ChangeMonthlyNorm();
                         ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeSecondBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
                         ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}>
                         Сохранить

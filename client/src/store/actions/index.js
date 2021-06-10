@@ -107,9 +107,10 @@ const ChangeMessagePlan = () => {
     }
 }
 
-const ChangeAcknowledgements = () => {
+const ChangeAcknowledgements = (e) => {
     return {
-        type: "Change-Acknowledgements"
+        type: "Change-Acknowledgements",
+        e
     }
 }
 

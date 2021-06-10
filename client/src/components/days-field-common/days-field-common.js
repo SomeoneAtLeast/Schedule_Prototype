@@ -50,6 +50,8 @@ import WorkerSettingsModal from "../worker-settings-modal";
 // Итог с учетом ночи (Нелинейный) = Месячная норма по графику +
 // Итог с учетом ночи (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем Итог с учетом ночи, часы ГЛ не учитываются
 // (с округлением до ближайшего целого) +
+// Итог с учетом ночи (Руководитель) =  (почему-то один ГЛ не участвовал - добавил и его). Складываются Итог с учетом ночи
+// всех линейных сотрудников, то есть то же самое, что всех гл. +
 
 // План по сообщениям (День) = С понижающим коэффициентом * на эффективность вверху графика +
 // План по сообщениям (Ночь) = (С понижающим коэффициентом / 2 * на эффективность вверху графика) + (С понижающим коэффициентом / 2 * (Коэффициент Ночь * 10)) +
@@ -57,10 +59,16 @@ import WorkerSettingsModal from "../worker-settings-modal";
 // План по сообщениям (Нелинейный) = Не задется +
 // План по сообщениям (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем План по сообщениям , план ГЛ не учитываются
 // (с округлением до ближайшего целого) +
+// План по сообщения (Руководитель) =  (почему-то один ГЛ не участвовал - добавил и его). Складываются План по сообщения
+// всех линейных сотрудников, кроме КМ, то есть то же самое, что всех гл, кроме КМ. +
 
-// Благодарности = вручную + СДЕЛАТЬ 3 По-умолчанию + 
+
+// Благодарности = Сейчас зафиксированы на 3 + 
+// Благодарности (КМ) = Не задаются -
 // Благодарности (Нелинейный) = Не задется +
 // Благодарности (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем Благодарности , Благодарности ГЛ не учитываются + 
+// Благодарности (Руководитель) =  (почему-то один ГЛ не участвовал - добавил и его). Благодарности
+// всех линейных сотрудников, то есть то же самое, что всех гл. +
 
 // Вторые перерывы (Нелинейный) = Не задется +
 // Вторые перерывы (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем Перерывы + 
@@ -69,6 +77,7 @@ import WorkerSettingsModal from "../worker-settings-modal";
 // Коэффициент = вручную + СДЕЛАТЬ 1 По-умолчанию +
 // Коэффициент (Нелинейный) = Не задется +
 // Коэффициент (ГЛ) = Не задается +
+// Коэффициент (Руководитель) = Не задется +
 
 // Коэффициент Ночь = вручную + СДЕЛАТЬ 1 По-умолчанию +
 // Коэффициент Ночь (ночь) = вручную + СДЕЛАТЬ 0.75 По-умолчанию +
@@ -85,6 +94,7 @@ import WorkerSettingsModal from "../worker-settings-modal";
 
 // При смене роли некоторые показатели сбрасываются на базовые для это роли, а другие пересчитываются. 
 // Коэф ночь, обучение, коэфф, благодарности а для ГЛ многие
+
 
 // После открытия попапа не работает назначение
 // После снятия выделения последний день все еще селектед
@@ -201,11 +211,11 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             const targetInformation = targetWorker.years[0].months[currentMonth - 1].shiftAndTeam[i - 1];
 
             monthData.push(
-                <td className = "days-field-common__item"
+                <td className = "days-field-common__shift-and-team-item"
                     key={i + 3000}>
-                        <div className="days-field-common__item-input-wrapper">
+                        <div className="days-field-common__shift-and-team-item-input-wrapper">
                             <input 
-                                className="days-field-common__item-input"
+                                className="days-field-common__shift-and-team-item-input"
                                 type="text"
                                 maxLength={2}
                                 onChange={(e) => {ChangeShiftAndTeamText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm();
@@ -271,7 +281,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             const targetInformation = targetWorker.years[0].months[currentMonth - 1].additionalInformation[i - 1];
             let readOnly = false;
 
-            if (targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.nonLinearWorker) {
+            if (targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.nonLinearWorker || targetMonth.monthlyShiftData.director) {
                 readOnly = true;
             }
 
@@ -287,7 +297,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 value={targetInformation.value ? targetInformation.value : "-"}
                                 onChange={(e) => {ChangeAdditionalInformationText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm();
                                 ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
-                                 ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}}/>
+                                 ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(e); ChangeSecondBreaks()}}/>
                         </div>
                 </td>
             )
@@ -367,7 +377,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                             {
                                 dates[0].months[currentMonth - 1].shiftAndTeam.map((item) => {
                                     return (
-                                        <th className = "days-field-common__days-item" 
+                                        <th className = "days-field-common__shift-and-team-title-item" 
                                             key={item.name}>
                                             <div>
                                                 {item.name}

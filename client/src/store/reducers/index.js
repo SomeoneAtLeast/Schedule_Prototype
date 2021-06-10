@@ -524,6 +524,7 @@ const reducer = (state = initialState, action) => {
                 let totalWithTheNight = withADecreasingCoefficient * coefficientNight;
                 const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+                const director = targetMonth.monthlyShiftData.director;
 
                 if (groupLeader) {
                     const groupLeaderTeamNumber = worker.years[0].months[currentMonth - 1].shiftAndTeam[1].value;
@@ -554,6 +555,29 @@ const reducer = (state = initialState, action) => {
                     totalWithTheNight = Number(withADecreasingCoefficient);
                 }
 
+                if (director) {
+
+                    let totalWithTheNightAllGroupLeaders = 0;
+
+                    newWorkers.forEach((worker) => {
+                        const targetMonth = worker.years[0].months[currentMonth - 1];
+                        const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
+                        const coefficientNight = targetMonth.additionalInformation[12].value;
+                        const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
+                        const isNonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
+                        const isDirector = targetMonth.monthlyShiftData.director;
+
+                        if (!isGroupLeader && !isNonLinearWorker && !isDirector) {
+                            const workingHours = withADecreasingCoefficient * coefficientNight;
+
+    
+                            totalWithTheNightAllGroupLeaders = totalWithTheNightAllGroupLeaders + workingHours;
+                        }
+                    })
+
+                    totalWithTheNight = Number(totalWithTheNightAllGroupLeaders);
+                }
+
                 if (isNaN(totalWithTheNight)) {
                     return {
                         ...state
@@ -575,17 +599,18 @@ const reducer = (state = initialState, action) => {
         
             newWorkers.forEach((worker) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
-                const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
-                const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
+                const nightWorker = targetMonth.monthlyShiftData.nightWorker;
+                const kmWorker = targetMonth.monthlyShiftData.kmWorker;
                 const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+                const director = targetMonth.monthlyShiftData.director;
                 const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
                 const efficiencyPerHour = dates[0].months[currentMonth - 1].efficiencyPerHour;
                 const numberOfAcknowledgements = dates[0].months[currentMonth - 1].numberOfAcknowledgements;
                 const coefficientNight = targetMonth.additionalInformation[12].value;
 
 
-                if (isNightWorker) {
+                if (nightWorker) {
 
                     const messagePlan = (withADecreasingCoefficient / 2 * efficiencyPerHour) + (withADecreasingCoefficient / 2 * (coefficientNight * 10));
 
@@ -604,7 +629,7 @@ const reducer = (state = initialState, action) => {
                     }
                 }
 
-                if (isKmWorker) {
+                if (kmWorker) {
 
                     const messagePlan = withADecreasingCoefficient * numberOfAcknowledgements;
                     targetMonth.additionalInformation[8].value = messagePlan.toFixed(2);
@@ -639,6 +664,8 @@ const reducer = (state = initialState, action) => {
                         const efficiencyPerHour = dates[0].months[currentMonth - 1].efficiencyPerHour;
                         const numberOfAcknowledgements = dates[0].months[currentMonth - 1].numberOfAcknowledgements;
                         const coefficientNight = targetMonth.additionalInformation[12].value;
+                        const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
+                        const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
                         const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
                         const isNonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                         const isDirector = targetMonth.monthlyShiftData.director;
@@ -646,6 +673,8 @@ const reducer = (state = initialState, action) => {
                         
                         if (targetMonth.shiftAndTeam[1].value === groupLeaderTeamNumber &&
                             !isGroupLeader && !isNonLinearWorker && !isDirector) {
+
+                            messagePlanOneWorker = withADecreasingCoefficient * efficiencyPerHour;
 
                             if (isNightWorker) {
                                 messagePlanOneWorker = (withADecreasingCoefficient / 2 * efficiencyPerHour) + (withADecreasingCoefficient / 2 * (coefficientNight * 10));
@@ -655,12 +684,41 @@ const reducer = (state = initialState, action) => {
                                 messagePlanOneWorker = withADecreasingCoefficient * numberOfAcknowledgements;
                             }
             
-                            messagePlanOneWorker = withADecreasingCoefficient * efficiencyPerHour;
                             messagePlanAllWorkers = messagePlanAllWorkers + messagePlanOneWorker;
                         }
                     })
 
                     messagePlan = messagePlanAllWorkers
+                }
+
+                if (director) {
+
+                    let messagePlanAllGroupLeaders = 0;
+
+                    newWorkers.forEach((worker) => {
+                        const targetMonth = worker.years[0].months[currentMonth - 1];
+                        const withADecreasingCoefficient = targetMonth.additionalInformation[6].value;
+                        const coefficientNight = targetMonth.additionalInformation[12].value;
+                        const isKmWorker = targetMonth.monthlyShiftData.kmWorker;
+                        const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
+                        const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
+                        const isNonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
+                        const isDirector = targetMonth.monthlyShiftData.director;
+                        let messagePlanOneWorker = 0;
+
+                        if (!isGroupLeader && !isNonLinearWorker && !isDirector && !isKmWorker) {
+                            messagePlanOneWorker = withADecreasingCoefficient * efficiencyPerHour;
+                            
+                            if (isNightWorker) {
+                                messagePlanOneWorker = (withADecreasingCoefficient / 2 * efficiencyPerHour) + (withADecreasingCoefficient / 2 * (coefficientNight * 10));
+                            }
+
+            
+                            messagePlanAllGroupLeaders = messagePlanAllGroupLeaders + messagePlanOneWorker;
+                        }
+                    })
+
+                    messagePlan = messagePlanAllGroupLeaders
                 }
 
                 targetMonth.additionalInformation[8].value = messagePlan.toFixed();
@@ -678,8 +736,10 @@ const reducer = (state = initialState, action) => {
         
             newWorkers.forEach((worker) => {
                 const targetMonth = worker.years[0].months[currentMonth - 1];
+                const kmWorker = targetMonth.monthlyShiftData.kmWorker;
                 const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+                const director = targetMonth.monthlyShiftData.director;
                 let acknowledgements = 3;
 
                 if (groupLeader) {
@@ -703,8 +763,29 @@ const reducer = (state = initialState, action) => {
                     acknowledgements = acknowledgementsAllWorkers;
                 }
 
-                if (nonLinearWorker) {
+                if (nonLinearWorker || kmWorker) {
                     acknowledgements = "-";
+                }
+
+                
+                if (director) {
+
+                    let acknowledgementsAllGroupLeaders = 0;
+
+                    newWorkers.forEach((worker) => {
+                        const targetMonth = worker.years[0].months[currentMonth - 1];
+                        const isGroupLeader = targetMonth.monthlyShiftData.groupLeader;
+                        const isNonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
+                        const isDirector = targetMonth.monthlyShiftData.director;
+
+                        if (!isGroupLeader && !isNonLinearWorker && !isDirector) {
+                            const acknowledgementsOneWorker = targetMonth.additionalInformation[9].value;
+    
+                            acknowledgementsAllGroupLeaders = acknowledgementsAllGroupLeaders + Number(acknowledgementsOneWorker);
+                        }
+                    })
+
+                    acknowledgements = acknowledgementsAllGroupLeaders;
                 }
 
                 targetMonth.additionalInformation[9].value = acknowledgements;
@@ -761,9 +842,10 @@ const reducer = (state = initialState, action) => {
             const targetMonth = newWorkers[selectedWorker].years[0].months[currentMonth - 1];
             const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
             const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+            const director = targetMonth.monthlyShiftData.director;
 
 
-            if (groupLeader || nonLinearWorker) {
+            if (groupLeader || nonLinearWorker || director) {
                 targetMonth.additionalInformation[11].value = "-";
             } else {   
                 targetMonth.additionalInformation[11].value = 1; 
@@ -782,9 +864,10 @@ const reducer = (state = initialState, action) => {
             const isNightWorker = targetMonth.monthlyShiftData.nightWorker;
             const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
             const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+            const director = targetMonth.monthlyShiftData.director;
 
 
-            if (groupLeader || nonLinearWorker) {
+            if (groupLeader || nonLinearWorker || director) {
                 targetMonth.additionalInformation[12].value = "-";
             } else if (isNightWorker) {
                 targetMonth.additionalInformation[12].value = 0.75; 
@@ -809,6 +892,8 @@ const reducer = (state = initialState, action) => {
                 const totalWithTheNight = targetMonth.additionalInformation[7].value;
                 const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
                 const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+                const director = targetMonth.monthlyShiftData.director;
+
                 let adjustment = totalWithTheNight / monthlyNorm;
 
                 if (isNaN(adjustment)) {
@@ -817,7 +902,7 @@ const reducer = (state = initialState, action) => {
                     }
                 }
 
-                if (groupLeader || nonLinearWorker) {
+                if (groupLeader || nonLinearWorker || director) {
                     targetMonth.additionalInformation[13].value = "-";
                 } else {
                     targetMonth.additionalInformation[13].value = adjustment.toFixed(2);
@@ -836,9 +921,9 @@ const reducer = (state = initialState, action) => {
             const targetMonth = newWorkers[selectedWorker].years[0].months[currentMonth - 1];
             const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
             const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+            const director = targetMonth.monthlyShiftData.director;
 
-
-            if (groupLeader || nonLinearWorker) {
+            if (groupLeader || nonLinearWorker || director) {
                 targetMonth.additionalInformation[14].value = "-";
             } else {   
                 targetMonth.additionalInformation[14].value = 8; 
@@ -1276,15 +1361,6 @@ const reducer = (state = initialState, action) => {
 
             if (action.objKey === "coefficient") {
                 targetMonth.additionalInformation[11].value = action.e.target.value;
-
-                return {
-                    ...state,
-                    workers: newWorkers
-                }
-            }
-
-            if (action.objKey === "acknowledgements") {
-                targetMonth.additionalInformation[9].value = action.e.target.value;
 
                 return {
                     ...state,
