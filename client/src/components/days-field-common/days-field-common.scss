@@ -27,6 +27,7 @@
     position: relative;
     padding: 0;
     color: rgba(0, 0, 0, 0.85);
+    background-clip: content-box;
     border: 1px solid #DDD;
     border-top: none;
     cursor: pointer;
@@ -48,13 +49,16 @@
         border: none;
         text-align: left;
         border-bottom: 1px solid #DDD;
+        box-shadow: 1px 0 3px 0px rgba(0, 0, 0, 0.2);
         transition: 0.2s;
-        z-index: 1;
+        z-index: 2;
 
         .days-field-common__item-link {
             display: block;
             background-color: #FFF;
             padding: 17px;
+            font-size: 14px;
+            width: 235px;
             border-right: 1px solid #DDD;
 
             &:hover {
@@ -89,25 +93,97 @@
             fill: white;
         }
     }
+
+    &--groupLeader {
+        .days-field-common__item-input {
+            font-family: "Roboto-Bold", sans-serif;
+
+        }
+    }
+
+    &--blue {
+        background: linear-gradient(70deg, #346497, #005b88);
+
+        .days-field-common__item-input {
+            color: white;
+
+        }
+    }
+
+    &--km-color {
+        background: linear-gradient(70deg, #c67979, #b06262);
+
+        .days-field-common__item-input {
+            color: white;
+
+        }
+    }
+
+    &--monthlyNorm {
+        border: 2px solid #6a6a6a;
+
+        .days-field-common__item-input {
+            color: #393939;
+            font-family: "Roboto-Bold", sans-serif;
+        }
+    }
+
+    &--coefficient {
+        background: linear-gradient(175deg, #EAB663, #E8BD79);
+
+        .days-field-common__item-input {
+            color: white;
+
+        }
+    }
+
+    &--coefficientNight {
+        background: linear-gradient(70deg, #6470b0, #325ad0);
+
+        .days-field-common__item-input {
+            color: white;
+
+            &:focus {
+                color: #dd65ff;;
+            }
+        }
+    }
+
+    &--adjustment {
+
+        .days-field-common__item-input {
+            color: #9f0f0f;
+            font-size: 11px;
+        }
+    }
+
+    &--training {
+
+        .days-field-common__item-input {
+            color: #3faa6c;
+        }
+    }
 }
 
 .days-field-common__shift-and-team-title-item {
     position: sticky;
     font-weight: normal;
-    padding: 5px;
+    padding: 5px 7px;
     color: white;
     font-size: 12px;
+    line-height: 11px;
     background: linear-gradient(175deg, #ea6153, #e34938);
 
+
     &:nth-child(2) {
-        left: 246.4px;
+        left: 270.4px;
         box-shadow: 0px 3px 3px 0 rgba(0, 0, 0, 0.15);
         z-index: 3;
     }
 
     &:nth-child(3) {
-        left: 296.4px;
-        box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, 0.15);
+        left: 295.4px;
+        box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.15);
         z-index: 2;
     }
 
@@ -117,8 +193,9 @@
     position: sticky;
     left: 0;
     padding: 0;
+    min-width: 25px;
     color: rgba(0, 0, 0, 0.85);
-    background-clip: padding-box;
+    background-clip: content-box;
     background-color: white;
     cursor: pointer;
     transition: background 0.3s;
@@ -126,16 +203,11 @@
 
 
     &:hover {
-        background-color: rgba(148, 66, 66, 1);
-        box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
-    }
-
-    &:active {
-        border: 2px solid rgb(90, 90, 90);
+        background-color: rgb(218, 218, 218);
     }
 
     &:nth-child(2) {
-        left: 246.4px;
+        left: 270.4px;
 
         .days-field-common__shift-and-team-item-input-wrapper {
             border-right: 1px solid #DDD;
@@ -143,9 +215,8 @@
     }
 
     &:nth-child(3) {
-        left: 296.4px;
-        box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
-        
+        left: 295.4px;
+        box-shadow: 1px 0 3px 0px rgba(0, 0, 0, 0.2);
     }
 
     &:not(:last-child) {
@@ -189,7 +260,7 @@
 }
 
 .days-field-common__shift-and-team-item-input {
-
+    font-size: 14px;
 }
 
 .days-field-common__item-worker-settings-btn {
@@ -222,6 +293,7 @@
 
 .days-field-common__days-item,
 .days-field-common__additional-information-item {
+    position: relative;
     width: 2%;
     font-weight: normal;
     padding: 10px;
@@ -230,6 +302,7 @@
     background: linear-gradient(175deg, #ea6153, #e34938);
     position: sticky;
     top: 0;
+    z-index: 1;
 
 
     &:first-child {
@@ -237,10 +310,88 @@
         z-index: 4; 
         box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, 0.15);
     }
+
+    &--monthlyNorm {
+        background: linear-gradient(175deg, #554848, #5b5151);
+
+        div {
+            font-family: "Roboto-Bold", sans-serif;
+        }
+    }
+
+    &--coefficient {
+        background: linear-gradient(175deg, #ECAB43, #E8BD79);
+        padding: 10px 15px;
+    }
+
+    &--coefficientNight {
+        background: linear-gradient(70deg, #5e69a6, #012388);
+        padding: 10px 12px;
+    }
+
+    &--adjustment {
+        background: linear-gradient(70deg, #d55959, #9f0f0f);
+        padding: 10px 12px;
+    }
+
+    &--training {
+        background: linear-gradient(70deg, #64b084, #32d074);
+    }
+
+    &--breaks,
+    &--shifts,
+    &--segment {
+        background: linear-gradient(70deg, #888, #7b7b7b);
+    }
+
+    &--segment {
+        padding: 10px 12px;
+        background: linear-gradient(70deg, #888, #7b7b7b);
+    }
+
+    &--norm,
+    &--withTrainingBreaks,
+    &--withADecreasingCoefficient,
+    &--totalWithTheNight {
+        background: linear-gradient(70deg, #6b92bb, #3c87ac);
+    }
+
+    &--messagePlan {
+        background: linear-gradient(70deg, #346497, #005b88);
+
+        .days-field-common__incidents-per-hour-title {
+            display: flex;
+            align-items: center;
+            height: 30px;
+            padding: 15px 0;
+
+        }
+    }
+
+    &--acknowledgements {
+        background: linear-gradient(70deg, #c67979, #b06262);
+
+        .days-field-common__incidents-per-hour-title {
+            display: flex;
+            align-items: center;
+            height: 30px;
+            padding: 15px 0;
+
+        }
+    }
 }
 
 .days-field-common__additional-information-item {
     font-size: 12px;
+}
+
+.days-field-common__additional-information-item-img {
+    width: 16px;
+    margin-top: 10px;
+}
+
+.days-field-common__item-input--additionalInformation {
+    font-size: 13px;
 }
 
 .days-field-common__incidents-per-hour-group,
@@ -257,7 +408,14 @@
 }
 
 .days-field-common__incidents-per-hour-group {
-    margin-top: 3px;
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 12px;
+    left: 50%;
+    width: 80px;
+    margin-left: -40px;
 }
 
 .days-field-common__incidents-per-hour-btn,
@@ -289,6 +447,10 @@
     }
 }
 
+// .days-field-common__incidents-per-hour-btn {
+//     font-family: "Roboto-Bold", sans-serif;
+// }
+
 .days-field-common__days-item-year {
     width: 65px;
 }
@@ -300,7 +462,15 @@
 .days-field-common__incidents-per-hour-value {
     display: flex;
     justify-content: center;
-    width: 35px;
+    align-items: center;
+    background-color: white;
+    font-family: "Roboto-Bold", sans-serif;
+    color: rgba(0, 0, 0, 0.85);
+    box-shadow: inset 0px 0px 2px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    font-size: 14px;
+    height: 30px;
+    width: 33px;
 }
 
 .days-field-common__item-link {
@@ -387,10 +557,50 @@
 
     .days-field-common__item {
         font-size: 14px;
+
+        &:first-child {
+            .days-field-common__item-link {
+                display: flex;
+                align-items: center;
+                box-sizing: border-box;
+                width: 152px;
+                height: 65px;
+                padding: 5px 10px;
+                font-size: 13px;
+            }
+        }
     }
 
     .days-field-common__days-item {
         font-size: 14px;
+    }
+
+    .days-field-common__shift-and-team-title-item {
+
+        &:nth-child(2) {
+            left: 152.4px
+        }
+    
+        &:nth-child(3) {
+            left: 177.4px;
+        }
+    
+    }
+    
+    .days-field-common__shift-and-team-item {
+
+        &:nth-child(2) {
+            left: 152.4px
+        }
+    
+        &:nth-child(3) {
+            left: 177.4px;
+        }
+    
+    }
+
+    .days-field-common__shift-and-team-item-input-wrapper {
+        height: 65px;
     }
 
     .days-field-common__item-link {
@@ -433,11 +643,57 @@
     
     .days-field-common__item {
         font-size: 12px;
+
+        &:first-child {
+            .days-field-common__item-link {
+                width: 120px;
+                height: 65px;
+                padding: 5px 7px;
+                font-size: 11px;
+            }
+        }
+    }
+
+    .days-field-common__item-link-text {
+        vertical-align: middle;
     }
 
     .days-field-common__days-item {
         font-size: 12px;
+
+        &:first-child {
+            padding: 6px;
+        }
     }
+
+    .days-field-common__shift-and-team-title-item {
+
+        &:nth-child(2) {
+            left: 120.4px;
+        }
+    
+        &:nth-child(3) {
+            left: 145.4px;
+        }
+    
+    }
+    
+    .days-field-common__shift-and-team-item {
+
+        &:nth-child(2) {
+            left: 120.4px;
+        }
+    
+        &:nth-child(3) {
+            left: 145.4px;
+        }
+    
+    }
+
+    .days-field-common__shift-and-team-item-input-wrapper {
+        height: 65px;
+    }
+
 
     .days-field-common__item-input {
         font-size: 12px;
@@ -445,6 +701,8 @@
 
     .days-field-common__item-worker-settings-btn {
         opacity: 1;
+        top: 2px;
+        right: 2px;
         
     }
 
@@ -453,10 +711,37 @@
     }
 
     .days-field-common__days-item-month {
-        width: 65px;
+        width: 58px;
     }
 
     .days-field-common__days-item-year {
         width: 45px;
+    }
+    
+    .days-field-common__incidents-per-hour-btn,
+    .days-field-common__days-item-btn-group .days-field-common__days-item-btn {
+        font-size: 14px;
+
+        &-left {
+
+            &:hover {
+                transform: translateX(0);
+            }
+
+            &:active {
+                transform: translateX(-3px);
+            }
+        }
+    
+        &-right {
+
+            &:hover {
+                transform: translateX(0);
+            }
+
+            &:active {
+                transform: translateX(3px);
+            }
+        }
     }
 }

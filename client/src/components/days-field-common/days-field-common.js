@@ -11,6 +11,9 @@ import DualBall from "../dual-ball";
 import UnsavedChangesModal from "../unsaved-changes-modal";
 import WorkerSettingsModal from "../worker-settings-modal";
 
+import moonImg from "./../../global-imgs/moon.svg"
+import sunImg from "./../../global-imgs/sun.svg"
+
 
 // Месячная норма по графику = сложить часы каждого дня +
 // Сегмент = вручную +
@@ -19,23 +22,28 @@ import WorkerSettingsModal from "../worker-settings-modal";
 // Смены (ночь) = количество ячеек имеющих более 3 рабочих часов +
 // Смены (KM) = количество ячеек имеющих более 3 рабочих часов + 1 +
 // Смены (ГЛ) = не задаются +
+// Смены (ГЛ КМ) = не задаются +
 // Смены (Нелинейный) = не задаются +
 // Смены (Руководитель) = не задаются +
 
 // Перерывы = смены * 50 / 60 (с округлением до ближайшего целого) +
 // Перерывы (ГЛ) = не задаются +
+// Перерывы (ГЛ КМ) = не задаются +
 // Перерывы (Нелинейный) = не задаются +
 // Перерывы (Руководитель) = не задаются +
 
 // Норма = Месячная норма по графику +
 // Норма (Нелинейный) = Месячная норма по графику +
-// Норма (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и суммируем их нормы, часы ГЛ не учитываются +
+// Норма (ГЛ) = ищем всех сотрудников, кроме КМ, с тем же номером команды, что и у гл и суммируем их нормы, часы ГЛ не учитываются +
+// Норма (ГЛ КМ) = ищем всех сотрудников КМ с тем же номером команды, что и у гл КМ и суммируем их нормы, часы ГЛ не учитываются +
 // Норма (Руководитель) =  (почему-то один ГЛ не участвовал - добавил и его). Складываются нормы всех линейных сотрудников, то есть то же самое, что всех гл. +
 
 // С обучением / перерывами = Норма - Перерывы (до округления) - Обучение +
 // С обучением / перерывами (Нелинейный) = Месячная норма по графику +
-// С обучением / перерывами (ГЛ) = ищем всех сотрудников с тем же номером команды,
+// С обучением / перерывами (ГЛ) = ищем всех сотрудников, кроме КМ, с тем же номером команды,
 // что и у гл и суммируем их С обучением / перерывами, гл не учитывается, потом округление до ближайшего целого +
+// С обучением / перерывами (ГЛ КМ) = ищем всех сотрудников КМ с тем же номером команды,
+// что и у гл КМ и суммируем их С обучением / перерывами, гл не учитывается, потом округление до ближайшего целого +
 // С обучением / перерывами (Руководитель) =  (почему-то один ГЛ не участвовал - добавил и его). Складываются С обучением / перерывами
 // всех линейных сотрудников, то есть то же самое, что всех гл. +
 
@@ -43,12 +51,16 @@ import WorkerSettingsModal from "../worker-settings-modal";
 // С понижающим коэффициентом (Нелинейный) = Месячная норма по графику +
 // С понижающим коэффициентом (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и суммируем С понижающим коэффициентом, часы ГЛ не учитываются
 // (с округлением до ближайшего целого) +
+// С понижающим коэффициентом (ГЛ КМ) = ищем всех сотрудников КМ с тем же номером команды, что и у гл  КМ и суммируем С понижающим коэффициентом, часы ГЛ не учитываются
+// (с округлением до ближайшего целого) +
 // С понижающим коэффициентом (Руководитель) =  (почему-то один ГЛ не участвовал - добавил и его). Складываются С понижающим коэффициентом
 // всех линейных сотрудников, то есть то же самое, что всех гл. +
 
 // Итог с учетом ночи = С понижающим коэффициентом * Коэффициент ночь (с округлением до ближайшего целого) +
 // Итог с учетом ночи (Нелинейный) = Месячная норма по графику +
 // Итог с учетом ночи (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем Итог с учетом ночи, часы ГЛ не учитываются
+// (с округлением до ближайшего целого) +
+// Итог с учетом ночи (ГЛ КМ) = ищем всех сотрудников КМ с тем же номером команды, что и у гл КМ и складываем Итог с учетом ночи, часы ГЛ не учитываются
 // (с округлением до ближайшего целого) +
 // Итог с учетом ночи (Руководитель) =  (почему-то один ГЛ не участвовал - добавил и его). Складываются Итог с учетом ночи
 // всех линейных сотрудников, то есть то же самое, что всех гл. +
@@ -59,38 +71,50 @@ import WorkerSettingsModal from "../worker-settings-modal";
 // План по сообщениям (Нелинейный) = Не задется +
 // План по сообщениям (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем План по сообщениям , план ГЛ не учитываются
 // (с округлением до ближайшего целого) +
+// План по сообщениям (ГЛ КМ) = ищем всех сотрудников КМ с тем же номером команды, что и у гл КМ и складываем План по сообщениям , план ГЛ не учитываются
+// (с округлением до ближайшего целого) +
 // План по сообщения (Руководитель) =  (почему-то один ГЛ не участвовал - добавил и его). Складываются План по сообщения
 // всех линейных сотрудников, кроме КМ, то есть то же самое, что всех гл, кроме КМ. +
-
 
 // Благодарности = Сейчас зафиксированы на 3 + 
 // Благодарности (КМ) = Не задаются -
 // Благодарности (Нелинейный) = Не задется +
 // Благодарности (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем Благодарности , Благодарности ГЛ не учитываются + 
+// Благодарности (ГЛ КМ) = сейчас не задаются + 
 // Благодарности (Руководитель) =  (почему-то один ГЛ не участвовал - добавил и его). Благодарности
 // всех линейных сотрудников, то есть то же самое, что всех гл. +
 
+// Вторые перерывы  = с округлением до 1 числа после запятой+
 // Вторые перерывы (Нелинейный) = Не задется +
 // Вторые перерывы (ГЛ) = ищем всех сотрудников с тем же номером команды, что и у гл и складываем Перерывы + 
+// Вторые перерывы (ГЛ КМ) = ищем всех сотрудников КМ с тем же номером команды, что и у гл КМ и складываем Перерывы + 
 // Вторые перерывы (Руководитель) = Не задется +
 
 // Коэффициент = вручную + СДЕЛАТЬ 1 По-умолчанию +
 // Коэффициент (Нелинейный) = Не задется +
 // Коэффициент (ГЛ) = Не задается +
+// Коэффициент (ГЛ КМ) = Не задается +
 // Коэффициент (Руководитель) = Не задется +
 
 // Коэффициент Ночь = вручную + СДЕЛАТЬ 1 По-умолчанию +
 // Коэффициент Ночь (ночь) = вручную + СДЕЛАТЬ 0.75 По-умолчанию +
 // Коэффициент Ночь (Нелинейный) = Не задется +
 // Коэффициент Ночь (ГЛ) = Не задается +
+// Коэффициент Ночь (ГЛ КМ) = Не задается +
+// Коэффициент Ночь (Руководитель) = Не задается +
 
 // Корректировка = Итог с учетом ночи / Месячная норма по графику +
 // Корректировка (Нелинейный) = Не задется +
 // Корректировка (ГЛ) = Не задается +
+// Корректировка (ГЛ КМ) = Не задается +
+// Корректировка (Руководитель) = Не задается +
+
 
 // Обучение = вручную + СДЕЛАТЬ 8 По-умолчанию +
 // Обучение (Нелинейный) = Не задется +
 // Обучение (ГЛ) = Не задается +
+// Обучение (ГЛ КМ) = Не задается +
+// Обучение (ГЛ Руководитель) = Не задается +
 
 // При смене роли некоторые показатели сбрасываются на базовые для это роли, а другие пересчитываются. 
 // Коэф ночь, обучение, коэфф, благодарности а для ГЛ многие
@@ -98,7 +122,6 @@ import WorkerSettingsModal from "../worker-settings-modal";
 
 // После открытия попапа не работает назначение
 // После снятия выделения последний день все еще селектед
-// Коэфф сбрасиывается не на 0, а на -
 
 
 import "./days-field-common.scss"
@@ -202,7 +225,9 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                         to={`/personalschedule/${workerNumber + 1}`}
                         className = {linkClassNames}
                         onClick={() => SelectWorker(workerNumber)}>
-                        {targetWorker.name}
+                            <span className = "days-field-common__item-link-text">
+                                {targetWorker.name}
+                            </span>
                     </Link>
             </td>
         )
@@ -280,9 +305,43 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             let classNames = "days-field-common__item";
             const targetInformation = targetWorker.years[0].months[currentMonth - 1].additionalInformation[i - 1];
             let readOnly = false;
+            let maxLength = 4;
 
-            if (targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.nonLinearWorker || targetMonth.monthlyShiftData.director) {
+            if (targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.kmGroupLeader || targetMonth.monthlyShiftData.nonLinearWorker || targetMonth.monthlyShiftData.director) {
                 readOnly = true;
+            }
+
+            if (targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.kmGroupLeader) {
+                classNames += " days-field-common__item--groupLeader";
+            }
+
+            if ((targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.director) && targetInformation.name === "messagePlan") {
+                classNames += " days-field-common__item--blue";
+            }
+
+            if (targetMonth.monthlyShiftData.kmGroupLeader && targetInformation.name === "messagePlan") {
+                classNames += " days-field-common__item--km-color";
+            }
+
+            if (targetInformation.name === "monthlyNorm") {
+                classNames += " days-field-common__item--monthlyNorm";
+            }
+
+            if (targetInformation.name === "coefficient") {
+                classNames += " days-field-common__item--coefficient";
+            }
+
+            if (targetInformation.name === "coefficientNight") {
+                classNames += " days-field-common__item--coefficientNight";
+            }
+
+            if (targetInformation.name === "adjustment") {
+                classNames += " days-field-common__item--adjustment";
+            }
+
+            if (targetInformation.name === "training") {
+                classNames += " days-field-common__item--training";
+                maxLength = 2;
             }
 
             monthData.push(
@@ -290,9 +349,9 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                     key={i + 2000}>
                         <div className="days-field-common__item-input-wrapper">
                             <input 
-                                className="days-field-common__item-input"
+                                className="days-field-common__item-input days-field-common__item-input--additionalInformation"
                                 type="text"
-                                maxLength={4}
+                                maxLength={maxLength}
                                 readOnly={readOnly}
                                 value={targetInformation.value ? targetInformation.value : "-"}
                                 onChange={(e) => {ChangeAdditionalInformationText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm();
@@ -408,23 +467,26 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                         let funcLeft = null;
                                         let funcRight = null;
                                         let value = null;
+                                        let classNames = "days-field-common__additional-information-item";
 
                                         if (item.name === "messagePlan") {
+                                            classNames += " days-field-common__additional-information-item--messagePlan";
                                             funcLeft = () => {ChangeIncidentsPerHour("back"); ChangeMessagePlan()};
                                             funcRight = () => {ChangeIncidentsPerHour("next"); ChangeMessagePlan()};
                                             value = dates[0].months[currentMonth - 1].efficiencyPerHour;
                                         } 
 
                                         if (item.name === "acknowledgements") {
+                                            classNames += " days-field-common__additional-information-item--acknowledgements";
                                             funcLeft = () => {ChangeNumberOfAcknowledgements("back"); ChangeMessagePlan()};
                                             funcRight = () => {ChangeNumberOfAcknowledgements("next"); ChangeMessagePlan()};
                                             value = dates[0].months[currentMonth - 1].numberOfAcknowledgements;
                                         } 
 
                                         return (
-                                            <th className = "days-field-common__additional-information-item" 
+                                            <th className = {classNames}
                                                 key={item.id}>
-                                                <div>
+                                                <div className = "days-field-common__incidents-per-hour-title">
                                                     {item.title}
                                                 </div>
                                                 <div className="days-field-common__incidents-per-hour-group">
@@ -446,12 +508,66 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                             </th>
                                         )
                                     }
+                                    
+                                    let classNames = "days-field-common__additional-information-item";
+                                    const moon = <img className = "days-field-common__additional-information-item-img" width="16" src={moonImg} alt="Ночь"/>;
+                                    const sun = <img className = "days-field-common__additional-information-item-img" width="16" src={sunImg} alt="День"/>;
+
+                                    if (item.name === "monthlyNorm") {
+                                        classNames += " days-field-common__additional-information-item--monthlyNorm";
+                                    }
+
+                                    if (item.name === "coefficient") {
+                                        classNames += " days-field-common__additional-information-item--coefficient";
+                                    }
+
+                                    if (item.name === "coefficientNight") {
+                                        classNames += " days-field-common__additional-information-item--coefficientNight";
+                                    }
+
+                                    if (item.name === "adjustment") {
+                                        classNames += " days-field-common__additional-information-item--adjustment";
+                                    }
+
+                                    if (item.name === "training") {
+                                        classNames += " days-field-common__additional-information-item--training";
+                                    }
+
+                                    if (item.name === "breaks") {
+                                        classNames += " days-field-common__additional-information-item--breaks";
+                                    }
+
+                                    if (item.name === "segment") {
+                                        classNames += " days-field-common__additional-information-item--segment";
+                                    }
+
+                                    if (item.name === "shifts") {
+                                        classNames += " days-field-common__additional-information-item--shifts";
+                                    }
+
+                                    if (item.name === "norm") {
+                                        classNames += " days-field-common__additional-information-item--norm";
+                                    }
+
+                                    if (item.name === "withTraining/Breaks") {
+                                        classNames += " days-field-common__additional-information-item--withTrainingBreaks";
+                                    }
+
+                                    if (item.name === "withADecreasingCoefficient") {
+                                        classNames += " days-field-common__additional-information-item--withADecreasingCoefficient";
+                                    }
+
+                                    if (item.name === "totalWithTheNight") {
+                                        classNames += " days-field-common__additional-information-item--totalWithTheNight";
+                                    }
 
                                     return (
-                                        <th className = "days-field-common__additional-information-item" 
+                                        <th className = {classNames}
                                             key={item.id}>
                                             <div>
                                                 {item.title}
+                                                {item.name === "coefficientNight" ? moon : null}
+                                                {item.name === "coefficient" ? sun : null}
                                             </div>
                                         </th>
                                     )

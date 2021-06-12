@@ -123,7 +123,7 @@ ChangeSecondBreaks}) => {
                                                     <button
                                                         className={`days-field-common-controls__sub-menu-item-btn days-field-common-controls__sub-menu-item-btn-${verifiedWorkingTime}`}
                                                         onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, workingTime, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks();
-                                                        ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeSecondBreaks()}}>   
+                                                        ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeSecondBreaks(); ChangeAdjustment();}}>   
                                                             <span className="days-field-common-controls__sub-menu-item-btn-text">
                                                                 {workingTime}
                                                             </span>
@@ -141,7 +141,7 @@ ChangeSecondBreaks}) => {
                                 <button
                                     className="days-field-common-controls__item-btn"
                                     onClick={() => {ChangeDayType(selectedWorker, selectedDay, name, hoursCount, hoursCount); ChangeMonthlyNorm(); ChangeNumberOfShifts(); ChangeNumberOfBreaks();
-                                    ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeSecondBreaks()}}>   
+                                    ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient(); ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeSecondBreaks(); ChangeAdjustment();}}>   
                                         <img className="days-field-common-controls__item-btn-img" src={img} alt={label}></img>
                                         <span className="days-field-common-controls__item-btn-text">
                                             {label}

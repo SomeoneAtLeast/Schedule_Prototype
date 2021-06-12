@@ -25,6 +25,10 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
             return workerType = "КМ"
         }
 
+        if (targetMonthlyShiftData.kmGroupLeader) {
+            return workerType = "Групп Лидер КМ"
+        }
+
         if (targetMonthlyShiftData.groupLeader) {
             return workerType = "Групп Лидер"
         }
@@ -47,7 +51,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
         workerName: workers[selectedWorker].name,
         workerType: workerTypeConverter(),
         workingShiftMonth: workingShiftMonth ? workingShiftMonth : "Не задано",
-        segment: segment ? segment : "Не задано",
+        segment: segment ? segment : "-",
     })
     
 
@@ -58,9 +62,9 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
         })
     }
 
-    const workerTypes = ["Руководитель", "Нелинейный сотрудник", "Групп Лидер", "Ночная смена SMM", "Дневная смена SMM", "КМ"];
+    const workerTypes = ["Руководитель", "Нелинейный сотрудник", "Групп Лидер", "Ночная смена SMM", "Дневная смена SMM", "Групп Лидер КМ", "КМ"];
     const workingShifts = ["Не задано", "Руководитель", "09-18", "11-20", "08-20", "09-21", "10-22", "11-23", "12-24", "14-02", "21-09"];  
-    const segments = ["Не задано", "А", "Г", "Н_Г", "Ж", "Ж_", "3", "К", "К_", "Н", "Н_", "О", "О_", "О_1", "Э"];  
+    const segments = ["-", "А", "Г", "Н_Г", "Ж", "Ж_", "3", "К", "К_", "Н", "Н_", "О", "О_", "О_1", "Э"];  
 
     return (
         <div className="worker-settings-modal-wrapper">
