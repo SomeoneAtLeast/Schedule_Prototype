@@ -13,4 +13,30 @@ router.get("/dates", async (req, res) => {
     }
 })
 
+router.post("/dates-update", async (req, res) => {
+    try {
+        const currentYear = Number(req.headers.year);
+        const currentMonth = Number(req.headers.month);
+        const dates = req.body;
+        const oneMonth = {...dates[0].months[currentMonth - 1]}
+
+        const updatePath = `months.${currentMonth - 1}`;
+        const target = {};
+        target[updatePath] = oneMonth;
+        Dates.updateOne(
+            {id: currentYear},
+            target,
+            function(){
+            }
+            );
+
+
+        res.json()
+
+    } catch (e) {
+        res.status(500).json(e.message)
+    }
+})
+
+
 module.exports = router;

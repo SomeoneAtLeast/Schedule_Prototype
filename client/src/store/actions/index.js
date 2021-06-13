@@ -19,6 +19,13 @@ const GetWorkersOnServer = (workers) => {
     }
 }
 
+const GetDatesOnServer = (dates) => {
+    return {
+        type: "Get-Dates-On-Server",
+        dates
+    }
+}
+
 const SeatsLoaded = (seats) => {
     return {
         type: "Seats-Loaded",
@@ -317,5 +324,6 @@ export {
     ChangeSecondBreaks,
     ChangeСoefficient,
     ChangeСoefficientNight,
-    ChangeTraining
+    ChangeTraining,
+    GetDatesOnServer
 }

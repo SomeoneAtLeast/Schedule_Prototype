@@ -6,7 +6,7 @@ import {useHttp} from "../../hooks/http.hook"
 import {SelectWorker, ChangeDayType, ChangeMonth, ChangeYear, SelectDay, ChangeScheduleText, ClearAllDays,
 WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks,
 ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment,
-ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText, ChangeAcknowledgements, ChangeSecondBreaks} from "../../store/actions"
+ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText, ChangeAcknowledgements, ChangeSecondBreaks, GetDatesOnServer} from "../../store/actions"
 import DualBall from "../dual-ball";
 import UnsavedChangesModal from "../unsaved-changes-modal";
 import WorkerSettingsModal from "../worker-settings-modal";
@@ -129,7 +129,7 @@ import "./days-field-common.scss"
 const DaysFieldCommon = ({workers, dates, unsavedChanges, currentYear, currentMonth, SelectWorker, SelectDay, ChangeDayType, ChangeScheduleText,
 ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts,
 ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight,
-DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText, ChangeAcknowledgements, ChangeSecondBreaks}) => {
+DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText, ChangeAcknowledgements, ChangeSecondBreaks, GetDatesOnServer}) => {
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
     const [showWorkerSettingsModal, setShowWorkerSettingsModal] = useState(false);
@@ -157,7 +157,9 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         try {
             ClearAllDays();
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            const datesData = await request("/api/dates/dates", "GET", null, {year: currentYear});
             GetWorkersOnServer(data);
+            GetDatesOnServer(datesData);
             ChangeYear(value);
         } catch (e) {}
     };
@@ -166,7 +168,9 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         try {
             ClearAllDays();
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            const datesData = await request("/api/dates/dates", "GET", null, {year: currentYear});
             GetWorkersOnServer(data);
+            GetDatesOnServer(datesData);
             ChangeMonth(value);
         } catch (e) {}
     };
@@ -234,7 +238,6 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         
         for (let i = 1; i <= workers[0].years[0].months[currentMonth - 1].shiftAndTeam.length; i++) {
             const targetInformation = targetWorker.years[0].months[currentMonth - 1].shiftAndTeam[i - 1];
-
             monthData.push(
                 <td className = "days-field-common__shift-and-team-item"
                     key={i + 3000}>
@@ -246,7 +249,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 onChange={(e) => {ChangeShiftAndTeamText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm();
                                     ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
                                     ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}}
-                                value={targetInformation.value}/>
+                                value={targetInformation.value ? targetInformation.value : "-"}/>
                         </div>
                 </td>
             )
@@ -617,7 +620,8 @@ const mapDispatchToProps = {
     ChangeNumberOfAcknowledgements,
     ChangeShiftAndTeamText,
     ChangeAcknowledgements,
-    ChangeSecondBreaks
+    ChangeSecondBreaks,
+    GetDatesOnServer
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, unsavedChanges, dates}) => {

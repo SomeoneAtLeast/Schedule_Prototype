@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {connect} from "react-redux"
 import PropTypes from 'prop-types';
 import {useHttp} from "../../hooks/http.hook"
-import {ClearAllDays, WorkersLoaded} from "../../store/actions"
+import {ClearAllDays, WorkersLoaded, DatesLoaded} from "../../store/actions"
 
 import "./save-and-cancel.scss"
 
@@ -10,8 +10,8 @@ import cancelImg from "./../../global-imgs/cancel.svg"
 import saveImg from "./../../global-imgs/save.svg"
 import dualBallImg from "../dual-ball/dual-ball.svg"
 
-const SaveAndCancel= ({workers, currentYear, currentMonth, ClearAllDays, WorkersLoaded}) => {
-
+const SaveAndCancel= ({workers, dates, currentYear, currentMonth, ClearAllDays, WorkersLoaded, DatesLoaded}) => {
+    const [loadingDates, setloadingDates] = useState(false);
     const [loadingWorkers, setLoadingWorkers] = useState(false);
     const [saveProcess, setSaveProcess] = useState(false);
 
@@ -26,18 +26,36 @@ const SaveAndCancel= ({workers, currentYear, currentMonth, ClearAllDays, Workers
         } catch (e) {}
     }
 
+    const saveDates = async () => {
+        try {
+            setSaveProcess(true)
+            ClearAllDays();
+            await request("/api/dates/dates-update", "POST", dates, {year: currentYear, month: currentMonth});
+            setSaveProcess(false)
+        } catch (e) {}
+    }
+
     const getWorkers = async () => {
         try {
-            setLoadingWorkers(true)
+            setLoadingWorkers(true);
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             WorkersLoaded(data);
             setLoadingWorkers(false)
         } catch (e) {}
     };
 
+    const getDates = async () => {
+        try {
+            setloadingDates(true);
+            const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
+            DatesLoaded(data);
+            setloadingDates(false);
+        } catch (e) {}
+    };
+
     const buttons = [
-        {name: "save",  label: "Отменить изменения", func: getWorkers, img:  loadingWorkers ? dualBallImg : cancelImg, id: -7},
-        {name: "save",  label: "Сохранить", func: saveWorkers, img: saveProcess ? dualBallImg : saveImg, id: -8},
+        {name: "save",  label: "Отменить изменения", func: () => {getWorkers(); getDates()}, img:  (loadingWorkers || loadingDates) ? dualBallImg : cancelImg, id: -7},
+        {name: "save",  label: "Сохранить", func: () => {saveWorkers(); saveDates()}, img: saveProcess ? dualBallImg : saveImg, id: -8},
     ]
 
     return (
@@ -73,12 +91,14 @@ SaveAndCancel.propTypes = {
 
 const mapDispatchToProps = {
     ClearAllDays,
-    WorkersLoaded
+    WorkersLoaded,
+    DatesLoaded
 }
 
-const mapStateToProps = ({workers, currentYear, currentMonth}) => {
+const mapStateToProps = ({workers, dates, currentYear, currentMonth}) => {
     return {
         workers,
+        dates,
         currentYear,
         currentMonth
     }

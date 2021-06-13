@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux"
 import {useHttp} from "../../hooks/http.hook"
-import {WorkersLoaded, ClearAllDays, UnsavedChangesStatus} from "../../store/actions"
+import {WorkersLoaded, ClearAllDays, UnsavedChangesStatus, DatesLoaded} from "../../store/actions"
 
 import "./unsaved-changes-modal.scss"
 
@@ -9,7 +9,7 @@ import cancelImg from "./../../global-imgs/cancel.svg"
 import saveImg from "./../../global-imgs/save.svg"
 import crossImg from "../../global-imgs/cross.svg"
 
-const UnsavedChangesModal = ({workers, currentYear, currentMonth, WorkersLoaded, ClearAllDays, UnsavedChangesStatus, className}) => {
+const UnsavedChangesModal = ({workers, dates, currentYear, currentMonth, WorkersLoaded, ClearAllDays, UnsavedChangesStatus, className, DatesLoaded}) => {
     const {request} = useHttp();
     
     const saveWorkers = async () => {
@@ -20,10 +20,26 @@ const UnsavedChangesModal = ({workers, currentYear, currentMonth, WorkersLoaded,
         } catch (e) {}
     }
 
+    const saveDates = async () => {
+        try {
+            await request("/api/dates/dates-update", "POST", dates, {year: currentYear, month: currentMonth});
+            UnsavedChangesStatus(false);
+        } catch (e) {}
+    }
+
+
     const getWorkers = async () => {
         try {
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
             WorkersLoaded(data);
+            UnsavedChangesStatus(false);
+        } catch (e) {}
+    };
+
+    const getDates = async () => {
+        try {
+            const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
+            DatesLoaded(data);
             UnsavedChangesStatus(false);
         } catch (e) {}
     };
@@ -41,7 +57,7 @@ const UnsavedChangesModal = ({workers, currentYear, currentMonth, WorkersLoaded,
                 <span className="unsaved-changes-modal__text">У вас есть несохраненные изменения</span>
                 <button 
                     className="unsaved-changes-modal__btn"
-                    onClick={() => getWorkers()}>
+                    onClick={() => {getWorkers(); getDates()}}>
                     <img 
                         className="unsaved-changes-modal__btn-img"
                         src={cancelImg}
@@ -50,7 +66,7 @@ const UnsavedChangesModal = ({workers, currentYear, currentMonth, WorkersLoaded,
                 </button>
                 <button 
                     className="unsaved-changes-modal__btn"
-                    onClick={() => saveWorkers()}>
+                    onClick={() => {saveWorkers(); saveDates()}}>
                     <img 
                         className="unsaved-changes-modal__btn-img"
                         src={saveImg}
@@ -66,12 +82,14 @@ const UnsavedChangesModal = ({workers, currentYear, currentMonth, WorkersLoaded,
 const mapDispatchToProps = {
     WorkersLoaded,
     ClearAllDays,
-    UnsavedChangesStatus
+    UnsavedChangesStatus, 
+    DatesLoaded
 }
 
-const mapStateToProps = ({workers, currentYear, currentMonth}) => {
+const mapStateToProps = ({workers, currentYear, currentMonth, dates}) => {
     return {
         workers,
+        dates,
         currentYear,
         currentMonth
     }

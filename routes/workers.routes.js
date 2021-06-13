@@ -18,28 +18,49 @@ router.post("/workers-update", async (req, res) => {
         const currentMonth = Number(req.headers.month);
 
         const workers = req.body;
+        let workersNames = []
         let workersСhanges = []
 
         workers.forEach(elem => {
-            workersСhanges.push(
-                elem.years[0].months[currentMonth - 1].days
+            workersNames.push(
+                elem.name
             )
         });
 
-        let i = 1;
+        workers.forEach(elem => {
+            workersСhanges.push(
+                {...elem.years[0].months[currentMonth - 1]}
+            )
+        });
 
-        workersСhanges.forEach(() => {
-            const updatePath = `years.${currentYear - 1}.months.${currentMonth - 1}.days`;
-            const target = {};
-            target[updatePath] = workersСhanges[i - 1];
-    
+        let iNames = 1;
+
+        workersNames.forEach(() => {
                 Workers.updateOne(
-                {id: i},
-                target,
+                {id: iNames},
+                {name: workersNames[iNames - 1]},
                 function(){
                 }
-            );
-                i++
+                );
+                
+                iNames++
+        });
+
+
+        let iWorkersСhanges = 1;
+
+        workersСhanges.forEach(() => {
+            const updatePath = `years.${currentYear - 1}.months.${currentMonth - 1}`;
+            const target = {};
+            target[updatePath] = workersСhanges[iWorkersСhanges - 1];
+                Workers.updateOne(
+                {id: iWorkersСhanges},
+                target,
+                function()  {
+                    }
+                );
+
+                iWorkersСhanges++
         });
 
         res.json(workersСhanges)

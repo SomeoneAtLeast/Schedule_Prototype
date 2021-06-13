@@ -5,6 +5,7 @@ const initialState = {
     workersOnServer: [],
     workers: [],
     dates: [],
+    datesOnServer: [],
     unsavedChanges: false,
     currentYear: 1,
     currentMonth: 1,
@@ -46,6 +47,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 workersOnServer: action.workers
             }
+        case "Get-Dates-On-Server":
+            return {
+                ...state,
+                datesOnServer: action.dates
+            }
         case "Seats-Loaded":
             return {
                 ...state,
@@ -77,6 +83,7 @@ const reducer = (state = initialState, action) => {
                 })
                 targetMonth.additionalInformation[0].value = workingHours;
             })
+
 
             return {
                 ...state,
@@ -130,7 +137,7 @@ const reducer = (state = initialState, action) => {
                     targetMonth.additionalInformation[2].value = shifts;
                 }
             })
-        
+
             return {
                 ...state,
                 workers: newWorkers
@@ -604,8 +611,8 @@ const reducer = (state = initialState, action) => {
 
                     withADecreasingCoefficient = Number(withADecreasingCoefficientAllGroupLeaders);
                 }
-
-                targetMonth.additionalInformation[6].value = withADecreasingCoefficient.toFixed();
+                // console.log(withADecreasingCoefficient)
+                targetMonth.additionalInformation[6].value = Number(withADecreasingCoefficient.toFixed());
             })
             
             return {
@@ -715,7 +722,7 @@ const reducer = (state = initialState, action) => {
                     }
                 }
                 
-                targetMonth.additionalInformation[7].value = totalWithTheNight.toFixed(1);
+                targetMonth.additionalInformation[7].value = Number(totalWithTheNight.toFixed(1));
             })
         
             return {
@@ -783,7 +790,6 @@ const reducer = (state = initialState, action) => {
                 }
 
                 let messagePlan = withADecreasingCoefficient * efficiencyPerHour;
-
 
                 if (groupLeader) {
                     const groupLeaderTeamNumber = worker.years[0].months[currentMonth - 1].shiftAndTeam[1].value;
@@ -881,7 +887,11 @@ const reducer = (state = initialState, action) => {
                     messagePlan = messagePlanAllGroupLeaders
                 }
 
-                targetMonth.additionalInformation[8].value = messagePlan.toFixed();
+                if (messagePlan === 0) {
+                    targetMonth.additionalInformation[8].value = 0;
+                } else {
+                    targetMonth.additionalInformation[8].value = messagePlan.toFixed();
+                }
             })
             
             return {
@@ -1084,10 +1094,14 @@ const reducer = (state = initialState, action) => {
 
                 let adjustment = totalWithTheNight / monthlyNorm;
 
-                if (groupLeader || kmGroupLeader || nonLinearWorker || director || isNaN(adjustment) || adjustment === Infinity) {
+                if (groupLeader || kmGroupLeader || nonLinearWorker || director || adjustment === Infinity) {
                     targetMonth.additionalInformation[13].value = "-";
                 } else {
                     targetMonth.additionalInformation[13].value = adjustment.toFixed(2);
+                }
+
+                if (isNaN(adjustment)) {
+                    targetMonth.additionalInformation[13].value = 0;
                 }
             })
             
@@ -1158,11 +1172,17 @@ const reducer = (state = initialState, action) => {
                 targetMonth.monthlyShiftData.director = true;
             }
 
-            if (workerData.workingShiftMonth) {
+            if (workerData.workingShiftMonth && workerData.workingShiftMonth !== "Не задано") {
                 targetMonth.monthlyShiftData.workingShiftMonth = workerData.workingShiftMonth;
+            } else {
+                targetMonth.monthlyShiftData.workingShiftMonth = null;
             }
 
-            targetMonth.additionalInformation[1].value = workerData.segment;
+            if (workerData.segment && workerData.segment !== "-") {
+                targetMonth.additionalInformation[1].value = workerData.segment;
+            } else {
+                targetMonth.additionalInformation[1].value = null;
+            }
 
             return {
                 ...state,
@@ -1580,10 +1600,21 @@ const reducer = (state = initialState, action) => {
             const {workers, currentMonth} = state;
             const newWorkers = [...workers.slice()];
             const targetMonth = newWorkers[action.workerId].years[0].months[currentMonth - 1];
-        
-            if (isNaN(action.e.target.value)) {
+
+            if ((isNaN(action.e.target.value) || action.e.target.value === "") && action.objKey === "shift№") {
+                targetMonth.shiftAndTeam[0].value = "-";
+
                 return {
-                    ...state
+                    ...state,
+                    workers: newWorkers
+                }
+            }
+
+            if ((isNaN(action.e.target.value) || action.e.target.value === "") && action.objKey === "team№") {
+                targetMonth.shiftAndTeam[1].value = "-";
+                return {
+                    ...state,
+                    workers: newWorkers
                 }
             }
             
@@ -1611,9 +1642,9 @@ const reducer = (state = initialState, action) => {
         }
         case "Change-Month": {
 
-            let {currentMonth, workers, workersOnServer} = state;
+            let {currentMonth, workers, dates, datesOnServer, workersOnServer} = state;
 
-            if (!isEqual(workers, workersOnServer)) {
+            if (!isEqual(workers, workersOnServer) || !isEqual(dates, datesOnServer)) {
                 return {
                     ...state,
                     unsavedChanges: true
@@ -1640,9 +1671,9 @@ const reducer = (state = initialState, action) => {
         }
         case "Change-Year": {
 
-            let {currentYear, workers, workersOnServer} = state;
+            let {currentYear, workers, dates, datesOnServer, workersOnServer} = state;
 
-            if (!isEqual(workers, workersOnServer)) {
+            if (!isEqual(workers, workersOnServer) || !isEqual(dates, datesOnServer)) {
                 return {
                     ...state,
                     unsavedChanges: true
