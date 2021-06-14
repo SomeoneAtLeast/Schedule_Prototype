@@ -1,2 +1,2 @@
-import Register from "./register";
-export default Register;
+import ManagingWorkers from "./register";
+export default ManagingWorkers;

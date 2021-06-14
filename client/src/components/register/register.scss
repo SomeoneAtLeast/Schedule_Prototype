@@ -11,9 +11,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     box-sizing: border-box;
     width: 380px;
+    height: 500px;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, .8);
     box-shadow: 0px 0px 8px 0px rgba(74, 74, 74, 0.9);
@@ -34,22 +34,24 @@
     font-size: 20px;
 }
 
-.register__inputs {
+.register__form {
     width: 100%;
     margin-bottom: 20px;
 }
 
-.register__input-wrapper {
+.register__form-select-wrapper,
+.register__form-input-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    cursor: pointer;
 
-    &:first-child {
-        margin-bottom: 10px;
+    &:not(:last-child) {
+        margin-bottom: 15px;
     }
 }
 
-.register__input {
+.register__form-input {
     border: none;
     outline: none;
     font-family: "Roboto-Regular", sans-serif;
@@ -66,11 +68,103 @@
     }
 }
 
-.register__btns {
+.register__btn-wrapper {
     margin-top: 20px;
 }
 
-.register__input-btn {
+.register__form-select-wrapper {
+    position: relative;
+    margin-top: 19px;
+
+    &::after {
+        position: absolute;
+        content: "";
+        top: 7px;
+        right: 7px;
+        width: 12px;
+        height: 7px;
+        background: rgba(0, 0, 0, 0.85);
+        clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    &:hover {
+        &::after {
+            background: #ff886c;
+        }
+    }
+}
+
+.register__form-select {
+    appearance: none;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    font-family: inherit;
+    background: linear-gradient(360deg, #dfdddc, #fff);
+    outline: 2px solid rgba(0, 0, 0, 0.5);
+    font-size: 16px;
+    width: 72%;
+    cursor: pointer;
+}
+
+.register__form-select-option {
+    background: #dfdddc;
+}
+
+.register__form-radio-title {
+    text-align: center;
+    margin: 30px 0 20px 0;
+}
+
+.register__form-radio-btns {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.register__form-radio-wrapper {
+    position: relative;
+    width: 90px;
+    cursor: pointer;
+
+    &:before {
+        position: absolute;
+        content: "";
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+        top: 0;
+        left: 32px;
+        bottom: 1px;
+        background-color: #aaa;
+        border-radius: 8px;
+        box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    }
+}
+
+
+.register__form-radio {
+    display: none;
+
+    &:checked  + .register__form-radio-wrapper::before {
+        content: "\2022";
+        color: #f3f3f3;
+        font-size: 30px;
+        text-align: center;
+        line-height: 18px;
+    }
+}
+
+.register__form-radio:checked {
+    background-color: turquoise;
+    cursor: pointer;
+}
+
+.register__btn {
     display: flex;
     justify-content: center;
     box-sizing: border-box;
@@ -101,8 +195,12 @@
 
 .register__exit {
     position: absolute;
+    border: none;
+    outline: none;
+    background-color: transparent;
     top: 5px;
-    right: 5px;
+    right: 1px;
+    cursor: pointer;
     transition: 0.3s;
 
     &:hover {
@@ -145,15 +243,15 @@
         font-size: 18px;
     }
 
-    .register__input-text {
+    .register__form-input-name {
         font-size: 14px;
     }
     
-    .register__input {
+    .register__form-input {
         font-size: 14px;
     }
 
-    .register__input-btn {
+    .register__btn {
         font-size: 14px;
     }
 

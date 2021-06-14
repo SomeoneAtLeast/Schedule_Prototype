@@ -55,7 +55,7 @@ const Login = () => {
                 </div>
                 <div className="login__inputs">
                     <label className="login__input-wrapper">
-                        <span className="login__input-text">Логин</span>
+                        <span className="login__input-text">Email</span>
                         <input
                             className="login__input" 
                             type="text"

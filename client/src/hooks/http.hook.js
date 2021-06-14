@@ -22,6 +22,7 @@ export const useHttp = () => {
 
             return data
         } catch (e) {
+            setSuccess(null)
             setError(e.message)
             throw e
         }

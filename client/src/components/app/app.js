@@ -19,7 +19,7 @@ import SeatsField from "../seats-field"
 import DaysFieldCommonControls from "../days-field-common-controls"
 import WorkingShifts from "../working-shifts"
 import UserControls from "../user-controls";
-import Register from "../register";
+import ManagingWorkers from "../managing-workers";
 import DualBall from "../dual-ball";
 
 
@@ -85,7 +85,7 @@ const App = ({ChangeSelectedPage, location}) => {
                                 }}/>
                                 <Route path="/seats" component={SeatsField}/>
                                 <Route path="/workingshifts" component={WorkingShifts}/>
-                                <Route path="/register" component={Register}/>
+                                <Route path="/managing-workers" component={ManagingWorkers}/>
                                 <Redirect to="/"/>
                             </Switch>
                         </div>
