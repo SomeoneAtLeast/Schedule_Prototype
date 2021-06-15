@@ -1,6 +1,22 @@
 const {Router} = require("express");
 const Workers = require("../models/Workers");
+const Prototype = require("../models/Prototype");
+const auth = require("../middleware/auth.middleware");
 const router = Router();
+
+router.post("/workers-generate", async (req, res) => {
+    try {
+        const test = await Prototype.find();
+
+        const Testbody = req.body;
+
+        Workers.insertMany(test)
+        res.json(Testbody);
+    } catch (e) {
+        res.status(500).json({message: "Что-то пошло не так"})
+    }
+})
+
 
 router.get("/workers", async (req, res) => {
     try {
