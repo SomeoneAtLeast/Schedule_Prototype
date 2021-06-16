@@ -30,7 +30,7 @@ const UnsavedChangesModal = ({workers, dates, currentYear, currentMonth, Workers
 
     const getWorkers = async () => {
         try {
-            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
             WorkersLoaded(data);
             UnsavedChangesStatus(false);
         } catch (e) {}
@@ -38,7 +38,7 @@ const UnsavedChangesModal = ({workers, dates, currentYear, currentMonth, Workers
 
     const getDates = async () => {
         try {
-            const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
+            const data = await request("/api/dates/dates", "GET", null, {year: currentYear, month: currentMonth});
             DatesLoaded(data);
             UnsavedChangesStatus(false);
         } catch (e) {}

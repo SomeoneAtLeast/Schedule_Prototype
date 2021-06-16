@@ -14,7 +14,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
     ChangeСoefficient, ChangeСoefficientNight, ChangeTraining}) => {
 
     const workerTypeConverter = () => {
-        const targetMonthlyShiftData = workers[selectedWorker].years[0].months[currentMonth - 1].monthlyShiftData;
+        const targetMonthlyShiftData = workers[selectedWorker].years[0].months[0].monthlyShiftData;
         let workerType = "Дневная смена SMM";
 
         if (targetMonthlyShiftData.nightWorker) {
@@ -44,8 +44,8 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
         return workerType
     }
 
-    const workingShiftMonth = workers[selectedWorker].years[0].months[currentMonth - 1].monthlyShiftData.workingShiftMonth;
-    const segment = workers[selectedWorker].years[0].months[currentMonth - 1].additionalInformation[1].value;
+    const workingShiftMonth = workers[selectedWorker].years[0].months[0].monthlyShiftData.workingShiftMonth;
+    const segment = workers[selectedWorker].years[0].months[0].additionalInformation[1].value;
 
     const [workerData, setworkerData] = useState ({
         workerName: workers[selectedWorker].name,

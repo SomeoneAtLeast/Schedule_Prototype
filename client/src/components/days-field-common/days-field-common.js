@@ -133,32 +133,35 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
 DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText, ChangeAcknowledgements, ChangeSecondBreaks, GetDatesOnServer}) => {
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
+    const [loadingMonth, setloadingMonth] = useState(true);
     const [showWorkerSettingsModal, setShowWorkerSettingsModal] = useState(false);
 
     const {request} = useHttp();
 
     const getWorkers = useCallback(async () => {
         try {
-            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
             WorkersLoaded(data);
             setLoading(false);
         } catch (e) {}
-    }, [request, WorkersLoaded, currentYear]);
+    }, [request, WorkersLoaded, currentYear, currentMonth]);
 
     
     const getDates = useCallback(async () => {
         try {
-            const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
+            const data = await request("/api/dates/dates", "GET", null, {year: currentYear, month: currentMonth});
             DatesLoaded(data);
             setloadingYear(false);
+            setloadingMonth(false)
         } catch (e) {}
-    }, [request, currentYear, DatesLoaded]);
+    }, [request, currentYear, DatesLoaded, currentMonth]);
 
     const tryChangeYear = async (value) => {
         try {
+            setloadingYear(true);
             ClearAllDays();
-            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
-            const datesData = await request("/api/dates/dates", "GET", null, {year: currentYear});
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
+            const datesData = await request("/api/dates/dates", "GET", null, {year: currentYear, month: currentMonth});
             GetWorkersOnServer(data);
             GetDatesOnServer(datesData);
             ChangeYear(value);
@@ -167,9 +170,10 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
 
     const tryChangeMonth = async (value) => {
         try {
+            setloadingMonth(true); 
             ClearAllDays();
-            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
-            const datesData = await request("/api/dates/dates", "GET", null, {year: currentYear});
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
+            const datesData = await request("/api/dates/dates", "GET", null, {year: currentYear, month: currentMonth});
             GetWorkersOnServer(data);
             GetDatesOnServer(datesData);
             ChangeMonth(value);
@@ -179,19 +183,27 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
     useEffect(() => {
             getDates();
             getWorkers();  
-            setloadingYear(true);
         return () => {
             UnsavedChangesStatus(false);
           };
     }, [getWorkers, getDates, UnsavedChangesStatus]);
     
     useEffect(() => {
+        setloadingMonth(true); 
+    }, [currentMonth]);
+
+    useEffect(() => {
+        setloadingYear(true);
+    }, [currentYear]);
+
+
+    useEffect(() => {
         ClearAllDays();
     }, [currentMonth, currentYear, ClearAllDays]);
 
     const getWorkerElement = (workerNumber) => {
         const targetWorker = workers[workerNumber];
-        const targetMonth = targetWorker.years[0].months[currentMonth - 1];
+        const targetMonth = targetWorker.years[0].months[0];
         let monthData = [];
         let linkClassNames = "days-field-common__item-link";
         let tdClassNames = "days-field-common__item";
@@ -200,7 +212,6 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         if (workingShift &&
             workingShift !== "Не задано") {
             let verifiedWorkingShift = workingShift;
-            console.log(verifiedWorkingShift)    
 
             if (verifiedWorkingShift === "Руководитель") {
                 verifiedWorkingShift = "director"
@@ -237,8 +248,8 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             </td>
         )
         
-        for (let i = 1; i <= workers[0].years[0].months[currentMonth - 1].shiftAndTeam.length; i++) {
-            const targetInformation = targetWorker.years[0].months[currentMonth - 1].shiftAndTeam[i - 1];
+        for (let i = 1; i <= workers[0].years[0].months[0].shiftAndTeam.length; i++) {
+            const targetInformation = targetWorker.years[0].months[0].shiftAndTeam[i - 1];
             monthData.push(
                 <td className = "days-field-common__shift-and-team-item"
                     key={i + 3000}>
@@ -247,7 +258,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 className="days-field-common__shift-and-team-item-input"
                                 type="text"
                                 maxLength={2}
-                                onChange={(e) => {ChangeShiftAndTeamText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm();
+                                onChange={(e) => {ChangeShiftAndTeamText(targetWorker.id, targetInformation.name, e); ChangeMonthlyNorm();
                                     ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
                                     ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}}
                                 value={targetInformation.value ? targetInformation.value : "-"}/>
@@ -256,9 +267,9 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             )
         }
 
-        for (let i = 1; i <= workers[0].years[0].months[currentMonth - 1].days.length; i++) {
+        for (let i = 1; i <= workers[0].years[0].months[0].days.length; i++) {
             let classNames = "days-field-common__item";
-            const targetDay = targetWorker.years[0].months[currentMonth - 1].days[i - 1];
+            const targetDay = targetWorker.years[0].months[0].days[i - 1];
             let verifiedWorkingTime = targetDay.workingShiftDay;
                                             
             if (verifiedWorkingTime === "Руководитель") {
@@ -305,9 +316,9 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             )
         }
 
-        for (let i = 1; i <= workers[0].years[0].months[currentMonth - 1].additionalInformation.length; i++) {
+        for (let i = 1; i <= workers[0].years[0].months[0].additionalInformation.length; i++) {
             let classNames = "days-field-common__item";
-            const targetInformation = targetWorker.years[0].months[currentMonth - 1].additionalInformation[i - 1];
+            const targetInformation = targetWorker.years[0].months[0].additionalInformation[i - 1];
             let readOnly = false;
             let maxLength = 4;
 
@@ -358,7 +369,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 maxLength={maxLength}
                                 readOnly={readOnly}
                                 value={targetInformation.value ? targetInformation.value : "-"}
-                                onChange={(e) => {ChangeAdditionalInformationText(targetWorker.id - 1, targetInformation.name, e); ChangeMonthlyNorm();
+                                onChange={(e) => {ChangeAdditionalInformationText(targetWorker.id, targetInformation.name, e); ChangeMonthlyNorm();
                                 ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
                                  ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(e); ChangeSecondBreaks()}}/>
                         </div>
@@ -379,7 +390,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             return (
                 <tr 
                     className = "days-field-common__items-row"
-                    key={worker.name}>
+                    key={worker.id}>
                     {getWorkerElement(i - 1)}
                 </tr>
             )
@@ -390,7 +401,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         )
     }
 
-    if (loading && loadingYear) {
+    if ((loading && loadingYear) || (loadingYear && loadingMonth)) {
         return (
             <DualBall className={"dual-ball--days-field-common"}/>
         )
@@ -428,7 +439,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                         ←
                                     </button>
                                     <div className = "days-field-common__days-item-month">
-                                        {dates[0].months[currentMonth - 1].name}
+                                        {!loadingMonth ?  dates[0].months[0].name : <DualBall className={"dual-ball--days-field-year-and-month"}/>}
                                     </div>
                                     <button
                                         className = "days-field-common__days-item-btn days-field-common__days-item-btn-right"
@@ -438,7 +449,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 </div>
                             </th>
                             {
-                                dates[0].months[currentMonth - 1].shiftAndTeam.map((item) => {
+                                dates[0].months[0].shiftAndTeam.map((item) => {
                                     return (
                                         <th className = "days-field-common__shift-and-team-title-item" 
                                             key={item.name}>
@@ -450,7 +461,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 })
                             }
                             {
-                                dates[0].months[currentMonth - 1].days.map((item) => {
+                                dates[0].months[0].days.map((item) => {
                                     return (
                                         <th className = "days-field-common__days-item" 
                                             key={item.id}>
@@ -465,7 +476,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 })
                             }
                             {
-                                dates[0].months[currentMonth - 1].additionalInformation.map((item) => {
+                                dates[0].months[0].additionalInformation.map((item) => {
 
                                     if (item.name === "messagePlan" || item.name === "acknowledgements" ) {
                                         let funcLeft = null;
@@ -477,14 +488,14 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                             classNames += " days-field-common__additional-information-item--messagePlan";
                                             funcLeft = () => {ChangeIncidentsPerHour("back"); ChangeMessagePlan()};
                                             funcRight = () => {ChangeIncidentsPerHour("next"); ChangeMessagePlan()};
-                                            value = dates[0].months[currentMonth - 1].efficiencyPerHour;
+                                            value = dates[0].months[0].efficiencyPerHour;
                                         } 
 
                                         if (item.name === "acknowledgements") {
                                             classNames += " days-field-common__additional-information-item--acknowledgements";
                                             funcLeft = () => {ChangeNumberOfAcknowledgements("back"); ChangeMessagePlan()};
                                             funcRight = () => {ChangeNumberOfAcknowledgements("next"); ChangeMessagePlan()};
-                                            value = dates[0].months[currentMonth - 1].numberOfAcknowledgements;
+                                            value = dates[0].months[0].numberOfAcknowledgements;
                                         } 
 
                                         return (

@@ -40,19 +40,23 @@ const Register = ({setShowRegister}) => {
         clearSuccess()
     }
 
-    const onRegister = async () => {
+
+    const onCreateWorker = async () =>  {
         try {
-            const data = await request("/api/auth/register", "POST", {email: form.email, password: form.password, role: form.role});
-            console.log(data)
+            await request("/api/workers/workers-generate", "POST", {name: form.name, workStartYear: form.workStartYear, workStartMonth: form.workStartMonth});
         } catch (e) {}
     }
 
-    const onTEST = async () => {
+
+    const onRegister = async () => {
         try {
-            const data = await request("/api/workers/workers-generate", "POST", {name: form.name, workStartYear: form.workStartYear, workStartMonth: form.workStartMonth});
-            console.log(data)
+            await request("/api/auth/register", "POST", {email: form.email, password: form.password, role: form.role});
+            if (inSchedule) {
+                onCreateWorker();
+            }
         } catch (e) {}
     }
+
 
     const inScheduleInfo = (
         <div className="register__form-add-in-schedule">
@@ -191,8 +195,7 @@ const Register = ({setShowRegister}) => {
                 <div className="register__btn-wrapper">
                     <button 
                         className="register__btn"
-                        // onClick={canRegister ? onRegister : () => setRegisterError(true)}
-                        onClick={onTEST}
+                        onClick={canRegister ? onRegister : () => setRegisterError(true)}
                         disabled={loading}>
                         Зарегистрировать
                     </button>

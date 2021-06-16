@@ -6,12 +6,46 @@ const router = Router();
 
 router.post("/workers-generate", async (req, res) => {
     try {
-        const test = await Prototype.find();
+        const newWorker = await Prototype.find({}, {_id: 0});
+        const newWorkerData = req.body;
+        const lastWorkerInDb = await Workers.find().limit(1).sort({$natural:-1});
 
-        const Testbody = req.body;
+        let startMonth = null;
 
-        Workers.insertMany(test)
-        res.json(Testbody);
+        if (newWorkerData.workStartMonth === "Январь") startMonth = 0;
+        if (newWorkerData.workStartMonth === "Февраль") startMonth = 1;
+        if (newWorkerData.workStartMonth === "Март") startMonth = 2;
+        if (newWorkerData.workStartMonth === "Апрель") startMonth = 3;
+        if (newWorkerData.workStartMonth === "Май") startMonth = 4;
+        if (newWorkerData.workStartMonth === "Июнь") startMonth = 5;
+        if (newWorkerData.workStartMonth === "Июль") startMonth = 6;
+        if (newWorkerData.workStartMonth === "Август") startMonth = 7;
+        if (newWorkerData.workStartMonth === "Сентябрь") startMonth = 8;
+        if (newWorkerData.workStartMonth === "Октябрь") startMonth = 9;
+        if (newWorkerData.workStartMonth === "Ноябрь") startMonth = 10;
+        if (newWorkerData.workStartMonth === "Декабрь") startMonth = 11;
+
+        if (Number(newWorkerData.workStartYear) === 2022) {
+            newWorker[0].years.splice(0, 1)
+        }
+
+        let doesntExistMonths = [];
+
+        let i = 0;
+        while (i < startMonth) {
+            doesntExistMonths.push({name: "DoesntExist"})
+            i++
+        }
+
+        if (startMonth > 0) {
+            newWorker[0].years[0].months.splice(0, startMonth, ...doesntExistMonths)
+        }
+
+        newWorker[0].name = newWorkerData.name;
+        newWorker[0].id = ++lastWorkerInDb[0].id;
+
+        Workers.insertMany(newWorker);
+        res.json(newWorker)
     } catch (e) {
         res.status(500).json({message: "Что-то пошло не так"})
     }
@@ -21,8 +55,25 @@ router.post("/workers-generate", async (req, res) => {
 router.get("/workers", async (req, res) => {
     try {
         const currentYear = Number(req.headers.year);
+        const currentMonth = Number(req.headers.month);
+        const findMonth = `years.${currentYear - 1}.months.${currentMonth - 1}`;
         const workers = await Workers.find({"years.id": currentYear}, {"years.$": 1, name: 1, id: 1});
-        res.json(workers);
+
+        let finalWorkers = [];
+
+
+        workers.forEach(elem => {
+            const targetMonth = elem.years[0].months.slice(currentMonth - 1, currentMonth);
+            elem.years[0].months = targetMonth;
+
+            if (elem.years[0].months[0].name !== "DoesntExist") {
+                finalWorkers.push(elem)
+            }
+        });
+
+
+        console.log(finalWorkers)
+        res.json(finalWorkers);
     } catch (e) {
         res.status(500).json({message: "Что-то пошло не так"})
     }
@@ -34,8 +85,17 @@ router.post("/workers-update", async (req, res) => {
         const currentMonth = Number(req.headers.month);
 
         const workers = req.body;
-        let workersNames = []
-        let workersСhanges = []
+        let iDWorkersInDb = [];
+        let workersNames = [];
+        let workersСhanges = [];
+
+        const workersInDb = await Workers.find();
+
+        workersInDb.forEach(elem => {
+            iDWorkersInDb.push(
+                elem._id
+            )
+        });
 
         workers.forEach(elem => {
             workersNames.push(
@@ -45,15 +105,15 @@ router.post("/workers-update", async (req, res) => {
 
         workers.forEach(elem => {
             workersСhanges.push(
-                {...elem.years[0].months[currentMonth - 1]}
+                {...elem.years[0].months[0]}
             )
         });
 
         let iNames = 1;
 
-        workersNames.forEach(() => {
+        iDWorkersInDb.forEach(() => {
                 Workers.updateOne(
-                {id: iNames},
+                {_id: iDWorkersInDb[iNames - 1]},
                 {name: workersNames[iNames - 1]},
                 function(){
                 }
@@ -62,15 +122,14 @@ router.post("/workers-update", async (req, res) => {
                 iNames++
         });
 
-
         let iWorkersСhanges = 1;
 
-        workersСhanges.forEach(() => {
+        iDWorkersInDb.forEach(() => {
             const updatePath = `years.${currentYear - 1}.months.${currentMonth - 1}`;
             const target = {};
             target[updatePath] = workersСhanges[iWorkersСhanges - 1];
                 Workers.updateOne(
-                {id: iWorkersСhanges},
+                {_id: iDWorkersInDb[iWorkersСhanges - 1]},
                 target,
                 function()  {
                     }

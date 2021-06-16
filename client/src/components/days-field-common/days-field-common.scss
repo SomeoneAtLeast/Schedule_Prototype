@@ -19,7 +19,7 @@
     color: white;
     font-size: 18px;
     box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.15);
-    top: 0;
+    top: -54px;
     z-index: 4; 
 }
 
@@ -167,6 +167,7 @@
 
 .days-field-common__shift-and-team-title-item {
     position: sticky;
+    top: 0;
     font-weight: normal;
     padding: 5px 7px;
     color: white;
@@ -293,14 +294,13 @@
 
 .days-field-common__days-item,
 .days-field-common__additional-information-item {
-    position: relative;
+    position: sticky;
     width: 2%;
     font-weight: normal;
     padding: 10px;
     color: white;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
     background: linear-gradient(175deg, #ea6153, #e34938);
-    position: sticky;
     top: 0;
     z-index: 1;
 

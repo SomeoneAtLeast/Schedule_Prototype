@@ -38,7 +38,7 @@ const SaveAndCancel= ({workers, dates, currentYear, currentMonth, ClearAllDays, 
     const getWorkers = async () => {
         try {
             setLoadingWorkers(true);
-            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
             WorkersLoaded(data);
             setLoadingWorkers(false)
         } catch (e) {}
@@ -47,7 +47,7 @@ const SaveAndCancel= ({workers, dates, currentYear, currentMonth, ClearAllDays, 
     const getDates = async () => {
         try {
             setloadingDates(true);
-            const data = await request("/api/dates/dates", "GET", null, {year: currentYear});
+            const data = await request("/api/dates/dates", "GET", null, {year: currentYear, month: currentMonth});
             DatesLoaded(data);
             setloadingDates(false);
         } catch (e) {}
