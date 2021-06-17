@@ -8,9 +8,14 @@ router.post("/workers-generate", async (req, res) => {
     try {
         const newWorker = await Prototype.find({}, {_id: 0});
         const newWorkerData = req.body;
-        const lastWorkerInDb = await Workers.find().limit(1).sort({$natural:-1});
-
+        let lastWorkerInDb = await Workers.find().limit(1).sort({$natural:-1});
         let startMonth = null;
+
+        if (lastWorkerInDb.length === 0) {
+            lastWorkerInDb.push({
+                id: 1
+            })
+        } 
 
         if (newWorkerData.workStartMonth === "Январь") startMonth = 0;
         if (newWorkerData.workStartMonth === "Февраль") startMonth = 1;
@@ -32,6 +37,7 @@ router.post("/workers-generate", async (req, res) => {
         let doesntExistMonths = [];
 
         let i = 0;
+
         while (i < startMonth) {
             doesntExistMonths.push({name: "DoesntExist"})
             i++
@@ -42,7 +48,9 @@ router.post("/workers-generate", async (req, res) => {
         }
 
         newWorker[0].name = newWorkerData.name;
+
         newWorker[0].id = ++lastWorkerInDb[0].id;
+
 
         Workers.insertMany(newWorker);
         res.json(newWorker)
@@ -56,7 +64,6 @@ router.get("/workers", async (req, res) => {
     try {
         const currentYear = Number(req.headers.year);
         const currentMonth = Number(req.headers.month);
-        const findMonth = `years.${currentYear - 1}.months.${currentMonth - 1}`;
         const workers = await Workers.find({"years.id": currentYear}, {"years.$": 1, name: 1, id: 1});
 
         let finalWorkers = [];
@@ -71,8 +78,6 @@ router.get("/workers", async (req, res) => {
             }
         });
 
-
-        console.log(finalWorkers)
         res.json(finalWorkers);
     } catch (e) {
         res.status(500).json({message: "Что-то пошло не так"})
@@ -145,5 +150,36 @@ router.post("/workers-update", async (req, res) => {
     }
 })
 
+router.get("/workers-names", async (req, res) => {
+    try {
+        const workers = await Workers.find();
+
+        let workersNames = [];
+
+        workers.forEach(elem => {
+            workersNames.push(
+                {
+                    name: elem.name,
+                    id: elem.id
+                }
+            )
+        });
+
+        res.json(workersNames);
+    } catch (e) {
+        res.status(500).json({message: "Что-то пошло не так"})
+    }
+})
+
+router.post("/remove-worker", async (req, res) => {
+    try {
+        const workerOnDeletion = req.body;
+
+        await Workers.remove(workerOnDeletion);
+        res.json({message: "Успешно удален"});
+    } catch (e) {
+        res.status(500).json({message: "Что-то пошло не так"})
+    }
+})
 
 module.exports = router;

@@ -26,7 +26,6 @@
 }
 
 .managing-workers__list-item-btn {
-    max-width: 180px;
     display: flex;
     align-items: center;
     box-sizing: border-box;
@@ -72,6 +71,15 @@
 
     .managing-workers__list-wrapper {
         min-width: 185px;
+        width: 185px;
+    }
+
+    .managing-workers__list {
+        width: 155px;
+    }
+
+    .managing-workers__list-item-btn {
+        padding: 10px 10px;
     }
 }
 
@@ -80,5 +88,15 @@
 
     .managing-workers__list-wrapper {
         min-width: 135px;
+        width: 135px;
+    }
+
+    .managing-workers__list {
+        width: 115px;
+    }
+
+    .managing-workers__list-item-btn {
+        padding: 10px 5px;
+        font-size: 12px;
     }
 }

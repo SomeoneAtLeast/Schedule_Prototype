@@ -1,4 +1,4 @@
-.register {
+.remove {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -6,41 +6,41 @@
     margin-top: 90px;
 }
 
-.register__content {
+.remove__content {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    width: 435px;
+    width: 454px;
     border-radius: 10px;
-    background-color: rgb(251, 251, 251);
+    background-color: rgba(255, 255, 255, .8);
     box-shadow: 0px 0px 8px 0px rgba(74, 74, 74, 0.9);
     padding: 60px 60px 40px;
 }
 
-.register__content-title {
+.remove__content-title {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-bottom: 30px; 
+    margin-bottom: 25px; 
 }
 
 
-.register__content-title-text {
+.remove__content-title-text {
     color: rgba(0, 0, 0, 0.85);
     font-size: 20px;
 }
 
-.register__form {
-    width: 100%;
+.remove__form {
     margin-bottom: 20px;
 }
 
-.register__form-select-wrapper,
-.register__form-input-wrapper {
+.remove__form-select-wrapper,
+.remove__form-input-wrapper {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-end;
     cursor: pointer;
@@ -50,7 +50,7 @@
     }
 }
 
-.register__form-input {
+.remove__form-input {
     border: none;
     outline: none;
     font-family: "Roboto-Regular", sans-serif;
@@ -67,19 +67,22 @@
     }
 }
 
-.register__btn-wrapper {
+.remove__btn-wrapper {
     margin-top: 20px;
 }
 
-.register__form-select-wrapper {
+.remove__form-select-wrapper {
     position: relative;
-    margin-top: 19px;
+
+    .remove__form-input-name {
+        width: 100%;
+    }
 
     &::after {
         position: absolute;
         content: "";
-        top: 7px;
-        right: 7px;
+        top: 50px;
+        right: 8px;
         width: 12px;
         height: 7px;
         background: rgba(0, 0, 0, 0.85);
@@ -95,7 +98,7 @@
     }
 }
 
-.register__form-select {
+.remove__form-select {
     appearance: none;
     border: none;
     border-radius: 4px;
@@ -104,29 +107,35 @@
     background: linear-gradient(360deg, #dfdddc, #fff);
     outline: 2px solid rgba(0, 0, 0, 0.5);
     font-size: 16px;
-    width: 72%;
+    width: 100%;
     cursor: pointer;
 }
 
-.register__form-select-option {
+.remove__form-input-name {
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.remove__form-select-option {
     background: #dfdddc;
 }
 
-.register__form-radio-title {
+.remove__form-radio-title {
     text-align: center;
+    font-size: 18px;
     margin: 30px 0 20px 0;
 }
 
-.register__form-radio-btns {
+.remove__form-radio-btns {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+
     margin: 0 auto;
 }
 
-.register__form-radio-wrapper {
+.remove__form-radio-wrapper {
     display: flex;
-    width: 65px;
     cursor: pointer;
 
     &::after{
@@ -144,10 +153,10 @@
 }
 
 
-.register__form-radio {
+.remove__form-radio {
     display: none;
 
-    &:checked  + .register__form-radio-wrapper::after {
+    &:checked  + .remove__form-radio-wrapper::after {
         content: "\2022";
         font-size: 30px;
         text-align: center;
@@ -155,12 +164,12 @@
     }
 }
 
-.register__form-radio:checked {
+.remove__form-radio:checked {
     background-color: turquoise;
     cursor: pointer;
 }
 
-.register__form-add-in-schedule {
+.remove__form-add-in-schedule {
     margin-top: 20px;
     padding: 15px 15px 20px 15px;
     border-radius: 5px;
@@ -168,40 +177,40 @@
     box-shadow: inset 0px 0px 2px 1px rgba(0, 0, 0, 0.5);
 }
 
-.register__form-input-wrapper--worker-name {
+.remove__form-input-wrapper--worker-name {
     flex-wrap: wrap;
     justify-content: center;
 
-    .register__form-input {
+    .remove__form-input {
         width: 100%;
         margin-top: 7px;
         text-align: center;
     }
 }
 
-.register__form-add-in-schedule-data {
+.remove__form-add-in-schedule-data {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     margin-top: 25px;
 
-    .register__form-select-wrapper {
+    .remove__form-select-wrapper {
         margin: 20px 0 0 0;
         width: 45%;
     }
 
-    .register__form-select {
+    .remove__form-select {
         width: 100%;
     }
 }
 
-.register__form-add-in-schedule-data-name {
+.remove__form-add-in-schedule-data-name {
     width: 100%;
     text-align: center;
 }
 
-.register__btn {
+.remove__btn {
     display: flex;
     justify-content: center;
     box-sizing: border-box;
@@ -230,7 +239,7 @@
     }
 }
 
-.register__exit {
+.remove__exit {
     position: absolute;
     border: none;
     outline: none;
@@ -249,66 +258,50 @@
     }
 }
 
-.register__exit-img {
+.remove__exit-img {
     width: 25px;
 }
 
-.register__error,
-.register__success {
+.remove__error,
+.remove__success {
     text-align: center;
 }
 
-.register__error-text {
+.remove__error-text {
     color: #e12f2f;
     font-size: 13px;
 }
 
-.register__success-text {
+.remove__success-text {
     color: #009f0a;
     font-size: 13px;
 }
 
 @media (max-width: 600px) { 
 
-    .register__content {
-        position: absolute;
-        left: 50%;
-        width: 324px;
-        margin-left: -162px;
+    .remove__content {
+        width: 310px;
         padding: 60px 40px 40px;
     }
     
     
-    .register__content-title-text {
+    .remove__content-title-text {
         font-size: 18px;
     }
 
-    .register__form-radio-title {
-        font-size: 15px;
-    }
-
-    .register__form-input-name {
+    .remove__form-input-name {
         font-size: 14px;
     }
     
-    .register__form-input {
-        font-size: 12px;
-    }
-
-    .register__form-select {
+    .remove__form-input {
         font-size: 14px;
     }
 
-    .register__form-add-in-schedule-data-name {
+    .remove__btn {
         font-size: 14px;
     }
 
-    .register__btn {
-        font-size: 14px;
-        padding: 10px 60px;
-    }
-
-    .register__exit-img {
+    .remove__exit-img {
         width: 30px;
     }
 }

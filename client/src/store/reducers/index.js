@@ -3,6 +3,7 @@ import {kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/s
 
 const initialState = {
     workersOnServer: [],
+    workersNamesOnServer: [],
     workers: [],
     dates: [],
     datesOnServer: [],
@@ -46,6 +47,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 workersOnServer: action.workers
+            }
+        case "Get-Workers-Names-On-Server":
+            return {
+                ...state,
+                workersNamesOnServer: action.workersNames
             }
         case "Get-Dates-On-Server":
             return {

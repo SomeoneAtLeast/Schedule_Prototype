@@ -8,12 +8,11 @@ router.get("/dates", async (req, res) => {
         const currentMonth = Number(req.headers.month);
 
         const dates = await Dates.find({id: currentYear}, {months: 1, name: 1, id: 1});
-        console.log(dates)
         dates.forEach(elem => {
             const targetMonth = elem.months.slice(currentMonth - 1, currentMonth);
             elem.months = targetMonth;
         });
-        console.log(dates[0].months)
+
         res.json(dates);
     } catch (e) {
         res.status(500).json({message: "Что-то пошло не так"})

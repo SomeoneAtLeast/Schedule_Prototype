@@ -34,6 +34,22 @@
             height: 19px;
         }
     }
+
+    &--remove {
+        display: inline;
+        height: auto;
+        min-height: auto;
+        text-align: center;
+        background: linear-gradient(360deg, #dfdddc, #fff);
+        outline: 2px solid rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        width: 100%;
+        .dual-ball__img {
+            vertical-align: bottom;
+            width: 21px;
+            height: 21px;
+        }
+    }
 }
 
 .dual-ball__img {

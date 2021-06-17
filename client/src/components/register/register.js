@@ -8,11 +8,12 @@ import crossImg from "../../global-imgs/cross-black.svg"
 
 const Register = ({setShowRegister}) => {
 
-    const {loading, error, success, request, clearError, clearSuccess} = useHttp();
+    const {loading, error, request, clearError} = useHttp();
 
     const [canRegister, setСanRegister] = useState(false);
     const [registerError, setRegisterError] = useState(false);
     const [inSchedule, setInSchedule] = useState(null);
+    const [success, setSuccess] = useState ("")
 
     const [form, setForm] = useState ({
         email: "",
@@ -37,14 +38,17 @@ const Register = ({setShowRegister}) => {
 
     const clearMessage = () => {
         clearError()
-        clearSuccess()
+        setSuccess("");
     }
 
 
     const onCreateWorker = async () =>  {
         try {
             await request("/api/workers/workers-generate", "POST", {name: form.name, workStartYear: form.workStartYear, workStartMonth: form.workStartMonth});
-        } catch (e) {}
+            setSuccess("Успешно зарегистрирован");
+        } catch (e) {
+            setSuccess("");
+        }
     }
 
 
@@ -54,7 +58,10 @@ const Register = ({setShowRegister}) => {
             if (inSchedule) {
                 onCreateWorker();
             }
-        } catch (e) {}
+            setSuccess("Успешно зарегистрирован");
+        } catch (e) {
+            setSuccess("");
+        }
     }
 
 
