@@ -24,7 +24,7 @@
 }
 
 .days-field-common__items-row:first-child {
-    background: linear-gradient(2deg, #ea6153, #d04737);
+    background: linear-gradient(90deg, #ff5b5b 47%, #828282 91%);
 }
 
 .days-field-common__item {
@@ -83,10 +83,6 @@
         }
     }
 
-    &:nth-child(4) {
-        border-left: none;
-    }
-
     &--specified {
         .days-field-common__item-worker-settings-btn + .days-field-common__item-link {
             
@@ -128,6 +124,13 @@
     &--monthlyNorm {
         border: 2px solid #6a6a6a;
 
+        .days-field-common__item-input {
+            color: #393939;
+            font-family: "Roboto-Bold", sans-serif;
+        }
+    }
+    
+    &--segment {
         .days-field-common__item-input {
             color: #393939;
             font-family: "Roboto-Bold", sans-serif;
@@ -272,8 +275,8 @@
 
 .days-field-common__item-worker-settings-btn {
     position: absolute;
-    top: 3px;
-    right: 5px;
+    top: 6px;
+    right: 6px;
     opacity: 0;
     padding: 0;
     border: none;
@@ -327,17 +330,17 @@
 
     &--coefficient {
         background: linear-gradient(175deg, #ECAB43, #E8BD79);
-        padding: 10px 15px;
+        padding: 10px 16px;
     }
 
     &--coefficientNight {
         background: linear-gradient(70deg, #5e69a6, #012388);
-        padding: 10px 12px;
+        padding: 10px 16px;
     }
 
     &--adjustment {
         background: linear-gradient(70deg, #d55959, #9f0f0f);
-        padding: 10px 12px;
+        padding: 10px 15px;
     }
 
     &--training {
@@ -347,12 +350,17 @@
     &--breaks,
     &--shifts,
     &--segment {
+        padding: 10px 17px;
         background: linear-gradient(70deg, #888, #7b7b7b);
     }
 
     &--segment {
-        padding: 10px 12px;
         background: linear-gradient(70deg, #888, #7b7b7b);
+    }
+
+
+    &--norm {
+        padding: 10px 17px;
     }
 
     &--norm,
@@ -486,49 +494,49 @@
 
 .worked-director,
 .days-field-common__item:first-child .days-field-common__item-link--director {
-    background-color:#db9191;
+    background-color:#d06363;
     color: white;
 }
 
 .worked-09-18,
 .days-field-common__item:first-child .days-field-common__item-link--09-18 {
-    background-color:#ffa8d5;
+    background-color:#da81ac;
     color: white;
 }
 
 .worked-11-20,
 .days-field-common__item:first-child .days-field-common__item-link--11-20 {
-    background-color:#ce6b9e;
+    background-color:#b54d83;;
     color: white;
 }
 
 .worked-08-20,
 .days-field-common__item:first-child .days-field-common__item-link--08-20 {
-    background-color:#23c6db;
+    background-color:#3eb8c7;
     color: white;
 }
 
 .worked-09-21,
 .days-field-common__item:first-child .days-field-common__item-link--09-21 {
-    background-color:#cccb79;
+    background-color:#c1b928;
     color: white;
 }
 
 .worked-10-22,
 .days-field-common__item:first-child .days-field-common__item-link--10-22 {
-    background-color:#6fc48c;
+    background-color:#40b768;
     color: white;
 }
 
 .worked-11-23,
 .days-field-common__item:first-child .days-field-common__item-link--11-23 {
-    background-color:#d55959;
+    background-color:#bb2a2a;
     color: white;
 }
 
 .worked-12-24,
 .days-field-common__item:first-child .days-field-common__item-link--12-24 {
-    background-color:#aca88b;
+    background-color:#868267;
     color: white;
 }
 

@@ -41,13 +41,13 @@
         min-height: auto;
         text-align: center;
         background: linear-gradient(360deg, #dfdddc, #fff);
-        outline: 2px solid rgba(0, 0, 0, 0.5);
-        border-radius: 4px;
+        border: 2px solid rgba(0, 0, 0, 0.5);
+        border-radius: 7px;
         width: 100%;
         .dual-ball__img {
             vertical-align: bottom;
             width: 21px;
-            height: 21px;
+            height: 19px;
         }
     }
 }
@@ -61,13 +61,53 @@
 
     .dual-ball {
         height: 84%;
+
+        &--remove {
+            height: 18px;
+            .dual-ball__img {
+                vertical-align: top;
+                width: 21px;
+                height: 17px;
+            }
+        }
     }
 }
 
+@media (max-width: 1000px) { 
+
+    .dual-ball {
+
+        &--days-field-year-and-month {
+            .dual-ball__img {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        &--remove {
+            height: 17px;
+        }
+    }
+}
+
+
 @media (max-width: 600px) { 
+
+    .dual-ball {
+        height: 16px;
+        &--remove {
+            height: 14px;
+            .dual-ball__img {
+                vertical-align: top;
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
 
     .dual-ball__img {
         width: 100px;
         height: 100px;
     }
+    
 }

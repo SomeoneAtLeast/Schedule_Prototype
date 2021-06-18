@@ -1145,11 +1145,11 @@ const reducer = (state = initialState, action) => {
 
             const workerData = action.workerData;
 
-            const {workers, selectedWorker} = state;
+            let {workers, selectedWorker} = state;
+
             const newWorkers = [...workers.slice()];
             const targetWorker = newWorkers[selectedWorker];
             const targetMonth = newWorkers[selectedWorker].years[0].months[0];
-
             targetWorker.name = workerData.workerName;
 
             targetMonth.monthlyShiftData.nightWorker = null;
@@ -1215,75 +1215,37 @@ const reducer = (state = initialState, action) => {
             }
         }
         case "Change-Day-Type": {
-
             const objKey = action.objKey;
             const workerId = action.workerId;
             const dayId = action.dayId;
             const scheduleType = action.scheduleType;
+
+            console.log(objKey, workerId, dayId)
+
             let workingTime = action.workingTime;
             let hoursCount = action.hoursCount;
-
-            if (workerId === 0 || dayId === 0) {
-                return {
-                    ...state 
-                }
-            }
 
             if (workingTime === undefined) {
                 workingTime = null;
             }
 
-            const {workers, selectedWorker, selectedDay} = state;
-            const workerIndex = workers.findIndex(elem => elem.id === workerId);
-            const dayIndex = workers[workerIndex].years[0].months[0].days.findIndex(elem => elem.id === dayId); 
+            const {workers, selectedDay} = state;
             const newWorkers = [...workers.slice()];
-            const targetDay = newWorkers[workerIndex].years[0].months[0].days[dayIndex];
-
-            if (objKey === "selected" && targetDay.changeShiftMenuOpen === true) {
-                targetDay.changeShiftMenuOpen = false
-            }
 
 
-            if (objKey === "worked") {
-                targetDay.worked = true;
-                targetDay.weekend = false;
-                targetDay.vacation = false;
-                targetDay.changeShiftMenuOpen = false;
-                targetDay.selected = false;
-                targetDay.workingShiftDay = workingTime;
-                targetDay.workingHours = hoursCount;
-            } else if (objKey === "weekend") {
-                targetDay.weekend = true;
-                targetDay.worked = false;
-                targetDay.vacation = false;
-                targetDay.changeShiftMenuOpen = false;
-                targetDay.selected = false;
-                targetDay.workingShiftDay = null
-                targetDay.workingHours = 0;
-            } else if (objKey === "vacation") {
-                targetDay.vacation = true;
-                targetDay.worked = false;
-                targetDay.weekend = false;
-                targetDay.changeShiftMenuOpen = false;
-                targetDay.selected = false;
-                targetDay.workingShiftDay = null
-                targetDay.workingHours = 0;
-            } else if (objKey === "selected") {
-                targetDay.selected = !targetDay.selected;
-            } else if (objKey === "changeShiftMenuOpen") {
-                targetDay.changeShiftMenuOpen = !targetDay.changeShiftMenuOpen;
-            } else if (objKey === "takeOf") {
-                targetDay.weekend = false;
-                targetDay.worked = false;
-                targetDay.vacation = false;
-                targetDay.changeShiftMenuOpen = false;
-                targetDay.selected = false;
-                targetDay.workingShiftDay = null
-                targetDay.workingHours = 0;
-            }
-
+            console.log(scheduleType)
             if (scheduleType === "common") {
-                if (objKey === "worked") {
+                console.log("Aboba")
+                if (objKey === "selected") {
+                    newWorkers.forEach((workerItem) => {
+                        console.log(workerItem.years[0].months[0].days)
+                        workerItem.years[0].months[0].days.forEach((dayItem) => {
+                            if (workerItem.id === workerId && dayItem.id === dayId) {
+                                dayItem.selected = !dayItem.selected;
+                            }
+                        })
+                    })
+                } else if (objKey === "worked") {
                     newWorkers.forEach((item) => {
                         item.years[0].months[0].days.forEach((item) => {
                             if (item.selected) {
@@ -1347,6 +1309,61 @@ const reducer = (state = initialState, action) => {
             }
 
             if (scheduleType === "personal") {
+
+                const workerIndex = workers.findIndex(elem => elem.id === workerId);
+                const dayIndex = workers[workerIndex].years[0].months[0].days.findIndex(elem => elem.id === dayId); 
+                const newWorkers = [...workers.slice()];
+                const targetDay = newWorkers[workerIndex].years[0].months[0].days[dayIndex];
+
+                if (workerId === 0 || dayId === 0) {
+                    return {
+                        ...state 
+                    }
+                }
+
+                if (objKey === "selected" && targetDay.changeShiftMenuOpen === true) {
+                    targetDay.changeShiftMenuOpen = false
+                }
+    
+    
+                if (objKey === "worked") {
+                    targetDay.worked = true;
+                    targetDay.weekend = false;
+                    targetDay.vacation = false;
+                    targetDay.changeShiftMenuOpen = false;
+                    targetDay.selected = false;
+                    targetDay.workingShiftDay = workingTime;
+                    targetDay.workingHours = hoursCount;
+                } else if (objKey === "weekend") {
+                    targetDay.weekend = true;
+                    targetDay.worked = false;
+                    targetDay.vacation = false;
+                    targetDay.changeShiftMenuOpen = false;
+                    targetDay.selected = false;
+                    targetDay.workingShiftDay = null
+                    targetDay.workingHours = 0;
+                } else if (objKey === "vacation") {
+                    targetDay.vacation = true;
+                    targetDay.worked = false;
+                    targetDay.weekend = false;
+                    targetDay.changeShiftMenuOpen = false;
+                    targetDay.selected = false;
+                    targetDay.workingShiftDay = null
+                    targetDay.workingHours = 0;
+                } else if (objKey === "selected") {
+                    targetDay.selected = !targetDay.selected;
+                } else if (objKey === "changeShiftMenuOpen") {
+                    targetDay.changeShiftMenuOpen = !targetDay.changeShiftMenuOpen;
+                } else if (objKey === "takeOf") {
+                    targetDay.weekend = false;
+                    targetDay.worked = false;
+                    targetDay.vacation = false;
+                    targetDay.changeShiftMenuOpen = false;
+                    targetDay.selected = false;
+                    targetDay.workingShiftDay = null
+                    targetDay.workingHours = 0;
+                }
+
                 if (objKey === "selected") {
                     newWorkers[workerIndex].years[0].months[0].days.forEach(item => {
                         if (item.id !== (dayIndex + 1)) {
@@ -1359,7 +1376,6 @@ const reducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                selectedWorker,
                 selectedDay,
                 workers: newWorkers
             }

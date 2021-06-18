@@ -119,10 +119,9 @@ import sunImg from "./../../global-imgs/sun.svg"
 // При смене роли некоторые показатели сбрасываются на базовые для это роли, а другие пересчитываются. 
 // Коэф ночь, обучение, коэфф, благодарности а для ГЛ многие
 
+
 // Обновить данные в бд, сейчас битые
-// После открытия попапа не работает назначение
-// После снятия выделения последний день все еще селектед
-// Протестировать отслеживание несохраненных изменений с другими стартовыми условями. 
+
 // auth.middleware еще не задействован
 // Убрать отправку данных в ответе у некоторых запросов
 
@@ -159,7 +158,6 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
 
     const tryChangeYear = async (value) => {
         try {
-            setloadingYear(true);
             ClearAllDays();
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
             const datesData = await request("/api/dates/dates", "GET", null, {year: currentYear, month: currentMonth});
@@ -171,7 +169,6 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
 
     const tryChangeMonth = async (value) => {
         try {
-            setloadingMonth(true); 
             ClearAllDays();
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
             const datesData = await request("/api/dates/dates", "GET", null, {year: currentYear, month: currentMonth});
@@ -341,6 +338,10 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
 
             if (targetInformation.name === "monthlyNorm") {
                 classNames += " days-field-common__item--monthlyNorm";
+            }
+
+            if (targetInformation.name === "segment") {
+                classNames += " days-field-common__item--segment";
             }
 
             if (targetInformation.name === "coefficient") {

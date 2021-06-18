@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {connect} from "react-redux"
-import {SaveWorkerSettings, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient,
+import {SaveWorkerSettings, SelectWorker, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks, ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient,
     ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm, ChangeAcknowledgements, ChangeSecondBreaks, ChangeСoefficient, ChangeСoefficientNight,
     ChangeTraining} from "../../store/actions"
 
@@ -9,7 +9,7 @@ import "./worker-settings-modal.scss"
 import crossImg from "../../global-imgs/cross.svg"
 import worker from "../../global-imgs/worker.svg"
 
-const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWorkerSettingsModal, SaveWorkerSettings, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks,
+const WorkerSettingsModal = ({workers, selectedWorker, setShowWorkerSettingsModal, SaveWorkerSettings, ChangeMonthlyNorm, ChangeNumberOfShifts, ChangeNumberOfBreaks,
     ChangeWithTrainingAndBreaks, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, ChangeMessagePlan, ChangeAdjustment, ChangeNorm, ChangeAcknowledgements, ChangeSecondBreaks,
     ChangeСoefficient, ChangeСoefficientNight, ChangeTraining}) => {
 
@@ -71,7 +71,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
             <div className="worker-settings-modal">
                 <button 
                     className="worker-settings-modal__exit-btn"
-                    onClick={() => setShowWorkerSettingsModal(false)}>
+                    onClick={() => {setShowWorkerSettingsModal(false);}}>
                     <img 
                         className="worker-settings-modal__exit-btn-img"
                         src={crossImg}
@@ -114,7 +114,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                         </select>
                     </label>
                     <label className="worker-settings-modal__form-input-label worker-settings-modal__form-select-label">
-                        <span className="worker-settings-modal__form-input-name">Смена</span>
+                        <span className="worker-settings-modal__form-input-name">График</span>
                         <select 
                             className="worker-settings-modal__form-select"
                             name="workingShiftMonth" 
@@ -161,7 +161,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
                     className="worker-settings-modal__btn"
                     onClick={(e) => {SaveWorkerSettings(workerData); setShowWorkerSettingsModal(false); ChangeAcknowledgements(e); ChangeСoefficient(); ChangeСoefficientNight(); ChangeTraining(); ChangeMonthlyNorm();
                         ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeSecondBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
-                        ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment()}}>
+                        ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment();}}>
                         Сохранить
                 </button>
             </div>
@@ -175,6 +175,7 @@ const WorkerSettingsModal = ({workers, selectedWorker, currentMonth, setShowWork
 
 const mapDispatchToProps = {
     SaveWorkerSettings,
+    SelectWorker,
     ChangeMonthlyNorm,
     ChangeNumberOfShifts,
     ChangeNumberOfBreaks,

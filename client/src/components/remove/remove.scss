@@ -14,7 +14,7 @@
     box-sizing: border-box;
     width: 454px;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, .8);
+    background-color: rgb(251, 251, 251);
     box-shadow: 0px 0px 8px 0px rgba(74, 74, 74, 0.9);
     padding: 60px 60px 40px;
 }
@@ -34,7 +34,7 @@
 }
 
 .remove__form {
-    margin-bottom: 20px;
+    width: 100%;
 }
 
 .remove__form-select-wrapper,
@@ -68,7 +68,7 @@
 }
 
 .remove__btn-wrapper {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .remove__form-select-wrapper {
@@ -76,12 +76,13 @@
 
     .remove__form-input-name {
         width: 100%;
+        font-size: 17px;
     }
 
     &::after {
         position: absolute;
         content: "";
-        top: 50px;
+        top: 48px;
         right: 8px;
         width: 12px;
         height: 7px;
@@ -100,12 +101,14 @@
 
 .remove__form-select {
     appearance: none;
-    border: none;
-    border-radius: 4px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 7px;
     text-align: center;
+    text-align-last: center;
+    padding: 0 5px;
     font-family: inherit;
     background: linear-gradient(360deg, #dfdddc, #fff);
-    outline: 2px solid rgba(0, 0, 0, 0.5);
+    outline: none;
     font-size: 16px;
     width: 100%;
     cursor: pointer;
@@ -123,7 +126,7 @@
 
 .remove__form-radio-title {
     text-align: center;
-    font-size: 18px;
+    font-size: 17px;
     margin: 30px 0 20px 0;
 }
 
@@ -214,7 +217,7 @@
     display: flex;
     justify-content: center;
     box-sizing: border-box;
-    padding: 10px 100px;
+    padding: 10px 136px;
     border-radius: 5px;
     border: 2px solid rgba(0, 0, 0, 0.85);
     outline: none;
@@ -277,11 +280,113 @@
     font-size: 13px;
 }
 
+
+@media (max-width: 1485px) { 
+
+    .remove__content {
+        width: 400px;
+        padding: 60px 45px 40px;
+    }
+
+    .remove__content-title-text {
+        font-size: 19px;
+    }
+
+    .remove__form-radio-title {
+        font-size: 16px;
+    }
+
+    .remove__form-select-wrapper {
+
+        &::after {
+            top: 46px;
+        }
+
+        .remove__form-input-name {
+            font-size: 16px;
+        }
+    }
+
+    .remove__form-input-name {
+        font-size: 15px;
+    }
+    
+
+    .remove__form-select {
+        font-size: 15px;
+    }
+
+    .remove__btn-wrapper {
+        margin-top: 10px;
+    }
+
+    .remove__btn {
+        font-size: 15px;
+        padding: 10px 125px;
+    }
+    
+}
+
+
+@media (max-width: 1000px) { 
+
+    .remove__content {
+        width: 385px;
+    }
+
+    .remove__content-title {
+        margin-bottom: 20px;
+    }
+
+    .remove__content-title-text {
+        font-size: 18px;
+    }
+
+    .remove__form-radio-title {
+        font-size: 15px;
+        margin: 20px 0;
+    }
+
+    .remove__form-select-wrapper {
+
+        &::after {
+            top: 46px;
+            width: 10px;
+            height: 6px;
+        }
+
+        .remove__form-input-name {
+            font-size: 15px;
+        }
+    }
+
+    .remove__form-input-name  {
+        font-size: 14px;
+    }
+
+    .remove__form-select {
+        font-size: 14px;
+    }
+
+    .remove__btn {
+        font-size: 14px;
+        padding: 10px 120px;
+    }
+
+    .remove__exit-img {
+        width: 30px;
+    }
+}
+
+
 @media (max-width: 600px) { 
 
     .remove__content {
-        width: 310px;
-        padding: 60px 40px 40px;
+        position: absolute;
+        left: 50%;
+        width: 324px;
+        margin-left: -162px;
+        padding: 60px 17px 40px;
     }
     
     
@@ -289,16 +394,33 @@
         font-size: 18px;
     }
 
+    .remove__form-select-wrapper {
+
+        &::after {
+            top: 44px;
+            right: 7px;
+        }
+
+        .remove__form-input-name {
+            font-size: 15px;
+        }
+    }
+
     .remove__form-input-name {
         font-size: 14px;
     }
-    
+
+    .remove__form-select {
+        font-size: 12px;
+    }
+
     .remove__form-input {
         font-size: 14px;
     }
 
     .remove__btn {
         font-size: 14px;
+        padding: 10px 116px;
     }
 
     .remove__exit-img {

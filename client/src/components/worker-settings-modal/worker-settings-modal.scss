@@ -123,14 +123,17 @@
 .worker-settings-modal__form-select {
     appearance: none;
     border: none;
+    outline: none;
     border-radius: 10px;
     text-align: center;
+    text-align-last: center;
     font-family: inherit;
     background: linear-gradient(360deg, #ea6153, #d04737);
     color: white;
     font-size: 16px;
     width: 76%;
     cursor: pointer;
+    padding: 0 5px;
 }
 
 .worker-settings-modal__form-select-option {
@@ -139,9 +142,11 @@
 
 .worker-settings-modal__form-select-shifts-option {
     color: white;
+    padding-left: 30px;
 }
 
 .worker-settings-modal__form-select-shifts-option:first-child {
+    color: rgba(0, 0, 0, 0.85);
     background: white;
 }
 
@@ -210,6 +215,7 @@
     &:hover {
         border: 2px solid rgba(255, 255, 255, 1);
         color: rgb(255, 255, 255);
+        transform: scale(0.97);
 
         .unsaved-changes-modal__btn-img {
             transform: translateY(-2px);
