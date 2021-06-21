@@ -62,7 +62,7 @@
         .days-field-common__item-link {
             display: block;
             background-color: #FFF;
-            padding: 17px;
+            padding: 11px 17px 11px 11px;
             font-size: 14px;
             width: 235px;
             border-right: 1px solid #DDD;
@@ -121,16 +121,128 @@
         }
     }
 
-    &--monthlyNorm {
-        border: 2px solid #6a6a6a;
+    &--non-clickable {
+        cursor: default;
 
+        &:hover {
+            background-color: white;
+            box-shadow: none;
+        }
+
+        &:active {
+            border-right: 1px solid #DDD;
+            border-bottom: 1px solid #DDD;
+            border-top: none;
+            border-left: none;
+        }
+
+        .days-field-common__item-input {
+            cursor: default;
+
+            &:hover {
+                transform: none;
+            }
+
+            &:focus {
+                transform: none;
+                color: inherit;
+            }
+        }
+    }
+
+    &--non-clickable.days-field-common__item--coefficient,
+    &--non-clickable.days-field-common__item--coefficientNight {
+        .days-field-common__item-input {
+            &:focus {
+                color: white;
+            }
+        }
+    }
+
+    &--non-clickable.days-field-common__item--training {
+        .days-field-common__item-input {
+            &:focus {
+                color: #3faa6c;
+            }
+        }
+    }
+
+    &--segment {
         .days-field-common__item-input {
             color: #393939;
             font-family: "Roboto-Bold", sans-serif;
         }
     }
     
-    &--segment {
+    &--linear-worker {
+
+        &:active {
+            border-right: 1px solid #DDD;
+            border-bottom: 1px solid #DDD;
+            border-top: none;
+            border-left: none;
+        }
+    }
+
+    &--linear-worker.days-field-common__item--messagePlan {
+        .days-field-common__item-input {
+
+            &:focus {
+                color: #393939;
+            }
+        }
+    }
+
+
+    &--management {
+        background-color: rgba(5, 64, 117, 0.67);
+        .days-field-common__item-input {
+            color: white;
+        }
+    }
+    
+    &--management.days-field-common__item--non-clickable {
+        background-color: rgba(5, 64, 117, 0.67);
+
+        .days-field-common__item-input {
+            color: white;
+        }
+
+        &:hover {
+            background-color: rgba(5, 64, 117, 0.67);
+        }
+
+
+        .days-field-common__item-input {
+            &:focus {
+                color: white;
+            }
+        }
+    }
+
+    &--management.days-field-common__item--monthlyNorm {
+        background-color: white;
+
+        &:hover {
+            background-color: white;
+        }
+
+        .days-field-common__item-input {
+            color: #393939;
+
+            &:focus {
+                color: #393939;
+            }
+        }
+    }
+
+    &--monthlyNorm {
+        border: 2px solid #6a6a6a;
+
+        &:active {
+            border: 2px solid #6a6a6a;
+        }
+
         .days-field-common__item-input {
             color: #393939;
             font-family: "Roboto-Bold", sans-serif;
@@ -153,16 +265,30 @@
             color: white;
 
             &:focus {
-                color: #dd65ff;;
+                color: #dd65ff;
             }
         }
     }
+
+    &--messagePlan {
+        .days-field-common__item-input {
+
+            &:focus {
+                color: white;
+            }
+        }
+    }
+
 
     &--adjustment {
 
         .days-field-common__item-input {
             color: #9f0f0f;
             font-size: 11px;
+
+            &:focus {
+                color: #9f0f0f;
+            }
         }
     }
 
@@ -186,13 +312,13 @@
 
 
     &:nth-child(2) {
-        left: 270.4px;
+        left: 264.4px;
         box-shadow: 0px 3px 3px 0 rgba(0, 0, 0, 0.15);
         z-index: 4;
     }
 
     &:nth-child(3) {
-        left: 295.4px;
+        left: 289.4px;
         box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.15);
         z-index: 3;
     }
@@ -217,7 +343,7 @@
     }
 
     &:nth-child(2) {
-        left: 270.4px;
+        left: 264.4px;
 
         .days-field-common__shift-and-team-item-input-wrapper {
             border-right: 1px solid #DDD;
@@ -225,7 +351,7 @@
     }
 
     &:nth-child(3) {
-        left: 295.4px;
+        left: 289.4px;
         box-shadow: 1px 0 3px 0px rgba(0, 0, 0, 0.2);
     }
 
@@ -242,7 +368,7 @@
 }
 
 .days-field-common__shift-and-team-item-input-wrapper {
-    height: 53px;
+    height: 39px;
     display: flex;
 }
 
@@ -255,7 +381,7 @@
     font-family: "Roboto-Regular", sans-serif;
     text-align: center;
     color: inherit;
-    font-size: 16px;
+    font-size: 14px;
     width: 90%;
     transition: 0.2s;
 
@@ -318,6 +444,11 @@
         left: 0;
         z-index: 5; 
         box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, 0.15);
+    }
+
+
+    &--weekend {
+        background: linear-gradient(360deg, #EE765E, #F9AA5F);
     }
 
     &--monthlyNorm {
@@ -494,7 +625,7 @@
 
 .worked-director,
 .days-field-common__item:first-child .days-field-common__item-link--director {
-    background-color:#d06363;
+    background-color:#b77b7b;
     color: white;
 }
 
@@ -553,11 +684,21 @@
 }
 
 .weekend {
-    background-color: rgba(136, 136, 136, 1);
+    background-color: rgb(255, 255, 255);
+
+    .days-field-common__item-input {
+        opacity: 0;
+        cursor: pointer;
+    }
 }
 
 .vacation {
     background-color: rgba(255, 203, 1, 1);
+
+    .days-field-common__item-input {
+        opacity: 0;
+        cursor: pointer;
+    }
 }
 
 .selected {
@@ -575,7 +716,7 @@
                 align-items: center;
                 box-sizing: border-box;
                 width: 152px;
-                height: 65px;
+                height: 45px;
                 padding: 5px 10px;
                 font-size: 13px;
             }
@@ -611,7 +752,7 @@
     }
 
     .days-field-common__shift-and-team-item-input-wrapper {
-        height: 65px;
+        height: 45px;
     }
 
     .days-field-common__item-link {
@@ -658,7 +799,7 @@
         &:first-child {
             .days-field-common__item-link {
                 width: 120px;
-                height: 65px;
+                height: 45px;
                 padding: 5px 7px;
                 font-size: 11px;
             }
@@ -702,7 +843,7 @@
     }
 
     .days-field-common__shift-and-team-item-input-wrapper {
-        height: 65px;
+        height: 45px;
     }
 
 

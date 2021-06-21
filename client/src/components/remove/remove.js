@@ -17,12 +17,18 @@ const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) 
     const [canRemove, setСanRemove] = useState(false);
     const [removeError, setRemoveError] = useState(false);
     const [shifter, setShifter] = useState(false);
-    const [completely, setCompletely] = useState(null);
+    const [fromMonth, setFromMonth] = useState(null);
 
     const [form, setForm] = useState ({
         name: "",
         id: ""
     })
+
+    const [endDate, setEndDate] = useState ({
+        workEndYear: 2021,
+        workEndMonth: "Январь",
+    })
+
 
     const [success, setSuccess] = useState ("")
 
@@ -30,11 +36,17 @@ const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) 
 
 
     const onChangeFormText = e => {
-
         setForm({
             ...form,
             [e.target.name]: e.target[e.target.selectedIndex].text,
             id: Number(e.target[e.target.selectedIndex].value)
+        })
+    }
+
+    const onChangeEndDate = e => {
+        setEndDate({
+            ...endDate,
+            [e.target.name]: e.target.value
         })
     }
 
@@ -63,12 +75,59 @@ const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) 
 
     const onRemove = async () => {
         try {
-           await request("/api/workers/remove-worker", "POST", {name: form.name, id: form.id});
+            if (fromMonth) {
+                await request("/api/workers/remove-worker", "POST", {name: form.name, id: form.id, workEndYear: endDate.workEndYear, workEndMonth: endDate.workEndMonth });
+            } else {
+                await request("/api/workers/remove-worker", "POST", {name: form.name, id: form.id, workEndYear: null, workEndMonth: null});
+            }
+           
            setShifter(!shifter);
            setSuccess("Успешно удален");
         } catch (e) {}
     }
 
+    const years = [2021, 2022];
+    const months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+    
+    const fromMonthBlock = (
+        <div className="remove__form-from-month">
+            <div className="remove__form-from-month-data">
+                <span className="remove__form-from-month-data-name">Удалить с</span>
+                <label className="remove__form-select-wrapper">
+                    <select 
+                        className="remove__form-select"
+                        name="workEndYear" 
+                        value={endDate.workEndYear} 
+                        onChange={onChangeEndDate}
+                        onFocus={() => {clearMessage()}}>
+                            {
+                                years.map((item) => {
+                                    return (
+                                        <option className="remove__form-select-option" key={item}>{item}</option>
+                                    )
+                                })
+                            }
+                    </select>
+                </label>
+                <label className="remove__form-select-wrapper">
+                    <select 
+                        className="remove__form-select"
+                        name="workEndMonth" 
+                        value={endDate.workEndMonth} 
+                        onChange={onChangeEndDate}
+                        onFocus={() => {clearMessage()}}>
+                            {
+                                months.map((item) => {
+                                    return (
+                                        <option className="remove__form-select-option" key={item}>{item}</option>
+                                    )
+                                })
+                            }
+                    </select>
+                </label>
+            </div>
+        </div>
+    )
 
     return (
         <div className="remove">
@@ -104,7 +163,7 @@ const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) 
                             name="deletion-type"
                             value="completely"
                             id="completely"
-                            onInput={() => {clearMessage(); setRemoveError(false);  setCompletely(true); setСanRemove(true)}}/>
+                            onInput={() => {clearMessage(); setRemoveError(false);  setFromMonth(false); setСanRemove(true)}}/>
                         <label
                             className="remove__form-radio-wrapper"
                             htmlFor="completely">
@@ -116,13 +175,14 @@ const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) 
                             name="deletion-type"
                             value="from-month"
                             id="from-month"
-                            onInput={() => {clearMessage(); setRemoveError(false); setCompletely(false); setСanRemove(false)}}/>
+                            onInput={() => {clearMessage(); setRemoveError(false); setFromMonth(true); setСanRemove(true)}}/>
                         <label
                             className="remove__form-radio-wrapper"
                             htmlFor="from-month">
                             <span className="remove__form-input-name">С выбранного месяца</span>
                         </label>
                     </div>
+                    {fromMonth ? fromMonthBlock : null}
                 </form>
                 <div className="remove__error">
                     <span className="remove__error-text">

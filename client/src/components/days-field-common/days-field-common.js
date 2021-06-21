@@ -215,6 +215,12 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
 
             if (targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.kmGroupLeader || targetMonth.monthlyShiftData.nonLinearWorker || targetMonth.monthlyShiftData.director) {
                 readOnly = true;
+                classNames += " days-field-common__item--management";
+                classNames += " days-field-common__item--non-clickable";
+            }
+
+            if (!targetMonth.monthlyShiftData.groupLeader && !targetMonth.monthlyShiftData.kmGroupLeader && !targetMonth.monthlyShiftData.nonLinearWorker && !targetMonth.monthlyShiftData.director) {
+                classNames += " days-field-common__item--linear-worker";
             }
 
             if (targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.kmGroupLeader) {
@@ -235,6 +241,18 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
 
             if (targetInformation.name === "segment") {
                 classNames += " days-field-common__item--segment";
+            }
+
+            if (targetInformation.name === "shifts" || targetInformation.name === "breaks" || targetInformation.name === "norm" ||
+                targetInformation.name === "withTraining/Breaks" || targetInformation.name === "withADecreasingCoefficient" || 
+                targetInformation.name === "totalWithTheNight" || targetInformation.name === "monthlyNorm" || targetInformation.name === "segment" ||
+                targetInformation.name === "messagePlan" || targetInformation.name === "acknowledgements" || targetInformation.name === "adjustment"
+                ) {
+                classNames += " days-field-common__item--non-clickable";
+            }
+ 
+            if (targetInformation.name === "messagePlan") {
+                classNames += " days-field-common__item--messagePlan";
             }
 
             if (targetInformation.name === "coefficient") {
@@ -357,8 +375,14 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                             }
                             {
                                 dates[0].months[0].days.map((item) => {
+                                    let classNames = "days-field-common__days-item";
+
+                                    if (item.dayName === "сб" || item.dayName === "вс") {
+                                        classNames += " days-field-common__days-item--weekend";
+                                    } 
+
                                     return (
-                                        <th className = "days-field-common__days-item" 
+                                        <th className = {classNames}
                                             key={item.id}>
                                             <div>
                                                 {item.id}

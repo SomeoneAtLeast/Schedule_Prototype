@@ -172,7 +172,7 @@
     cursor: pointer;
 }
 
-.remove__form-add-in-schedule {
+.remove__form-from-month {
     margin-top: 20px;
     padding: 15px 15px 20px 15px;
     border-radius: 5px;
@@ -191,16 +191,20 @@
     }
 }
 
-.remove__form-add-in-schedule-data {
+.remove__form-from-month-data {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    margin-top: 25px;
+    margin-top: 5px;
 
     .remove__form-select-wrapper {
         margin: 20px 0 0 0;
         width: 45%;
+
+        &::after {
+            top: 8px;
+        }
     }
 
     .remove__form-select {
@@ -208,7 +212,7 @@
     }
 }
 
-.remove__form-add-in-schedule-data-name {
+.remove__form-from-month-data-name {
     width: 100%;
     text-align: center;
 }

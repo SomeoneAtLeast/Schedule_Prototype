@@ -157,12 +157,14 @@ router.get("/workers-names", async (req, res) => {
         let workersNames = [];
 
         workers.forEach(elem => {
-            workersNames.push(
-                {
-                    name: elem.name,
-                    id: elem.id
-                }
-            )
+            if (elem.name !== "Удален") {
+                workersNames.push(
+                    {
+                        name: elem.name,
+                        id: elem.id
+                    }
+                )     
+            }
         });
 
         res.json(workersNames);
@@ -174,11 +176,53 @@ router.get("/workers-names", async (req, res) => {
 router.post("/remove-worker", async (req, res) => {
     try {
         const workerOnDeletion = req.body;
+        let endMonth = null;
+        // console.log({name: workerOnDeletion.name, id: workerOnDeletion.id})
+        if (workerOnDeletion.workEndMonth === "Январь") endMonth = 0;
+        if (workerOnDeletion.workEndMonth === "Февраль") endMonth = 1;
+        if (workerOnDeletion.workEndMonth === "Март") endMonth = 2;
+        if (workerOnDeletion.workEndMonth === "Апрель") endMonth = 3;
+        if (workerOnDeletion.workEndMonth === "Май") endMonth = 4;
+        if (workerOnDeletion.workEndMonth === "Июнь") endMonth = 5;
+        if (workerOnDeletion.workEndMonth === "Июль") endMonth = 6;
+        if (workerOnDeletion.workEndMonth === "Август") endMonth = 7;
+        if (workerOnDeletion.workEndMonth === "Сентябрь") endMonth = 8;
+        if (workerOnDeletion.workEndMonth === "Октябрь") endMonth = 9;
+        if (workerOnDeletion.workEndMonth === "Ноябрь") endMonth = 10;
+        if (workerOnDeletion.workEndMonth === "Декабрь") endMonth = 11;
 
-        await Workers.remove(workerOnDeletion);
+        if (workerOnDeletion.workEndYear && workerOnDeletion.workEndMonth) {
+            targetWorker = await Workers.find({name: workerOnDeletion.name, id: workerOnDeletion.id});
+
+            let doesntExistMonths = [];
+
+            let i = endMonth;
+    
+            while (i <= 11) {
+                doesntExistMonths.push({name: "DoesntExist"})
+                i++
+            };
+
+            if (Number(workerOnDeletion.workEndYear) === 2021) {
+                targetWorker[0].years.splice(1, 1);
+
+                if (endMonth === 0) {
+                    targetWorker[0].name = "Удален"
+                }
+
+                targetWorker[0].years[0].months.splice(endMonth, doesntExistMonths.length, ...doesntExistMonths);
+                await Workers.updateOne({name: workerOnDeletion.name, id: workerOnDeletion.id}, targetWorker[0], {upsert: false});
+            }
+
+
+            console.log(targetWorker[0].years[0].months)
+        } else {
+            console.log({name: workerOnDeletion.name, id: workerOnDeletion.id})
+            // await Workers.remove({name: workerOnDeletion.name, id: workerOnDeletion.id});
+        }
         res.json({message: "Успешно удален"});
     } catch (e) {
-        res.status(500).json({message: "Что-то пошло не так"})
+        res.status(500).json({message: e.message})
     }
 })
 
