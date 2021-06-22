@@ -150,26 +150,41 @@ router.post("/workers-update", async (req, res) => {
     }
 })
 
-router.get("/workers-names", async (req, res) => {
+router.get("/workers-candidates-for-deletion", async (req, res) => {
     try {
         const workers = await Workers.find();
 
-        let workersNames = [];
+        let candidatesForDeletion = [];
 
         workers.forEach(elem => {
-            if (elem.name !== "Удален") {
-                workersNames.push(
-                    {
-                        name: elem.name,
-                        id: elem.id
-                    }
-                )     
-            }
+            let yearsAndMonths = [];
+
+            elem.years.forEach(year => {
+
+                let months = [];
+
+                year.months.forEach((month) => {
+                    months.push(month.name)
+                })
+
+                yearsAndMonths.push({
+                    years: year.name,
+                    months
+                })
+            })
+
+            candidatesForDeletion.push(
+                {
+                    name: elem.name,
+                    id: elem.id,
+                    yearsAndMonths: yearsAndMonths,
+                }
+            )     
         });
 
-        res.json(workersNames);
+        res.json(candidatesForDeletion);
     } catch (e) {
-        res.status(500).json({message: "Что-то пошло не так"})
+        res.status(500).json({message: e.message})
     }
 })
 
@@ -204,14 +219,23 @@ router.post("/remove-worker", async (req, res) => {
             };
 
             if (Number(workerOnDeletion.workEndYear) === 2021) {
-                targetWorker[0].years.splice(1, 1);
-
                 if (endMonth === 0) {
-                    targetWorker[0].name = "Удален"
+                    await Workers.remove({name: workerOnDeletion.name, id: workerOnDeletion.id});
+                } else {
+                    targetWorker[0].years.splice(1, 1);
+                    targetWorker[0].years[0].months.splice(endMonth, doesntExistMonths.length, ...doesntExistMonths);
+                    await Workers.updateOne({name: workerOnDeletion.name, id: workerOnDeletion.id}, targetWorker[0], {upsert: false});
                 }
+            }
 
-                targetWorker[0].years[0].months.splice(endMonth, doesntExistMonths.length, ...doesntExistMonths);
-                await Workers.updateOne({name: workerOnDeletion.name, id: workerOnDeletion.id}, targetWorker[0], {upsert: false});
+            if (Number(workerOnDeletion.workEndYear) === 2022) {
+                if (endMonth === 0) {
+                    targetWorker[0].years.splice(1, 1);
+                    await Workers.updateOne({name: workerOnDeletion.name, id: workerOnDeletion.id}, targetWorker[0], {upsert: false});
+                } else {
+                    targetWorker[0].years[1].months.splice(endMonth, doesntExistMonths.length, ...doesntExistMonths);
+                    await Workers.updateOne({name: workerOnDeletion.name, id: workerOnDeletion.id}, targetWorker[0], {upsert: false});
+                }
             }
 
 

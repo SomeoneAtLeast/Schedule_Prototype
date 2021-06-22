@@ -29,6 +29,7 @@ const initialState = {
     seatsActive: false,
     workingshiftsActive: false,
     makeWorkingBtnActive: false,
+    candidatesForDeletion: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -48,10 +49,10 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 workersOnServer: action.workers
             }
-        case "Get-Workers-Names-On-Server":
+        case "Get-Candidates-For-Deletion":
             return {
                 ...state,
-                workersNamesOnServer: action.workersNames
+                candidatesForDeletion: action.candidatesForDeletion
             }
         case "Get-Dates-On-Server":
             return {

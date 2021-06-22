@@ -14,9 +14,9 @@ import WorkerSettingsModal from "../worker-settings-modal";
 import moonImg from "./../../global-imgs/moon.svg"
 import sunImg from "./../../global-imgs/sun.svg"
 
-
 // auth.middleware еще не задействован
 // Убрать отправку данных в ответе у некоторых запросов
+// вернуть сообщения об ошибках вместо e.message
 
 import "./days-field-common.scss"
 

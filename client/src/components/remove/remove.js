@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useHttp} from "../../hooks/http.hook"
 import {connect} from "react-redux"
-import {GetWorkersNamesOnServer} from "../../store/actions"
+import {GetCandidatesForDeletion} from "../../store/actions"
 
 import "./remove.scss"
 
@@ -9,11 +9,11 @@ import DualBall from "../dual-ball";
 
 import crossImg from "../../global-imgs/cross-black.svg"
 
-const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) => {
+const Remove = ({candidatesForDeletion, GetCandidatesForDeletion, setShowRemove}) => {
 
     const {loading, error, request, clearError} = useHttp();
 
-    const [namesReceived, setNamesReceived] = useState(false);
+    const [candidatesForDeletionReceived, setCandidatesForDeletionReceived] = useState(false);
     const [canRemove, setСanRemove] = useState(false);
     const [removeError, setRemoveError] = useState(false);
     const [shifter, setShifter] = useState(false);
@@ -59,19 +59,25 @@ const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) 
     useEffect(() => {
         const getWorkersNames = async () =>  {
             try {
-                setNamesReceived(false)
-                const workersNames = await request("/api/workers/workers-names", "GET");
-                setForm({
-                    name: workersNames[0].name,
-                    id: workersNames[0].id
-                })
-                GetWorkersNamesOnServer(workersNames);
-                setNamesReceived(true);
+                setCandidatesForDeletionReceived(false)
+                const candidatesForDeletionFromServer = await request("/api/workers/workers-candidates-for-deletion", "GET");
+                GetCandidatesForDeletion(candidatesForDeletionFromServer);
+                setCandidatesForDeletionReceived(true);
             } catch (e) {}
         }
 
         getWorkersNames();
-    }, [GetWorkersNamesOnServer, request, shifter])
+    }, [GetCandidatesForDeletion, request, shifter])
+
+    useEffect(() => {
+        if (candidatesForDeletionReceived) {
+            setForm({
+                name: candidatesForDeletion[0].name,
+                id: candidatesForDeletion[0].id
+            })
+        }
+    }, [candidatesForDeletionReceived, candidatesForDeletion])
+
 
     const onRemove = async () => {
         try {
@@ -86,6 +92,7 @@ const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) 
         } catch (e) {}
     }
 
+    console.log(candidatesForDeletion)
     const years = [2021, 2022];
     const months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
     
@@ -138,7 +145,7 @@ const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) 
                 <form className="remove__form">
                     <label className="remove__form-select-wrapper">
                         <span className="remove__form-input-name">Сотрудник</span>
-                        {!namesReceived ? <DualBall className={"dual-ball--remove"}/> : 
+                        {!candidatesForDeletionReceived ? <DualBall className={"dual-ball--remove"}/> : 
                         <select 
                             className="remove__form-select"
                             name="name" 
@@ -146,7 +153,7 @@ const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) 
                             onChange={onChangeFormText}
                             onFocus={() => {clearMessage(); setRemoveError(false)}}>
                                 {
-                                    workersNamesOnServer.map((item) => {
+                                    candidatesForDeletion.map((item) => {
                                         return (
                                             <option className="remove__form-select-option" value={item.id} key={item.id}>{item.name}</option>
                                         )
@@ -216,12 +223,13 @@ const Remove = ({workersNamesOnServer, GetWorkersNamesOnServer, setShowRemove}) 
 }
 
 const mapDispatchToProps = {
-    GetWorkersNamesOnServer
+    GetCandidatesForDeletion
 }
 
-const mapStateToProps = ({workersNamesOnServer}) => {
+const mapStateToProps = ({candidatesForDeletion}) => {
     return {
-        workersNamesOnServer
+        candidatesForDeletion,
+
     }
 }
 

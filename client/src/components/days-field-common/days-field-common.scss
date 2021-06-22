@@ -72,7 +72,9 @@
             }
 
             &:active {
-                font-size: 96%;
+
+                    transform: scale(0.9);
+
             }
         }
 
@@ -393,6 +395,10 @@
         transform: scale(1.1);
         color: #5b13ac;
     }
+}
+
+.days-field-common__item-input {
+    width: 50%;
 }
 
 .days-field-common__shift-and-team-item-input {

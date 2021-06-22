@@ -19,10 +19,10 @@ const GetWorkersOnServer = (workers) => {
     }
 }
 
-const GetWorkersNamesOnServer = (workersNames) => {
+const GetCandidatesForDeletion = (candidatesForDeletion) => {
     return {
-        type: "Get-Workers-Names-On-Server",
-        workersNames
+        type: "Get-Candidates-For-Deletion",
+        candidatesForDeletion
     }
 }
 
@@ -54,6 +54,7 @@ const SelectWorker = (id) => {
         id
     }
 }
+
 
 const ClearAllDays = () => {
     return {
@@ -333,5 +334,5 @@ export {
     ChangeСoefficientNight,
     ChangeTraining,
     GetDatesOnServer,
-    GetWorkersNamesOnServer
+    GetCandidatesForDeletion
 }
