@@ -23,12 +23,16 @@ const Remove = ({candidatesForDeletion, GetCandidatesForDeletion, setShowRemove}
         name: "",
         id: ""
     })
-
+    console.log(form.name)
     const [endDate, setEndDate] = useState ({
-        workEndYear: 2021,
+        workEndYear: 1,
         workEndMonth: "Январь",
     })
 
+    const [targetWorkerData, setTargetWorker] = useState ({
+        workerIndex: 0,
+        yearIndex: 0
+    })
 
     const [success, setSuccess] = useState ("")
 
@@ -43,10 +47,33 @@ const Remove = ({candidatesForDeletion, GetCandidatesForDeletion, setShowRemove}
         })
     }
 
-    const onChangeEndDate = e => {
+    const onChangeEndYear = e => {
         setEndDate({
             ...endDate,
-            [e.target.name]: e.target.value
+            workEndYear: Number(e.target[e.target.selectedIndex].value)
+        })
+    }
+
+    const onChangeEndMonth = e => {
+        setEndDate({
+            ...endDate,
+            workEndMonth: e.target.value,
+        })
+    }
+
+    const onChangeTargetWorkerIndex = e => {
+        const workerIndex = candidatesForDeletion.findIndex(elem => elem.id === Number(e.target[e.target.selectedIndex].value)); 
+        setTargetWorker({
+            ...targetWorkerData,
+            workerIndex
+        })
+    }
+
+    const onChangeTargetYearIndex = e => {
+        const yearIndex = candidatesForDeletion[targetWorkerData.workerIndex].yearsAndMonths.findIndex(elem => elem.id === Number(e.target[e.target.selectedIndex].value)); 
+        setTargetWorker({
+            ...targetWorkerData,
+            yearIndex
         })
     }
 
@@ -54,7 +81,6 @@ const Remove = ({candidatesForDeletion, GetCandidatesForDeletion, setShowRemove}
         clearError();
         setSuccess("");
     }
-
 
     useEffect(() => {
         const getWorkersNames = async () =>  {
@@ -70,7 +96,7 @@ const Remove = ({candidatesForDeletion, GetCandidatesForDeletion, setShowRemove}
     }, [GetCandidatesForDeletion, request, shifter])
 
     useEffect(() => {
-        if (candidatesForDeletionReceived) {
+        if (candidatesForDeletionReceived && candidatesForDeletion[0]) {
             setForm({
                 name: candidatesForDeletion[0].name,
                 id: candidatesForDeletion[0].id
@@ -80,61 +106,101 @@ const Remove = ({candidatesForDeletion, GetCandidatesForDeletion, setShowRemove}
 
 
     const onRemove = async () => {
+        if (!form.name) {
+            return
+        }
+
         try {
             if (fromMonth) {
                 await request("/api/workers/remove-worker", "POST", {name: form.name, id: form.id, workEndYear: endDate.workEndYear, workEndMonth: endDate.workEndMonth });
             } else {
                 await request("/api/workers/remove-worker", "POST", {name: form.name, id: form.id, workEndYear: null, workEndMonth: null});
             }
-           
+
+            setForm({
+                name: "",
+                id: ""
+            })
+
+            setEndDate({
+                workEndYear: 1,
+                workEndMonth: "Январь",
+            });
+
+            setTargetWorker({
+                ...targetWorkerData,
+                workerIndex: 0,
+                yearIndex: 0
+            });
+
            setShifter(!shifter);
            setSuccess("Успешно удален");
         } catch (e) {}
     }
 
-    console.log(candidatesForDeletion)
-    const years = [2021, 2022];
-    const months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
-    
-    const fromMonthBlock = (
-        <div className="remove__form-from-month">
-            <div className="remove__form-from-month-data">
-                <span className="remove__form-from-month-data-name">Удалить с</span>
-                <label className="remove__form-select-wrapper">
-                    <select 
-                        className="remove__form-select"
-                        name="workEndYear" 
-                        value={endDate.workEndYear} 
-                        onChange={onChangeEndDate}
-                        onFocus={() => {clearMessage()}}>
-                            {
-                                years.map((item) => {
-                                    return (
-                                        <option className="remove__form-select-option" key={item}>{item}</option>
-                                    )
-                                })
-                            }
-                    </select>
-                </label>
-                <label className="remove__form-select-wrapper">
-                    <select 
-                        className="remove__form-select"
-                        name="workEndMonth" 
-                        value={endDate.workEndMonth} 
-                        onChange={onChangeEndDate}
-                        onFocus={() => {clearMessage()}}>
-                            {
-                                months.map((item) => {
-                                    return (
-                                        <option className="remove__form-select-option" key={item}>{item}</option>
-                                    )
-                                })
-                            }
-                    </select>
-                </label>
+    const fromMonthBlock = () => {
+        return (
+            <div className="remove__form-from-month">
+                <div className="remove__form-from-month-data">
+                    <span className="remove__form-from-month-data-name">Удалить с</span>
+                    <label className="remove__form-select-wrapper">
+                        <select 
+                            className="remove__form-select"
+                            name="workEndYear" 
+                            value={endDate.workEndYear} 
+                            onChange={(e) => {onChangeEndYear(e); onChangeTargetYearIndex(e)}}
+                            onFocus={() => {clearMessage()}}>
+                                {   candidatesForDeletion[0] ?
+                                    candidatesForDeletion[targetWorkerData.workerIndex].yearsAndMonths.map((item) => {
+                                        return (
+                                            <option className="remove__form-select-option" value={item.id} key={item.years}>{item.years}</option>
+                                        )
+                                    })
+                                    :
+                                    <option className="remove__form-select-option" key={"-"}>-</option>
+                                }
+
+
+
+
+{/* value={form.id} 
+                            onChange={(e) => {onChangeFormText(e); onChangeTargetWorkerIndex(e)}}
+                            onFocus={() => {clearMessage(); setRemoveError(false)}}>
+                                {   candidatesForDeletion[0] ?
+                                    candidatesForDeletion.map((item) => {
+                                        return (
+                                            <option className="remove__form-select-option" value={item.id} key={item.id}>{item.name}</option>
+                                        )
+                                    }) */}
+
+
+
+
+
+                        </select>
+                    </label>
+                    <label className="remove__form-select-wrapper">
+                        <select 
+                            className="remove__form-select"
+                            name="workEndMonth" 
+                            value={endDate.workEndMonth} 
+                            onChange={onChangeEndMonth}
+                            onFocus={() => {clearMessage()}}>
+                                {   candidatesForDeletion[0] ?
+                                    candidatesForDeletion[targetWorkerData.workerIndex].yearsAndMonths[targetWorkerData.yearIndex].months.map((item) => {
+                                        return (
+                                            <option className="remove__form-select-option" key={item}>{item}</option>
+                                        )
+                                    })
+                                    :
+                                    <option className="remove__form-select-option" key={"-"}>-</option>
+                                }
+                        </select>
+                    </label>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 
     return (
         <div className="remove">
@@ -150,14 +216,16 @@ const Remove = ({candidatesForDeletion, GetCandidatesForDeletion, setShowRemove}
                             className="remove__form-select"
                             name="name" 
                             value={form.id} 
-                            onChange={onChangeFormText}
+                            onChange={(e) => {onChangeFormText(e); onChangeTargetWorkerIndex(e)}}
                             onFocus={() => {clearMessage(); setRemoveError(false)}}>
-                                {
+                                {   candidatesForDeletion[0] ?
                                     candidatesForDeletion.map((item) => {
                                         return (
                                             <option className="remove__form-select-option" value={item.id} key={item.id}>{item.name}</option>
                                         )
                                     })
+                                    :
+                                    <option className="remove__form-select-option" value={"Никого нет"} key={"Никого нет"}>Никого нет</option>
                                 }
                         </select>
                         }
@@ -189,7 +257,7 @@ const Remove = ({candidatesForDeletion, GetCandidatesForDeletion, setShowRemove}
                             <span className="remove__form-input-name">С выбранного месяца</span>
                         </label>
                     </div>
-                    {fromMonth ? fromMonthBlock : null}
+                    {fromMonth ? fromMonthBlock() : null}
                 </form>
                 <div className="remove__error">
                     <span className="remove__error-text">

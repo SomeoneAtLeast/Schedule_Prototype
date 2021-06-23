@@ -146,7 +146,7 @@ router.post("/workers-update", async (req, res) => {
         res.json(workersСhanges)
 
     } catch (e) {
-        res.status(500).json(e.message)
+        res.status(500).json({message: "Что-то пошло не так"})
     }
 })
 
@@ -164,12 +164,15 @@ router.get("/workers-candidates-for-deletion", async (req, res) => {
                 let months = [];
 
                 year.months.forEach((month) => {
-                    months.push(month.name)
+                    if (month.name !== "DoesntExist") {
+                        months.push(month.name)
+                    }
                 })
 
                 yearsAndMonths.push({
                     years: year.name,
-                    months
+                    months,
+                    id: year.id
                 })
             })
 
@@ -184,29 +187,31 @@ router.get("/workers-candidates-for-deletion", async (req, res) => {
 
         res.json(candidatesForDeletion);
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({message: "Что-то пошло не так"})
     }
 })
 
 router.post("/remove-worker", async (req, res) => {
     try {
         const workerOnDeletion = req.body;
-        let endMonth = null;
-        // console.log({name: workerOnDeletion.name, id: workerOnDeletion.id})
-        if (workerOnDeletion.workEndMonth === "Январь") endMonth = 0;
-        if (workerOnDeletion.workEndMonth === "Февраль") endMonth = 1;
-        if (workerOnDeletion.workEndMonth === "Март") endMonth = 2;
-        if (workerOnDeletion.workEndMonth === "Апрель") endMonth = 3;
-        if (workerOnDeletion.workEndMonth === "Май") endMonth = 4;
-        if (workerOnDeletion.workEndMonth === "Июнь") endMonth = 5;
-        if (workerOnDeletion.workEndMonth === "Июль") endMonth = 6;
-        if (workerOnDeletion.workEndMonth === "Август") endMonth = 7;
-        if (workerOnDeletion.workEndMonth === "Сентябрь") endMonth = 8;
-        if (workerOnDeletion.workEndMonth === "Октябрь") endMonth = 9;
-        if (workerOnDeletion.workEndMonth === "Ноябрь") endMonth = 10;
-        if (workerOnDeletion.workEndMonth === "Декабрь") endMonth = 11;
 
         if (workerOnDeletion.workEndYear && workerOnDeletion.workEndMonth) {
+
+            let endMonth = null;
+
+            if (workerOnDeletion.workEndMonth === "Январь") endMonth = 0;
+            if (workerOnDeletion.workEndMonth === "Февраль") endMonth = 1;
+            if (workerOnDeletion.workEndMonth === "Март") endMonth = 2;
+            if (workerOnDeletion.workEndMonth === "Апрель") endMonth = 3;
+            if (workerOnDeletion.workEndMonth === "Май") endMonth = 4;
+            if (workerOnDeletion.workEndMonth === "Июнь") endMonth = 5;
+            if (workerOnDeletion.workEndMonth === "Июль") endMonth = 6;
+            if (workerOnDeletion.workEndMonth === "Август") endMonth = 7;
+            if (workerOnDeletion.workEndMonth === "Сентябрь") endMonth = 8;
+            if (workerOnDeletion.workEndMonth === "Октябрь") endMonth = 9;
+            if (workerOnDeletion.workEndMonth === "Ноябрь") endMonth = 10;
+            if (workerOnDeletion.workEndMonth === "Декабрь") endMonth = 11;
+
             targetWorker = await Workers.find({name: workerOnDeletion.name, id: workerOnDeletion.id});
 
             let doesntExistMonths = [];
@@ -218,7 +223,7 @@ router.post("/remove-worker", async (req, res) => {
                 i++
             };
 
-            if (Number(workerOnDeletion.workEndYear) === 2021) {
+            if (Number(workerOnDeletion.workEndYear) === 1) {
                 if (endMonth === 0) {
                     await Workers.remove({name: workerOnDeletion.name, id: workerOnDeletion.id});
                 } else {
@@ -228,7 +233,7 @@ router.post("/remove-worker", async (req, res) => {
                 }
             }
 
-            if (Number(workerOnDeletion.workEndYear) === 2022) {
+            if (Number(workerOnDeletion.workEndYear) === 2) {
                 if (endMonth === 0) {
                     targetWorker[0].years.splice(1, 1);
                     await Workers.updateOne({name: workerOnDeletion.name, id: workerOnDeletion.id}, targetWorker[0], {upsert: false});
@@ -238,15 +243,13 @@ router.post("/remove-worker", async (req, res) => {
                 }
             }
 
-
-            console.log(targetWorker[0].years[0].months)
         } else {
-            console.log({name: workerOnDeletion.name, id: workerOnDeletion.id})
-            // await Workers.remove({name: workerOnDeletion.name, id: workerOnDeletion.id});
+            await Workers.remove({name: workerOnDeletion.name, id: workerOnDeletion.id});
         }
+        
         res.json({message: "Успешно удален"});
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({message: "Что-то пошло не так"})
     }
 })
 
