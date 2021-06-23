@@ -1,6 +1,9 @@
 import isEqual from 'lodash-es/isEqual';
 import {kmArr, glTable, workTeamsNames, months} from "../../models/shift-model/shift-model"
 
+const dateOnUserPc = new Date();
+const yearOnUserPc = String(dateOnUserPc.getFullYear());
+
 const initialState = {
     workersOnServer: [],
     workersNamesOnServer: [],
@@ -8,8 +11,8 @@ const initialState = {
     dates: [],
     datesOnServer: [],
     unsavedChanges: false,
-    currentYear: 1,
-    currentMonth: 1,
+    currentYear: Number(yearOnUserPc.substr(yearOnUserPc.length -1)),
+    currentMonth: dateOnUserPc.getMonth() + 1,
     selectedWorker: 0,
     selectedDay: 0,
     selectedMonth: 0,

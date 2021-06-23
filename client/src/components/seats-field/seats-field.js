@@ -8,6 +8,7 @@ import "./seats-field.scss"
 
 import SeatsItem from "../seats-item";
 import DualBall from "../dual-ball";
+import NotReadyStub from "../not-ready-stub";
 
 
 const SeatsField = ({SeatsLoaded, seats}) => {
@@ -82,6 +83,7 @@ const SeatsField = ({SeatsLoaded, seats}) => {
 
     return (
         <div className="seats-field">
+            <NotReadyStub/>
             <div className="seats-field-title">
                 Рабочие места
             </div>

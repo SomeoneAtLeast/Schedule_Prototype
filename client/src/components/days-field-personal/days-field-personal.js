@@ -8,6 +8,7 @@ import "./days-field-personal.scss"
 
 import DaysFieldItemPersonal from "../days-field-personal-item";
 import UnsavedChangesModal from "../unsaved-changes-modal";
+import NotReadyStub from "../not-ready-stub";
 import DualBall from "../dual-ball";
 
 const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, ChangeDayType, ChangeMonth, ChangeYear, selectedWorker, SelectWorker, WorkersLoaded, ClearAllDays, filter, id, GetWorkersOnServer, UnsavedChangesStatus}) => {
@@ -20,17 +21,17 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
     const getWorkers = useCallback(async () => {
         try {
             setloadingYear(true);
-            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
             WorkersLoaded(data);
             setLoading(false);
             setloadingYear(false);
         } catch (e) {}
-    }, [request, WorkersLoaded, currentYear]);
+    }, [request, WorkersLoaded, currentYear, currentMonth]);
 
     const tryChangeYear = async (value) => {
         try {
             ClearAllDays();
-            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
             GetWorkersOnServer(data);
             ChangeYear(value);
         } catch (e) {}
@@ -39,7 +40,7 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
     const tryChangeMonth = async (value) => {
         try {
             ClearAllDays();
-            const data = await request("/api/workers/workers", "GET", null, {year: currentYear});
+            const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
             GetWorkersOnServer(data);
             ChangeMonth(value);
         } catch (e) {}
@@ -49,7 +50,6 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
     useEffect(() => {
         SelectWorker(id);
         getWorkers();
-        console.log("1")
         return () => {
             UnsavedChangesStatus(false);
           };
@@ -77,9 +77,9 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
 
         if(filter === "worked") {
             const workedDays = workersArr.filter(item => item.worked);
-            const oldMonth = {...targetWorker.years[0].months[currentMonth - 1]};
+            const oldMonth = {...targetWorker.years[0].months[0]};
             const newMonth = {...oldMonth, days: workedDays};
-            const newMonths = [...targetWorker.years[0].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[0].months.slice(currentMonth)];
+            const newMonths = [...targetWorker.years[0].months.slice(0, 0), newMonth, ...targetWorker.years[0].months.slice(currentMonth)];
             const oldYear = {...targetWorker.years[0]};
             const newYear = {...oldYear, months: newMonths};
             const newYears = [...targetWorker.years.slice(0, currentYear - 1), newYear, ...targetWorker.years.slice(currentYear)];
@@ -88,9 +88,9 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
             return  newWorkers
         } else if (filter === "weekends") {
             const weekendDays = workersArr.filter(item => item.weekend);
-            const oldMonth = {...targetWorker.years[0].months[currentMonth - 1]};
+            const oldMonth = {...targetWorker.years[0].months[0]};
             const newMonth = {...oldMonth, days: weekendDays};
-            const newMonths = [...targetWorker.years[0].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[0].months.slice(currentMonth)];
+            const newMonths = [...targetWorker.years[0].months.slice(0, 0), newMonth, ...targetWorker.years[0].months.slice(currentMonth)];
             const oldYear = {...targetWorker.years[0]};
             const newYear = {...oldYear, months: newMonths};
             const newYears = [...targetWorker.years.slice(0, currentYear - 1), newYear, ...targetWorker.years.slice(currentYear)];
@@ -99,9 +99,9 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
             return  newWorkers
         } else if (filter === "vacation") {
             const vacationDays = workersArr.filter(item => item.vacation);
-            const oldMonth = {...targetWorker.years[0].months[currentMonth - 1]};
+            const oldMonth = {...targetWorker.years[0].months[0]};
             const newMonth = {...oldMonth, days: vacationDays};
-            const newMonths = [...targetWorker.years[0].months.slice(0, currentMonth - 1), newMonth, ...targetWorker.years[0].months.slice(currentMonth)];
+            const newMonths = [...targetWorker.years[0].months.slice(0, 0), newMonth, ...targetWorker.years[0].months.slice(currentMonth)];
             const oldYear = {...targetWorker.years[0]};
             const newYear = {...oldYear, months: newMonths};
             const newYears = [...targetWorker.years.slice(0, currentYear - 1), newYear, ...targetWorker.years.slice(currentYear)];
@@ -115,12 +115,12 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
 
     const getWorkerPresonalDays = (workerNumber) => {
 
-        const visibleWorkers = filterWorkers(workers[selectedWorker].years[0].months[currentMonth - 1].days, selectedWorker, filter)
+        const visibleWorkers = filterWorkers(workers[selectedWorker].years[0].months[0].days, selectedWorker, filter)
         const visibleWorker = visibleWorkers[workerNumber];
         const targetWorker = workers[workerNumber];
         let daysInMonth = [];
 
-        if (visibleWorker.years[0].months[currentMonth - 1].days.length === 0) {
+        if (visibleWorker.years[0].months[0].days.length === 0) {
             daysInMonth.push(
                 <td className = "days-field-personal__item days-field-personal__no-items" 
                     key={workerNumber}>
@@ -136,7 +136,7 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
             )
         }
 
-        const daysFieldElements = visibleWorker.years[0].months[currentMonth - 1].days.map((item) => {
+        const daysFieldElements = visibleWorker.years[0].months[0].days.map((item) => {
             
             let classNames = "days-field-personal__item";
             const {weekend, vacation, worked, selected, workingShiftDay, changeShiftMenuOpen} = item;
@@ -193,7 +193,7 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
         )
     }
 
-    const visibleDays = filterDays(workers[selectedWorker].years[0].months[currentMonth - 1].days, filter)
+    const visibleDays = filterDays(workers[selectedWorker].years[0].months[0].days, filter)
 
     const daysNumbers = visibleDays.map((item) => {
 
@@ -212,6 +212,7 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
 
     return (
         <div className="days-field-personal-wrapper">
+            <NotReadyStub/>
             {unsavedChanges ? <UnsavedChangesModal className={"unsaved-changes-modal--days-field-personal"}/> : null}
             <div className = "days-field-personal-years">
                 <div className = "days-field-personal__item-btn-group days-field-personal__item-btn-group--year">
@@ -242,7 +243,7 @@ const DaysFieldPresonal = ({workers, unsavedChanges, currentYear, currentMonth, 
                                         ←
                                     </button>
                                     <div className = "days-field-personal__item-month">
-                                        {workers[0].years[0].months[currentMonth - 1].name}
+                                        {workers[0].years[0].months[0].name}
                                     </div>
                                     <button
                                         className = "days-field-personal__item-btn days-field-personal__item-btn-right"

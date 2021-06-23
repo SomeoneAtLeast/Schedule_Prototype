@@ -399,6 +399,10 @@
 
 .days-field-common__item-input {
     width: 50%;
+
+    &--additionalInformation {
+        width: 90%;
+    }
 }
 
 .days-field-common__shift-and-team-item-input {

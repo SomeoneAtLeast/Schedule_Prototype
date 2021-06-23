@@ -8,6 +8,7 @@ import  "./working-shifts.scss"
 
 import WorkingShiftsSocialItem from "../working-shifts-social-item"
 import WorkingShiftsKmItem from "../working-shifts-km-item"
+import NotReadyStub from "../not-ready-stub";
 import DualBall from "../dual-ball";
 
 const WorkingShifts = ({ShiftsLoaded, shifts, kmShifts, months, workTeamsNames, glTable, kmTable, ChangeShiftText}) => {
@@ -148,6 +149,7 @@ const WorkingShifts = ({ShiftsLoaded, shifts, kmShifts, months, workTeamsNames, 
 
         return (
             <div className="working-shifts" key={123}>
+                <NotReadyStub/>
                 <div className="working-shifts__table-month">
                     <input
                             className="working-shifts__table-input-value"
