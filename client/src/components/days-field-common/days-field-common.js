@@ -16,7 +16,6 @@ import sunImg from "./../../global-imgs/sun.svg"
 
 // auth.middleware еще не задействован
 // Убрать отправку данных в ответе у некоторых запросов
-// вернуть сообщения об ошибках вместо e.message
 
 import "./days-field-common.scss"
 
@@ -229,6 +228,10 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
 
             if ((targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.director) && targetInformation.name === "messagePlan") {
                 classNames += " days-field-common__item--blue";
+            }
+
+            if (targetMonth.monthlyShiftData.nightWorker && targetInformation.name === "messagePlan") {
+                classNames += " days-field-common__item--night";
             }
 
             if (targetMonth.monthlyShiftData.kmGroupLeader && targetInformation.name === "messagePlan") {

@@ -114,6 +114,15 @@
         }
     }
 
+    &--night {
+        background-color: #5e69a6;
+
+        .days-field-common__item-input {
+            color: white;
+
+        }
+    }
+
     &--km-color {
         background: linear-gradient(70deg, #c67979, #b06262);
 
