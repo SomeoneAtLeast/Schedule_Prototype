@@ -31,6 +31,10 @@ const UserControls = () => {
                 buttons.map((item) => {
                     const {label, img, funk, name, id} = item;
 
+                    if (auth.role !== "Супервайзер" && name === "managing-workers") {
+                        return null
+                    }
+
                     if (name === "managing-workers") {
                         return (
                             <li className="user-controls__item" key = {id}>

@@ -87,3 +87,47 @@
         width: 25px;
     }
 }
+
+@media (max-width: 600px) { 
+
+    .save-and-cancel {
+        width: 66px;
+        margin: 0;
+        padding: 0 5px;
+        border-top: none;
+        border-left: 1px solid #eee;
+    }
+
+    .save-and-cancel__item {
+        margin: 0;
+    }
+
+    .save-and-cancel__item-btn {
+        padding: 3px;
+
+        &:hover {
+    
+            .save-and-cancel__item-btn-img {
+                transform: none;
+            }
+        }
+    
+        &:active {
+            transform: scale(0.90);
+        }
+    }
+
+    .save-and-cancel__item-btn-text {
+        position: absolute;
+        clip: rect(0 0 0 0);
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+    }
+
+    .save-and-cancel__item-btn-img {
+        margin: 0;
+        width: 23px;
+    }
+
+}

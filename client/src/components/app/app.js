@@ -25,9 +25,8 @@ import DualBall from "../dual-ball";
 
 const App = ({ChangeSelectedPage, location}) => {
 
-    const {token, login, logout, userId, ready} = useAuth();
+    const {token, login, logout, userId, role, ready} = useAuth();
     const isAuthenticated = !!token;
-
     useEffect(() => {
         ChangeSelectedPage(location);
     }, [ChangeSelectedPage, location])
@@ -35,11 +34,11 @@ const App = ({ChangeSelectedPage, location}) => {
     if (!ready) {
         return <DualBall/>
     }
-
+    
     if (isAuthenticated) {
         return (
             <Context.Provider value={{
-                token, login, logout, userId, isAuthenticated
+                token, login, logout, userId, isAuthenticated, role
                 }}>
                 <div className = "app">
                     <header className="header">
@@ -61,15 +60,25 @@ const App = ({ChangeSelectedPage, location}) => {
                             return (
                             <div className="controls">
                                 <Route path="/personalschedule/:id" exact component={FilterList}/>
-                                <Route path="/personalschedule/:id" exact component={SaveAndCancel}/>
-                                <Route path="/personalschedule/:id" exact component={UserControls}/>
+                                { (role === "Супервайзер") ?
+                                    <Route path="/personalschedule/:id" exact component={SaveAndCancel}/>                                
+                                    :
+                                    null
+                                }
+                                <Route path="/personalschedule/:id" exact component={UserControls}/>   
                             </div>
                             )
                         }}/>
                         <Route path="/" exact>
                             <div className="controls">
-                                <Route path="/" exact component={DaysFieldCommonControls}/>
-                                <Route path="/" exact component={SaveAndCancel}/>
+                                { (role === "Супервайзер") ?
+                                    <>
+                                        <Route path="/" exact component={DaysFieldCommonControls}/>
+                                        <Route path="/" exact component={SaveAndCancel}/>
+                                    </>                               
+                                    :
+                                    null
+                                }
                                 <Route path="/" exact component={UserControls}/>
                             </div>
                         </Route>

@@ -32,7 +32,7 @@ const Login = () => {
     const onLogin = async () => {
         try {
             const data = await request("/api/auth/login", "POST", {...form});
-            auth.login(data.token, data.userId);
+            auth.login(data.token, data.userId, data.role);
         } catch (e) {}
     }
 

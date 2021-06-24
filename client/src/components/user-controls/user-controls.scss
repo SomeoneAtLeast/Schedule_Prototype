@@ -77,3 +77,51 @@
         width: 25px;
     }
 }
+
+@media (max-width: 600px) { 
+
+    .user-controls  {
+        display: flex;
+        justify-content: center;
+        width: auto;
+        margin: 0;
+        padding: 0 5px;
+        border-top: none;
+        border-left: 1px solid #eee;
+    }
+
+    .user-controls__item {
+        margin: 0;
+        width: 31px;
+    }
+
+    .user-controls__item-link {
+        padding: 3px;
+        width: auto;
+
+        &:hover {
+    
+            .user-controls__item-link-img {
+                transform: none;
+            }
+        }
+    
+        &:active {
+            transform: scale(0.90);
+        }
+    }
+
+    .user-controls__item-link-text {
+        position: absolute;
+        clip: rect(0 0 0 0);
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+    }
+
+    .user-controls__item-link-img {
+        margin: 0;
+        width: 23px;
+    }
+
+}

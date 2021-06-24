@@ -117,6 +117,10 @@
     }
 }
 
+.days-field-common-controls__sub-menu-item-btn-text--mini {
+    display: none;
+}
+
 .days-field-common-controls__sub-menu-item-btn-director {
     display: flex;
     justify-content: center;
@@ -225,5 +229,104 @@
     .days-field-common-controls__sub-menu-item-btn {
         font-size: 10px;
         padding: 5px 4px;
+    }
+}
+
+@media (max-width: 600px) { 
+
+    .days-field-common-controls {
+        width: 175px;
+        margin: 0;
+        padding: 0 5px;
+    }
+
+    .days-field-common-controls__item {
+        margin: 0 1px;
+    }
+
+    .days-field-common-controls__item-btn-text {
+        position: absolute;
+        clip: rect(0 0 0 0);
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+    }
+    
+    .days-field-common-controls__item-btn {
+        padding: 3px;
+
+        &:hover {
+            .days-field-common-controls__item-btn-img {
+                transform: none;
+            }
+        }
+    
+        &:active {
+            transform: scale(0.90);
+        }
+    }
+
+    .days-field-common-controls__item-btn-img {
+        margin-right: 0;
+        width: 23px;
+    }
+
+    .days-field-common-controls__sub-menu {
+        position: absolute;
+        justify-content: center;
+        top: -31px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        padding: 8px 0 2px 0;
+    }
+
+    .days-field-common-controls__item-btn-with-sub-menu {
+        &::after {
+            right: 19px;
+            top: auto;
+            bottom: 18px;
+            transform: scaleY(0.7) rotate(-180deg);
+        }
+    }
+
+    .days-field-common-controls__item-btn-with-sub-menu-active {
+        .days-field-common-controls__item-btn-img {
+            transform: none;
+        }
+    
+        &::after {
+            transform: scaleY(0.7) rotate(0);
+        }
+    }
+
+
+    .days-field-common-controls__sub-menu-item {
+        margin: 0 2px 0 0;
+        border: none;
+
+        &:first-child {
+            width: 10%;
+
+            .days-field-common-controls__sub-menu-item-btn-text {
+                display: none;
+            }
+
+            .days-field-common-controls__sub-menu-item-btn-text--mini {
+                display: block;
+            }
+        }
+
+        &:hover {
+            border: none;
+        }
+    
+        &:active {
+            transform: scale(0.90);
+        }
+    }
+
+    .days-field-common-controls__sub-menu-item-btn {
+        padding: 4px 4px;
     }
 }

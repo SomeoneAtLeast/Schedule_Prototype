@@ -49,3 +49,26 @@
         min-width: 135px;
     }
 }
+
+
+@media (max-width: 600px) { 
+
+    .main {
+        position: relative;
+    }
+
+    .controls {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 7px 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.85);
+        z-index: 7;
+        min-width: 360px;
+        width: 100%;
+    }
+}
+

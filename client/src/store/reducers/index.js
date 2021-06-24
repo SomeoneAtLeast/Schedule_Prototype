@@ -1223,9 +1223,6 @@ const reducer = (state = initialState, action) => {
             const workerId = action.workerId;
             const dayId = action.dayId;
             const scheduleType = action.scheduleType;
-
-            console.log(objKey, workerId, dayId)
-
             let workingTime = action.workingTime;
             let hoursCount = action.hoursCount;
 
@@ -1236,13 +1233,9 @@ const reducer = (state = initialState, action) => {
             const {workers, selectedDay} = state;
             const newWorkers = [...workers.slice()];
 
-
-            console.log(scheduleType)
             if (scheduleType === "common") {
-                console.log("Aboba")
                 if (objKey === "selected") {
                     newWorkers.forEach((workerItem) => {
-                        console.log(workerItem.years[0].months[0].days)
                         workerItem.years[0].months[0].days.forEach((dayItem) => {
                             if (workerItem.id === workerId && dayItem.id === dayId) {
                                 dayItem.selected = !dayItem.selected;

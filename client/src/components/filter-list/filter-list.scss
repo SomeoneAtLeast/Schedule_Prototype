@@ -20,3 +20,14 @@
         width: 115px;
     }
 }
+
+@media (max-width: 600px) { 
+
+    .filter-list {
+        display: flex;
+        justify-content: space-between;
+        width: 196px;
+        margin: 0;
+        padding: 0 5px;
+    }
+}

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from "react";
+import React, {useEffect, useState, useCallback, useContext} from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux"
@@ -14,6 +14,8 @@ import WorkerSettingsModal from "../worker-settings-modal";
 import moonImg from "./../../global-imgs/moon.svg"
 import sunImg from "./../../global-imgs/sun.svg"
 
+import Context from "../../context";
+
 // auth.middleware еще не задействован
 // Убрать отправку данных в ответе у некоторых запросов
 
@@ -23,6 +25,9 @@ const DaysFieldCommon = ({workers, dates, unsavedChanges, currentYear, currentMo
 ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus, ChangeMonthlyNorm, ChangeNumberOfShifts,
 ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight,
 DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText, ChangeAcknowledgements, ChangeSecondBreaks, GetDatesOnServer}) => {
+
+    const context = useContext(Context);
+
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
     const [loadingMonth, setloadingMonth] = useState(true);
@@ -114,19 +119,23 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         monthData.push(
             <td className = {tdClassNames}
                 key={workerNumber}>
-                    <button 
-                        className = "days-field-common__item-worker-settings-btn"
-                        onClick={() => {setShowWorkerSettingsModal(true); SelectWorker(workerNumber)}}>
-                            <svg className = "days-field-common__item-worker-settings-btn-img" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/>
-                                <path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25
-                                2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98
-                                0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0
-                                .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0
-                                .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21
-                                1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41
-                                1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-                            </svg>
-                    </button>
+                    { (context.role === "Супервайзер") ?
+                        <button 
+                            className = "days-field-common__item-worker-settings-btn"
+                            onClick={() => {setShowWorkerSettingsModal(true); SelectWorker(workerNumber)}}>
+                                <svg className = "days-field-common__item-worker-settings-btn-img" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/>
+                                    <path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25
+                                    2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98
+                                    0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0
+                                    .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0
+                                    .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21
+                                    1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41
+                                    1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                                </svg>
+                        </button>                            
+                        :
+                        null
+                    }
                     <Link 
                         to={`/personalschedule/${workerNumber + 1}`}
                         className = {linkClassNames}
@@ -141,16 +150,25 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         for (let i = 1; i <= workers[0].years[0].months[0].shiftAndTeam.length; i++) {
             const targetInformation = targetWorker.years[0].months[0].shiftAndTeam[i - 1];
             monthData.push(
-                <td className = "days-field-common__shift-and-team-item"
+                <td className={(context.role === "Супервайзер") ? "days-field-common__shift-and-team-item" : "days-field-common__shift-and-team-item days-field-common__shift-and-team-item--read-only"}
                     key={i + 3000}>
                         <div className="days-field-common__shift-and-team-item-input-wrapper">
+
                             <input 
-                                className="days-field-common__shift-and-team-item-input"
+                                className={(context.role === "Супервайзер") ? "days-field-common__shift-and-team-item-input" : "days-field-common__shift-and-team-item-input days-field-common__shift-and-team-item-input--read-only"}
                                 type="text"
                                 maxLength={2}
-                                onChange={(e) => {ChangeShiftAndTeamText(targetWorker.id, targetInformation.name, e); ChangeMonthlyNorm();
+                                readOnly={(context.role === "Супервайзер") ? false : true}
+                                onChange={
+                                     (context.role === "Супервайзер") ?
+                                    (e) => {ChangeShiftAndTeamText(targetWorker.id, targetInformation.name, e); ChangeMonthlyNorm();
                                     ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
-                                    ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}}
+                                    ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}
+                                    :
+                                    null
+                                    
+                                
+                                }
                                 value={targetInformation.value ? targetInformation.value : "-"}/>
                         </div>
                 </td>
@@ -188,18 +206,23 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             }
 
             monthData.push(
-                <td className = {classNames}
+
+                <td className={(context.role === "Супервайзер") ? classNames : "days-field-common__item days-field-common__item--read-only"}
                     key={i + 1000}
                     onClick={() => SelectDayAndChangeDayType()}>
                         <div className="days-field-common__item-input-wrapper">
                             <input 
-                                className="days-field-common__item-input"
+                                className={(context.role === "Супервайзер") ? "days-field-common__item-input" : "days-field-common__item-input days-field-common__item-input--read-only"}
                                 type="text"
                                 maxLength={2}
+                                readOnly={(context.role === "Супервайзер") ? false : true}
                                 value={targetDay.workingHours}
-                                onChange={(e) =>  {ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e); ChangeMonthlyNorm();
+                                onChange={(context.role === "Супервайзер") ?
+                                (e) =>  {ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e); ChangeMonthlyNorm();
                                 ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
-                                ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}}
+                                ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}
+                                :
+                                null}
                             />
                         </div>
                 </td>
@@ -275,19 +298,28 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                 maxLength = 2;
             }
 
+            if (context.role !== "Супервайзер") {
+                readOnly = true;
+                classNames += " days-field-common__item--read-only";
+            }
+
             monthData.push(
                 <td className = {classNames}
                     key={i + 2000}>
                         <div className="days-field-common__item-input-wrapper">
                             <input 
-                                className="days-field-common__item-input days-field-common__item-input--additionalInformation"
+                                className={(context.role === "Супервайзер") ? "days-field-common__item-input days-field-common__item-input--additionalInformation" :
+                                "days-field-common__item-input days-field-common__item-input--additionalInformation days-field-common__item-input--read-only"}
                                 type="text"
                                 maxLength={maxLength}
                                 readOnly={readOnly}
                                 value={targetInformation.value ? targetInformation.value : "-"}
-                                onChange={(e) => {ChangeAdditionalInformationText(targetWorker.id, targetInformation.name, e); ChangeMonthlyNorm();
+                                onChange={(context.role === "Супервайзер") ?
+                                (e) => {ChangeAdditionalInformationText(targetWorker.id, targetInformation.name, e); ChangeMonthlyNorm();
                                 ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
-                                 ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(e); ChangeSecondBreaks()}}/>
+                                 ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(e); ChangeSecondBreaks()}
+                                :
+                                null}/>
                         </div>
                 </td>
             )
@@ -419,7 +451,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                             funcRight = () => {ChangeNumberOfAcknowledgements("next"); ChangeMessagePlan()};
                                             value = dates[0].months[0].numberOfAcknowledgements;
                                         } 
-
+                                        
                                         return (
                                             <th className = {classNames}
                                                 key={item.id}>
@@ -427,19 +459,27 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                                     {item.title}
                                                 </div>
                                                 <div className="days-field-common__incidents-per-hour-group">
-                                                    <button
-                                                        className = "days-field-common__incidents-per-hour-btn days-field-common__incidents-per-hour-btn-left"
-                                                        onClick={funcLeft}>
-                                                        ←
-                                                    </button>
+                                                    {(context.role === "Супервайзер") ?
+                                                        <button
+                                                            className = "days-field-common__incidents-per-hour-btn days-field-common__incidents-per-hour-btn-left"
+                                                            onClick={funcLeft}>
+                                                            ←
+                                                        </button>
+                                                        :
+                                                        null
+                                                    }
                                                     <div className = "days-field-common__incidents-per-hour-value">
                                                         {value}
                                                     </div>
-                                                    <button
-                                                        className = "days-field-common__incidents-per-hour-btn days-field-common__incidents-per-hour-btn-right"
-                                                        onClick={funcRight}>
-                                                        →
-                                                    </button>
+                                                    {(context.role === "Супервайзер") ?
+                                                        <button
+                                                            className = "days-field-common__incidents-per-hour-btn days-field-common__incidents-per-hour-btn-right"
+                                                            onClick={funcRight}>
+                                                            →
+                                                        </button>
+                                                        :
+                                                        null
+                                                    }
 
                                                 </div>
                                             </th>

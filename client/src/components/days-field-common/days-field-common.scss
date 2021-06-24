@@ -247,7 +247,8 @@
         }
     }
 
-    &--monthlyNorm {
+    &--monthlyNorm,
+    &--monthlyNorm.days-field-common__item--read-only {
         border: 2px solid #6a6a6a;
 
         &:active {
@@ -269,6 +270,16 @@
         }
     }
 
+    &--coefficient.days-field-common__item--read-only {
+
+        .days-field-common__item-input {
+
+            &:focus {
+                color: white;
+            }
+        }
+    }
+    
     &--coefficientNight {
         background: linear-gradient(70deg, #6470b0, #325ad0);
 
@@ -277,6 +288,16 @@
 
             &:focus {
                 color: #dd65ff;
+            }
+        }
+    }
+
+    &--coefficientNight.days-field-common__item--read-only {
+
+        .days-field-common__item-input {
+
+            &:focus {
+                color: white;
             }
         }
     }
@@ -307,6 +328,38 @@
 
         .days-field-common__item-input {
             color: #3faa6c;
+        }
+    }
+
+    &--training.days-field-common__item--read-only {
+
+        .days-field-common__item-input {
+
+            &:focus {
+                color: #3faa6c;
+            }
+        }
+    }
+
+    &--read-only {
+        cursor: default;
+
+        &:hover {
+            background-color: white;
+            box-shadow: none;
+        }
+
+        &:active {
+            border: none;
+            border-right: 1px solid #DDD;
+            border-bottom: 1px solid #DDD;
+        }
+
+        .days-field-common__item-input {
+
+            &:focus {
+                color: inherit;
+            }
         }
     }
 }
@@ -369,6 +422,14 @@
     &:not(:last-child) {
         border-bottom: 1px solid #DDD;
     }
+
+    &--read-only {
+        cursor: default;
+
+        &:hover {
+            background-color: white;
+        }
+    }
 }
 
 .days-field-common__item-input-wrapper {
@@ -403,6 +464,18 @@
     &:focus {
         transform: scale(1.1);
         color: #5b13ac;
+    }
+
+    &--read-only {
+        cursor: default;
+
+        &:hover {
+            transform: none;
+        }
+    
+        &:focus {
+            transform: none;
+        }
     }
 }
 
@@ -570,6 +643,13 @@
         }
     }
 }
+
+.days-field-common__days-item {
+    .days-field-common__days-item-btn-group {
+        width: 244px;
+    }
+}
+
 
 .days-field-common__incidents-per-hour-group {
     position: absolute;
@@ -748,6 +828,12 @@
         font-size: 14px;
     }
 
+    .days-field-common__days-item {
+        .days-field-common__days-item-btn-group {
+            width: 132px;
+        }
+    }
+
     .days-field-common__shift-and-team-title-item {
 
         &:nth-child(2) {
@@ -839,6 +925,13 @@
         }
     }
 
+    .days-field-common__days-item {
+        .days-field-common__days-item-btn-group {
+            width: 108px;
+        }
+    }
+
+
     .days-field-common__shift-and-team-title-item {
 
         &:nth-child(2) {
@@ -867,6 +960,9 @@
         height: 45px;
     }
 
+    .days-field-common__shift-and-team-item-input {
+        font-size: 12px;
+    }
 
     .days-field-common__item-input {
         font-size: 12px;

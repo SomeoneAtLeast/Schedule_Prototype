@@ -159,24 +159,6 @@ const Remove = ({candidatesForDeletion, GetCandidatesForDeletion, setShowRemove}
                                     :
                                     <option className="remove__form-select-option" key={"-"}>-</option>
                                 }
-
-
-
-
-{/* value={form.id} 
-                            onChange={(e) => {onChangeFormText(e); onChangeTargetWorkerIndex(e)}}
-                            onFocus={() => {clearMessage(); setRemoveError(false)}}>
-                                {   candidatesForDeletion[0] ?
-                                    candidatesForDeletion.map((item) => {
-                                        return (
-                                            <option className="remove__form-select-option" value={item.id} key={item.id}>{item.name}</option>
-                                        )
-                                    }) */}
-
-
-
-
-
                         </select>
                     </label>
                     <label className="remove__form-select-wrapper">

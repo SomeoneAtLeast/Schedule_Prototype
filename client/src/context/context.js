@@ -7,7 +7,8 @@ const Context = React.createContext({
     userId: null,
     login: noop,
     logout: noop,
-    isAuthenticated: false
+    isAuthenticated: false,
+    role: null
 }); 
 
 export default Context;

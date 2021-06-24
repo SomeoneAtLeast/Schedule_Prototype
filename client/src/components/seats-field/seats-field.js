@@ -73,9 +73,9 @@ const SeatsField = ({SeatsLoaded, seats}) => {
     if (loading) {
         return (
             <div className="seats-field">
-                <div className="seats-field-title">
+                {/* <div className="seats-field-title">
                     Рабочие места
-                </div>
+                </div> */}
                 <DualBall/>
             </div>
         )

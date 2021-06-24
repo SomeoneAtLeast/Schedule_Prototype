@@ -29,10 +29,10 @@ const FilterItem = ({btnText, btnQuantity, id, active, img, MakeFilterActive, Fi
             onClick = {onClick}>   
                 <img className="filter-list__filter-img" src={img} alt={btnText}></img>
                 <div className="filter-list__text">
-                    <span>
+                    <span className="filter-list__filter-name">
                         {btnText}
                     </span>
-                    <span>
+                    <span className="filter-list__days-number">
                         {btnQuantity}
                     </span>
                 </div>

@@ -113,9 +113,16 @@ ChangeSecondBreaks}) => {
                                         item.subMenu.map((subItem) => {
                                             const {workingTime, hoursCount, id} = subItem;
                                             let verifiedWorkingTime = workingTime;
-                                            
+                                            let textMini = null;
+
                                             if (verifiedWorkingTime === "Руководитель") {
                                                 verifiedWorkingTime = "director"
+
+                                                textMini = (
+                                                    <span className="days-field-common-controls__sub-menu-item-btn-text--mini">
+                                                        Рук
+                                                    </span>
+                                                )
                                             }
 
                                             return (
@@ -127,6 +134,7 @@ ChangeSecondBreaks}) => {
                                                             <span className="days-field-common-controls__sub-menu-item-btn-text">
                                                                 {workingTime}
                                                             </span>
+                                                            {textMini}
                                                     </button>
                                                 </li>                                               
                                             )

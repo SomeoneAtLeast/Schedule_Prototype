@@ -88,3 +88,32 @@
         width: 25px;
     }
 }
+
+@media (max-width: 600px) { 
+
+    .filter-list__filter-btn {
+        display: flex;
+        align-items: center;
+        padding: 4px 3px;
+        width: auto;
+        margin: 0;
+    }
+
+    .filter-list__text {
+        height: auto;
+    }
+
+    .filter-list__filter-name {
+        position: absolute;
+        clip: rect(0 0 0 0);
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+    }
+
+    .filter-list__filter-img {
+        margin-right: 4px;
+        width: 23px;
+    }
+
+}
