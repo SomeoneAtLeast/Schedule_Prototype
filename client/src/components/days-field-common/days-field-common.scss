@@ -68,7 +68,7 @@
             border-right: 1px solid #DDD;
 
             &:hover {
-                color: rgba(0, 0, 0, 0.6);
+                color: rgba(240, 239, 239, 0.6);
             }
 
             &:active {
@@ -345,7 +345,7 @@
         cursor: default;
 
         &:hover {
-            background-color: white;
+            // background-color: white;
             box-shadow: none;
         }
 
@@ -358,7 +358,7 @@
         .days-field-common__item-input {
 
             &:focus {
-                color: inherit;
+                // color: inherit;
             }
         }
     }
@@ -426,9 +426,9 @@
     &--read-only {
         cursor: default;
 
-        &:hover {
-            background-color: white;
-        }
+        // &:hover {
+        //     background-color: white;
+        // }
     }
 }
 

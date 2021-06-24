@@ -205,11 +205,14 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                 ChangeDayType(targetWorker.id, targetDay.id, "selected")
             }
 
-            monthData.push(
+            if (context.role !== "Супервайзер") {
+                classNames += " days-field-common__item--read-only";
+            }
 
-                <td className={(context.role === "Супервайзер") ? classNames : "days-field-common__item days-field-common__item--read-only"}
+            monthData.push(
+                <td className={classNames}
                     key={i + 1000}
-                    onClick={() => SelectDayAndChangeDayType()}>
+                    onClick={(context.role === "Супервайзер") ? () => SelectDayAndChangeDayType() : null}>
                         <div className="days-field-common__item-input-wrapper">
                             <input 
                                 className={(context.role === "Супервайзер") ? "days-field-common__item-input" : "days-field-common__item-input days-field-common__item-input--read-only"}
