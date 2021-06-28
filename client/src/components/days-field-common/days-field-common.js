@@ -18,6 +18,7 @@ import Context from "../../context";
 
 // auth.middleware еще не задействован
 // Убрать отправку данных в ответе у некоторых запросов
+// поменять number на +, работает быстрее. 
 
 import "./days-field-common.scss"
 
@@ -27,7 +28,8 @@ ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalI
 DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText, ChangeAcknowledgements, ChangeSecondBreaks, GetDatesOnServer}) => {
 
     const context = useContext(Context);
-
+    const roleSupervisor = context.role === "Супервайзер";
+    const roleNotSupervisor = context.role !== "Супервайзер";
     const [loading, setLoading] = useState(true);
     const [loadingYear, setloadingYear] = useState(true);
     const [loadingMonth, setloadingMonth] = useState(true);
@@ -49,11 +51,11 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             const data = await request("/api/dates/dates", "GET", null, {year: currentYear, month: currentMonth});
             DatesLoaded(data);
             setloadingYear(false);
-            setloadingMonth(false)
+            setloadingMonth(false);
         } catch (e) {}
     }, [request, currentYear, DatesLoaded, currentMonth]);
 
-    const tryChangeYear = async (value) => {
+    const tryChangeYear = async value => {
         try {
             ClearAllDays();
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
@@ -64,7 +66,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         } catch (e) {}
     };
 
-    const tryChangeMonth = async (value) => {
+    const tryChangeMonth = async value => {
         try {
             ClearAllDays();
             const data = await request("/api/workers/workers", "GET", null, {year: currentYear, month: currentMonth});
@@ -76,8 +78,8 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
     };
 
     useEffect(() => {
-            getDates();
-            getWorkers();  
+        getDates();
+        getWorkers();  
         return () => {
             UnsavedChangesStatus(false);
           };
@@ -96,7 +98,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         ClearAllDays();
     }, [currentMonth, currentYear, ClearAllDays]);
 
-    const getWorkerElement = (workerNumber) => {
+    const getWorkerElement = workerNumber => {
         const targetWorker = workers[workerNumber];
         const targetMonth = targetWorker.years[0].months[0];
         let monthData = [];
@@ -108,9 +110,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             workingShift !== "Не задано") {
             let verifiedWorkingShift = workingShift;
 
-            if (verifiedWorkingShift === "Руководитель") {
-                verifiedWorkingShift = "director"
-            }
+            if (verifiedWorkingShift === "Руководитель") verifiedWorkingShift = "director";
 
             linkClassNames += ` days-field-common__item-link--${verifiedWorkingShift}`;
             tdClassNames += " days-field-common__item--specified";
@@ -119,7 +119,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         monthData.push(
             <td className = {tdClassNames}
                 key={workerNumber}>
-                    { (context.role === "Супервайзер") ?
+                    { (roleSupervisor) ?
                         <button 
                             className = "days-field-common__item-worker-settings-btn"
                             onClick={() => {setShowWorkerSettingsModal(true); SelectWorker(workerNumber)}}>
@@ -150,24 +150,21 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         for (let i = 1; i <= workers[0].years[0].months[0].shiftAndTeam.length; i++) {
             const targetInformation = targetWorker.years[0].months[0].shiftAndTeam[i - 1];
             monthData.push(
-                <td className={(context.role === "Супервайзер") ? "days-field-common__shift-and-team-item" : "days-field-common__shift-and-team-item days-field-common__shift-and-team-item--read-only"}
+                <td className={(roleSupervisor) ? "days-field-common__shift-and-team-item" : "days-field-common__shift-and-team-item days-field-common__shift-and-team-item--read-only"}
                     key={i + 3000}>
                         <div className="days-field-common__shift-and-team-item-input-wrapper">
-
                             <input 
-                                className={(context.role === "Супервайзер") ? "days-field-common__shift-and-team-item-input" : "days-field-common__shift-and-team-item-input days-field-common__shift-and-team-item-input--read-only"}
+                                className={(roleSupervisor) ? "days-field-common__shift-and-team-item-input" : "days-field-common__shift-and-team-item-input days-field-common__shift-and-team-item-input--read-only"}
                                 type="text"
                                 maxLength={2}
-                                readOnly={(context.role === "Супервайзер") ? false : true}
+                                readOnly={(roleSupervisor) ? false : true}
                                 onChange={
-                                     (context.role === "Супервайзер") ?
+                                     (roleSupervisor) ?
                                     (e) => {ChangeShiftAndTeamText(targetWorker.id, targetInformation.name, e); ChangeMonthlyNorm();
                                     ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
                                     ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}
                                     :
                                     null
-                                    
-                                
                                 }
                                 value={targetInformation.value ? targetInformation.value : "-"}/>
                         </div>
@@ -180,47 +177,31 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
             const targetDay = targetWorker.years[0].months[0].days[i - 1];
             let verifiedWorkingTime = targetDay.workingShiftDay;
                                             
-            if (verifiedWorkingTime === "Руководитель") {
-                verifiedWorkingTime = "director"
-            }
-
-            if (targetDay.selected) {
-                classNames += " selected";
-            }
-
-            if (targetDay.worked) {
-                classNames += ` worked-${verifiedWorkingTime}`;
-            }
-
-            if (targetDay.weekend) {
-                classNames += " weekend";
-            }
-
-            if (targetDay.vacation) {
-                classNames += " vacation";
-            }
+            if (verifiedWorkingTime === "Руководитель") verifiedWorkingTime = "director";
+            if (targetDay.selected) classNames += " selected";
+            if (targetDay.worked) classNames += ` worked-${verifiedWorkingTime}`;
+            if (targetDay.weekend) classNames += " weekend";
+            if (targetDay.vacation) classNames += " vacation";
 
             const SelectDayAndChangeDayType = () => {
                 SelectDay(targetWorker.id, targetDay.id);
                 ChangeDayType(targetWorker.id, targetDay.id, "selected")
             }
 
-            if (context.role !== "Супервайзер") {
-                classNames += " days-field-common__item--read-only";
-            }
+            if (roleNotSupervisor) classNames += " days-field-common__item--read-only";
 
             monthData.push(
                 <td className={classNames}
                     key={i + 1000}
-                    onClick={(context.role === "Супервайзер") ? () => SelectDayAndChangeDayType() : null}>
+                    onClick={(roleSupervisor) ? () => SelectDayAndChangeDayType() : null}>
                         <div className="days-field-common__item-input-wrapper">
                             <input 
-                                className={(context.role === "Супервайзер") ? "days-field-common__item-input" : "days-field-common__item-input days-field-common__item-input--read-only"}
+                                className={(roleSupervisor) ? "days-field-common__item-input" : "days-field-common__item-input days-field-common__item-input--read-only"}
                                 type="text"
                                 maxLength={2}
-                                readOnly={(context.role === "Супервайзер") ? false : true}
+                                readOnly={(roleSupervisor) ? false : true}
                                 value={targetDay.workingHours}
-                                onChange={(context.role === "Супервайзер") ?
+                                onChange={(roleSupervisor) ?
                                 (e) =>  {ChangeScheduleText(targetWorker.id, targetDay.id, "workingHours", e); ChangeMonthlyNorm();
                                 ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
                                 ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(); ChangeSecondBreaks()}
@@ -235,73 +216,45 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         for (let i = 1; i <= workers[0].years[0].months[0].additionalInformation.length; i++) {
             let classNames = "days-field-common__item";
             const targetInformation = targetWorker.years[0].months[0].additionalInformation[i - 1];
+            const targInfName = targetInformation.name;
+            const groupLeader = targetMonth.monthlyShiftData.groupLeader;
+            const kmGroupLeader = targetMonth.monthlyShiftData.kmGroupLeader;
+            const nonLinearWorker = targetMonth.monthlyShiftData.nonLinearWorker;
+            const director = targetMonth.monthlyShiftData.director;
             let readOnly = false;
             let maxLength = 4;
 
-            if (targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.kmGroupLeader || targetMonth.monthlyShiftData.nonLinearWorker || targetMonth.monthlyShiftData.director) {
+            if (groupLeader || kmGroupLeader || nonLinearWorker || director) {
                 readOnly = true;
                 classNames += " days-field-common__item--management";
                 classNames += " days-field-common__item--non-clickable";
             }
 
-            if (!targetMonth.monthlyShiftData.groupLeader && !targetMonth.monthlyShiftData.kmGroupLeader && !targetMonth.monthlyShiftData.nonLinearWorker && !targetMonth.monthlyShiftData.director) {
-                classNames += " days-field-common__item--linear-worker";
-            }
+            if (!groupLeader && !kmGroupLeader && !nonLinearWorker && !director) classNames += " days-field-common__item--linear-worker";
+            if (groupLeader || kmGroupLeader) classNames += " days-field-common__item--groupLeader";
+            if ((groupLeader || director) && targInfName === "messagePlan") classNames += " days-field-common__item--blue";
+            if (targetMonth.monthlyShiftData.nightWorker && targInfName === "messagePlan") classNames += " days-field-common__item--night";
+            if (kmGroupLeader && targInfName === "messagePlan") classNames += " days-field-common__item--km-color";
+            if (targInfName === "monthlyNorm") classNames += " days-field-common__item--monthlyNorm";
+            if (targInfName === "segment") classNames += " days-field-common__item--segment";
 
-            if (targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.kmGroupLeader) {
-                classNames += " days-field-common__item--groupLeader";
-            }
-
-            if ((targetMonth.monthlyShiftData.groupLeader || targetMonth.monthlyShiftData.director) && targetInformation.name === "messagePlan") {
-                classNames += " days-field-common__item--blue";
-            }
-
-            if (targetMonth.monthlyShiftData.nightWorker && targetInformation.name === "messagePlan") {
-                classNames += " days-field-common__item--night";
-            }
-
-            if (targetMonth.monthlyShiftData.kmGroupLeader && targetInformation.name === "messagePlan") {
-                classNames += " days-field-common__item--km-color";
-            }
-
-            if (targetInformation.name === "monthlyNorm") {
-                classNames += " days-field-common__item--monthlyNorm";
-            }
-
-            if (targetInformation.name === "segment") {
-                classNames += " days-field-common__item--segment";
-            }
-
-            if (targetInformation.name === "shifts" || targetInformation.name === "breaks" || targetInformation.name === "norm" ||
-                targetInformation.name === "withTraining/Breaks" || targetInformation.name === "withADecreasingCoefficient" || 
-                targetInformation.name === "totalWithTheNight" || targetInformation.name === "monthlyNorm" || targetInformation.name === "segment" ||
-                targetInformation.name === "messagePlan" || targetInformation.name === "acknowledgements" || targetInformation.name === "adjustment"
-                ) {
-                classNames += " days-field-common__item--non-clickable";
-            }
+            if (targInfName === "shifts" || targInfName === "breaks" || targInfName === "norm" ||
+                targInfName === "withTraining/Breaks" || targInfName === "withADecreasingCoefficient" || 
+                targInfName === "totalWithTheNight" || targInfName === "monthlyNorm" || targInfName === "segment" ||
+                targInfName === "messagePlan" || targInfName === "acknowledgements" || targInfName === "adjustment"
+                ) classNames += " days-field-common__item--non-clickable";
  
-            if (targetInformation.name === "messagePlan") {
-                classNames += " days-field-common__item--messagePlan";
-            }
+            if (targInfName === "messagePlan") classNames += " days-field-common__item--messagePlan";
+            if (targInfName === "coefficient") classNames += " days-field-common__item--coefficient";
+            if (targInfName === "coefficientNight") classNames += " days-field-common__item--coefficientNight";
+            if (targInfName === "adjustment") classNames += " days-field-common__item--adjustment";
 
-            if (targetInformation.name === "coefficient") {
-                classNames += " days-field-common__item--coefficient";
-            }
-
-            if (targetInformation.name === "coefficientNight") {
-                classNames += " days-field-common__item--coefficientNight";
-            }
-
-            if (targetInformation.name === "adjustment") {
-                classNames += " days-field-common__item--adjustment";
-            }
-
-            if (targetInformation.name === "training") {
+            if (targInfName === "training") {
                 classNames += " days-field-common__item--training";
                 maxLength = 2;
             }
 
-            if (context.role !== "Супервайзер") {
+            if (roleNotSupervisor) {
                 readOnly = true;
                 classNames += " days-field-common__item--read-only";
             }
@@ -311,14 +264,14 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                     key={i + 2000}>
                         <div className="days-field-common__item-input-wrapper">
                             <input 
-                                className={(context.role === "Супервайзер") ? "days-field-common__item-input days-field-common__item-input--additionalInformation" :
+                                className={(roleSupervisor) ? "days-field-common__item-input days-field-common__item-input--additionalInformation" :
                                 "days-field-common__item-input days-field-common__item-input--additionalInformation days-field-common__item-input--read-only"}
                                 type="text"
                                 maxLength={maxLength}
                                 readOnly={readOnly}
                                 value={targetInformation.value ? targetInformation.value : "-"}
-                                onChange={(context.role === "Супервайзер") ?
-                                (e) => {ChangeAdditionalInformationText(targetWorker.id, targetInformation.name, e); ChangeMonthlyNorm();
+                                onChange={(roleSupervisor) ?
+                                (e) => {ChangeAdditionalInformationText(targetWorker.id, targInfName, e); ChangeMonthlyNorm();
                                 ChangeNumberOfShifts(); ChangeNumberOfBreaks(); ChangeNorm(); ChangeWithTrainingAndBreaks(); ChangeWithADecreasingCoefficient();
                                  ChangeTotalWithTheNight(); ChangeMessagePlan(); ChangeAdjustment(); ChangeAcknowledgements(e); ChangeSecondBreaks()}
                                 :
@@ -415,9 +368,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                 dates[0].months[0].days.map((item) => {
                                     let classNames = "days-field-common__days-item";
 
-                                    if (item.dayName === "сб" || item.dayName === "вс") {
-                                        classNames += " days-field-common__days-item--weekend";
-                                    } 
+                                    if (item.dayName === "сб" || item.dayName === "вс") classNames += " days-field-common__days-item--weekend";
 
                                     return (
                                         <th className = {classNames}
@@ -462,7 +413,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                                     {item.title}
                                                 </div>
                                                 <div className="days-field-common__incidents-per-hour-group">
-                                                    {(context.role === "Супервайзер") ?
+                                                    {(roleSupervisor) ?
                                                         <button
                                                             className = "days-field-common__incidents-per-hour-btn days-field-common__incidents-per-hour-btn-left"
                                                             onClick={funcLeft}>
@@ -474,7 +425,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                                     <div className = "days-field-common__incidents-per-hour-value">
                                                         {value}
                                                     </div>
-                                                    {(context.role === "Супервайзер") ?
+                                                    {(roleSupervisor) ?
                                                         <button
                                                             className = "days-field-common__incidents-per-hour-btn days-field-common__incidents-per-hour-btn-right"
                                                             onClick={funcRight}>
@@ -492,62 +443,28 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
                                     let classNames = "days-field-common__additional-information-item";
                                     const moon = <img className = "days-field-common__additional-information-item-img" width="16" src={moonImg} alt="Ночь"/>;
                                     const sun = <img className = "days-field-common__additional-information-item-img" width="16" src={sunImg} alt="День"/>;
+                                    const name = item.name;
 
-                                    if (item.name === "monthlyNorm") {
-                                        classNames += " days-field-common__additional-information-item--monthlyNorm";
-                                    }
-
-                                    if (item.name === "coefficient") {
-                                        classNames += " days-field-common__additional-information-item--coefficient";
-                                    }
-
-                                    if (item.name === "coefficientNight") {
-                                        classNames += " days-field-common__additional-information-item--coefficientNight";
-                                    }
-
-                                    if (item.name === "adjustment") {
-                                        classNames += " days-field-common__additional-information-item--adjustment";
-                                    }
-
-                                    if (item.name === "training") {
-                                        classNames += " days-field-common__additional-information-item--training";
-                                    }
-
-                                    if (item.name === "breaks") {
-                                        classNames += " days-field-common__additional-information-item--breaks";
-                                    }
-
-                                    if (item.name === "segment") {
-                                        classNames += " days-field-common__additional-information-item--segment";
-                                    }
-
-                                    if (item.name === "shifts") {
-                                        classNames += " days-field-common__additional-information-item--shifts";
-                                    }
-
-                                    if (item.name === "norm") {
-                                        classNames += " days-field-common__additional-information-item--norm";
-                                    }
-
-                                    if (item.name === "withTraining/Breaks") {
-                                        classNames += " days-field-common__additional-information-item--withTrainingBreaks";
-                                    }
-
-                                    if (item.name === "withADecreasingCoefficient") {
-                                        classNames += " days-field-common__additional-information-item--withADecreasingCoefficient";
-                                    }
-
-                                    if (item.name === "totalWithTheNight") {
-                                        classNames += " days-field-common__additional-information-item--totalWithTheNight";
-                                    }
+                                    if (name === "monthlyNorm") classNames += " days-field-common__additional-information-item--monthlyNorm";
+                                    if (name === "coefficient") classNames += " days-field-common__additional-information-item--coefficient";
+                                    if (name === "coefficientNight") classNames += " days-field-common__additional-information-item--coefficientNight";
+                                    if (name === "adjustment") classNames += " days-field-common__additional-information-item--adjustment";
+                                    if (name === "training") classNames += " days-field-common__additional-information-item--training";
+                                    if (name === "breaks") classNames += " days-field-common__additional-information-item--breaks";
+                                    if (name === "segment") classNames += " days-field-common__additional-information-item--segment";
+                                    if (name === "shifts") classNames += " days-field-common__additional-information-item--shifts";
+                                    if (name === "norm") classNames += " days-field-common__additional-information-item--norm";
+                                    if (name === "withTraining/Breaks") classNames += " days-field-common__additional-information-item--withTrainingBreaks";
+                                    if (name === "withADecreasingCoefficient") classNames += " days-field-common__additional-information-item--withADecreasingCoefficient";
+                                    if (name === "totalWithTheNight") classNames += " days-field-common__additional-information-item--totalWithTheNight";
 
                                     return (
                                         <th className = {classNames}
                                             key={item.id}>
                                             <div>
                                                 {item.title}
-                                                {item.name === "coefficientNight" ? moon : null}
-                                                {item.name === "coefficient" ? sun : null}
+                                                {name === "coefficientNight" ? moon : null}
+                                                {name === "coefficient" ? sun : null}
                                             </div>
                                         </th>
                                     )
@@ -563,52 +480,16 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
     )
 }
 
-DaysFieldCommon.propTypes = {
-    workers: PropTypes.array,
-    SelectWorker: PropTypes.func,
-    SelectDay: PropTypes.func,
-    ChangeDayType: PropTypes.func,
-    ChangeScheduleText: PropTypes.func
-}
+DaysFieldCommon.propTypes = {workers: PropTypes.array, SelectWorker: PropTypes.func, SelectDay: PropTypes.func, ChangeDayType: PropTypes.func, ChangeScheduleText: PropTypes.func}
 
 const mapDispatchToProps = {
-    SelectWorker, 
-    ChangeDayType,
-    SelectDay,
-    ChangeScheduleText,
-    ChangeMonth,
-    ChangeYear,
-    ClearAllDays,
-    WorkersLoaded,
-    GetWorkersOnServer,
-    UnsavedChangesStatus,
-    ChangeMonthlyNorm,
-    ChangeNumberOfShifts,
-    ChangeNumberOfBreaks,
-    ChangeNorm,
-    ChangeWithTrainingAndBreaks,
-    ChangeAdditionalInformationText,
-    ChangeWithADecreasingCoefficient,
-    ChangeTotalWithTheNight,
-    DatesLoaded,
-    ChangeIncidentsPerHour,
-    ChangeMessagePlan,
-    ChangeAdjustment,
-    ChangeNumberOfAcknowledgements,
-    ChangeShiftAndTeamText,
-    ChangeAcknowledgements,
-    ChangeSecondBreaks,
-    GetDatesOnServer
+    SelectWorker, ChangeDayType, SelectDay, ChangeScheduleText, ChangeMonth, ChangeYear, ClearAllDays, WorkersLoaded, GetWorkersOnServer, UnsavedChangesStatus,ChangeMonthlyNorm, ChangeNumberOfShifts,
+    ChangeNumberOfBreaks, ChangeNorm, ChangeWithTrainingAndBreaks, ChangeAdditionalInformationText, ChangeWithADecreasingCoefficient, ChangeTotalWithTheNight, DatesLoaded, ChangeIncidentsPerHour,
+    ChangeMessagePlan, ChangeAdjustment, ChangeNumberOfAcknowledgements, ChangeShiftAndTeamText, ChangeAcknowledgements, ChangeSecondBreaks, GetDatesOnServer
 }
 
 const mapStateToProps = ({workers, currentYear, currentMonth, unsavedChanges, dates}) => {
-    return {
-        workers,
-        currentYear,
-        currentMonth,
-        unsavedChanges,
-        dates
-    }
+    return {workers, currentYear, currentMonth, unsavedChanges, dates}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DaysFieldCommon);
