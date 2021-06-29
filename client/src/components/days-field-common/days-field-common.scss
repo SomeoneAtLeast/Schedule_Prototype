@@ -2,7 +2,6 @@
     position: relative;
     overflow: scroll;
     max-height: 80vh;
-    padding-bottom: 46px;
 }
 
 .days-field-common {
@@ -1006,5 +1005,12 @@
                 transform: translateX(3px);
             }
         }
+    }
+}
+
+@media (max-width: 600px) { 
+    
+    .days-field-common-wrapper {
+        padding-bottom: 46px;
     }
 }
