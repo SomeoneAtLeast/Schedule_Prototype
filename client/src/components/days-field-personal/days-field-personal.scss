@@ -12,12 +12,12 @@
 .days-field-personal-years {
     position: relative;
     text-align: center;
-    background: linear-gradient(360deg, #7F39D0, #5b13ac);
+    background: linear-gradient(0deg, #7E3BCC, #5b13ac);
     padding: 15px;
     border-radius: 10px 0 0 0;
     color: white;
     font-size: 18px;
-    box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.4);
     z-index: 3; 
 }
 
@@ -31,12 +31,24 @@
 .days-field-personal__items-row:first-child {
     
     .days-field-personal__item {
+        position: relative;
         width: 2%;
         height: 38.5px;
         padding: 10px;
         color: white;
-        box-shadow: 0 3px 3px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.4);
         background: linear-gradient(175deg, #934BE6, #7b20e2);
+
+        &:first-child {
+            position: relative;
+            background: linear-gradient(180deg, #7E36D0, #7834c6);
+            box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.4);
+            z-index: 3;
+        }
+
+        &--weekend {
+            background: linear-gradient(360deg, #EE765E, #F9AA5F);
+        }    
     }
 }
 
@@ -112,49 +124,122 @@
     }
 }
 
+.days-field-personal__item--director,
+.days-field-personal td.days-field-personal--worked-director {
+    background-color:#b77b7b;
+    color: white;
+
+    .days-field-personal__item-hours-text {
+        color: white;
+    }
+}
+
+.days-field-personal__item--09-18,
+.days-field-personal td.days-field-personal--worked-09-18 {
+    background-color:#da81ac;
+    color: white;
+
+    .days-field-personal__item-hours-text {
+        color: white;
+    }
+}
+
+.days-field-personal__item--11-20,
+.days-field-personal td.days-field-personal--worked-11-20 {
+    background-color:#b54d83;;
+    color: white;
+
+    .days-field-personal__item-hours-text {
+        color: white;
+    }
+}
+
+.days-field-personal__item--08-20,
+.days-field-personal td.days-field-personal--worked-08-20 {
+    background-color:#3eb8c7;
+    color: white;
+
+    .days-field-personal__item-hours-text {
+        color: white;
+    }
+}
+
+.days-field-personal__item--09-21,
+.days-field-personal td.days-field-personal--worked-09-21 {
+    background-color:#c1b928;
+    color: white;
+
+    .days-field-personal__item-hours-text {
+        color: white;
+    }
+}
+
+.days-field-personal__item--10-22,
+.days-field-personal td.days-field-personal--worked-10-22 {
+    background-color:#40b768;
+    color: white;
+
+    .days-field-personal__item-hours-text {
+        color: white;
+    }
+}
+
+.days-field-personal__item--11-23,
+.days-field-personal td.days-field-personal--worked-11-23 {
+    background-color:#bb2a2a;
+    color: white;
+
+    .days-field-personal__item-hours-text {
+        color: white;
+    }
+}
+
+.days-field-personal__item--12-24,
+.days-field-personal td.days-field-personal--worked-12-24 {
+    background-color:#868267;
+    color: white;
+
+    .days-field-personal__item-hours-text {
+        color: white;
+    }
+}
+
+.days-field-personal__item--14-02,
+.days-field-personal td.days-field-personal--worked-14-02 {
+    background-color:#ae9478;
+    color: white;
+
+    .days-field-personal__item-hours-text {
+        color: white;
+    }
+}
+
+.days-field-personal__item--21-09,
+.days-field-personal td.days-field-personal--worked-21-09 {
+    background-color: #5e69a6;
+    color: white;
+
+    .days-field-personal__item-hours-text {
+        color: white;
+    }
+}
+
 .days-field-personal td.days-field-personal--weekend {
-    background-color: rgba(136, 136, 136, 1);
+    background-color: rgb(255, 255, 255);
+
+    .days-field-personal__item-hours-text {
+        opacity: 0;
+    }
 }
 
 .days-field-personal td.days-field-personal--vacation {
     background-color: rgba(255, 203, 1, 1);
+
+    .days-field-personal__item-hours-text {
+        opacity: 0;
+    }
 }
 
-.days-field-personal td.days-field-personal--worked-09-18 {
-    background:#ffa8d5;
-}
-
-.days-field-personal td.days-field-personal--worked-11-20 {
-    background:#ce6b9e;
-}
-
-.days-field-personal td.days-field-personal--worked-08-20 {
-    background:#23c6db;
-}
-
-.days-field-personal td.days-field-personal--worked-09-21 {
-    background:#cccb79;
-}
-
-.days-field-personal td.days-field-personal--worked-10-22 {
-    background:#6fc48c;
-}
-
-.days-field-personal td.days-field-personal--worked-11-23 {
-    background:#d55959;
-}
-
-.days-field-personal td.days-field-personal--worked-12-24 {
-    background:#aca88b;
-}
-
-.days-field-personal td.days-field-personal--worked-14-02 {
-    background:#ae9478;
-}
-
-.days-field-personal td.days-field-personal--worked-21-09 {
-    background:#5e69a6;
-}
 
 .days-field-personal__no-items {
     text-align: center;

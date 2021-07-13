@@ -305,11 +305,7 @@ DatesLoaded, ChangeIncidentsPerHour, ChangeMessagePlan, ChangeAdjustment, Change
         )
     }
 
-    if ((loading && loadingYear) || (loadingYear && loadingMonth)) {
-        return (
-            <DualBall className={"dual-ball--days-field-common"}/>
-        )
-    }
+    if ((loading && loadingYear) || (loadingYear && loadingMonth)) return <DualBall className={"dual-ball--days-field-common"}/>
 
     return (
         <>

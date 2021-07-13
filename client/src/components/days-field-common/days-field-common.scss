@@ -780,7 +780,7 @@
 
     .days-field-common__item-input {
         opacity: 0;
-        pointer-events:none; 
+        pointer-events: none; 
         cursor: pointer;
     }
 }
@@ -1009,7 +1009,7 @@
 }
 
 @media (max-width: 600px) { 
-    
+
     .days-field-common-wrapper {
         padding-bottom: 46px;
     }
